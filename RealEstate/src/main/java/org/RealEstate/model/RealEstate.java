@@ -1,23 +1,37 @@
 package org.RealEstate.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@MappedSuperclass
-public class RealEstate extends MainEntity implements Serializable {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 20)
 
+public abstract class RealEstate extends MainEntity implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	protected long id;
 	/**
 	 * 
 	 */
@@ -53,7 +67,9 @@ public class RealEstate extends MainEntity implements Serializable {
 	private Date postDate;
 
 	@ElementCollection(targetClass = String.class)
-	private List<String> iamges = new ArrayList<>();
+	private List<String> images = new ArrayList<>();
+
+	private boolean pending;
 
 	public String getTittle() {
 		return tittle;
@@ -147,16 +163,32 @@ public class RealEstate extends MainEntity implements Serializable {
 		return postDate;
 	}
 
+	public boolean isPending() {
+		return pending;
+	}
+
+	public void setPending(boolean pending) {
+		this.pending = pending;
+	}
+
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
 	}
 
-	public List<String> getIamges() {
-		return iamges;
+	public List<String> getImages() {
+		return images;
 	}
 
-	public void setIamges(List<String> iamges) {
-		this.iamges = iamges;
+	public void setImages(List<String> images) {
+		this.images = images;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

@@ -23,9 +23,7 @@ public class OfficeRent extends RealEstate implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private long id;
+
 	private int nbRoom;
 	private boolean electricElevator;
 	private int nbOfCarPark;
@@ -36,14 +34,6 @@ public class OfficeRent extends RealEstate implements Serializable {
 	private List<WaterResources> waterResources = new ArrayList<>();
 
 	private int nbBathRoom;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public int getNbRoom() {
 		return nbRoom;

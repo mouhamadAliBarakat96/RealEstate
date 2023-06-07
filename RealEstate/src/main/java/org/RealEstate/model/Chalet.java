@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +20,8 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tbl_chalet")
+
+@DiscriminatorValue("chalet")
 public class Chalet extends MainEntity implements Serializable {
 
 	/**
@@ -38,8 +41,11 @@ public class Chalet extends MainEntity implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "village_id")
 	private Village village;
-	// todo
-	private double price;
+
+	private double weekdays;
+
+	private double weekenddays;
+
 	@Embedded
 	private GoogleMapAttribute addressEmbeddable = new GoogleMapAttribute();
 
@@ -50,16 +56,9 @@ public class Chalet extends MainEntity implements Serializable {
 	private int space;
 
 	@Temporal(TemporalType.TIMESTAMP)
-
 	private Date postDate;
 
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -101,12 +100,20 @@ public class Chalet extends MainEntity implements Serializable {
 		this.village = village;
 	}
 
-	public double getPrice() {
-		return price;
+	public double getWeekdays() {
+		return weekdays;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setWeekdays(double weekdays) {
+		this.weekdays = weekdays;
+	}
+
+	public double getWeekenddays() {
+		return weekenddays;
+	}
+
+	public void setWeekenddays(double weekenddays) {
+		this.weekenddays = weekenddays;
 	}
 
 	public GoogleMapAttribute getAddressEmbeddable() {

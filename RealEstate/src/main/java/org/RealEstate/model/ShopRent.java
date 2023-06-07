@@ -8,9 +8,6 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.RealEstate.enumerator.WaterResources;
@@ -23,9 +20,7 @@ public class ShopRent extends RealEstate implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private long id;
+
 	private boolean electricElevator;
 	private int nbOfCarPark;
 
@@ -35,13 +30,7 @@ public class ShopRent extends RealEstate implements Serializable {
 
 	private int storefronts;
 
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public boolean isElectricElevator() {
 		return electricElevator;
