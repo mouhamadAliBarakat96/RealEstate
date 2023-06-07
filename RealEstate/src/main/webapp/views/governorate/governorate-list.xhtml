@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:decorate template="/views/template/template.xhtml">
+
+
+	<ui:param name="title" value="#{bundle.main_page}" />
+	<ui:param name="subtitle" value="#{bundle.main_page}" />
+
+	<ui:define name="breadcrumb">
+
+		<div class="row">
+
+
+			<li class="breadcrumb-item active">#{bundle.card}</li>
+			<li class="breadcrumb-item active">Classes and Subjects</li>
+
+
+		</div>
+	</ui:define>
+	<ui:define name="pageTittle">
+
+		<h4 class="page-title">List Classes and Subjects</h4>
+	</ui:define>
+	<ui:define name="customFormContent">
+
+
+</ui:define>
+</ui:decorate>
+</html>
+

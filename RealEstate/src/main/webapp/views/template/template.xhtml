@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" dir="ltr"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<h:outputStylesheet name="admin-template/toastr-rtl.min.css"
+		library="css" />
+
+	<h:outputStylesheet
+		name="admin-template/bootstrap-datetimepicker.min.css" library="css" />
+	<h:outputStylesheet name="admin-template/bootstrap-timepicker.min.css"
+		library="css" />
+
+	<h:outputStylesheet name="admin-template/bootstrap.min.css"
+		library="css" />
+
+	<h:outputStylesheet name="admin-template/icons.css" library="css" />
+
+	<h:outputStylesheet name="admin-template/metisMenu.min.css"
+		library="css" />
+
+	<h:outputStylesheet name="admin-template/style.css" library="css" />
+	<h:outputStylesheet name="select2/select2.min.css" library="plugins" />
+	<h:outputStylesheet name="admin-template/general.css" library="css" />
+
+	<f:facet name="first">
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript library="primefaces" name="jquery/jquery-plugins.js"></h:outputScript>
+	</f:facet>
+	<ui:insert name="customStyleSheet"></ui:insert>
+	<title>Click a tutor</title>
+</h:head>
+
+
+<h:body>
+
+
+
+	<h:outputScript name="jquery.min.js" library="js" />
+	<h:outputScript name="bootstrap.bundle.min.js" library="js" />
+
+
+
+
+
+
+	<ui:insert name="customAjaxStatus">
+		<p:ajaxStatus
+			style="position: fixed; left:5px;  top: 60px; z-index: 100000">
+			<f:facet name="start">
+				<h:graphicImage value="/resources/images/ajax-loader.gif" />
+			</f:facet>
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
+	</ui:insert>
+	<div class="topbar">
+
+
+		<!-- LOGO -->
+		<div class="topbar-left">
+			<div style="margin-top: 8%;">
+
+
+				<span class="logo-sm" style="font-size: 22px; color: #0056b3;">
+					asdasd </span>
+			</div>
+		</div>
+
+		<!-- LOGO -->
+
+		<!--end logo-->
+		<!-- Navbar -->
+		<nav class="navbar-custom"> <!--end topbar-nav-->
+
+		<ul class="list-unstyled topbar-nav mb-0">
+			<li><h:form prependId="false">
+					<button id="btnHideId" onclick="widthCorrection()"
+						class="button-menu-mobile nav-link waves-effect waves-light hide-aside">
+						<i class="dripicons-menu nav-icon"></i>
+					</button>
+				</h:form></li>
+
+		</ul>
+		</nav>
+		<!-- end navbar-->
+	</div>
+
+
+
+
+
+
+	<h:form id="formTemplate" prependId="false">
+
+
+		<div class="page-wrapper">
+			<!-- Left Sidenav -->
+			<div class="left-sidenav">
+				<div class="main-icon-menu">
+					<nav class="nav"> <ui:repeat var="menu"
+						value="#{templateController.menu}">
+
+						<a href="##{menu.href}" class="nav-link "
+							data-toggle="tooltip-custom" data-placement="top"
+							title="#{menu.itemLabel}" data-original-title="#{menu.itemLabel}">
+							<g> <span class="#{menu.iconName}" /> </g>
+						</a>
+					</ui:repeat> </nav>
+				</div>
+				<!--end main-icon-menu-->
+
+
+
+				<div class="main-menu-inner">
+					<div class="menu-body slimscroll">
+						<ui:repeat var="menu" value="#{templateController.menu}">
+							<div id="#{menu.href}" class="main-icon-menu-pane ">
+								<div class="title-box">
+									<h6 class="menu-title">#{menu.itemLabel}</h6>
+
+
+								</div>
+
+								<ul class="nav">
+									<ui:repeat var="sub" value="#{menu.subMenuDetails}">
+										<li class="nav-item "><h:link class="nav-link  "
+												style="#{sub.styleClass}" outcome="#{sub.url}">
+												<i class="#{sub.iconName}" />
+											 #{sub.itemLabel}
+
+											</h:link></li>
+									</ui:repeat>
+								</ul>
+							</div>
+						</ui:repeat>
+						<!-- end Analytic -->
+					</div>
+				</div>
+			</div>
+			<div class="page-content" id="page-content">
+				<div class="container-fluid">
+
+
+
+					<!-- Page-Title -->
+
+
+
+
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="page-title-box">
+								<div class="float-right">
+									<ol class="breadcrumb">
+
+										<ui:insert name="breadcrumb">
+										</ui:insert>
+
+									</ol>
+								</div>
+								<div class="float-left">
+
+
+									<ui:insert name="pageTittle">
+
+
+									</ui:insert>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+
+					<!--end col-->
+				</div>
+
+				<ui:insert name="customFormContent" />
+			</div>
+
+		</div>
+
+
+	</h:form>
+
+
+
+
+
+
+	<h:outputScript name="metisMenu.min.js" library="js" />
+
+	<h:outputScript name="waves.min.js" library="js" />
+
+
+	<h:outputScript name="jquery.slimscroll.min.js" library="js" />
+
+
+	<h:outputScript name="app.js" library="js" />
+
+	<h:outputScript name="template.js" library="js" />
+
+	<h:outputScript name="bootstrap-datepicker.js" library="js" />
+	<h:outputScript name="bootstrap-datepicker.ar.js" library="js/locales" />
+	<h:outputScript name="bootstrap-datetimepicker.min.js" library="js" />
+	<h:outputScript name="bootstrap-datetimepicker.ar.js"
+		library="js/locales" />
+	<h:outputScript name="toastr.min.js" library="js" />
+	<h:outputScript name="hot_key.js" library="js" />
+
+	<h:outputScript name="bootstrap-input-spinner.js"
+		library="plugins/input-spinner/js" />
+	<h:outputScript name="select2/select2.min.js" library="plugins" />
+	<ui:insert name="customOutputScript"></ui:insert>
+
+
+
+	<h:panelGroup id="messageScript">
+		<h:outputScript rendered="#{not empty facesContext.messageList}">
+			<ui:repeat value="#{templateController.messages}" var="message">
+				generate("#{message.summary}","#{message.detail}");
+			</ui:repeat>
+		</h:outputScript>
+	</h:panelGroup>
+
+
+	<script type="text/javascript">
+
+	function widthCorrection() {
+		
+		   var element = document.getElementById("page-content");
+		   element.classList.toggle("myTableWidth");
+		}
+	
+	window.onload = widthCorrection;
+	</script>
+
+</h:body>
+
+
+</html>

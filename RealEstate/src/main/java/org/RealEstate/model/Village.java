@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tbl_village")
+
 public class Village extends MainEntity implements Serializable {
 
 	/**

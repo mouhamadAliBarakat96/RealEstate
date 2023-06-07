@@ -1,0 +1,473 @@
+.label, .badge {
+	font-size: 10.998px;
+	font-weight: bold;
+	line-height: 14px;
+	color: #ffffff;
+	white-space: nowrap;
+	vertical-align: baseline;
+	background-color: #999999;
+}
+
+.ui-datatable .ui-datatable-data>tr>td {
+	text-align: center;
+}
+
+.float-left {
+	margin-left: 0.2%;
+}
+
+.label {
+	padding: 1px 4px 2px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.badge {
+	padding: 1px 9px 2px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	border-radius: 9px;
+}
+
+a.label:hover, a.badge:hover {
+	color: #ffffff;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.label-important, .badge-important {
+	background-color: #b94a48;
+}
+
+.label-important[href], .badge-important[href] {
+	background-color: #953b39;
+}
+
+.label-warning, .badge-warning {
+	background-color: #ffce54;
+}
+
+.label-warning[href], .badge-warning[href] {
+	background-color: #c67605;
+}
+
+.label-success, .badge-success {
+	background-color: #468847;
+}
+
+.label-success[href], .badge-success[href] {
+	background-color: #356635;
+}
+
+.label-info, .badge-info {
+	background-color: #3a87ad;
+}
+
+.label-info[href], .badge-info[href] {
+	background-color: #2d6987;
+}
+
+.label-inverse, .badge-inverse {
+	background-color: #333333;
+}
+
+.label-inverse[href], .badge-inverse[href] {
+	background-color: #1a1a1a;
+}
+
+.ui-datatable thead th {
+	border: none !important;
+	background-color: #ebedf0 !important;
+}
+
+.ui-expanded-row-content.ui-widget-content {
+	background-color: #f1f5fa !important;
+}
+
+.ui-datatable {
+	margin-bottom: 25px
+}
+
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+
+.ui-button-text-only .ui-button-text {
+	padding: 0.3em 0.4em;
+}
+
+.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+	visibility: hidden;
+}
+
+.ui-filter-column .ui-column-customfilter .custom-filter {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.year-spinner input {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ui-dialog-content.ui-widget-content .ui-confirm-dialog-severity {
+	display: none;
+}
+
+.dialog-position {
+	top: 50%;
+	left: 40%;
+}
+
+.confirm-dialog.ui-confirm-dialog .ui-widget-header {
+	display: none !important;
+}
+
+.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-confirmdialog-yes.ui-state-hover,
+	.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-confirmdialog-yes.ui-state-focus,
+	.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-confirmdialog-yes.ui-state-active,
+	.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-confirmdialog-no.ui-state-hover,
+	.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-confirmdialog-no.ui-state-focus,
+	.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-confirmdialog-no.ui-state-active
+	{
+	background-color: #d2d2d2 !important;
+}
+
+.ui-confirmdialog-yes {
+	border-color: #53a93f !important;
+}
+
+.ui-confirmdialog-yes .ui-button-text.ui-c {
+	background-color: #53a93f !important;
+	color: white !important
+}
+
+.ui-confirmdialog-no {
+	border-color: #d73d32 !important;
+}
+
+.ui-confirmdialog-no .ui-button-text.ui-c {
+	background-color: #d73d32 !important;
+	color: white !important
+}
+
+.text-ellipsis {
+	display: list-item;
+	list-style: outside none none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: pre;
+}
+
+.ui-tooltip .ui-tooltip-text {
+	background-color: #0062cc !important;
+}
+
+.ui-tooltip-left .ui-tooltip-arrow {
+	border-left-color: #0062cc !important;
+}
+
+.ui-tooltip-right .ui-tooltip-arrow .btn-cancel {
+	border-left-color: #f1646c !important;
+}
+
+.ui-tooltip .ui-tooltip-text .btn-cancel {
+	background-color: #f1646c !important;
+}
+
+.ui-dialog-title {
+	font-size: 16px !important;
+	float: left !important;
+}
+
+.ui-icon .ui-confirm-dialog-severity .ui-icon-alert {
+	display: none;
+}
+
+.ui-dialog-titlebar-icon.ui-dialog-titlebar-close.ui-corner-all {
+	float: right !important
+}
+
+.ui-dialog.ui-widget.ui-widget.delete-dialog {
+	width: 20% !important;;
+}
+
+.ui-dialog.ui-widget-content .ui-dialog-titlebar, .ui-dialog .ui-dialog-buttonpane
+	{
+	background: #f5f5f5 !important;
+	border: #ddd;
+}
+
+.ui-confirm-dialog.ui-dialog.ui-widget {
+	width: 30% !important;
+}
+
+.ui-dialog-content.ui-widget-content .ui-confirm-dialog-severity {
+	float: right;
+	margin-left: 10px;
+	display: inline-block;
+	margin-top: 3px;
+}
+
+.ui-confirm-dialog-message {
+	
+}
+
+.ui-inputnumber.ui-widget.form-control {
+	padding: 0 !important;
+}
+
+.ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all {
+	width: 100%;
+	background-color: #fff !important;
+}
+
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield
+	{
+	box-shadow: none !important;
+	height: 100%;
+}
+
+.skin .ui-chkbox .ui-chkbox-box.ui-state-active {
+	background: #1b7e5a !important;
+}
+
+.skin .ui-chkbox {
+	border-color: #1b7e5a !important;
+}
+
+.skin .ui-chkbox .ui-chkbox-box {
+	width: 25px;
+	height: 25px;
+	border-radius: 1px;
+}
+
+.custom-select {
+	height: calc(2.3rem + 2px) !important;
+}
+
+.hidden-header .ui-column-title {
+	display: none;
+}
+
+.error-message {
+	color: #da4453;
+	padding: 4px 8px;
+	width: 100%;
+	margin-top: 5px;
+	font-size: 12px;
+	display: inline-block;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label {
+	text-align: center !important;
+}
+
+.select2-container--default .select2-selection--single {
+	border: 1px solid #e8ebf3 !important;
+	height: calc(2.3rem + 2px) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered
+	{
+	line-height: 36px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow
+	{
+	height: 36px !important;
+}
+
+.btn-danger:not (:disabled ):not (.disabled ).active, .btn-danger:not (:disabled
+	 ):not (.disabled ):active, .show>.btn-danger.dropdown-toggle {
+	background-color: #f1646c !important;
+}
+
+.btn.btn-warning.active.toggle-off {
+	color: white !important;
+	background-color: #ffce54 !important;
+}
+
+.slow .toggle-group {
+	transition: left 0.7s;
+	-webkit-transition: left 0.7s;
+}
+
+div.fixed {
+	position: fixed;
+	bottom: 0;
+	margin-left: 10px;
+	left: 0;
+	margin-bottom: 10px;
+	width: 300px;
+	left: 0;
+	left: 0;
+	width: 300px;
+}
+
+.datepicker {
+	font-family: sans-serif !important;
+}
+
+.hideOutputColumn {
+	visibility: hidden;
+}
+
+.btn-warning:hover {
+	color: white !important;
+}
+
+/*input text filter class inputtext-filter*/
+.inputtext-filter.ui-selectonemenu {
+	text-align: right !important;
+	padding-right: 6px !important;
+}
+
+.inputtext-filter.ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all
+	{
+	height: 29px;
+	margin-bottom: 5px !important;
+}
+
+.radioBtn label {
+	margin-right: 10px;
+	font-weight: 600 !important;
+	background-color: gold;
+	padding: 8px;
+	border-radius: 20px;
+	color: blue;
+	font-size: 15px;
+}
+
+.radioBtn input {
+	margin-right: 10px;
+	width: 20px;
+	font-weight: 800;
+}
+
+.checkBoxClass .ui-chkbox .ui-chkbox-box {
+	width: 28px;
+	height: 28px;
+	margin-right: 30px;
+	margin-left: 30px;
+}
+
+.checkBoxClass .ui-chkbox-icon.ui-icon {
+	padding: 10px;
+	margin-top: 4px;
+}
+
+.checkBoxClass .ui-state-active {
+	background-color: #1a8fe2;
+}
+
+.btn-danger:not (:disabled ):not (.disabled ).active, .btn-danger:not (:disabled
+	 ):not (.disabled ):active, .show>.btn-danger.dropdown-toggle {
+	background-color: #f1646c;
+}
+
+.modalClass {
+	position: absolute;
+}
+
+.width50 {
+	max-width: 70%;
+}
+
+.width25 {
+	max-width: 50%;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight,
+	.ui-widget-header .ui-state-highlight {
+	border: 1px solid #FFf;
+	color: #f5f7fa;
+	background: #4fc1e9 !important;
+	opacity: 0.8;
+}
+
+.btn-purple {
+	background: #8b67ff !important;
+}
+
+.btn-purple:hover {
+	color: white;
+	background: #7551e9 !important;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active
+	{
+	background: #4d79f6 none repeat scroll 0 0 !important;
+	color: hsl(0, 0%, 100%) !important;
+	font-weight: normal !important;
+}
+
+.ui-datatable.manycolumn table {
+	display: block;
+}
+
+.white {
+	color: white;
+}
+
+.form-section {
+	border-bottom: 1px solid #37bc9b;
+	color: #37bc9b;
+	font-size: 1rem;
+	line-height: 2rem;
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+.myTableWidth {
+	width: calc(100% - 300px) !important;
+}
+
+@media only screen and (max-width: 1200px) {
+	.myTableWidth {
+		width: calc(100%) !important;
+	}
+}
+
+.myTableWidth2 {
+	width: calc(100% - 17%);
+}
+
+.float-right {
+	margin-right: 15px;
+}
+
+.card {
+	margin: 2% 15px;
+}
+
+.btn-danger:not (:disabled ):not (.disabled ).active, .btn-danger:not (:disabled
+	 ):not (.disabled ):active, .show>.btn-danger.dropdown-toggle {
+	background-color: #f1646c !important;
+}
+
+.btn.btn-warning.active.toggle-off {
+	color: white !important;
+	background-color: #f0ad4e !important;
+}
+
+.slow .toggle-group {
+	transition: left 0.7s;
+	-webkit-transition: left 0.7s;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice
+	{
+	background-color: #3bafda;
+	border: 1px solid #3bafda;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+	color :white;
+	border-right:1px solid white;
+}
+
+.btn-secondary:hover{
+	background-color : #3bafda !important   ;
+	border-color :  #3bafda    !important ;
+}
