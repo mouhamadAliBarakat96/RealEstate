@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="governorate-list::#views#governorate#governorate-list.xhtml"
+    NAME="output" PATH="/views/governorate/governorate-list.xhtml"
+    TARGET="rules:#views#governorate#governorate-list.xhtml"
+    TITLE="governorate-list" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#views#governorate#governorate-list.xhtml"
+  PATH="/views/governorate/governorate-list.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::1" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::1" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="governorate::#views#governorate#governorate.xhtml" NAME="output"
+    PATH="/views/governorate/governorate.xhtml"
+    TARGET="rules:#views#governorate#governorate.xhtml"
+    TITLE="governorate" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#views#governorate#governorate.xhtml"
+  PATH="/views/governorate/governorate.xhtml" SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::2" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::2" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="district-list::#views#district#district-list.xhtml"
+    NAME="output" PATH="/views/district/district-list.xhtml"
+    TARGET="rules:#views#district#district-list.xhtml"
+    TITLE="district-list" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::3" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::3" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="district::#views#district#district.xhtml"
+    NAME="output" PATH="/views/district/district.xhtml"
+    TARGET="rules:#views#district#district.xhtml" TITLE="district" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#views#district#district.xhtml"
+  PATH="/views/district/district.xhtml" SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#views#district#district-list.xhtml"
+  PATH="/views/district/district-list.xhtml" SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

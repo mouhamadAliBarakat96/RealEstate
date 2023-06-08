@@ -20,5 +20,5 @@ public interface ICRUDOperations<T> {
 	public int count();
 
 	public T newEntity() throws InstantiationException, IllegalAccessException;
-
+	
 }

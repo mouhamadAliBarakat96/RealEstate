@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import org.RealEstate.facade.GovernorateFacade;
 import org.RealEstate.model.Governorate;
+import org.RealEstate.utils.CommonUtility;
 
 @ViewScoped
 @Named
@@ -25,6 +26,19 @@ public class GovernorateListController implements Serializable {
 	@PostConstruct
 	public void init() {
 		pageItems = governorateFacade.findAll();
+	}
+
+	public void remove(Governorate item) {
+		try {
+			governorateFacade.remove(item);
+			pageItems = governorateFacade.findAll();
+			CommonUtility.addMessageToFacesContext("Delete Success ", "success");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			CommonUtility.addMessageToFacesContext("Error on delete caused by childs ", "error");
+
+		}
 	}
 
 	public List<Governorate> getPageItems() {

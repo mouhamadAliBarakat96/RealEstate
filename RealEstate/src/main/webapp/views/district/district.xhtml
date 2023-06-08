@@ -3,6 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
 	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:h="http://java.sun.com/jsf/html">
 
@@ -19,9 +20,9 @@
 		<div class="row">
 
 			<li class="breadcrumb-item ">#{bundle.card}</li>
-			<li class="breadcrumb-item "><h:link outcome="governorate-list"> Governorate List </h:link></li>
+			<li class="breadcrumb-item "><h:link outcome="district-list"> District List </h:link></li>
 
-			<li class="breadcrumb-item active">Management Governorate</li>
+			<li class="breadcrumb-item active">Management District</li>
 
 
 		</div>
@@ -29,9 +30,13 @@
 	</ui:define>
 	<ui:define name="pageTittle">
 
-		<h4 class="page-title">Mangment Governorate</h4>
+		<h4 class="page-title">Mangment District</h4>
 	</ui:define>
 	<ui:define name="customFormContent">
+		<o:onloadScript>
+	select2me();
+	</o:onloadScript>
+	<h:panelGroup id="crud-id">
 		<div class="panel-body">
 
 			<div class="card">
@@ -40,7 +45,7 @@
 						<div class=" col-md-12">
 
 
-							<div class="col-md-5">
+							<div class="col-md-4">
 								<div class="form-group">
 									<h:outputLabel class="control-label" for="name"
 										style="padding-left:1.5%" value="name ">
@@ -48,7 +53,7 @@
 									</h:outputLabel>
 									<h:inputText id="name" required="true" f5:placeholder="name "
 										label="name " title="name "
-										value="#{governorateController.governorate.name}"
+										value="#{districtController.district.name}"
 										styleClass="form-control">
 										<f:ajax render=":messageScript"></f:ajax>
 									</h:inputText>
@@ -56,17 +61,36 @@
 								</div>
 							</div>
 
+							<div class="col-md-4">
+								<p:outputLabel class="control-label" for="governorate"
+									value="governorate ">
+								</p:outputLabel>
+								<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+									styleClass="select2 select2me form-control   custom-select"
+									converter="omnifaces.SelectItemsConverter" id="governorate"
+									label="governorate"
+									value="#{districtController.district.governorate}"
+									placeHolder="#set">
+									<f:selectItem itemLabel="governorate" itemValue="" />
+									<f:selectItems value="#{districtController.governorateList}"
+										var="re" itemLabel="  #{re.name}" itemValue="#{re}" />
+
+								</h:selectOneMenu>
+								<h:message for="governorate" styleClass="error-message" />
+							</div>
+
+
 						</div>
 					</div>
 
 					<div class="row">
-					<div class="col-md-12">
+						<div class="col-md-12">
 							<h:commandLink id="saveId"
 								style=" float:right ; margin-left:10px;"
-								action='#{governorateController.save()}'
+								action='#{districtController.save()}'
 								styleClass="btn btn-primary btn-save">
-								<f:ajax render=":messageScript :tableId"
-									execute="  save-group  " />
+								<f:ajax render=":messageScript "
+									execute="  crud-id  " />
 								<i class="fa fa-save" />
 								<span>Save</span>
 
@@ -83,7 +107,7 @@
 
 		</div>
 
-
+</h:panelGroup>
 
 	</ui:define>
 

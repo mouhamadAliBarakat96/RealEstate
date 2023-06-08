@@ -40,22 +40,26 @@ public class TemplateController implements Serializable {
 
 		menu.add(m1);
 
-		// --- configuration ---//
-		m1 = new MenuItem("2", getValue("card"), " fa fa-wrench ", "", getValue("card"), true);
+		m1 = new MenuItem("2", getValue("card"), " fa fa-cogs ", "", getValue("card"), true);
 
-		m2 = new MenuItem("Advertisement List", "   mdi mdi-note-plus-outline     ", "governorate-list", true,
-				"addButton");
+		m2 = new MenuItem("Governorate List", "    mdi mdi-google-nearby      ", "governorate-list", true, "addButton");
 		m1.addChild(m2);
 
-		
+		m2 = new MenuItem("", "", "governorate", true, "display: none;");
+		m1.addChild(m2);
+        //----//		
+		m2 = new MenuItem("District List", "     mdi mdi-image-area-close       ", "district-list", true, "addButton");
+		m1.addChild(m2);
+
+		m2 = new MenuItem("", "", "district", true, "display: none;");
+		m1.addChild(m2);
+
 		menu.add(m1);
 
 		return menu;
 
 	}
 
-	
-	
 	public List<MenuItem> getMenu() {
 		return menu;
 	}

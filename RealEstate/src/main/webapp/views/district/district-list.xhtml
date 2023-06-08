@@ -20,14 +20,14 @@
 
 
 			<li class="breadcrumb-item active">#{bundle.card}</li>
-			<li class="breadcrumb-item active">Governorate List</li>
+			<li class="breadcrumb-item active">District List</li>
 
 
 		</div>
 	</ui:define>
 	<ui:define name="pageTittle">
 
-		<h4 class="page-title">Governorate List</h4>
+		<h4 class="page-title">District List</h4>
 	</ui:define>
 	<ui:define name="customFormContent">
 
@@ -40,17 +40,17 @@
 
 							<div class="col-md-8 col-sm-12">
 								<span style="font-size: 20px;"> Table Represent
-									Governorate </span> <span style="font-size: 14px;"
-									class="label label-warning countClass" id="countId">#{governorateListController.pageItems.size()}
+									District </span> <span style="font-size: 14px;"
+									class="label label-warning countClass" id="countId">#{districtListController.pageItems.size()}
 								</span>
 							</div>
 							<div class="col-md-4 col-sm-12">
-								<h:commandLink action='governorate'
+								<h:commandLink action='district'
 									id="btn-to-crud"
 									styleClass="  btn btn-primary waves-effect waves-light btn-crud-page "
 									style="float:right">
 									<i class="fa fa-plus"></i>
-									<span> Add New Governorate </span>
+									<span> Add New District </span>
 
 									<f:ajax></f:ajax>
 
@@ -73,19 +73,19 @@
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
 						rowsPerPageTemplate="5,10,15" styleClass="border-none"
-						value="#{governorateListController.pageItems}"
-						widgetVar="tableWidget" emptyMessage="No Governorate was added"
-						filteredValue="#{governorateListController.filteredList}">
+						value="#{districtListController.pageItems}"
+						widgetVar="tableWidget" emptyMessage="No District was added"
+						filteredValue="#{districtListController.filteredList}">
 					
 
 						<p:column styleClass="no-header table-actions-column" width="80">
-							<span> <h:link outcome='governorate'
+							<span> <h:link outcome='district'
 									styleClass="btn btn-warning  waves-effect waves-light   btn-xs">
 									<f:param name="id" value="#{entity.id}" />
 									<span class=" dripicons-document-edit  " style="color: white;" />
 									<f:ajax></f:ajax>
 								</h:link> <p:commandLink
-									actionListener="#{governorateListController.remove(entity)}"
+									actionListener="#{districtListController.remove(entity)}"
 									style="margin-left:5px;" update=":messageScript header-panel"
 									styleClass="btn btn-danger waves-effect waves-light btn-xs ">
 									<i class=" dripicons-trash  "
@@ -97,6 +97,7 @@
 								</p:commandLink>
 							</span>
 						</p:column>
+
 
 						<p:column filterBy="#{entity.id}" headerText="id"
 						 style="vertical-align: middle; margin-left: .5rem"
@@ -110,6 +111,24 @@
 						</p:column>
 
 
+
+						<p:column filterBy="#{entity.governorate}" headerText="governorate"
+							sortBy="#{entity.governorate}" filterMatchMode="contains">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('tableWidget').filter()"
+									style="width:100% ;   " styleClass="inputtext-filter">
+									<f:selectItem itemLabel="all " itemValue="" />
+
+									<f:selectItems itemLabel="false" itemValue="False" />
+									<f:selectItems value="#{districtListController.governorateList}" var="re" itemLabel="  #{re.name} "
+										itemValue="#{re}" />
+
+
+									<f:ajax></f:ajax>
+								</p:selectOneMenu>
+							</f:facet>
+							<h:outputText value="#{entity.governorate.name}" />
+						</p:column>
 
 					</p:dataTable>
 				</div>

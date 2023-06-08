@@ -13,4 +13,47 @@
 	</navigation-case>
 </navigation-rule>
 
+
+<navigation-rule>
+	<navigation-case>
+		<from-outcome>governorate</from-outcome>
+		<to-view-id>/views/governorate/governorate.xhtml</to-view-id>
+		<redirect />
+	</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+	<navigation-case>
+		<from-outcome>district-list</from-outcome>
+		<to-view-id>/views/district/district-list.xhtml</to-view-id>
+		<redirect />
+	</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+	<navigation-case>
+		<from-outcome>district</from-outcome>
+		<to-view-id>/views/district/district.xhtml</to-view-id>
+		<redirect />
+	</navigation-case>
+</navigation-rule>
+
+
+
+
+
+
+<application>
+		<locale-config>
+			<default-locale>en</default-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>resources.Bundle</base-name>
+			<var>bundle</var>
+		</resource-bundle>
+
+		<message-bundle>resources.Bundle</message-bundle>
+	</application>
 </faces-config>
