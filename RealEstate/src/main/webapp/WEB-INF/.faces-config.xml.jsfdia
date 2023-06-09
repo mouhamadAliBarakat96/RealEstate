@@ -42,4 +42,24 @@
   PATH="/views/district/district.xhtml" SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#views#district#district-list.xhtml"
   PATH="/views/district/district-list.xhtml" SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::4" SHAPE="32,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::4" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="village-list::#views#village#village-list.xhtml" NAME="output"
+    PATH="/views/village/village-list.xhtml"
+    TARGET="rules:#views#village#village-list.xhtml"
+    TITLE="village-list" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::5" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::5" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="village::#views#village#village.xhtml"
+    NAME="output" PATH="/views/village/village.xhtml"
+    TARGET="rules:#views#village#village.xhtml" TITLE="village" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#views#village#village.xhtml"
+  PATH="/views/village/village.xhtml" SHAPE="256,481,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#views#village#village-list.xhtml"
+  PATH="/views/village/village-list.xhtml" SHAPE="240,593,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

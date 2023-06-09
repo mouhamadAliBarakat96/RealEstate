@@ -2,6 +2,7 @@ package org.RealEstate.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -27,10 +30,13 @@ public class Village extends MainEntity implements Serializable {
 	private long id;
 
 	@Size(min = 1)
+	@Column(unique = true)
+	@NotEmpty
 	private String name;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "district_id")
+	@NotNull
 	private District district;
 
 	public long getId() {

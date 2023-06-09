@@ -87,7 +87,7 @@
 						<div class="col-md-12">
 							<h:commandLink id="saveId"
 								style=" float:right ; margin-left:10px;"
-								action='#{districtController.save()}'
+								action='#{districtController.save(false)}'
 								styleClass="btn btn-primary btn-save">
 								<f:ajax render=":messageScript "
 									execute="  crud-id  " />
@@ -96,6 +96,18 @@
 
 
 							</h:commandLink>
+							
+							<h:commandLink 
+								style=" float:right ; margin-left:10px;"
+								action='#{districtController.save(true)}'
+								styleClass="btn btn-primary btn-save">
+								<f:ajax render=":messageScript "
+									execute="  crud-id  " />
+								<i class="fa fa-save" />
+								<span>Save And New </span>
+
+
+							</h:commandLink> 
 						</div>
 
 					</div>

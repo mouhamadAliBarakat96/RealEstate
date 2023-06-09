@@ -2,13 +2,17 @@ package org.RealEstate.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import javax.validation.constraints.NotBlank ;
+import javax.validation.constraints.NotEmpty;
 @Entity
 @Table(name = "tbl_governorate")
 // mo7afaza
@@ -24,9 +28,10 @@ public class Governorate extends MainEntity implements Serializable {
 	private long id;
 
 	@Size(min = 1)
+	@Column(unique = true)
+	
+	@NotEmpty
 	private String name;
-	
-	
 
 	public long getId() {
 		return id;
@@ -44,7 +49,6 @@ public class Governorate extends MainEntity implements Serializable {
 		this.name = name;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

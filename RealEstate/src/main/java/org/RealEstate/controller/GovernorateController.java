@@ -59,32 +59,42 @@ public class GovernorateController extends AbstractController<Governorate> imple
 		}
 	}
 
-	public void save() {
+	public void save(boolean isSaveAndNew) {
 		try {
 			if (getItem().getId() <= 0) {
 				super.save();
 				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 				flash.put("new-card", "true");
-				changeUrl();
+				changeUrl(isSaveAndNew);
 			} else {
 				governorate = getAbstractFacade().save(governorate);
+				if (isSaveAndNew) {
+					changeUrl(isSaveAndNew);
+
+				}
 
 				CommonUtility.addMessageToFacesContext(" save_success ", "success");
 
 			}
 		} catch (Exception e) {
-			CommonUtility.addMessageToFacesContext(e.getMessage(), "error");
+			CommonUtility.addMessageToFacesContext(e.getCause().getMessage(), "error");
 			e.printStackTrace();
 		}
 
 	}
 
-	private void changeUrl() {
+	private void changeUrl(boolean isSaveAndNew) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", getItem().getId() + "");
+			if (!isSaveAndNew) {
+				Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", getItem().getId() + "");
+
+			} else {
+				Faces.redirect(url);
+
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();

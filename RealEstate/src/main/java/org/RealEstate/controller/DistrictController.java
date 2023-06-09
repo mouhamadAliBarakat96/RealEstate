@@ -68,17 +68,20 @@ public class DistrictController extends AbstractController<District> implements 
 			}
 		}
 	}
-	
-	public void save() {
+
+	public void save(boolean isSaveAndNew) {
 		try {
 			if (getItem().getId() <= 0) {
 				super.save();
 				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 				flash.put("new-card", "true");
-				changeUrl();
+				changeUrl(isSaveAndNew);
 			} else {
 				district = getAbstractFacade().save(district);
+				if (isSaveAndNew) {
+					changeUrl(isSaveAndNew);
 
+				}
 				CommonUtility.addMessageToFacesContext(" save_success ", "success");
 
 			}
@@ -89,18 +92,23 @@ public class DistrictController extends AbstractController<District> implements 
 
 	}
 
-	private void changeUrl() {
+	private void changeUrl(boolean isSaveAndNew) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", getItem().getId() + "");
+			if (!isSaveAndNew) {
+				Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", getItem().getId() + "");
+
+			} else {
+				Faces.redirect(url);
+
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public District getDistrict() {
 		return district;
@@ -138,6 +146,4 @@ public class DistrictController extends AbstractController<District> implements 
 		this.governorateList = governorateList;
 	}
 
-	
-	
 }
