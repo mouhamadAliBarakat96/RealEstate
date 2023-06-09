@@ -47,22 +47,25 @@ public class TemplateController implements Serializable {
 
 		m2 = new MenuItem("", "", "governorate", true, "display: none;");
 		m1.addChild(m2);
-        //----//		
+		// ----//
 		m2 = new MenuItem("District List", "     mdi mdi-image-area-close       ", "district-list", true, "addButton");
 		m1.addChild(m2);
 
 		m2 = new MenuItem("", "", "district", true, "display: none;");
 		m1.addChild(m2);
 
+		// ----//
+		m2 = new MenuItem("Village List", "      mdi mdi-city-variant     ", "village-list", true, "addButton");
+		m1.addChild(m2);
+		m2 = new MenuItem("", "", "village", true, "display: none;");
+		m1.addChild(m2);
 		
-		  //----//		
-				m2 = new MenuItem("Village List", "     mdi mdi-image-area-close       ", "village-list", true, "addButton");
-				m1.addChild(m2);
+		// mdi mdi-cogs 
 
-				m2 = new MenuItem("", "", "village", true, "display: none;");
-				m1.addChild(m2);
-				
-				
+		m2 = new MenuItem("Configuration", "      mdi mdi-cogs     ", "configuration", true, "addButton");
+		m1.addChild(m2);
+		
+		
 		menu.add(m1);
 
 		return menu;

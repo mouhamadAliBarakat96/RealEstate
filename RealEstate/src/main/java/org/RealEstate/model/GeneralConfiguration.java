@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -23,9 +24,11 @@ public class GeneralConfiguration extends MainEntity implements Serializable {
 	private long id;
 
 	@Size(min = 1)
+	@NotEmpty
 	private String key;
 
 	@Size(min = 1)
+	@NotEmpty
 	private String value;
 
 	public long getId() {

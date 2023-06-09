@@ -5,63 +5,74 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
 
-<navigation-rule>
-	<navigation-case>
-		<from-outcome>governorate-list</from-outcome>
-		<to-view-id>/views/governorate/governorate-list.xhtml</to-view-id>
-		<redirect />
-	</navigation-case>
-</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>governorate-list</from-outcome>
+			<to-view-id>/views/governorate/governorate-list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 
-<navigation-rule>
-	<navigation-case>
-		<from-outcome>governorate</from-outcome>
-		<to-view-id>/views/governorate/governorate.xhtml</to-view-id>
-		<redirect />
-	</navigation-case>
-</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>governorate</from-outcome>
+			<to-view-id>/views/governorate/governorate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 
-<navigation-rule>
-	<navigation-case>
-		<from-outcome>district-list</from-outcome>
-		<to-view-id>/views/district/district-list.xhtml</to-view-id>
-		<redirect />
-	</navigation-case>
-</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>district-list</from-outcome>
+			<to-view-id>/views/district/district-list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 
-<navigation-rule>
-	<navigation-case>
-		<from-outcome>district</from-outcome>
-		<to-view-id>/views/district/district.xhtml</to-view-id>
-		<redirect />
-	</navigation-case>
-</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>district</from-outcome>
+			<to-view-id>/views/district/district.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 
-<navigation-rule>
-	<navigation-case>
-		<from-outcome>village-list</from-outcome>
-		<to-view-id>/views/village/village-list.xhtml</to-view-id>
-		<redirect />
-	</navigation-case>
-</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>village-list</from-outcome>
+			<to-view-id>/views/village/village-list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 
-<navigation-rule>
-	<navigation-case>
-		<from-outcome>village</from-outcome>
-		<to-view-id>/views/village/village.xhtml</to-view-id>
-		<redirect />
-	</navigation-case>
-</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>village</from-outcome>
+			<to-view-id>/views/village/village.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>configuration</from-outcome>
+			<to-view-id>/views/configuration/configuration.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 
 
 
-<application>
+
+
+
+	<application>
 		<locale-config>
 			<default-locale>en</default-locale>
 		</locale-config>

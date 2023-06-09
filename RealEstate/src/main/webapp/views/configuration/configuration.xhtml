@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:decorate template="/views/template/template.xhtml">
+
+
+	<ui:param name="title" value="#{bundle.main_page}" />
+	<ui:param name="subtitle" value="#{bundle.main_page}" />
+
+	<ui:define name="breadcrumb">
+
+		<!-- Page-Title -->
+		<div class="row">
+
+			<li class="breadcrumb-item ">#{bundle.card}</li>
+
+			<li class="breadcrumb-item active">Management Configuration</li>
+
+
+		</div>
+		<!--end col-->
+	</ui:define>
+	<ui:define name="pageTittle">
+
+		<h4 class="page-title">Mangment Configuration</h4>
+	</ui:define>
+	<ui:define name="customFormContent">
+	<h:panelGroup id="crud-id">
+		<div class="panel-body">
+
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class=" col-md-12">
+
+
+							<div class="col-md-5">
+								<div class="form-group">
+									<h:outputLabel class="control-label" for="freeNbOfPost"
+										style="padding-left:1.5%" value="free nb of post ">
+										<span class="required">*</span>
+									</h:outputLabel>
+									<h:inputText id="freeNbOfPost" required="true" f5:placeholder="free nb of post "
+										label="free nb of post " title="free nb of post "
+										onkeypress="return isNumberKey(event)"
+										value="#{configurationController.freeNbOfPost}"
+										styleClass="form-control">
+										<f:ajax render=":messageScript"></f:ajax>
+									</h:inputText>
+									<h:message for="freeNbOfPost" styleClass="error-message" />
+								</div>
+							</div>
+							
+							
+							<div class="col-md-5">
+								<div class="form-group">
+									<h:outputLabel class="control-label" for="postExpiryDate"
+										style="padding-left:1.5%" value="post Expiry Date  ">
+										<span class="required">*</span>
+									</h:outputLabel>
+									<h:inputText id="postExpiryDate" required="true" f5:placeholder="name "
+										label="post Expiry Date  " title="post Expiry Date  "
+										onkeypress="return isNumberKey(event)"
+										value="#{configurationController.postExpiryDate}"
+										styleClass="form-control">
+										<f:ajax render=":messageScript"></f:ajax>
+									</h:inputText>
+									<h:message for="postExpiryDate" styleClass="error-message" />
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row">
+					<div class="col-md-12">
+							<h:commandLink id="saveId"
+								style=" float:right ; margin-left:10px;"
+								action='#{configurationController.save()}'
+								styleClass="btn btn-primary btn-save">
+								<f:ajax render=":messageScript :tableId"
+									execute="  name  " />
+								<i class="fa fa-save" />
+								<span>Save</span>
+
+
+							</h:commandLink>
+							
+								
+							
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+
+
+		</div>
+
+</h:panelGroup>
+
+	</ui:define>
+
+</ui:decorate>
+
+</html>
