@@ -50,4 +50,21 @@
 		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
 		<param-value>true</param-value>
 	</context-param>
+
+
+	 
+	<mime-mapping>
+		<extension>eot</extension>
+		<mime-type>application/font-eot</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>woff</extension>
+		<mime-type>application/font-woff</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>ttf</extension>
+		<mime-type>application/font-ttf</mime-type>
+	</mime-mapping>
+
+
 </web-app>

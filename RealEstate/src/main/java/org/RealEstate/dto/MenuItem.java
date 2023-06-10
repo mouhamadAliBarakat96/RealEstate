@@ -16,7 +16,21 @@ public class MenuItem {
 	private String styleClass ;
 	
 	private String href; 
+	
+	 
 
+	public MenuItem(String itemLabel, String iconName, String url, boolean permission, String subMenuTitle,
+			String styleClass, String href) {
+		
+		super();
+		this.itemLabel = itemLabel;
+		this.iconName = iconName;
+		Url = url;
+		this.permission = permission;
+		this.subMenuTitle = subMenuTitle;
+		this.styleClass = styleClass;
+		this.href = href;
+	}
 	public MenuItem(String href ,String itemLabel, String iconName, String url, String subMenuTitle, boolean permission) {
 		super();
 		this.href = href;
