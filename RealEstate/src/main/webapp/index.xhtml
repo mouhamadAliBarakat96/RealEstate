@@ -7,7 +7,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough">
 
-<ui:decorate template="/views/template/makaan-template.xhtml">
+<ui:composition template="/views/template/makaan-template.xhtml">
 
 	<ui:define name="header-start">
 		<div class="container-fluid header bg-white p-0">
@@ -285,7 +285,6 @@
 	</ui:define>
 
 	<ui:define name="footer">
-
 		<div class="container">
 			<div class="copyright">
 				<div class="row">
@@ -306,8 +305,7 @@
 				</div>
 			</div>
 		</div>
-
 	</ui:define>
 
-</ui:decorate>
+</ui:composition>
 </html>

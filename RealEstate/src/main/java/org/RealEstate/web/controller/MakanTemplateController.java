@@ -18,24 +18,22 @@ public class MakanTemplateController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<MenuItem> menu = new ArrayList<MenuItem>();
+	private List<MenuItem> menu = new ArrayList<>();
 
 	@PostConstruct
 	public void init() {
-		fillMenuItems();
+		fillMenuItems(menu);
 	}
 
-	public List<MenuItem> fillMenuItems() {
-		List<MenuItem> menu = new ArrayList<>();
+	public void fillMenuItems(List<MenuItem> menu) {
 		MenuItem m1 = null;
 
-		m1 =  new MenuItem("Home", "", "home-page", true, "nav-item nav-link active");
-		menu.add(m1);
-		
-		m1 =  new MenuItem("Contact us", "", "contact-page", true, "nav-item nav-link");
+		m1 = new MenuItem("Home", "", "home-page", true, "nav-item nav-link active");
 		menu.add(m1);
 
-		return menu;
+		m1 = new MenuItem("Contact us", "", "contact-page", true, "nav-item nav-link");
+		menu.add(m1);
+
 	}
 
 	public List<MenuItem> getMenu() {
