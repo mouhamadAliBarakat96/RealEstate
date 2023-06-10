@@ -28,10 +28,10 @@ public class MakanTemplateController implements Serializable {
 	public void fillMenuItems(List<MenuItem> menu) {
 		MenuItem m1 = null;
 
-		m1 = new MenuItem("Home", "", "home-page", true, "nav-item nav-link active");
+		m1 = new MenuItem("Home", "", "index-page", true, "nav-item nav-link active");
 		menu.add(m1);
 
-		m1 = new MenuItem("Contact us", "", "contact-page", true, "nav-item nav-link");
+		m1 = new MenuItem("Contact us", "", "contact-us", true, "nav-item nav-link");
 		menu.add(m1);
 
 	}
