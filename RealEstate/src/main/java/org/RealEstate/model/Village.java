@@ -39,6 +39,15 @@ public class Village extends MainEntity implements Serializable {
 	@NotNull
 	private District district;
 
+	public Village() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Village(@Size(min = 1) @NotEmpty String name) {
+		super();
+		this.name = name;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -83,6 +92,10 @@ public class Village extends MainEntity implements Serializable {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+	
+	public String fullAddress() {
+		return this.name + "/ " + this.getDistrict().getName() + "/ " + this.getDistrict().getGovernorate().getName();
 	}
 
 }

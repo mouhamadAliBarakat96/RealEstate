@@ -40,7 +40,19 @@ public class AppratmentSell extends RealEstate implements Serializable {
 	private boolean greenBond;
 	private boolean blockNb;
 
-	
+	public AppratmentSell() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public AppratmentSell(int nbRoom, int floor, boolean garden, int nbBathRoom, Village village,List<String> images) {
+		super("Appratment Sell", "this Appratment is for you", 3500, village, 150000);
+
+		this.nbRoom = nbRoom;
+		this.floor = floor;
+		this.garden = garden;
+		this.nbBathRoom = nbBathRoom;
+		super.setImages(images);
+	}
 
 	public int getNbRoom() {
 		return nbRoom;

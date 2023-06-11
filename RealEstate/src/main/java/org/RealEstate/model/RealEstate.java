@@ -58,7 +58,9 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	private double price;
 	@Embedded
 	private GoogleMapAttribute addressEmbeddable = new GoogleMapAttribute();
+	
 	private int views;
+	
 	private int liked;
 
 	private boolean freezed;
@@ -70,6 +72,23 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	private List<String> images = new ArrayList<>();
 
 	private boolean pending;
+	
+	public RealEstate() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+	public RealEstate(String tittle, String subTittle, int space, Village village, double price) {
+		super();
+		this.tittle = tittle;
+		this.subTittle = subTittle;
+		this.space = space;
+		this.village = village;
+		this.price = price;
+	}
+
+
 
 	public String getTittle() {
 		return tittle;

@@ -58,7 +58,22 @@ public class Chalet extends MainEntity implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date postDate;
 
+	public Chalet() {
+		// TODO Auto-generated constructor stub
+	}
 
+	public Chalet(@Size(min = 1) String name, boolean pool, boolean chimney, String descrption, Village village,
+			double weekdays, double weekenddays) {
+		super();
+		this.name = name;
+		this.pool = pool;
+		this.chimney = chimney;
+		this.descrption = descrption;
+		this.village = village;
+		this.weekdays = weekdays;
+		this.weekenddays = weekenddays;
+
+	}
 
 	public String getName() {
 		return name;

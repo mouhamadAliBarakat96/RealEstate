@@ -11,8 +11,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import javax.validation.constraints.NotBlank ;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+
 @Entity
 @Table(name = "tbl_governorate")
 // mo7afaza
@@ -29,9 +30,18 @@ public class Governorate extends MainEntity implements Serializable {
 
 	@Size(min = 1)
 	@Column(unique = true)
-	
+
 	@NotEmpty
 	private String name;
+
+	public Governorate() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Governorate(@Size(min = 1) @NotEmpty String name) {
+		super();
+		this.name = name;
+	}
 
 	public long getId() {
 		return id;

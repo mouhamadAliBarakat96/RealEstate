@@ -1,6 +1,7 @@
 package org.RealEstate.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -14,8 +15,6 @@ public class Land extends RealEstate implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-
-
 	private boolean greenBond;
 	private boolean blockNb;
 	private int nbOfShares;
@@ -23,9 +22,17 @@ public class Land extends RealEstate implements Serializable {
 	private boolean water;
 	private boolean electricity;
 
+	public Land() {
+		// TODO Auto-generated constructor stub
+	}
 
-
-
+	public Land(int nbOfShares, boolean road, boolean water,Village village,List<String> images) {
+		super("Land 1", "this land is for you", 3500, village, 87000);
+		this.nbOfShares = nbOfShares;
+		this.road = road;
+		this.water = water;
+		super.setImages(images);
+	}
 
 	public boolean isGreenBond() {
 		return greenBond;

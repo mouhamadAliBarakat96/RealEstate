@@ -83,7 +83,8 @@
 					<div class="navbar-nav ms-auto">
 						<ui:repeat var="item" value="#{makanTemplateController.menu}">
 
-							<h:link outcome="#{item.url}" value="#{item.itemLabel}" styleClass="#{item.styleClass}" />
+							<h:link outcome="#{item.url}" value="#{item.itemLabel}"
+								styleClass="#{item.styleClass}" />
 
 						</ui:repeat>
 					</div>
@@ -108,24 +109,28 @@
 			<!-- category End -->
 
 
-			<div class="container-xxl py-5">
-				<div class="container">
-					<ui:insert name="property-listing" />
-				</div>
-			</div>
+			<ui:insert name="property-content" />
 
-			<div class="tab-content">
-				<div id="tab-1" class="tab-pane fade show p-0 active">
-					<div class="row g-4">
-						<ui:insert name="property-content" />
-					</div>
-				</div>
-			</div>
 
 			<div
 				class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn"
 				data-wow-delay="0.1s">
-				<ui:insert name="footer" />
+				<div class="container">
+					<div class="copyright">
+						<div class="row">
+							<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+								<a class="border-bottom" href="#">Makaan</a>, @All Right
+								Reserved.
+							</div>
+							<div class="col-md-6 text-center text-md-end">
+								<div class="footer-menu">
+									<a href="index.xhtml">Home</a> <a href="contact-us.xhtml">Contact
+										us</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 
 		</div>

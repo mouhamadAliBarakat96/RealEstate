@@ -22,8 +22,11 @@ public class AppratmentRent extends RealEstate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int nbRoom;
+	
 	private boolean electricElevator;
+	
 	private int nbOfCarPark;
+	
 	private int floor;
 
 	@ElementCollection(targetClass = WaterResources.class)
@@ -33,6 +36,19 @@ public class AppratmentRent extends RealEstate implements Serializable {
 	private boolean garden;
 
 	private int nbBathRoom;
+
+	public AppratmentRent() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public AppratmentRent(int nbRoom, int floor, boolean garden, int nbBathRoom, Village village,List<String> images) {
+		super("Appratment Rent", "this Appratment is for you", 3500, village, 200000);
+		this.nbRoom = nbRoom;
+		this.floor = floor;
+		this.garden = garden;
+		this.nbBathRoom = nbBathRoom;
+		super.setImages(images);
+	}
 
 	public int getNbRoom() {
 		return nbRoom;
