@@ -1,3 +1,4 @@
+
 package org.RealEstate.model;
 
 import java.io.Serializable;
@@ -12,6 +13,8 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +25,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.RealEstate.enumerator.PostStatus;
+import org.RealEstate.enumerator.PostType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -71,7 +77,11 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@ElementCollection(targetClass = String.class)
 	private List<String> images = new ArrayList<>();
 
-	private boolean pending;
+	@Enumerated(EnumType.STRING)
+	private PostStatus postStatus;
+	
+	@Enumerated(EnumType.STRING)
+	private PostType postType ;
 	
 	public RealEstate() {
 		// TODO Auto-generated constructor stub
@@ -121,6 +131,31 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	public void setSpace(int space) {
 		this.space = space;
 	}
+
+	
+	public PostStatus getPostStatus() {
+		return postStatus;
+	}
+
+
+
+	public void setPostStatus(PostStatus postStatus) {
+		this.postStatus = postStatus;
+	}
+
+
+
+	public PostType getPostType() {
+		return postType;
+	}
+
+
+
+	public void setPostType(PostType postType) {
+		this.postType = postType;
+	}
+
+
 
 	public Village getVillage() {
 		return village;
@@ -182,13 +217,7 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		return postDate;
 	}
 
-	public boolean isPending() {
-		return pending;
-	}
 
-	public void setPending(boolean pending) {
-		this.pending = pending;
-	}
 
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
