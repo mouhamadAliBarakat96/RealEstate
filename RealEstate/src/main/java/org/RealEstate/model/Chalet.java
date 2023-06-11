@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +20,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
+import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
+
+import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "tbl_chalet")
@@ -59,6 +64,18 @@ public class Chalet extends MainEntity implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date postDate;
+
+	@Column(length = 1000)
+	@Expose
+	private String reffuseCause;
+
+	@Column(length = 1000)
+	@Expose
+	private String reviuexCause;
+
+	@Enumerated(EnumType.STRING)
+	@Expose
+	private PostStatus postStatus;
 
 	public Chalet() {
 		// TODO Auto-generated constructor stub
@@ -170,6 +187,38 @@ public class Chalet extends MainEntity implements Serializable {
 
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getReffuseCause() {
+		return reffuseCause;
+	}
+
+	public void setReffuseCause(String reffuseCause) {
+		this.reffuseCause = reffuseCause;
+	}
+
+	public String getReviuexCause() {
+		return reviuexCause;
+	}
+
+	public void setReviuexCause(String reviuexCause) {
+		this.reviuexCause = reviuexCause;
+	}
+
+	public PostStatus getPostStatus() {
+		return postStatus;
+	}
+
+	public void setPostStatus(PostStatus postStatus) {
+		this.postStatus = postStatus;
 	}
 
 	@Override

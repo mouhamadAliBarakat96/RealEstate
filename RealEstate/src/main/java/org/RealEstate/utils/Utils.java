@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.TimeZone;
 
 import org.RealEstate.enumerator.Unit;
@@ -158,7 +159,7 @@ public class Utils {
 
 			}
 
-			JsonObject obj = (JsonObject) jsonParser.parse(sb.toString());
+			JsonObject obj = (JsonObject) jsonParser.parse(json);
 
 			return gson.fromJson(obj, Classtype);
 		
@@ -259,6 +260,16 @@ public class Utils {
 		return c.getTime();
 	}
 
+	
+	public static int radnomIntBasedToDate() {
+		Date currentDate = new Date();
+        long timestamp = currentDate.getTime(); // Get the current timestamp in milliseconds
+        
+        Random random = new Random(timestamp); // Seed the Random object with the timestamp
+        int randomNumber = random.nextInt();
+        
+        return randomNumber ;
+	}
 	// -------------------------- begin ------------------- //
 
 	public static Date dateWithoutMilliseconds(Date date) throws ParseException {

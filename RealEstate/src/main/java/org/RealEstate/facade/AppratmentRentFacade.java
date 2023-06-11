@@ -19,7 +19,7 @@ public class AppratmentRentFacade extends AbstractFacade<AppratmentRent> impleme
 		super(AppratmentRent.class);
 	}
 	
-	public AppratmentRent preSave(AppratmentRent obj) {
+	public AppratmentRent mangmentSavePost(AppratmentRent obj) {
 		return null ;
 	}
 }

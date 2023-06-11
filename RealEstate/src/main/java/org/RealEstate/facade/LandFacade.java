@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import javax.ejb.Stateless;
 
+import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.Land;
 import org.RealEstate.model.ShopRent;
 
@@ -19,5 +20,12 @@ public class LandFacade extends AbstractFacade<Land> implements Serializable {
 
 	public LandFacade() {
 		super(Land.class);
+	}
+	
+	
+	
+
+	public AppratmentSell mangmentSavePost(Land obj) {
+		return null ;
 	}
 }

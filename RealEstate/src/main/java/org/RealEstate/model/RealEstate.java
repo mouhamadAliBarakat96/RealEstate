@@ -29,65 +29,83 @@ import javax.persistence.TemporalType;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 20)
 
 public abstract class RealEstate extends MainEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Expose
 	protected long id;
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 
 	@Column(length = 1000)
+	@Expose
 	private String tittle;
 
 	@Column(length = 3000)
+	@Expose
 	private String subTittle;
 
-	private boolean negotiable;
+	@Column(length = 1000)
+	@Expose
+	private String reffuseCause;
 
+	@Column(length = 1000)
+	@Expose
+	private String reviuexCause;
+
+	@Expose
+	private boolean negotiable;
+	@Expose
 	private int space;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "village_id")
+	@Expose
 	private Village village;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
+	@Expose
 	private User user;
-
+	@Expose
 	private double price;
 	@Embedded
 	private GoogleMapAttribute addressEmbeddable = new GoogleMapAttribute();
-	
+	@Expose
 	private int views;
-	
+	@Expose
 	private int liked;
 
+	@Expose
 	private boolean freezed;
 	@Temporal(TemporalType.TIMESTAMP)
-
+	@Expose
 	private Date postDate;
 
 	@ElementCollection(targetClass = String.class)
+	@Expose
 	private List<String> images = new ArrayList<>();
 
 	@Enumerated(EnumType.STRING)
+	@Expose
 	private PostStatus postStatus;
-	
+
 	@Enumerated(EnumType.STRING)
-	private PostType postType ;
-	
+	@Expose
+	private PostType postType;
+
 	public RealEstate() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 	public RealEstate(String tittle, String subTittle, int space, Village village, double price) {
 		super();
@@ -97,8 +115,6 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		this.village = village;
 		this.price = price;
 	}
-
-
 
 	public String getTittle() {
 		return tittle;
@@ -132,30 +148,21 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		this.space = space;
 	}
 
-	
 	public PostStatus getPostStatus() {
 		return postStatus;
 	}
-
-
 
 	public void setPostStatus(PostStatus postStatus) {
 		this.postStatus = postStatus;
 	}
 
-
-
 	public PostType getPostType() {
 		return postType;
 	}
 
-
-
 	public void setPostType(PostType postType) {
 		this.postType = postType;
 	}
-
-
 
 	public Village getVillage() {
 		return village;
@@ -217,8 +224,6 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		return postDate;
 	}
 
-
-
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
 	}
@@ -237,6 +242,22 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getReffuseCause() {
+		return reffuseCause;
+	}
+
+	public void setReffuseCause(String reffuseCause) {
+		this.reffuseCause = reffuseCause;
+	}
+
+	public String getReviuexCause() {
+		return reviuexCause;
+	}
+
+	public void setReviuexCause(String reviuexCause) {
+		this.reviuexCause = reviuexCause;
 	}
 
 }

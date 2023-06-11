@@ -22,8 +22,10 @@ public class OfficeSellFacade extends AbstractFacade<OfficeSell> implements Seri
 		super(OfficeSell.class);
 	}
 	
-	public OfficeSell preSave(OfficeSell obj) {
+	public OfficeSell mangmentSavePost(OfficeSell obj) {
 		return null ;
 	}
+	
+	
 }
 

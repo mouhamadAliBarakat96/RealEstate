@@ -26,10 +26,17 @@ public class Test implements Serializable {
 		land.setElectricity(true);
 		AppratmentRent appratmentRent = new AppratmentRent();
 		appratmentRent.setFloor(2);
+		addCommonsField(appratmentRent);
+
 		list.add(land);
 		list.add(appratmentRent);
 		appratmentRent = (AppratmentRent) list.get(1);
 		System.out.println(appratmentRent.getFloor());
+		System.out.println(appratmentRent.getId());
+	}
+
+	private static void addCommonsField(RealEstate realEstate) {
+		realEstate.setId(123);
 	}
 
 	public List<RealEstate> getList() {

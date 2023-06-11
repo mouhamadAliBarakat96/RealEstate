@@ -81,7 +81,7 @@ public class IndexController implements Serializable {
 		addToChalet(new Chalet("Corner", true, false, "over 10 person", vill, 100, 150));
 		addToChalet(new Chalet("Zoz", true, false, "for families", vill, 100, 150));
 
-		filteredRealEstates.addAll(realEstates);
+		filteredRealEstates = new ArrayList<>(realEstates);
 
 	}
 

@@ -22,7 +22,7 @@ public class OfficeRentFacade extends AbstractFacade<OfficeRent> implements Seri
 		super(OfficeRent.class);
 	}
 	
-	public OfficeRent preSave(OfficeRent obj) {
+	public OfficeRent mangmentSavePost(OfficeRent obj) {
 		return null ;
 	}
 }

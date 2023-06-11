@@ -20,7 +20,7 @@ public class ShopRentFacade extends AbstractFacade<ShopRent> implements Serializ
 		super(ShopRent.class);
 	}
 	
-	public ShopRent preSave(ShopRent obj) {
+	public ShopRent mangmentSavePost(ShopRent obj) {
 		return null ;
 	}
 }
