@@ -50,7 +50,7 @@
 
 </h:head>
 <body>
-	<h:form>
+	<h:form id="myForm">
 		<div class="container-xxl bg-white p-0">
 
 			<!-- Spinner Start -->
@@ -104,13 +104,13 @@
 
 			<!-- searchBar End -->
 
-			<!-- category Start -->
-			<ui:insert name="category" />
-			<!-- category End -->
-
 
 			<ui:insert name="property-content" />
 
+
+			<!-- category Start -->
+			<ui:insert name="category" />
+			<!-- category End -->
 
 			<div
 				class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn"

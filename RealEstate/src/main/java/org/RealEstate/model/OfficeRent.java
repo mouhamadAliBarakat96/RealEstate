@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.WaterResources;
 
 @Entity
@@ -25,8 +26,11 @@ public class OfficeRent extends RealEstate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int nbRoom;
+
 	private boolean electricElevator;
+
 	private int nbOfCarPark;
+
 	private int floor;
 
 	@ElementCollection(targetClass = WaterResources.class)
@@ -34,6 +38,26 @@ public class OfficeRent extends RealEstate implements Serializable {
 	private List<WaterResources> waterResources = new ArrayList<>();
 
 	private int nbBathRoom;
+
+	public OfficeRent() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+	public OfficeRent(int nbRoom, boolean electricElevator, int floor, int nbBathRoom,Village vill,List<String> images) {
+		super("Office Rent", "the Office is for you", 3500, vill, 150000);
+		super.setImages(images);
+		super.setPostType(PostType.OFFICE_RENT);
+		
+		this.nbRoom = nbRoom;
+		this.electricElevator = electricElevator;
+		this.floor = floor;
+		this.nbBathRoom = nbBathRoom;
+		 
+	}
+
+
 
 	public int getNbRoom() {
 		return nbRoom;

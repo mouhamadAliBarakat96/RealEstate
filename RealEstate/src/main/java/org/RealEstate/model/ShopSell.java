@@ -22,6 +22,7 @@ public class ShopSell extends RealEstate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private boolean electricElevator;
+
 	private int nbOfCarPark;
 
 	@ElementCollection(targetClass = WaterResources.class)
@@ -29,10 +30,14 @@ public class ShopSell extends RealEstate implements Serializable {
 	private List<WaterResources> waterResources = new ArrayList<>();
 
 	private int storefronts;
+
 	private boolean greenBond;
+
 	private boolean blockNb;
 
-
+	public ShopSell() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public boolean isElectricElevator() {
 		return electricElevator;

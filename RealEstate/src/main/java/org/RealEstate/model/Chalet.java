@@ -18,6 +18,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
+import org.RealEstate.enumerator.PostType;
+
 @Entity
 @Table(name = "tbl_chalet")
 
@@ -72,7 +74,6 @@ public class Chalet extends MainEntity implements Serializable {
 		this.village = village;
 		this.weekdays = weekdays;
 		this.weekenddays = weekenddays;
-
 	}
 
 	public String getName() {

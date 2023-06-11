@@ -31,6 +31,9 @@ public class ShopRent extends RealEstate implements Serializable {
 	private int storefronts;
 
 
+	public ShopRent() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public boolean isElectricElevator() {
 		return electricElevator;

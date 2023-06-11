@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.RealEstate.enumerator.PostType;
+
 @Entity
 @Table(name = "tbl_land")
 public class Land extends RealEstate implements Serializable {
@@ -32,6 +34,7 @@ public class Land extends RealEstate implements Serializable {
 		this.road = road;
 		this.water = water;
 		super.setImages(images);
+		super.setPostType(PostType.LAND);
 	}
 
 	public boolean isGreenBond() {

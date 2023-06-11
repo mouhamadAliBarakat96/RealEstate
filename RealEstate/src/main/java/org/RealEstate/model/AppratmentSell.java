@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.WaterResources;
 
 @Entity
@@ -46,12 +47,13 @@ public class AppratmentSell extends RealEstate implements Serializable {
 
 	public AppratmentSell(int nbRoom, int floor, boolean garden, int nbBathRoom, Village village,List<String> images) {
 		super("Appratment Sell", "this Appratment is for you", 3500, village, 150000);
-
+		super.setImages(images);
+		super.setPostType(PostType.APPRATMENT_SELL);
 		this.nbRoom = nbRoom;
 		this.floor = floor;
 		this.garden = garden;
 		this.nbBathRoom = nbBathRoom;
-		super.setImages(images);
+		
 	}
 
 	public int getNbRoom() {

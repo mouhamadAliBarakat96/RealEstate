@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
+import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.WaterResources;
 
 @Entity
@@ -48,6 +49,7 @@ public class AppratmentRent extends RealEstate implements Serializable {
 		this.garden = garden;
 		this.nbBathRoom = nbBathRoom;
 		super.setImages(images);
+		super.setPostType(PostType.APPRATMENT_RENT);
 	}
 
 	public int getNbRoom() {
