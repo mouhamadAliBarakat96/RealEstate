@@ -25,7 +25,7 @@ public class LandFacade extends AbstractFacade<Land> implements Serializable {
 	
 	
 
-	public AppratmentSell mangmentSavePost(Land obj) {
-		return null ;
+	public Land mangmentSavePost(Land obj) throws Exception {
+		return this.save(obj);
 	}
 }

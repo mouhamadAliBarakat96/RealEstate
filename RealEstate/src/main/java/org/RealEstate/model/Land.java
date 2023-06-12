@@ -8,6 +8,8 @@ import javax.persistence.Table;
 
 import org.RealEstate.enumerator.PostType;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "tbl_land")
 public class Land extends RealEstate implements Serializable {
@@ -16,12 +18,16 @@ public class Land extends RealEstate implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	@Expose
 	private boolean greenBond;
+	@Expose
 	private boolean blockNb;
 	private int nbOfShares;
+	@Expose
 	private boolean road;
+	@Expose
 	private boolean water;
+	@Expose
 	private boolean electricity;
 
 	public Land() {

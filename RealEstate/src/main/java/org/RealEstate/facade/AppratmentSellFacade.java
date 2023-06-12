@@ -21,7 +21,7 @@ public class AppratmentSellFacade extends AbstractFacade<AppratmentSell> impleme
 		super(AppratmentSell.class);
 	}
 	
-	public AppratmentSell mangmentSavePost(AppratmentSell obj) {
-		return null ;
+	public AppratmentSell mangmentSavePost(AppratmentSell obj) throws Exception {
+		return this.save(obj);
 	}
 }

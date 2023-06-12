@@ -15,6 +15,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "tbl_village")
 
@@ -27,11 +29,13 @@ public class Village extends MainEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Expose
 	private long id;
 
 	@Size(min = 1)
 	@Column(unique = true)
 	@NotEmpty
+	@Expose
 	private String name;
 
 	@ManyToOne(fetch = FetchType.LAZY)

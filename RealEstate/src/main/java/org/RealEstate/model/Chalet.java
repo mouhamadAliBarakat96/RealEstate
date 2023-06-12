@@ -38,42 +38,54 @@ public class Chalet extends MainEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Expose
 	private long id;
 	@Size(min = 1)
+	@Expose
 	private String name;
+	@Expose
 	private boolean pool;
+	@Expose
 	private boolean chimney;
+	@Expose
 	@Column(length = 3000)
 	private String descrption;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "village_id")
+	@Expose
 	private Village village;
-
+	@Expose
 	private double weekdays;
-
+	@Expose
 	private double weekenddays;
 
 	@Embedded
+	@Expose
 	private GoogleMapAttribute addressEmbeddable = new GoogleMapAttribute();
-
+	@Expose
 	private int views;
-
+	@Expose
 	private int liked;
-
+	@Expose
 	private int space;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Expose
 	private Date postDate;
 
 	@Column(length = 1000)
 	@Expose
+
 	private String reffuseCause;
 
 	@Column(length = 1000)
 	@Expose
+	
 	private String reviuexCause;
 
 	@Enumerated(EnumType.STRING)
+	
 	@Expose
 	private PostStatus postStatus;
 

@@ -1,7 +1,5 @@
 package org.RealEstate.utils;
 
-import java.io.Serializable;
-
 public interface Constants {
 
 	public final String DATE_FORMAT_TO_JSON = "yyyy-MM-dd";
@@ -13,8 +11,8 @@ public interface Constants {
 	public final String JSON_EMPTY_ARRAY = "[]";
 	public final String JSON_EMPTY_OBJECT = "{}";
 
-    String UPLOAD_DIR = determineUploadDir();
-    
+	public final String UPLOAD_DIR = determineUploadDir();
+
 	static String determineUploadDir() {
 		String os = System.getProperty("os.name").toLowerCase();
 
@@ -28,7 +26,11 @@ public interface Constants {
 	}
 
 	final String POST_IMAGE_DIR_NAME = "POST";
-	final String PROFILE_iMAGE_DIR_NAME = "PROFILE";
-	
+	final String PROFILE_IMAGE_DIR_NAME = "PROFILE";
 
+	public static final String EMPTY_REQUEST_DONT_CONTAIN_DATA = "EMPTY_REQUEST_DONT_CONTAIN_DATA";
+	public static final String NB_OF_IMAGE_GREATER_NUMBER_OF_IMAGE_ALLOWED = "NB_OF_IMAGE_GREATER_NUMBER_OF_IMAGE_ALLOWED";
+	public static final String AT_LAST_ONE_IMAGE_REQUIRED = "AT_LAST_ONE_IMAGE_REQUIRED";
+
+	public static final int NB_IMAGE_IN_POST_ALLOWED = 5;
 }

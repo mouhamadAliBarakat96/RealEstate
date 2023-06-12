@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 import org.RealEstate.enumerator.WaterResources;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "tbl_shop_sell")
 public class ShopSell extends RealEstate implements Serializable {
@@ -20,19 +22,20 @@ public class ShopSell extends RealEstate implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	@Expose
 	private boolean electricElevator;
-
+	@Expose
 	private int nbOfCarPark;
 
 	@ElementCollection(targetClass = WaterResources.class)
 	@Enumerated(EnumType.STRING)
+	@Expose
 	private List<WaterResources> waterResources = new ArrayList<>();
-
+	@Expose
 	private int storefronts;
-
+	@Expose
 	private boolean greenBond;
-
+	@Expose
 	private boolean blockNb;
 
 	public ShopSell() {

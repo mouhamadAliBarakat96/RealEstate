@@ -22,7 +22,7 @@ public class ShopSellFacade extends AbstractFacade<ShopSell> implements Serializ
 		super(ShopSell.class);
 	}
 	
-	public ShopSell mangmentSavePost(ShopSell obj) {
-		return null ;
+	public ShopSell mangmentSavePost(ShopSell obj) throws Exception {
+		return this.save(obj);
 	}
 }

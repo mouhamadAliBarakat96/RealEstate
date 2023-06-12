@@ -18,8 +18,9 @@ public class AppratmentRentFacade extends AbstractFacade<AppratmentRent> impleme
 	public AppratmentRentFacade() {
 		super(AppratmentRent.class);
 	}
-	
-	public AppratmentRent mangmentSavePost(AppratmentRent obj) {
-		return null ;
+
+	public AppratmentRent mangmentSavePost(AppratmentRent obj) throws Exception {
+		return this.save(obj);
+
 	}
 }

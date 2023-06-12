@@ -8,6 +8,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.annotations.Expose;
+
 @MappedSuperclass
 @EntityListeners(MainEntityListener.class)
 public class MainEntity extends ApplicationEntity implements Serializable, Comparable<MainEntity> {
@@ -20,9 +22,11 @@ public class MainEntity extends ApplicationEntity implements Serializable, Compa
 	private int version;
 
 	@Temporal(TemporalType.TIMESTAMP)
+@Expose
 	private Date creationDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Expose
 	private Date LastUpdate;
 
 	@Override

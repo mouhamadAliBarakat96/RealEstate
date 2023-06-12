@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 
 
 @Entity
@@ -29,17 +31,24 @@ public class User extends MainEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-
+	@Expose
 	private String firstName;
+	@Expose
 	private String lastName;
+	@Expose
 	private String middleName;
+	@Expose
 	private String profileImageUrl;
+	@Expose
 	private String userName;
+	@Expose
 	private String passowrd;
+	@Expose
 	private boolean freezed;
 
 	// el post li howe mnzlon
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+	@Expose
 	private List<RealEstate> readStateList = new ArrayList<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -48,7 +57,7 @@ public class User extends MainEntity implements Serializable {
 			inverseJoinColumns = { @JoinColumn(name = "state_id") }
 
 	)
-
+	@Expose
 	private List<RealEstate> readStateFavoriteList = new ArrayList<>();
 
 	public long getId() {

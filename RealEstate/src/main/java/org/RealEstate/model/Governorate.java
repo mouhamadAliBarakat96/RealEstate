@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.google.gson.annotations.Expose;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
@@ -26,12 +28,14 @@ public class Governorate extends MainEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Expose
 	private long id;
 
 	@Size(min = 1)
 	@Column(unique = true)
 
 	@NotEmpty
+	@Expose
 	private String name;
 
 	public Governorate() {

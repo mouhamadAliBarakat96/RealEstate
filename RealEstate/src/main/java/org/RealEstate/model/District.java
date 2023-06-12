@@ -15,6 +15,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "tbl_district")
 // kada2
@@ -27,16 +29,19 @@ public class District extends MainEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Expose
 	private long id;
 
 	@Size(min = 1)
 	@Column(unique = true)
 	@NotEmpty
+	@Expose
 	private String name;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "governorate_id")
 	@NotNull
+	@Expose
 	private Governorate governorate;
 
 	public District() {

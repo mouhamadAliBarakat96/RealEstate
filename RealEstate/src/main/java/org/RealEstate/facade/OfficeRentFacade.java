@@ -22,8 +22,9 @@ public class OfficeRentFacade extends AbstractFacade<OfficeRent> implements Seri
 		super(OfficeRent.class);
 	}
 	
-	public OfficeRent mangmentSavePost(OfficeRent obj) {
-		return null ;
+	public OfficeRent mangmentSavePost(OfficeRent obj) throws Exception {
+		return this.save(obj);
+	
 	}
 }
 

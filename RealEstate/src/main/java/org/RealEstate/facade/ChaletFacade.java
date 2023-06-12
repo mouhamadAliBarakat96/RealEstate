@@ -20,7 +20,7 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 		super(Chalet.class);
 	}
 	
-	public Chalet mangmentSavePost(Chalet obj) {
-		return null ;
+	public Chalet mangmentSavePost(Chalet obj) throws Exception {
+		return this.save(obj);
 	}
 }
