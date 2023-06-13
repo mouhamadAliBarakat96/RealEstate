@@ -9,7 +9,7 @@ import javax.faces.context.FacesContext;
 
 public class Utility {
 
-	public final static String BUNDLE_FILE_NAME_EN = "resources.Bundle-en";
+	public final static String BUNDLE_FILE_NAME_AR = "resources.Bundle-ar";
 	public final static String BUNDLE_FILE_NAME = "resources.Bundle";
 	public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 

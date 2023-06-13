@@ -109,34 +109,36 @@
 
 
 			<!-- category Start -->
-			<ui:insert name="category" />
+			<ui:insert name="statistic-content" />
 			<!-- category End -->
 
-			<div
-				class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn"
-				data-wow-delay="0.1s">
-				<div class="container">
-					<div class="copyright">
-						<div class="row">
-							<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-								<a class="border-bottom" href="#">Makaan</a>, @All Right
-								Reserved.
-							</div>
-							<div class="col-md-6 text-center text-md-end">
-								<div class="footer-menu">
-									<a href="index.xhtml">Home</a> <a href="contact-us.xhtml">Contact
-										us</a>
+
+
+			<ui:insert name="footer">
+				<div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+					<div class="container">
+						<div class="copyright">
+							<div class="row">
+								<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+									<a class="border-bottom" href="#">Makaan</a>, @All Right
+									Reserved.
+								</div>
+								<div class="col-md-6 text-center text-md-end">
+									<div class="footer-menu">
+										<a href="index.xhtml">Home</a> <a href="contact-us.xhtml">Contact
+											us</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</ui:insert>
 
 		</div>
 	</h:form>
 	<!-- custom Output Script -->
-	<ui:insert name="customOutputScript"></ui:insert>
+	<ui:insert name="customOutputScript"/>
 
 	<!-- JavaScript Libraries -->
 	<script src="/resources/makaan/js/jquery-3.4.1.min.js"></script>

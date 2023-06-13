@@ -40,17 +40,17 @@ public class IndexController implements Serializable {
 
 	private PostType selectPostType = PostType.APPRATMENT_RENT;
 
-//	private List<Governorate> governorates = new ArrayList<>();
-//	
-//	private Governorate selecteGovernorate=new Governorate();
+	private List<Governorate> governorates = new ArrayList<>();
+	private Governorate selecteGovernorate=new Governorate();
 	
 	
 	private List<Village> villages = new ArrayList<>();
 	private Village selecteVillage=new Village();
 	
 	
-//	private List<District> districts = new ArrayList<>();
-
+	private List<District> districts = new ArrayList<>();
+	private District selecteDistrict=new District();
+	
 	@PostConstruct
 	public void init() {
 
@@ -185,6 +185,38 @@ public class IndexController implements Serializable {
 
 	public void setSelecteVillage(Village selecteVillage) {
 		this.selecteVillage = selecteVillage;
+	}
+
+	public List<Governorate> getGovernorates() {
+		return governorates;
+	}
+
+	public void setGovernorates(List<Governorate> governorates) {
+		this.governorates = governorates;
+	}
+
+	public Governorate getSelecteGovernorate() {
+		return selecteGovernorate;
+	}
+
+	public void setSelecteGovernorate(Governorate selecteGovernorate) {
+		this.selecteGovernorate = selecteGovernorate;
+	}
+
+	public List<District> getDistricts() {
+		return districts;
+	}
+
+	public void setDistricts(List<District> districts) {
+		this.districts = districts;
+	}
+
+	public District getSelecteDistrict() {
+		return selecteDistrict;
+	}
+
+	public void setSelecteDistrict(District selecteDistrict) {
+		this.selecteDistrict = selecteDistrict;
 	}
  
 }
