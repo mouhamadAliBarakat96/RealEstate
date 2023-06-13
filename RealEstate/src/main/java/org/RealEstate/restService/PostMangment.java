@@ -28,5 +28,11 @@ public class PostMangment {
 		return postService.mangmentAddPost(input);
 
 	}
+	
+	// add views
+	
+	// find post by id 
+	
+	// update post
 
 }

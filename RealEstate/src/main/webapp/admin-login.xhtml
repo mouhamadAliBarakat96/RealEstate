@@ -9,7 +9,7 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-<title>Click a Tutor</title>
+	<title>Real Estate</title>
 	<h:outputStylesheet name="front-end-template/bootstrap.min.css"
 		library="css" />
 	<h:outputStylesheet name="front-end-template/flex-slider.css"
@@ -33,17 +33,18 @@
 	<h:outputStylesheet name="pages/login-front-end.css" library="css" />
 
 </h:head>
-<h:body >
+<h:body>
 
 	<o:onloadScript>
 
 ($('.toogle')).bootstrapToggle();
 </o:onloadScript>
 
-	
 
 
-	<h:form styleClass="account-body accountbg"  prependId="false" method="post">>
+
+	<h:form styleClass="account-body accountbg" prependId="false"
+		method="post">>
 
 		<div class="row vh-100 " style="margin-top: 0%">
 			<div class="col-12 align-self-center">
@@ -56,9 +57,9 @@
 
 
 								<div class="text-center auth-logo-text">
-									<h4 class="mt-0 mb-3 mt-5">Let's Get Started TeacherFiner</h4>
+									<h4 class="mt-0 mb-3 mt-5">Let's Get Started Real Estate</h4>
 									<p class="text-muted mb-0" style="font-size: 16px;">Sign in
-										to continue to TeacherFinder.</p>
+										to continue to Real Estate.</p>
 								</div>
 
 
@@ -69,7 +70,7 @@
 
 									<h:panelGroup id="login-form">
 
-								
+
 
 										<div class="form-group">
 											<label for="username">Username </label>
@@ -97,9 +98,8 @@
 												<span class="auth-form-icon"> <i
 													class="dripicons-lock"></i>
 												</span>
-												
+
 												<p:inputText h5:type="password"
-												
 													styleClass=" form-control #{component.valid ? '' :'error' } "
 													value="#{loginAdmin.password}" required="true"
 													id="userpassword" h5:placeholder="Enter password">
@@ -142,7 +142,7 @@
 							</div>
 							<!--end /div-->
 
-						
+
 						</div>
 						<!--end card-body-->
 					</div>
@@ -160,17 +160,17 @@
 		<footer>
 		<div class="container">
 			<div style="text-align: center">
-			<div class="row">
-		
-				<div class="col-lg-12 col-md-12 col-sm-12">
-					<p class="copyright">Copyright &copy; 2020 developed and
-						designed by Mouhamad Ali Barakat</p>
-					
+				<div class="row">
+
+					<div class="col-lg-12 col-md-12 col-sm-12">
+						<p class="copyright">Copyright &copy; 2020 developed and
+							designed by Mouhamad Ali Barakat</p>
+
 						<p class="copyright">mouhamadalibarakat@hotmail.com</p>
 
 					</div>
 				</div>
-		
+
 			</div>
 		</div>
 		</footer>
@@ -196,16 +196,16 @@
 	<h:outputScript name="front-end-template/owl-carousel.js" library="js" />
 
 	<h:outputScript name="front-end-template/popper.js" library="js" />
-	
+
 
 	<h:outputScript name="front-end-template/scrollreveal.min.js"
 		library="js" />
-		
+
 	<h:outputScript name="front-end-template/custom.js" library="js" />
 
 
 
-<h:outputScript name="toggle/bootstrap-toggle.min.js" library="plugins" />
+	<h:outputScript name="toggle/bootstrap-toggle.min.js" library="plugins" />
 
 
 </h:body>

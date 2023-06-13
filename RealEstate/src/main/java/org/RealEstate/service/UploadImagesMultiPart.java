@@ -22,6 +22,13 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 @Stateless
 public class UploadImagesMultiPart implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+
 	public List<String> uploadImage(List<InputPart> inputParts) throws IOException {
 
 		String fileName = null;
@@ -30,7 +37,7 @@ public class UploadImagesMultiPart implements Serializable {
 		for (InputPart inputPart : inputParts) {
 
 			MultivaluedMap<String, String> header = inputPart.getHeaders();
-			fileName = getFileName(header) ;
+			fileName = getFileName(header);
 			fileNames.add(fileName);
 			InputStream inputStream = inputPart.getBody(InputStream.class, null);
 			byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -50,42 +57,41 @@ public class UploadImagesMultiPart implements Serializable {
 			if ((filename.trim().startsWith("filename"))) {
 				String[] name = filename.split("=");
 				String finalFileName = name[1].trim().replaceAll("\"", "");
-				
+
 				return addRandomBeforeExtension(finalFileName);
 			}
 		}
 		return "unknown";
 	}
-	
-	
-	   private static String addRandomBeforeExtension(String fileName ) {
-	        Path filePath = Paths.get(fileName);
-	        String nameWithoutExtension =  removeFileExtension(filePath.getFileName().toString());
-	        String extension = getFileExtension(fileName);
-	        
-	        // Add the random number before the extension
-	        String modifiedNameWithoutExtension = nameWithoutExtension + "_" +  Utils.radnomIntBasedToDate();;
-	        
-	        // Combine the modified name and extension
-	        String modifiedFileName = modifiedNameWithoutExtension + "." + extension;
 
-	        return modifiedFileName;
-	    }
-	   
-	   private static String getFileExtension(String fileName) {
-		   int dotIndex = fileName.lastIndexOf('.');
-		    if (dotIndex == -1 || dotIndex == fileName.length() - 1) {
-		        return ""; // No extension found or the dot is the last character
-		    }
-		    return fileName.substring(dotIndex + 1);
-	    }
-	   
-	   private static String removeFileExtension(String fileName) {
-	        int dotIndex = fileName.lastIndexOf('.');
-	        if (dotIndex == -1) {
-	            return fileName; // No extension found
-	        }
-	        return fileName.substring(0, dotIndex);
-	    }
+	private static String addRandomBeforeExtension(String fileName) {
+		Path filePath = Paths.get(fileName);
+		String nameWithoutExtension = removeFileExtension(filePath.getFileName().toString());
+		String extension = getFileExtension(fileName);
+
+		// Add the random number before the extension
+		String modifiedNameWithoutExtension = nameWithoutExtension + "_" + Utils.radnomIntBasedToDate();
+		
+
+		// Combine the modified name and extension
+		return modifiedNameWithoutExtension + "." + extension;
+
+	}
+
+	private static String getFileExtension(String fileName) {
+		int dotIndex = fileName.lastIndexOf('.');
+		if (dotIndex == -1 || dotIndex == fileName.length() - 1) {
+			return ""; // No extension found or the dot is the last character
+		}
+		return fileName.substring(dotIndex + 1);
+	}
+
+	private static String removeFileExtension(String fileName) {
+		int dotIndex = fileName.lastIndexOf('.');
+		if (dotIndex == -1) {
+			return fileName; // No extension found
+		}
+		return fileName.substring(0, dotIndex);
+	}
 
 }

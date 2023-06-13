@@ -62,9 +62,6 @@ public class PostService implements Serializable {
 	@EJB
 	private OfficeSellFacade officeSellFacade;
 
-	@EJB
-	private UploadImagesMultiPart uploadImagesMultiPart;
-
 	public Response mangmentAddPost(MultipartFormDataInput input) {
 
 		try {
@@ -74,7 +71,7 @@ public class PostService implements Serializable {
 			// form contain image
 			List<InputPart> inputParts = uploadForm.get("file");
 
-			if (inputParts.isEmpty()) {
+			if (inputParts == null || inputParts.isEmpty()) {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.AT_LAST_ONE_IMAGE_REQUIRED).build();
 
 			}
@@ -96,20 +93,21 @@ public class PostService implements Serializable {
 			checkUserNbOfPostAllowed();
 
 			String jsonDataFromRequest = data.get(0).getBodyAsString();
-			savePost(jsonDataFromRequest);
-			// manage save images
-			uploadImagesMultiPart.uploadImage(inputParts);
+			Object obj = savePost(jsonDataFromRequest, inputParts);
+
+			return Response.status(Status.OK).entity(Utils.objectToString(obj)).build();
+
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 
 		}
 
-		return null;
+	
 	}
 
-	private Object savePost(String jsonString) throws Exception {
+	private Object savePost(String jsonString, List<InputPart> inputParts) throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jsonNode = mapper.readTree(jsonString);
@@ -120,64 +118,57 @@ public class PostService implements Serializable {
 			AppratmentRent appratmentRent = Utils.getObjectFromString(jsonString, AppratmentRent.class);
 			addCommonsField(appratmentRent);
 			checkPostConstraintFields(appratmentRent);
-			appratmentRent.setPostType(PostType.APPRATMENT_RENT);
-			return appratmentRentFacade.mangmentSavePost(appratmentRent);
+			return appratmentRentFacade.mangmentSavePost(appratmentRent, inputParts);
 		case "APPRATMENT_SELL":
 
 			AppratmentSell appratmentSell = Utils.getObjectFromString(jsonString, AppratmentSell.class);
 			addCommonsField(appratmentSell);
-			appratmentSell.setPostType(PostType.APPRATMENT_SELL);
 
 			checkPostConstraintFields(appratmentSell);
-			return appratmentSellFacade.mangmentSavePost(appratmentSell);
+			return appratmentSellFacade.mangmentSavePost(appratmentSell, inputParts);
 		case "LAND":
 
 			Land land = Utils.getObjectFromString(jsonString, Land.class);
 			addCommonsField(land);
-			land.setPostType(PostType.LAND);
 
 			checkPostConstraintFields(land);
-			return landFacade.mangmentSavePost(land);
+			return landFacade.mangmentSavePost(land, inputParts);
 		case "CHALET":
 
 			Chalet chalet = Utils.getObjectFromString(jsonString, Chalet.class);
 			addCommonsFieldChalet(chalet);
 			checkChaletConstraintFields(chalet);
 
-			return chaletFacade.mangmentSavePost(chalet);
+			return chaletFacade.mangmentSavePost(chalet, inputParts);
 		case "SHOP_RENT":
 
 			ShopRent shopRent = Utils.getObjectFromString(jsonString, ShopRent.class);
 			addCommonsField(shopRent);
 			checkPostConstraintFields(shopRent);
-			shopRent.setPostType(PostType.SHOP_RENT);
 
-			return shopRentFacade.mangmentSavePost(shopRent);
+			return shopRentFacade.mangmentSavePost(shopRent, inputParts);
 		case "SHOP_SELL":
 
 			ShopSell shopSell = Utils.getObjectFromString(jsonString, ShopSell.class);
 			addCommonsField(shopSell);
 			checkPostConstraintFields(shopSell);
-			shopSell.setPostType(PostType.SHOP_SELL);
 
-			return shopSellFacade.mangmentSavePost(shopSell);
+			return shopSellFacade.mangmentSavePost(shopSell, inputParts);
 		case "OFFICE_RENT":
 
 			OfficeRent officeRent = Utils.getObjectFromString(jsonString, OfficeRent.class);
 			addCommonsField(officeRent);
 			checkPostConstraintFields(officeRent);
-			officeRent.setPostType(PostType.OFFICE_RENT);
 
-			return officeRentFacade.mangmentSavePost(officeRent);
+			return officeRentFacade.mangmentSavePost(officeRent, inputParts);
 		case "OFFICE_SALE":
 			OfficeSell officeSell = Utils.getObjectFromString(jsonString, OfficeSell.class);
 			addCommonsField(officeSell);
 			checkPostConstraintFields(officeSell);
-			officeSell.setPostType(PostType.OFFICE_SELL);
 
-			return officeSellFacade.mangmentSavePost(officeSell);
+			return officeSellFacade.mangmentSavePost(officeSell, inputParts);
 		default:
-			// return error no post type
+
 			return null;
 		}
 

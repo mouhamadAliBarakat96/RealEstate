@@ -55,8 +55,8 @@ public class Test {
 			waterResources.add(WaterResources.CALCAREOUS_WATER);
 
 			Village village = new Village();
-			village.setId(1);
-			
+			village.setId(701);
+
 			AppratmentRent appratmentRent = new AppratmentRent();
 			appratmentRent.setPostType(PostType.APPRATMENT_RENT);
 			appratmentRent.setWaterResources(waterResources);
@@ -71,7 +71,7 @@ public class Test {
 			System.out.println(Utils.objectToString(appratmentSell));
 			Land land = new Land();
 			land.setPostType(PostType.LAND);
-			//land.setWaterResources(waterResources);
+			// land.setWaterResources(waterResources);
 			land.setVillage(village);
 			System.out.println("Land");
 			System.out.println(Utils.objectToString(land));
@@ -79,30 +79,30 @@ public class Test {
 			System.out.println("OfficeRent");
 			officeRent.setPostType(PostType.OFFICE_RENT);
 			officeRent.setWaterResources(waterResources);
-			officeRent.setVillage(village) ;
+			officeRent.setVillage(village);
 			System.out.println(Utils.objectToString(officeRent));
 
 			OfficeSell officeSell = new OfficeSell();
 			System.out.println("OfficeSell");
 			officeSell.setPostType(PostType.OFFICE_SELL);
 			officeSell.setWaterResources(waterResources);
-			officeSell.setVillage(village) ;
+			officeSell.setVillage(village);
 			System.out.println(Utils.objectToString(officeSell));
 			ShopRent shopRent = new ShopRent();
 			System.out.println("ShopRent");
 			shopRent.setPostType(PostType.SHOP_RENT);
 			shopRent.setWaterResources(waterResources);
-			shopRent.setVillage(village) ;
+			shopRent.setVillage(village);
 			System.out.println(Utils.objectToString(shopRent));
 			ShopSell shopSell = new ShopSell();
 			System.out.println("ShopSell");
 			shopSell.setPostType(PostType.SHOP_SELL);
 			shopSell.setWaterResources(waterResources);
-			shopSell.setVillage(village) ;
+			shopSell.setVillage(village);
 			System.out.println(Utils.objectToString(shopSell));
 
 			Chalet chalet = new Chalet();
-			chalet.setVillage(village) ;
+			chalet.setVillage(village);
 			System.out.println("Chalet");
 			System.out.println(Utils.objectToString(chalet));
 			System.out.println("add post type to json");

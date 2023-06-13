@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.RealEstate.utils.Constants;
+
 
 @WebServlet("/image/*")
 public class ImageServlet extends HttpServlet {
@@ -24,15 +26,10 @@ public class ImageServlet extends HttpServlet {
 	// ---------------------------------------------------------------------------------------
 
 	public void init() throws ServletException {
-
-		// Define base path somehow. You can define it as init-param of the servlet.
 		
-		// TODO edit
-		this.imagePath = "c:\\var\\webapp\\images";
+		
+		this.imagePath = Constants.UPLOAD_DIR ;
 
-		// In a Windows environment with the Applicationserver running on the
-		// c: volume, the above path is exactly the same as "c:\var\webapp\images".
-		// In Linux/Mac/UNIX, it is just straightforward "/var/webapp/images".
 	}
 
 	// Actions

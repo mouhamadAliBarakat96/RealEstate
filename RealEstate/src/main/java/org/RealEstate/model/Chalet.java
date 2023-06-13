@@ -1,10 +1,13 @@
 package org.RealEstate.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -89,6 +92,10 @@ public class Chalet extends MainEntity implements Serializable {
 	@Expose
 	private PostStatus postStatus;
 
+
+	@ElementCollection(targetClass = String.class)
+	@Expose
+	private List<String> images = new ArrayList<>();
 	public Chalet() {
 		// TODO Auto-generated constructor stub
 	}
@@ -231,6 +238,14 @@ public class Chalet extends MainEntity implements Serializable {
 
 	public void setPostStatus(PostStatus postStatus) {
 		this.postStatus = postStatus;
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
+	public void setImages(List<String> images) {
+		this.images = images;
 	}
 
 	@Override
