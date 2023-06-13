@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -19,6 +21,8 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "tbl_village")
+@NamedQueries({
+		@NamedQuery(name = Village.FING_BY_DISTRICT, query = "SELECT village FROM Village village WHERE village.district.id = :districtId") })
 
 public class Village extends MainEntity implements Serializable {
 
@@ -26,6 +30,7 @@ public class Village extends MainEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static final String FING_BY_DISTRICT = "Village.FING_BY_DISTRICT";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -97,7 +102,7 @@ public class Village extends MainEntity implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	public String fullAddress() {
 		return this.name + "/ " + this.getDistrict().getName() + "/ " + this.getDistrict().getGovernorate().getName();
 	}

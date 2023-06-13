@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -19,6 +21,9 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "tbl_district")
+@NamedQueries({
+		@NamedQuery(name = District.FING_BY_GOVERNORATE, query = "SELECT district FROM District district WHERE district.governorate.id = :governorateId") })
+
 // kada2
 public class District extends MainEntity implements Serializable {
 
@@ -26,6 +31,7 @@ public class District extends MainEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static final String FING_BY_GOVERNORATE = "District.FING_BY_GOVERNORATE";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

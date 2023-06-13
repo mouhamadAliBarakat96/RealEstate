@@ -9,8 +9,15 @@ public class RestApplication extends Application {
 	@Override
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
+		classes.add(GovernorateMangment.class);
+		classes.add(PostMangment.class);
+		classes.add(DistrictMangment.class);
+		
+		classes.add(VillageMangment.class);
 
+		classes.add(WaterResourcesMangment.class);
 
+		
 		return classes;
 	}
 }

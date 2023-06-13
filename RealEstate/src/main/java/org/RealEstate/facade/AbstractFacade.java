@@ -10,8 +10,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.interfaces.ICRUDOperations;
+import org.RealEstate.utils.Utils;
 import org.eclipse.persistence.internal.jpa.EJBQueryImpl;
 import org.eclipse.persistence.jpa.JpaEntityManager;
 import org.eclipse.persistence.queries.DatabaseQuery;
@@ -59,6 +62,18 @@ public abstract class AbstractFacade<T> implements Serializable, ICRUDOperations
 		CriteriaQuery<T> cq = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
 		cq.select(cq.from(entityClass));
 		return getEntityManager().createQuery(cq).getResultList();
+	}
+	public Response findAllForApi() {
+		try {
+
+			return Response.status(Status.OK).entity(Utils.listToString(this.findAll())).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+
 	}
 
 	public List<T> findRange(int[] range) {

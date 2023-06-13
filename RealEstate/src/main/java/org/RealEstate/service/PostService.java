@@ -100,8 +100,10 @@ public class PostService implements Serializable {
 			// manage save images
 			uploadImagesMultiPart.uploadImage(inputParts);
 		} catch (Exception e) {
-			// return error
+			
 			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
 		}
 
 		return null;
@@ -130,10 +132,12 @@ public class PostService implements Serializable {
 			return appratmentSellFacade.mangmentSavePost(appratmentSell);
 		case "LAND":
 
-			Land Land = Utils.getObjectFromString(jsonString, Land.class);
-			addCommonsField(Land);
-			checkPostConstraintFields(Land);
-			return landFacade.mangmentSavePost(Land);
+			Land land = Utils.getObjectFromString(jsonString, Land.class);
+			addCommonsField(land);
+			land.setPostType(PostType.LAND);
+
+			checkPostConstraintFields(land);
+			return landFacade.mangmentSavePost(land);
 		case "CHALET":
 
 			Chalet chalet = Utils.getObjectFromString(jsonString, Chalet.class);
