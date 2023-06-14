@@ -84,12 +84,14 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-
-
-
-
-
-
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>realEstate-card</from-outcome>
+			<to-view-id>/realEstate-card.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 	<application>
 		<locale-config>
@@ -99,7 +101,6 @@
 			<base-name>resources.Bundle</base-name>
 			<var>bundle</var>
 		</resource-bundle>
-
 		<message-bundle>resources.Bundle</message-bundle>
 	</application>
 </faces-config>
