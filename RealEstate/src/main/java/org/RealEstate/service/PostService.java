@@ -62,6 +62,9 @@ public class PostService implements Serializable {
 	@EJB
 	private OfficeSellFacade officeSellFacade;
 
+	/*
+	 * Manage Add post
+	 */
 	public Response mangmentAddPost(MultipartFormDataInput input) {
 
 		try {
@@ -95,7 +98,13 @@ public class PostService implements Serializable {
 			String jsonDataFromRequest = data.get(0).getBodyAsString();
 			Object obj = savePost(jsonDataFromRequest, inputParts);
 
-			return Response.status(Status.OK).entity(Utils.objectToString(obj)).build();
+			if (obj == null) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.POST_TYPE_NOT_SUPPORTED).build();
+
+			} else {
+				return Response.status(Status.OK).entity(Utils.objectToString(obj)).build();
+
+			}
 
 		} catch (Exception e) {
 
@@ -104,7 +113,6 @@ public class PostService implements Serializable {
 
 		}
 
-	
 	}
 
 	private Object savePost(String jsonString, List<InputPart> inputParts) throws Exception {
@@ -191,9 +199,135 @@ public class PostService implements Serializable {
 
 	private void checkPostConstraintFields(RealEstate realEstate) {
 
+		// TODO
 	}
 
 	private void checkChaletConstraintFields(Chalet chalet) {
+
+		// TODO
+	}
+	/*
+	 *
+	 */
+
+	/*
+	 * Update Post Vieux
+	 */
+
+	public Response updatePostVieux(Long id, String postType) {
+		try {
+
+			switch (postType) {
+			case "APPRATMENT_RENT":
+				AppratmentRent appratmentRent = appratmentRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (appratmentRent != null) {
+					appratmentRent.setViews(appratmentRent.getViews() + 1);
+					appratmentRentFacade.save(appratmentRent);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+
+				}
+
+			case "APPRATMENT_SELL":
+
+				AppratmentSell appratmentSell = appratmentSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (appratmentSell != null) {
+					appratmentSell.setViews(appratmentSell.getViews() + 1);
+					appratmentSellFacade.save(appratmentSell);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+
+				}
+
+			case "LAND":
+
+				Land land = landFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (land != null) {
+					land.setViews(land.getViews() + 1);
+					landFacade.save(land);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "CHALET":
+
+				Chalet chalet = chaletFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (chalet != null) {
+					chalet.setViews(chalet.getViews() + 1);
+					chaletFacade.save(chalet);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "SHOP_RENT":
+
+				ShopRent shopRent = shopRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (shopRent != null) {
+					shopRent.setViews(shopRent.getViews() + 1);
+					shopRentFacade.save(shopRent);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "SHOP_SELL":
+
+				ShopSell shopSell = shopSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (shopSell != null) {
+					shopSell.setViews(shopSell.getViews() + 1);
+					shopSellFacade.save(shopSell);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "OFFICE_RENT":
+
+				OfficeRent officeRent = officeRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (officeRent != null) {
+					officeRent.setViews(officeRent.getViews() + 1);
+					officeRentFacade.save(officeRent);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "OFFICE_SALE":
+
+				OfficeSell officeSell = officeSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (officeSell != null) {
+					officeSell.setViews(officeSell.getViews() + 1);
+					officeSellFacade.save(officeSell);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			default:
+
+				return Response.status(Status.BAD_REQUEST).entity(Constants.POST_TYPE_NOT_SUPPORTED).build();
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
 
 	}
 

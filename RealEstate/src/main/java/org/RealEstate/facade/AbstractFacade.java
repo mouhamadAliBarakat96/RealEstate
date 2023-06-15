@@ -1,11 +1,13 @@
 package org.RealEstate.facade;
 
-
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
@@ -51,6 +53,12 @@ public abstract class AbstractFacade<T> implements Serializable, ICRUDOperations
 		}
 	}
 
+	public T findWithLockPessimisticWriteWithoutException(Object id) {
+		Map<String, Object> properties = new HashMap<>();
+		properties.put("jakarta.persistence.lock.timeout", 6500L);
+		return getEntityManager().find(entityClass, id, LockModeType.PESSIMISTIC_WRITE, properties);
+	}
+
 	public T find(Object id) {
 		return getEntityManager().find(entityClass, id);
 	}
@@ -63,6 +71,7 @@ public abstract class AbstractFacade<T> implements Serializable, ICRUDOperations
 		cq.select(cq.from(entityClass));
 		return getEntityManager().createQuery(cq).getResultList();
 	}
+
 	public Response findAllForApi() {
 		try {
 
