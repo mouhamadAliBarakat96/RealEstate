@@ -50,7 +50,8 @@ public class IndexController implements Serializable {
 	
 	private List<District> districts = new ArrayList<>();
 	private District selecteDistrict=new District();
-	
+	List<String> imagesUrl = Arrays.asList("property-1.jpg", "property-2.jpg", "property-3.jpg", "property-4.jpg");
+
 	@PostConstruct
 	public void init() {
 
@@ -62,8 +63,7 @@ public class IndexController implements Serializable {
 		Village vill = new Village("Chehour");
 		vill.setDistrict(district);
 
-		List<String> imagesUrl = Arrays.asList("property-1.jpg", "property-2.jpg", "property-3.jpg", "property-4.jpg");
-
+ 
 		addToRealEstate(new AppratmentRent(5, 2, true, 1, vill, imagesUrl));
 		addToRealEstate(new AppratmentRent(5, 2, true, 1, vill, imagesUrl));
 
@@ -217,6 +217,14 @@ public class IndexController implements Serializable {
 
 	public void setSelecteDistrict(District selecteDistrict) {
 		this.selecteDistrict = selecteDistrict;
+	}
+
+	public List<String> getImagesUrl() {
+		return imagesUrl;
+	}
+
+	public void setImagesUrl(List<String> imagesUrl) {
+		this.imagesUrl = imagesUrl;
 	}
  
 }
