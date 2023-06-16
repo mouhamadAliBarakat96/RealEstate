@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response.Status;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
 import org.RealEstate.model.Village;
+import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
 
 @Stateless
@@ -26,6 +27,16 @@ public class VillageFacade extends AbstractFacade<Village> implements Serializab
 		super(Village.class);
 	}
 
+	public Village findWithExcption(Long id) throws Exception {
+		Village village = this.find(id);
+		if(village !=null) {
+			return village;
+		}
+		else {
+			throw new Exception(Constants.VILLAGE_NOT_EXISTS);
+		}
+	}
+	
 	public Response findByDisctrictForApi(Long districtId) {
 		try {
 			List<Village> list = getEntityManager().createNamedQuery(Village.FING_BY_DISTRICT, Village.class)

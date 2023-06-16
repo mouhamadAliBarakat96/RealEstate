@@ -46,6 +46,7 @@ public class Village extends MainEntity implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "district_id")
 	@NotNull
+	@Expose
 	private District district;
 
 	public Village() {

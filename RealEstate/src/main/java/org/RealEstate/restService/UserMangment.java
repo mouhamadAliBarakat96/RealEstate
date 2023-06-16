@@ -51,7 +51,7 @@ public class UserMangment implements Serializable {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 
-	public Response savePost(@QueryParam("page") int page, @QueryParam("size") int size) {
+	public Response findAllUser(@QueryParam("page") int page, @QueryParam("size") int size) {
 		try {
 			return userService.findAllPagination(page, size);
 		} catch (Exception e) {
@@ -62,12 +62,17 @@ public class UserMangment implements Serializable {
 	}
 
 	@GET
-	@Path("/v1/post-buy-User/{id}")
+	@Path("/v1/post-buy-user")
 	@Produces(MediaType.APPLICATION_JSON)
 
-	public Response updatePostView(@PathParam("id") Long UserId) {
+	// TOODO BAAD FI BATHROOM W BedRom
+	public Response findAllPostByUser(@QueryParam("userId") Long userId, @QueryParam("postType") String postType,
+			@QueryParam("minPrice") int minPrice, @QueryParam("maxPrice") int maxPrice,
+			@QueryParam("villageId") Long villageId ,@QueryParam("page") int page , @QueryParam("size") int size
+			
+			) {
 
-		return userService.findAllPostByUser(UserId);
+		return userService.findAllPostByUser(userId, postType, minPrice, maxPrice , villageId , page , size  );
 
 	}
 

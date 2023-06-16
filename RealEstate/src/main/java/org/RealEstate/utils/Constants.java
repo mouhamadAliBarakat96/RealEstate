@@ -38,4 +38,7 @@ public interface Constants {
 
 	public static final String USER_NAME_SHOULD_BE_UNIQUE = "USER_NAME_SHOULD_BE_UNIQUE";
 	public static final int NB_IMAGE_IN_POST_ALLOWED = 5;
+
+	public static final String USER_NOT_EXISTS = "USER_NOT_EXISTS";
+	public static final String VILLAGE_NOT_EXISTS = "VILLAGE_NOT_EXISTS";
 }

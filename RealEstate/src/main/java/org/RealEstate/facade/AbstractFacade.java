@@ -109,6 +109,10 @@ public abstract class AbstractFacade<T> implements Serializable, ICRUDOperations
 		return (getEntityManager().createQuery(cq).getSingleResult()).intValue();
 	}
 
+	
+
+	
+	
 	public T newEntity() throws InstantiationException, IllegalAccessException {
 		return this.entityClass.newInstance();
 	}

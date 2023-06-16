@@ -190,7 +190,7 @@ public class PostService implements Serializable {
 			officeRent.setUser(user);
 
 			return officeRentFacade.mangmentSavePost(officeRent, inputParts);
-		case "OFFICE_SALE":
+		case "OFFICE_SELL":
 			OfficeSell officeSell = Utils.getObjectFromString(jsonString, OfficeSell.class);
 			addCommonsField(officeSell);
 			checkPostConstraintFields(officeSell);
@@ -210,7 +210,7 @@ public class PostService implements Serializable {
 		Long id = jsonNode.get("userId").asLong();
 		User user = userFacade.find(id);
 		if (user == null) {
-			throw new Exception("USER_NOT_EXISTS");
+			throw new Exception(Constants.USER_NOT_EXISTS);
 		} else {
 
 			Long nbOfPost = restateFacade.findUserCountPost(user.getId());
@@ -343,7 +343,7 @@ public class PostService implements Serializable {
 					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
 				}
 
-			case "OFFICE_SALE":
+			case "OFFICE_SELL":
 
 				OfficeSell officeSell = officeSellFacade.findWithLockPessimisticWriteWithoutException(id);
 

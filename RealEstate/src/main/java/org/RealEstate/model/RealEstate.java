@@ -109,8 +109,11 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	private PostType postType;
 
 	@Expose
+	
 	private boolean pricePublic;
 
+	
+	
 	public RealEstate() {
 		// TODO Auto-generated constructor stub
 	}

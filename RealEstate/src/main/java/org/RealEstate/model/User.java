@@ -7,12 +7,15 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
@@ -54,12 +57,12 @@ public class User extends MainEntity implements Serializable {
 	private String phoneNumber;
 
 	// el post li howe mnzlon
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
-	@Expose
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
+///	@Expose
 	private List<RealEstate> readStateList = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
-	@Expose
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
+//	@Expose
 	private List<Chalet> chales = new ArrayList<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
