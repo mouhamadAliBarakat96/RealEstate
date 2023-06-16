@@ -46,6 +46,7 @@ import org.RealEstate.model.RealEstate;
  */
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
+import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 
 public class Test {
@@ -107,6 +108,18 @@ public class Test {
 			System.out.println(Utils.objectToString(chalet));
 			System.out.println("add post type to json");
 
+			
+			User user = new User();
+			user.setFirstName("dada");
+			user.setLastName("dada");
+			user.setMiddleName("dada");
+			user.setUserName("userName");
+			user.setPassowrd(Utils.sha256("123456"));
+			user.setPhoneNumber("71006196");
+			System.out.println("<<>>");
+			System.out.println("USER");
+			System.out.println(Utils.objectToString(user));
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

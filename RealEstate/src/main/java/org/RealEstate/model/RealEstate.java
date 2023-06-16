@@ -2,7 +2,6 @@
 package org.RealEstate.model;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +22,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -34,9 +35,13 @@ import com.google.gson.annotations.Expose;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 20)
+@NamedQueries({
+		@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and realEstate.freezed=false ") })
 
 public abstract class RealEstate extends MainEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String FING_NB_POST_FOR_USER = "RealEstate.FING_NB_POST_FOR_USER";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -102,6 +107,9 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Expose
 	private PostType postType;
+
+	@Expose
+	private boolean pricePublic;
 
 	public RealEstate() {
 		// TODO Auto-generated constructor stub
@@ -258,6 +266,14 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	public void setReviuexCause(String reviuexCause) {
 		this.reviuexCause = reviuexCause;
+	}
+
+	public boolean isPricePublic() {
+		return pricePublic;
+	}
+
+	public void setPricePublic(boolean pricePublic) {
+		this.pricePublic = pricePublic;
 	}
 
 }

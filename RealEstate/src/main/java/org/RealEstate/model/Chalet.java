@@ -53,7 +53,7 @@ public class Chalet extends MainEntity implements Serializable {
 	@Expose
 	@Column(length = 3000)
 	private String descrption;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "village_id")
 	@Expose
@@ -84,18 +84,22 @@ public class Chalet extends MainEntity implements Serializable {
 
 	@Column(length = 1000)
 	@Expose
-	
+
 	private String reviuexCause;
 
 	@Enumerated(EnumType.STRING)
-	
+
 	@Expose
 	private PostStatus postStatus;
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	@Expose
+	private User user;
 
 	@ElementCollection(targetClass = String.class)
 	@Expose
 	private List<String> images = new ArrayList<>();
+
 	public Chalet() {
 		// TODO Auto-generated constructor stub
 	}
@@ -246,6 +250,14 @@ public class Chalet extends MainEntity implements Serializable {
 
 	public void setImages(List<String> images) {
 		this.images = images;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

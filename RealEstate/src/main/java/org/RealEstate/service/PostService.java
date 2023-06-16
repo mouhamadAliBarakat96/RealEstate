@@ -1,6 +1,5 @@
 package org.RealEstate.service;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -12,15 +11,16 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.enumerator.PostStatus;
-import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.AppratmentRentFacade;
 import org.RealEstate.facade.AppratmentSellFacade;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.LandFacade;
 import org.RealEstate.facade.OfficeRentFacade;
 import org.RealEstate.facade.OfficeSellFacade;
+import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.ShopRentFacade;
 import org.RealEstate.facade.ShopSellFacade;
+import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.AppratmentRent;
 import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.Chalet;
@@ -30,6 +30,7 @@ import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
+import org.RealEstate.model.User;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
@@ -62,6 +63,15 @@ public class PostService implements Serializable {
 	@EJB
 	private OfficeSellFacade officeSellFacade;
 
+	@EJB
+	private UserFacade userFacade;
+
+	@EJB
+	private RealEstateFacade restateFacade;
+
+	@EJB
+	private AppSinglton appSinglton;
+
 	/*
 	 * Manage Add post
 	 */
@@ -92,11 +102,10 @@ public class PostService implements Serializable {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.EMPTY_REQUEST_DONT_CONTAIN_DATA).build();
 			}
 
-			// TODO
-			checkUserNbOfPostAllowed();
+			User user = checkUserConstraint(data.get(0).getBodyAsString());
 
 			String jsonDataFromRequest = data.get(0).getBodyAsString();
-			Object obj = savePost(jsonDataFromRequest, inputParts);
+			Object obj = savePost(jsonDataFromRequest, inputParts, user);
 
 			if (obj == null) {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.POST_TYPE_NOT_SUPPORTED).build();
@@ -107,7 +116,7 @@ public class PostService implements Serializable {
 			}
 
 		} catch (Exception e) {
-
+ 
 			e.printStackTrace();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 
@@ -115,17 +124,22 @@ public class PostService implements Serializable {
 
 	}
 
-	private Object savePost(String jsonString, List<InputPart> inputParts) throws Exception {
+	private Object savePost(String jsonString, List<InputPart> inputParts, User user) throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jsonNode = mapper.readTree(jsonString);
 		String postType = jsonNode.get("postType").asText();
+
+		if (postType == null) {
+			return null;
+		}
 
 		switch (postType) {
 		case "APPRATMENT_RENT":
 			AppratmentRent appratmentRent = Utils.getObjectFromString(jsonString, AppratmentRent.class);
 			addCommonsField(appratmentRent);
 			checkPostConstraintFields(appratmentRent);
+			appratmentRent.setUser(user);
 			return appratmentRentFacade.mangmentSavePost(appratmentRent, inputParts);
 		case "APPRATMENT_SELL":
 
@@ -133,11 +147,14 @@ public class PostService implements Serializable {
 			addCommonsField(appratmentSell);
 
 			checkPostConstraintFields(appratmentSell);
+			appratmentSell.setUser(user);
+
 			return appratmentSellFacade.mangmentSavePost(appratmentSell, inputParts);
 		case "LAND":
 
 			Land land = Utils.getObjectFromString(jsonString, Land.class);
 			addCommonsField(land);
+			land.setUser(user);
 
 			checkPostConstraintFields(land);
 			return landFacade.mangmentSavePost(land, inputParts);
@@ -146,6 +163,7 @@ public class PostService implements Serializable {
 			Chalet chalet = Utils.getObjectFromString(jsonString, Chalet.class);
 			addCommonsFieldChalet(chalet);
 			checkChaletConstraintFields(chalet);
+			chalet.setUser(user);
 
 			return chaletFacade.mangmentSavePost(chalet, inputParts);
 		case "SHOP_RENT":
@@ -153,6 +171,7 @@ public class PostService implements Serializable {
 			ShopRent shopRent = Utils.getObjectFromString(jsonString, ShopRent.class);
 			addCommonsField(shopRent);
 			checkPostConstraintFields(shopRent);
+			shopRent.setUser(user);
 
 			return shopRentFacade.mangmentSavePost(shopRent, inputParts);
 		case "SHOP_SELL":
@@ -160,6 +179,7 @@ public class PostService implements Serializable {
 			ShopSell shopSell = Utils.getObjectFromString(jsonString, ShopSell.class);
 			addCommonsField(shopSell);
 			checkPostConstraintFields(shopSell);
+			shopSell.setUser(user);
 
 			return shopSellFacade.mangmentSavePost(shopSell, inputParts);
 		case "OFFICE_RENT":
@@ -167,12 +187,14 @@ public class PostService implements Serializable {
 			OfficeRent officeRent = Utils.getObjectFromString(jsonString, OfficeRent.class);
 			addCommonsField(officeRent);
 			checkPostConstraintFields(officeRent);
+			officeRent.setUser(user);
 
 			return officeRentFacade.mangmentSavePost(officeRent, inputParts);
 		case "OFFICE_SALE":
 			OfficeSell officeSell = Utils.getObjectFromString(jsonString, OfficeSell.class);
 			addCommonsField(officeSell);
 			checkPostConstraintFields(officeSell);
+			officeSell.setUser(user);
 
 			return officeSellFacade.mangmentSavePost(officeSell, inputParts);
 		default:
@@ -182,7 +204,23 @@ public class PostService implements Serializable {
 
 	}
 
-	private void checkUserNbOfPostAllowed() {
+	private User checkUserConstraint(String jsonString) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(jsonString);
+		Long id = jsonNode.get("userId").asLong();
+		User user = userFacade.find(id);
+		if (user == null) {
+			throw new Exception("USER_NOT_EXISTS");
+		} else {
+
+			Long nbOfPost = restateFacade.findUserCountPost(user.getId());
+
+			if (nbOfPost >= appSinglton.getFreeNbOfPost()) {
+				throw new Exception("EXCEEDED_POST_LIMIT");
+			}
+
+			return user;
+		}
 
 	}
 

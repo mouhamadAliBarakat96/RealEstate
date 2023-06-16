@@ -16,6 +16,7 @@ public class RestApplication extends Application {
 		classes.add(VillageMangment.class);
 
 		classes.add(WaterResourcesMangment.class);
+		classes.add(UserMangment.class);
 
 		
 		return classes;

@@ -15,6 +15,7 @@ import org.RealEstate.facade.ConfigurationFacade;
 import org.RealEstate.interfaces.ICRUDOperations;
 import org.RealEstate.model.GeneralConfiguration;
 import org.RealEstate.model.Governorate;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.CommonUtility;
 
 @ViewScoped
@@ -33,6 +34,9 @@ public class ConfigurationController implements Serializable {
 	private GeneralConfiguration generalConfigurationPostExpiryDate;
 
 	private List<GeneralConfiguration> listGeneralConfiguration = new ArrayList<>();
+
+	@EJB
+	private AppSinglton appSinglton;
 
 	@PostConstruct
 	public void init() {
@@ -72,6 +76,8 @@ public class ConfigurationController implements Serializable {
 				generalConfigurationNbFreeNbOFPost.setValue(String.valueOf(freeNbOfPost));
 
 			}
+			appSinglton.setFreeNbOfPost(freeNbOfPost);
+			
 			configurationFacade.save(generalConfigurationNbFreeNbOFPost);
 
 			// post expiryDate
@@ -83,6 +89,7 @@ public class ConfigurationController implements Serializable {
 				generalConfigurationPostExpiryDate.setValue(String.valueOf(postExpiryDate));
 
 			}
+			appSinglton.setPostExpiryDate(postExpiryDate);
 
 			CommonUtility.addMessageToFacesContext(" save_success ", "success");
 			configurationFacade.save(generalConfigurationPostExpiryDate);

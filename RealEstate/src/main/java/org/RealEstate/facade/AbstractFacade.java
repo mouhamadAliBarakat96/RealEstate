@@ -88,10 +88,20 @@ public abstract class AbstractFacade<T> implements Serializable, ICRUDOperations
 	public List<T> findRange(int[] range) {
 		CriteriaQuery<T> cq = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
 		cq.select(cq.from(entityClass));
+		
 		return getEntityManager().createQuery(cq).setMaxResults(range[1] - range[0]).setFirstResult(range[0])
 				.getResultList();
 	}
 
+	public List<T> findPagintion(int size , int offset ) {
+		CriteriaQuery<T> cq = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
+		cq.select(cq.from(entityClass));
+		
+		return getEntityManager().createQuery(cq).setMaxResults(size).setFirstResult(offset)
+				.getResultList();
+	}
+
+	
 	public int count() {
 		CriteriaQuery<Long> cq = getEntityManager().getCriteriaBuilder().createQuery(Long.class);
 		Root<T> root = cq.from(entityClass);
