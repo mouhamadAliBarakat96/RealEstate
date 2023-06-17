@@ -17,6 +17,8 @@ import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
 import org.RealEstate.model.Land;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.model.ShopRent;
+import org.RealEstate.model.ShopSell;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.utils.Constants;
@@ -108,7 +110,9 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		}
 
 		// asln el land ma ha yje 3aded 8oraf bas ehtyat
-		if (!classType.equals(Land.class)) {
+		if (!classType.equals(Land.class) || !classType.equals(ShopSell.class) || classType.equals(ShopRent.class)
+
+		) {
 
 			if (bedRoom > 0) {
 				if (bedRoomEq) {
@@ -132,6 +136,9 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 			}
 
 		}
+
+		Predicate maxPricePredicate = criteriaBuilder.equal(root.get("price"), maxPrice);
+		predicates.add(maxPricePredicate);
 
 		// Combine the predicates using conjunction (AND) or disjunction (OR)
 		Predicate finalPredicate = criteriaBuilder.and(predicates.toArray(new Predicate[0]));

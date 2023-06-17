@@ -39,7 +39,7 @@ public class ShopSell extends RealEstate implements Serializable {
 	private boolean blockNb;
 
 	public ShopSell() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public boolean isElectricElevator() {
