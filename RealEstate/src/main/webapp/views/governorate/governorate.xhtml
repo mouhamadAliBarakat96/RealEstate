@@ -32,73 +32,85 @@
 		<h4 class="page-title">Mangment Governorate</h4>
 	</ui:define>
 	<ui:define name="customFormContent">
-	<h:panelGroup id="crud-id">
-		<div class="panel-body">
+		<h:panelGroup id="crud-id">
+			<div class="panel-body">
 
-			<div class="card">
-				<div class="card-body">
-					<div class="row">
-						<div class=" col-md-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class=" col-md-12">
 
 
-							<div class="col-md-5">
-								<div class="form-group">
-									<h:outputLabel class="control-label" for="name"
-										style="padding-left:1.5%" value="name ">
-										<span class="required">*</span>
-									</h:outputLabel>
-									<h:inputText id="name" required="true" f5:placeholder="name "
-										label="name " title="name "
-										
-										value="#{governorateController.governorate.name}"
-										styleClass="form-control">
-										<f:ajax render=":messageScript"></f:ajax>
-									</h:inputText>
-									<h:message for="name" styleClass="error-message" />
+								<div class="col-md-5">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="name"
+											style="padding-left:1.5%" value="name ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="name" required="true" f5:placeholder="name "
+											label="name " title="name "
+											value="#{governorateController.governorate.name}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="name" styleClass="error-message" />
+									</div>
 								</div>
+
+								<div class="col-md-5">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="nameAr"
+											style="padding-left:1.5%" value="nameAr ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="nameAr" required="true"
+											f5:placeholder="nameAr " label="nameAr " title="nameAr "
+											value="#{governorateController.governorate.nameAr}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for=" nameAr" styleClass="error-message" />
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<h:commandLink id="saveId"
+									style=" float:right ; margin-left:10px;"
+									action='#{governorateController.save(false)}'
+									styleClass="btn btn-primary btn-save">
+									<f:ajax render=":messageScript :tableId" execute="  name  " />
+									<i class="fa fa-save" />
+									<span>Save</span>
+
+
+								</h:commandLink>
+
+								<h:commandLink style=" float:right ; margin-left:10px;"
+									action='#{governorateController.save(true)}'
+									styleClass="btn btn-primary btn-save">
+									<f:ajax render=":messageScript " execute="  crud-id  " />
+									<i class="fa fa-save" />
+									<span>Save And New</span>
+
+
+								</h:commandLink>
+
 							</div>
 
 						</div>
-					</div>
-
-					<div class="row">
-					<div class="col-md-12">
-							<h:commandLink id="saveId"
-								style=" float:right ; margin-left:10px;"
-								action='#{governorateController.save(false)}'
-								styleClass="btn btn-primary btn-save">
-								<f:ajax render=":messageScript :tableId"
-									execute="  name  " />
-								<i class="fa fa-save" />
-								<span>Save</span>
-
-
-							</h:commandLink>
-							
-									<h:commandLink 
-								style=" float:right ; margin-left:10px;"
-								action='#{governorateController.save(true)}'
-								styleClass="btn btn-primary btn-save">
-								<f:ajax render=":messageScript "
-									execute="  crud-id  " />
-								<i class="fa fa-save" />
-								<span>Save And New</span>
-
-
-							</h:commandLink>
-							
-						</div>
 
 					</div>
-
 				</div>
+
+
+
 			</div>
 
-
-
-		</div>
-
-</h:panelGroup>
+		</h:panelGroup>
 
 	</ui:define>
 

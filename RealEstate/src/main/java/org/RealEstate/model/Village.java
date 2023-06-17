@@ -43,6 +43,11 @@ public class Village extends MainEntity implements Serializable {
 	@Expose
 	private String name;
 
+	@NotEmpty
+	@Expose
+	@Column(unique = true)
+	private String nameAr;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "district_id")
 	@NotNull
@@ -76,6 +81,14 @@ public class Village extends MainEntity implements Serializable {
 
 	public District getDistrict() {
 		return district;
+	}
+
+	public String getNameAr() {
+		return nameAr;
+	}
+
+	public void setNameAr(String nameAr) {
+		this.nameAr = nameAr;
 	}
 
 	public void setDistrict(District district) {

@@ -45,8 +45,7 @@
 								</span>
 							</div>
 							<div class="col-md-4 col-sm-12">
-								<h:commandLink action='governorate'
-									id="btn-to-crud"
+								<h:commandLink action='governorate' id="btn-to-crud"
 									styleClass="  btn btn-primary waves-effect waves-light btn-crud-page "
 									style="float:right">
 									<i class="fa fa-plus"></i>
@@ -62,64 +61,72 @@
 
 						</div>
 					</h:panelGroup>
-						<div
-				style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
-
-
-					
-					<p:dataTable var="entity" paginator="true" rows="10"
-						paginatorPosition="bottom" style="margin-top: 2%"
-						rowKey="#{item.id}" 
-						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-						rowsPerPageTemplate="5,10,15" styleClass="border-none"
-						value="#{governorateListController.pageItems}"
-						widgetVar="tableWidget" emptyMessage="No Governorate was added"
-						filteredValue="#{governorateListController.filteredList}">
-					
-
-						<p:column styleClass="no-header table-actions-column" width="80">
-							<span> <h:link outcome='governorate'
-									styleClass="btn btn-warning  waves-effect waves-light   btn-xs">
-									<f:param name="id" value="#{entity.id}" />
-									<span class=" dripicons-document-edit  " style="color: white;" />
-									<f:ajax></f:ajax>
-								</h:link> <p:commandLink
-									actionListener="#{governorateListController.remove(entity)}"
-									style="margin-left:5px;" update=":messageScript header-panel"
-									styleClass="btn btn-danger waves-effect waves-light btn-xs ">
-									<i class=" dripicons-trash  "
-										style="color: white; font-size: 11px;" />
-									<p:confirm header="Delete" message="Are You Sure From Delete ?">
-									</p:confirm>
-									<p:ajax oncomplete="PF('tableWidget').filter()">
-									</p:ajax>
-								</p:commandLink>
-							</span>
-						</p:column>
-
-						<p:column filterBy="#{entity.id}" headerText="id"
-						 style="vertical-align: middle; margin-left: .5rem"
-							sortBy="#{entity.id}" filterMatchMode="contains">
-							<h:outputText value="#{entity.id}" />
-						</p:column>
-						<p:column filterBy="#{entity.name}" sortBy="#{entity.name}"
-						 style="vertical-align: middle; margin-left: .5rem"
-							headerText="  Name" filterMatchMode="contains">
-							<h:outputText value="#{entity.name}" />
-						</p:column>
+					<div
+						style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
 
 
 
-					</p:dataTable>
-				</div>
+						<p:dataTable var="entity" paginator="true" rows="10"
+							paginatorPosition="bottom" style="margin-top: 2%"
+							rowKey="#{item.id}"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+							rowsPerPageTemplate="5,10,15" styleClass="border-none"
+							value="#{governorateListController.pageItems}"
+							widgetVar="tableWidget" emptyMessage="No Governorate was added"
+							filteredValue="#{governorateListController.filteredList}">
+
+
+							<p:column styleClass="no-header table-actions-column" width="80">
+								<span> <h:link outcome='governorate'
+										styleClass="btn btn-warning  waves-effect waves-light   btn-xs">
+										<f:param name="id" value="#{entity.id}" />
+										<span class=" dripicons-document-edit  " style="color: white;" />
+										<f:ajax></f:ajax>
+									</h:link> <p:commandLink
+										actionListener="#{governorateListController.remove(entity)}"
+										style="margin-left:5px;" update=":messageScript header-panel"
+										styleClass="btn btn-danger waves-effect waves-light btn-xs ">
+										<i class=" dripicons-trash  "
+											style="color: white; font-size: 11px;" />
+										<p:confirm header="Delete"
+											message="Are You Sure From Delete ?">
+										</p:confirm>
+										<p:ajax oncomplete="PF('tableWidget').filter()">
+										</p:ajax>
+									</p:commandLink>
+								</span>
+							</p:column>
+
+							<p:column filterBy="#{entity.id}" headerText="id"
+								style="vertical-align: middle; margin-left: .5rem"
+								sortBy="#{entity.id}" filterMatchMode="contains">
+								<h:outputText value="#{entity.id}" />
+							</p:column>
+							<p:column filterBy="#{entity.name}" sortBy="#{entity.name}"
+								style="vertical-align: middle; margin-left: .5rem"
+								headerText="  Name" filterMatchMode="contains">
+								<h:outputText value="#{entity.name}" />
+							</p:column>
+
+
+							<p:column filterBy="#{entity.nameAr}" sortBy="#{entity.nameAr}"
+								style="vertical-align: middle; margin-left: .5rem"
+								headerText="  Name Ar" filterMatchMode="contains">
+								<h:outputText value="#{entity.nameAr}" />
+							</p:column>
+
+
+
+						</p:dataTable>
+					</div>
 				</div>
 			</div>
 
 
 		</h:panelGroup>
 
-<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 			<h:commandLink
 				style="color:white; margin-left:5px; margin-top:5px; margin-bottom:5px;"
 				styleClass="ui-confirmdialog-no btn btn-danger">

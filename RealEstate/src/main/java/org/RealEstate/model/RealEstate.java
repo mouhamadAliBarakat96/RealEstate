@@ -85,10 +85,14 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	private double price;
 	@Embedded
 	private GoogleMapAttribute addressEmbeddable = new GoogleMapAttribute();
+
 	@Expose
 	private int views;
 	@Expose
 	private int liked;
+
+	@Expose
+	private int numberOfCall;
 
 	@Expose
 	private boolean freezed;
@@ -109,11 +113,8 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	private PostType postType;
 
 	@Expose
-	
 	private boolean pricePublic;
 
-	
-	
 	public RealEstate() {
 		// TODO Auto-generated constructor stub
 	}
@@ -278,5 +279,15 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	public void setPricePublic(boolean pricePublic) {
 		this.pricePublic = pricePublic;
 	}
+
+	public int getNumberOfCall() {
+		return numberOfCall;
+	}
+
+	public void setNumberOfCall(int numberOfCall) {
+		this.numberOfCall = numberOfCall;
+	}
+	
+	
 
 }

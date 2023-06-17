@@ -44,6 +44,12 @@ public class District extends MainEntity implements Serializable {
 	@Expose
 	private String name;
 
+	@NotEmpty
+	@Column(unique = true)
+	@NotEmpty
+	@Expose
+	private String nameAr;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "governorate_id")
 	@NotNull
@@ -74,6 +80,14 @@ public class District extends MainEntity implements Serializable {
 		this.name = name;
 	}
 
+	public String getNameAr() {
+		return nameAr;
+	}
+
+	public void setNameAr(String nameAr) {
+		this.nameAr = nameAr;
+	}
+
 	public Governorate getGovernorate() {
 		return governorate;
 	}
@@ -81,6 +95,8 @@ public class District extends MainEntity implements Serializable {
 	public void setGovernorate(Governorate governorate) {
 		this.governorate = governorate;
 	}
+	
+	
 
 	@Override
 	public int hashCode() {

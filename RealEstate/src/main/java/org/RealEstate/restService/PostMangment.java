@@ -35,7 +35,7 @@ public class PostMangment {
 
 	// add views
 	@PUT
-	@Path("/v1/{id}/{postType}")
+	@Path("/v1/add-view/{id}/{postType}")
 	@Produces(MediaType.APPLICATION_JSON)
 
 	public Response updatePostView(@PathParam("id") Long id, @PathParam("postType") String postType) {
@@ -44,6 +44,17 @@ public class PostMangment {
 
 	}
 
+	// add like
+	@PUT
+	@Path("/v1/add-like/{id}/{postType}")
+	@Produces(MediaType.APPLICATION_JSON)
+
+	public Response updatePostLike(@PathParam("id") Long id, @PathParam("postType") String postType) {
+
+		return postService.updatePostVieux(id, postType);
+
+	}
+	
 	@GET
 	@Path("/v1")
 	@Produces(MediaType.APPLICATION_JSON)

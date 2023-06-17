@@ -39,8 +39,8 @@
 						<div class="row">
 
 							<div class="col-md-8 col-sm-12">
-								<span style="font-size: 20px;"> Table Represent Village
-								</span> <span style="font-size: 14px;"
+								<span style="font-size: 20px;"> Table Represent Village </span>
+								<span style="font-size: 14px;"
 									class="label label-warning countClass" id="countId">#{villageListController.pageItems.size()}
 								</span>
 							</div>
@@ -109,6 +109,11 @@
 								headerText="  Name" filterMatchMode="contains">
 								<h:outputText value="#{entity.name}" />
 							</p:column>
+							<p:column filterBy="#{entity.nameAr}" sortBy="#{entity.nameAr}"
+								style="vertical-align: middle; margin-left: .5rem"
+								headerText="  Name Ar" filterMatchMode="contains">
+								<h:outputText value="#{entity.nameAr}" />
+							</p:column>
 
 
 
@@ -121,13 +126,16 @@
 
 										<f:selectItems itemLabel="false" itemValue="False" />
 										<f:selectItems value="#{villageListController.listDistrict}"
-											var="re" itemLabel="   #{re.governorate.name}  /   #{re.name}   " itemValue="#{re}" />
+											var="re"
+											itemLabel="   #{re.governorate.name}  /   #{re.name}   "
+											itemValue="#{re}" />
 
 
 										<f:ajax></f:ajax>
 									</p:selectOneMenu>
 								</f:facet>
-								<h:outputText value=" #{entity.district.governorate.name}  / #{entity.district.name}   " />
+								<h:outputText
+									value=" #{entity.district.governorate.name}  / #{entity.district.name}   " />
 							</p:column>
 
 						</p:dataTable>

@@ -386,6 +386,125 @@ public class PostService implements Serializable {
 
 	}
 
+	
+	public Response updatePostLike(Long id, String postType) {
+		try {
+
+			switch (postType) {
+			case "APPRATMENT_RENT":
+				AppratmentRent appratmentRent = appratmentRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (appratmentRent != null) {
+					appratmentRent.setLiked(appratmentRent.getLiked() + 1);
+					appratmentRentFacade.save(appratmentRent);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+
+				}
+
+			case "APPRATMENT_SELL":
+
+				AppratmentSell appratmentSell = appratmentSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (appratmentSell != null) {
+					appratmentSell.setLiked(appratmentSell.getLiked() + 1);
+					appratmentSellFacade.save(appratmentSell);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+
+				}
+
+			case "LAND":
+
+				Land land = landFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (land != null) {
+					land.setLiked(land.getLiked() + 1);
+					landFacade.save(land);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "CHALET":
+
+				Chalet chalet = chaletFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (chalet != null) {
+					chalet.setLiked(chalet.getLiked() + 1);
+					chaletFacade.save(chalet);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "SHOP_RENT":
+
+				ShopRent shopRent = shopRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (shopRent != null) {
+					shopRent.setLiked(shopRent.getLiked() + 1);
+					shopRentFacade.save(shopRent);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "SHOP_SELL":
+
+				ShopSell shopSell = shopSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (shopSell != null) {
+					shopSell.setLiked(shopSell.getLiked() + 1);
+					shopSellFacade.save(shopSell);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "OFFICE_RENT":
+
+				OfficeRent officeRent = officeRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (officeRent != null) {
+					officeRent.setLiked(officeRent.getLiked() + 1);
+					officeRentFacade.save(officeRent);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "OFFICE_SELL":
+
+				OfficeSell officeSell = officeSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (officeSell != null) {
+					officeSell.setLiked(officeSell.getLiked() + 1);
+					officeSellFacade.save(officeSell);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			default:
+
+				return Response.status(Status.BAD_REQUEST).entity(Constants.POST_TYPE_NOT_SUPPORTED).build();
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+
+	}
+	
+	
 	public Response findPosts(Long userId, String postType, int minPrice, int maxPrice, Long villageId, int page,
 			int size, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, Long districtId,
 			Long governorateId) {

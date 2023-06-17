@@ -38,6 +38,12 @@ public class Governorate extends MainEntity implements Serializable {
 	@Expose
 	private String name;
 
+	@NotEmpty
+	@Column(unique = true)
+	@NotEmpty
+	@Expose
+	private String nameAr;
+
 	public Governorate() {
 		// TODO Auto-generated constructor stub
 	}
@@ -61,6 +67,14 @@ public class Governorate extends MainEntity implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getNameAr() {
+		return nameAr;
+	}
+
+	public void setNameAr(String nameAr) {
+		this.nameAr = nameAr;
 	}
 
 	@Override
