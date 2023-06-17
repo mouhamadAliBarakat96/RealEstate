@@ -3,3 +3,11 @@
   background-size: cover;
   background-position: center;
 }
+
+body .ui-dataview .ui-dataview-header {
+    background: #00b98e;
+}
+
+body .ui-paginator {
+    background: #fff;
+}

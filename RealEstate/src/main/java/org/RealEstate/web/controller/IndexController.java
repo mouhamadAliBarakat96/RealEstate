@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -74,17 +75,29 @@ public class IndexController implements Serializable {
 	}
 
 	public void listenerSelectGovernate() {
-		villages=new ArrayList<>();
+		villages = new ArrayList<>();
 		districts = districtFacade.findByGovernorate(selecteGovernorate.getId());
-		 
+
 	}
 
 	public void listenerSelectDistrict() {
 		villages = villageFacade.findByDisctrict(selecteDistrict.getId());
 	}
 
+	public void search() {
+		AtomicLong l = new AtomicLong(10);
+		try {
+			
+			realEstateFacade.findAllRealSatateWithFilter(null, selectPostType.toString(), 0, 0, selecteVillage, 10, 0,
+					l, 0, false, 0, false, selecteDistrict, selecteGovernorate);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void genrateFakeData() {
-		
+
 		Governorate governorate = new Governorate("Janoub");
 		District district = new District("Tyre");
 		district.setGovernorate(governorate);
