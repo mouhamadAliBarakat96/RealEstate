@@ -386,8 +386,8 @@ public class PostService implements Serializable {
 
 	}
 
-	public Response findPosts(Long userId, String postType, int minPrice, int maxPrice, Long villageId,
-			int page, int size, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, Long districtId,
+	public Response findPosts(Long userId, String postType, int minPrice, int maxPrice, Long villageId, int page,
+			int size, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, Long districtId,
 			Long governorateId) {
 
 		try {
@@ -429,6 +429,18 @@ public class PostService implements Serializable {
 			return Response.status(Status.OK).entity(Utils.objectToString(response)).build();
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+
+	}
+
+	public Response findPostById(Long id) {
+
+		try {
+			RealEstate realEstate = restateFacade.findWithQueryHint(id);
+			return Response.status(Status.OK).entity(Utils.objectToString(realEstate)).build();
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
 		}
 
 	}

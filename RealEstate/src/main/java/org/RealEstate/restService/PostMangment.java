@@ -61,14 +61,33 @@ public class PostMangment {
 				bedRoomEq, bathRoom, bathRoomEq, districtId, governorateId);
 
 	}
+	
+	
+	
+	// find post by id
+	@GET
+	@Path("/v1/{id}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
 
+	public Response findPostById(@PathParam("id") Long id  ) {
+
+		return postService.findPostById(id);
+
+	}
+	
+	
+
+	
 	// add call
+	
 	
 	
 	// add wpp call
 
-	// find post by id
+	
 
 	// update post
 
+	
 }

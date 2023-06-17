@@ -7,10 +7,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
+import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.model.AppratmentRent;
 import org.RealEstate.model.District;
@@ -42,6 +44,26 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	public Long findUserCountPost(Long userId) {
 		return (Long) getEntityManager().createNamedQuery(RealEstate.FING_NB_POST_FOR_USER)
 				.setParameter("userId", userId).getSingleResult();
+	}
+
+	public RealEstate findWithQueryHint(Long id) {
+		EntityManager entityManager = getEntityManager();
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<RealEstate> criteriaQuery = criteriaBuilder.createQuery(RealEstate.class);
+
+		Root<RealEstate> root = criteriaQuery.from(RealEstate.class);
+		criteriaQuery.select(root);
+		criteriaQuery.where(criteriaBuilder.equal(root.get("id"), id));
+
+		TypedQuery<RealEstate> typedQuery = entityManager.createQuery(criteriaQuery);
+
+		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
+				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
+				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
+				.setHint("eclipselink.join-fetch", "RealEstate.user");
+
+		return typedQuery.getSingleResult();
+
 	}
 
 	public List<RealEstate> findAllRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice,
@@ -110,7 +132,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		}
 
 		// asln el land ma ha yje 3aded 8oraf bas ehtyat
-		if (!classType.equals(Land.class) || !classType.equals(ShopSell.class) || classType.equals(ShopRent.class)
+		if (!classType.equals(Land.class) && !classType.equals(ShopSell.class) && !classType.equals(ShopRent.class)
 
 		) {
 
@@ -137,8 +159,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 		}
 
-		Predicate maxPricePredicate = criteriaBuilder.equal(root.get("price"), maxPrice);
-		predicates.add(maxPricePredicate);
+		Predicate postActive = criteriaBuilder.equal(root.get("postStatus"), PostStatus.ACCEPTED);
+		predicates.add(postActive);
 
 		// Combine the predicates using conjunction (AND) or disjunction (OR)
 		Predicate finalPredicate = criteriaBuilder.and(predicates.toArray(new Predicate[0]));

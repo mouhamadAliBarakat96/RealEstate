@@ -61,7 +61,6 @@ public class UserMangment implements Serializable {
 
 	}
 
-
 	private Response analyzeException(Exception e) {
 		e.printStackTrace();
 		if (e instanceof EJBException)
