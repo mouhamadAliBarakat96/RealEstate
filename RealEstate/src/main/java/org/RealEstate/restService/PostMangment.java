@@ -57,12 +57,14 @@ public class PostMangment {
 
 	) {
 
-		return postService.findAllPostByUser(userId, postType, minPrice, maxPrice, villageId, page, size, bedRoom,
+		return postService.findPosts(userId, postType, minPrice, maxPrice, villageId, page, size, bedRoom,
 				bedRoomEq, bathRoom, bathRoomEq, districtId, governorateId);
 
 	}
 
 	// add call
+	
+	
 	// add wpp call
 
 	// find post by id

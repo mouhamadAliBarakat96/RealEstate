@@ -80,7 +80,6 @@ public class PostService implements Serializable {
 	@EJB
 	private AppSinglton appSinglton;
 
-	
 	@EJB
 	private VillageFacade villageFacade;
 
@@ -88,8 +87,7 @@ public class PostService implements Serializable {
 	private DistrictFacade districtFacade;
 	@EJB
 	private GovernorateFacade governorateFacade;
-	
-	
+
 	/*
 	 * Manage Add post
 	 */
@@ -134,7 +132,7 @@ public class PostService implements Serializable {
 			}
 
 		} catch (Exception e) {
- 
+
 			e.printStackTrace();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 
@@ -270,6 +268,7 @@ public class PostService implements Serializable {
 	 * Update Post Vieux
 	 */
 
+	// to use by kassem
 	public Response updatePostVieux(Long id, String postType) {
 		try {
 
@@ -386,7 +385,8 @@ public class PostService implements Serializable {
 		}
 
 	}
-	public Response findAllPostByUser(Long userId, String postType, int minPrice, int maxPrice, Long villageId,
+
+	public Response findPosts(Long userId, String postType, int minPrice, int maxPrice, Long villageId,
 			int page, int size, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, Long districtId,
 			Long governorateId) {
 
@@ -423,9 +423,9 @@ public class PostService implements Serializable {
 			response.setSize(size);
 			response.setTotalCount(totalResults.get());
 			response.setData(realEstate);
-			//System.out.println(realEstate);
-			//realEstate.get(0).getPostType()
-			//AppratmentRent t = (AppratmentRent) realEstate.get(0)
+			// System.out.println(realEstate);
+			// realEstate.get(0).getPostType()
+			// AppratmentRent t = (AppratmentRent) realEstate.get(0)
 			return Response.status(Status.OK).entity(Utils.objectToString(response)).build();
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
