@@ -12,7 +12,7 @@ import com.google.gson.annotations.Expose;
 
 @MappedSuperclass
 @EntityListeners(MainEntityListener.class)
-public class MainEntity extends ApplicationEntity implements Serializable, Comparable<MainEntity> {
+public class MainEntity extends ApplicationEntity implements Serializable {
 
 	/**
 	 * 
@@ -22,7 +22,7 @@ public class MainEntity extends ApplicationEntity implements Serializable, Compa
 	private int version;
 
 	@Temporal(TemporalType.TIMESTAMP)
-@Expose
+	@Expose
 	private Date creationDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -89,11 +89,11 @@ public class MainEntity extends ApplicationEntity implements Serializable, Compa
 		return true;
 	}
 
-	@Override
-	public int compareTo(MainEntity mainEntity) {
-		// TODO Auto-generated method stub
-
-		return mainEntity.getLastUpdate().compareTo(this.getLastUpdate());
-	}
+	// @Override
+	// public int compareTo(MainEntity mainEntity) {
+	// // TODO Auto-generated method stub
+	//
+	// return mainEntity.getLastUpdate().compareTo(this.getLastUpdate());
+	// }
 
 }

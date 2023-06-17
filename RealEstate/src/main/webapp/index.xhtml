@@ -47,6 +47,7 @@
 									styleClass="form-select border-0 py-3"
 									converter="omnifaces.SelectItemsConverter"
 									value="#{indexController.selecteGovernorate}">
+									<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
 									<f:selectItems value="#{indexController.governorates}"
 										var="option" itemLabel="#{option.name}" itemValue="#{option}" />
 									<f:ajax execute="@this" render="myForm:districtSelectId"
@@ -59,7 +60,7 @@
 									converter="omnifaces.SelectItemsConverter"
 									styleClass="form-select border-0 py-3"
 									value="#{indexController.selecteDistrict}">
-									<f:selectItem itemLabel="Discrit" itemValue="" />
+									<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
 									<f:selectItems value="#{indexController.districts}"
 										var="option" itemLabel="#{option.name}" itemValue="#{option}" />
 									<f:ajax execute="@this"
@@ -71,7 +72,7 @@
 								<h:selectOneMenu id="villageSelectId"
 									styleClass="form-select border-0 py-3"
 									value="#{indexController.selecteVillage}">
-									<f:selectItem itemLabel="Village" itemValue="" />
+									<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
 									<f:selectItems value="#{indexController.villages}" var="option"
 										itemLabel="#{option.name}" itemValue="#{option}" />
 									<f:ajax execute="@this" />
