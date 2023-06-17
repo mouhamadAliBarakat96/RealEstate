@@ -50,5 +50,11 @@ public class VillageFacade extends AbstractFacade<Village> implements Serializab
 		}
 
 	}
+	
+	public List<Village> findByDisctrict(Long districtId) {
+		List<Village> list = getEntityManager().createNamedQuery(Village.FING_BY_DISTRICT, Village.class)
+				.setParameter("districtId", districtId).getResultList();
+		return list;
+	}
 
 }

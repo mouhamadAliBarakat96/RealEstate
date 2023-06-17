@@ -9,10 +9,15 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.RealEstateTypeEnum;
+import org.RealEstate.facade.DistrictFacade;
+import org.RealEstate.facade.GovernorateFacade;
+import org.RealEstate.facade.RealEstateFacade;
+import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.model.AppratmentRent;
 import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.Chalet;
@@ -32,6 +37,15 @@ public class IndexController implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	private GovernorateFacade governorateFacade;
+	@Inject
+	private DistrictFacade districtFacade;
+	@Inject
+	private VillageFacade villageFacade;
+	@Inject
+	private RealEstateFacade realEstateFacade;
+
 	private List<RealEstate> realEstates = new ArrayList<>();
 
 	private List<RealEstate> filteredRealEstates = new ArrayList<>();
@@ -41,29 +55,41 @@ public class IndexController implements Serializable {
 	private PostType selectPostType = PostType.APPRATMENT_RENT;
 
 	private List<Governorate> governorates = new ArrayList<>();
-	private Governorate selecteGovernorate=new Governorate();
-	
-	
+	private Governorate selecteGovernorate = new Governorate();
+
 	private List<Village> villages = new ArrayList<>();
-	private Village selecteVillage=new Village();
-	
-	
+	private Village selecteVillage = new Village();
+
 	private List<District> districts = new ArrayList<>();
-	private District selecteDistrict=new District();
-	List<String> imagesUrl = Arrays.asList("property-1.jpg", "property-2.jpg", "property-3.jpg", "property-4.jpg");
+	private District selecteDistrict = new District();
+
+	private List<String> imagesUrl = Arrays.asList("property-1.jpg", "property-2.jpg", "property-3.jpg",
+			"property-4.jpg");
 
 	@PostConstruct
 	public void init() {
+		governorates = governorateFacade.findAll();
+		genrateFakeData();
+		filteredRealEstates = new ArrayList<>(realEstates);
+	}
 
+	public void listenerSelectGovernate() {
+		districts = districtFacade.findByGovernorate(selecteGovernorate.getId());
+	}
+
+	public void listenerSelectDistrict() {
+		villages = villageFacade.findByDisctrict(selecteDistrict.getId());
+	}
+
+	public void genrateFakeData() {
+		
 		Governorate governorate = new Governorate("Janoub");
-
 		District district = new District("Tyre");
 		district.setGovernorate(governorate);
 
 		Village vill = new Village("Chehour");
 		vill.setDistrict(district);
 
- 
 		addToRealEstate(new AppratmentRent(5, 2, true, 1, vill, imagesUrl));
 		addToRealEstate(new AppratmentRent(5, 2, true, 1, vill, imagesUrl));
 
@@ -80,8 +106,6 @@ public class IndexController implements Serializable {
 		addToChalet(new Chalet("Joulie", true, false, "for couples", vill, 100, 150));
 		addToChalet(new Chalet("Corner", true, false, "over 10 person", vill, 100, 150));
 		addToChalet(new Chalet("Zoz", true, false, "for families", vill, 100, 150));
-
-		filteredRealEstates = new ArrayList<>(realEstates);
 
 	}
 
@@ -170,7 +194,6 @@ public class IndexController implements Serializable {
 		this.selectPostType = selectPostType;
 	}
 
-	 
 	public List<Village> getVillages() {
 		return villages;
 	}
@@ -226,5 +249,5 @@ public class IndexController implements Serializable {
 	public void setImagesUrl(List<String> imagesUrl) {
 		this.imagesUrl = imagesUrl;
 	}
- 
+
 }

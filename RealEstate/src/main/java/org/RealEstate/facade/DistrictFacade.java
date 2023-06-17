@@ -49,4 +49,12 @@ public class DistrictFacade extends AbstractFacade<District> implements Serializ
 
 	}
 
+	public List<District> findByGovernorate(Long governorateId) {
+
+		List<District> list = getEntityManager().createNamedQuery(District.FING_BY_GOVERNORATE, District.class)
+				.setParameter("governorateId", governorateId).getResultList();
+		return list;
+
+	}
+
 }
