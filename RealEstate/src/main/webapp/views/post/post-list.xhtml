@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:decorate template="/views/template/template.xhtml">
+
+
+
+
+	<ui:param name="title" value="#{bundle.main_page}" />
+	<ui:param name="subtitle" value="#{bundle.main_page}" />
+
+	<ui:define name="breadcrumb">
+
+		<div class="row">
+
+
+			<li class="breadcrumb-item active">#{bundle.card}</li>
+			<li class="breadcrumb-item active">Post List</li>
+
+
+		</div>
+	</ui:define>
+	<ui:define name="pageTittle">
+
+		<h4 class="page-title">Post List</h4>
+	</ui:define>
+	<ui:define name="customFormContent">
+
+		<h:panelGroup>
+
+			<div class="card">
+				<div class="card-body">
+					<h:panelGroup id="header-panel" style="width:100%">
+						<div class="row">
+
+							<div class="col-md-8 col-sm-12">
+								<span style="font-size: 20px;"> Table Represent Post </span> <span
+									style="font-size: 14px;" class="label label-warning countClass"
+									id="countId">#{governorateListController.pageItems.size()}
+								</span>
+							</div>
+
+						</div>
+					</h:panelGroup>
+					<div
+						style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
+
+
+						<p:dataTable var="var" value="#{postListController.lazyModel}"
+							paginator="true" rows="10" rowKey="#{var.id}"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							rowsPerPageTemplate="2,5,10,15" selectionMode="single"
+							id="postTable">
+
+							<p:column headerText="Name" sortBy="#{var.id}"
+								filterBy="#{var.id}">
+								<h:outputText value="#{var.id}" />
+							</p:column>
+
+						</p:dataTable>
+
+					</div>
+				</div>
+			</div>
+
+
+		</h:panelGroup>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<h:commandLink
+				style="color:white; margin-left:5px; margin-top:5px; margin-bottom:5px;"
+				styleClass="ui-confirmdialog-no btn btn-danger">
+				<em class="fa fa-times" />
+
+				<span> no</span>
+
+
+				<f:ajax></f:ajax>
+			</h:commandLink>
+
+			<h:commandLink
+				style="margin-left:10px  ; margin-top:5px;  margin-bottom:5px; color: white;"
+				styleClass="ui-confirmdialog-yes  btn btn-primary "
+				icon="ui-icon-check">
+				<f:ajax render=":messageScript"></f:ajax>
+				<em class="fa fa-check" />
+
+				<span> yes</span>
+
+
+			</h:commandLink>
+
+
+		</p:confirmDialog>
+	</ui:define>
+</ui:decorate>
+</html>
+

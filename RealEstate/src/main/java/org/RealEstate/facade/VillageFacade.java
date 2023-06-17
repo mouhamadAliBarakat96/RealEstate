@@ -27,6 +27,9 @@ public class VillageFacade extends AbstractFacade<Village> implements Serializab
 		super(Village.class);
 	}
 
+	
+	
+	
 	public Village findWithExcption(Long id) throws Exception {
 		Village village = this.find(id);
 		if(village !=null) {

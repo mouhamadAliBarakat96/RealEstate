@@ -3,6 +3,7 @@ package org.RealEstate.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +47,9 @@ public class Utils {
 	public static <T> String objectToString(T data) throws Exception {
 		Gson gs = new GsonBuilder().setDateFormat(Constants.DATE_FORMAT).excludeFieldsWithoutExposeAnnotation()
 				.create();
-		return gs.toJson(data);
+		String json = gs.toJson(data);
+		return new String(json.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+	
 
 	}
 
@@ -196,7 +199,9 @@ public class Utils {
 
 		Gson gson2 = new GsonBuilder().setDateFormat(Constants.DATE_FORMAT).excludeFieldsWithoutExposeAnnotation()
 				.create();
-		return gson2.toJson(data);
+		String json = gson2.toJson(data);
+		return new String(json.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+	
 
 	}
 //
