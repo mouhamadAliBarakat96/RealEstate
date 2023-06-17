@@ -74,7 +74,9 @@ public class IndexController implements Serializable {
 	}
 
 	public void listenerSelectGovernate() {
+		villages=new ArrayList<>();
 		districts = districtFacade.findByGovernorate(selecteGovernorate.getId());
+		 
 	}
 
 	public void listenerSelectDistrict() {
