@@ -188,4 +188,12 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 	}
 
+	// TODO
+
+	// start here create predict
+
+//	public Long  countRealSatateWithFilter () {
+//		
+//	}
+
 }

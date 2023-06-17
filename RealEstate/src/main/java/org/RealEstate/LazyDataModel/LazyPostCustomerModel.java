@@ -43,12 +43,11 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 
 		return count.intValue();
 	}
-	
-	 @Override
-	    public String getRowKey(RealEstate realEstate) {
-	        return String.valueOf(realEstate.getId());
-	    }
 
+	@Override
+	public String getRowKey(RealEstate realEstate) {
+		return String.valueOf(realEstate.getId());
+	}
 
 	private Predicate applyFilters(CriteriaBuilder cb, Root<RealEstate> root, Map<String, FilterMeta> filterBy) {
 		Predicate predicate = cb.conjunction();
@@ -103,7 +102,10 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 
 		// Load the customers with pagination
 		List<RealEstate> customers = realEstateFacade.getEm().createQuery(query).setFirstResult(first)
-				.setMaxResults(pageSize).getResultList();
+				.setMaxResults(pageSize).setHint("eclipselink.join-fetch", "RealEstate.village")
+				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
+				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
+				.setHint("eclipselink.join-fetch", "RealEstate.user").getResultList();
 
 		// Set the total count and return the loaded customers
 		setRowCount(count.intValue());

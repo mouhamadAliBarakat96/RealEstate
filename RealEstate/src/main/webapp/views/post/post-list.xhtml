@@ -38,12 +38,7 @@
 					<h:panelGroup id="header-panel" style="width:100%">
 						<div class="row">
 
-							<div class="col-md-8 col-sm-12">
-								<span style="font-size: 20px;"> Table Represent Post </span> <span
-									style="font-size: 14px;" class="label label-warning countClass"
-									id="countId">#{governorateListController.pageItems.size()}
-								</span>
-							</div>
+							
 
 						</div>
 					</h:panelGroup>
@@ -53,14 +48,57 @@
 
 						<p:dataTable var="var" value="#{postListController.lazyModel}"
 							paginator="true" rows="10" rowKey="#{var.id}"
+							paginatorPosition="bottom"
 							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-							rowsPerPageTemplate="2,5,10,15" selectionMode="single"
-							id="postTable">
+							rowsPerPageTemplate="2,5,10,15" id="postTable">
 
 							<p:column headerText="Name" sortBy="#{var.id}"
 								filterBy="#{var.id}">
 								<h:outputText value="#{var.id}" />
 							</p:column>
+							<p:column headerText="postType" sortBy="#{var.postType}"
+								filterBy="#{var.postType}">
+								<h:outputText value="#{var.postType}" />
+							</p:column>
+
+							<p:column headerText="location " filterBy="#{var.village.name}">
+								<h:outputText
+									value="#{var.village.district.governorate.name} /  #{var.village.district.name} / #{var.village.name }" />
+							</p:column>
+
+
+
+							<p:column headerText="user "
+								filterBy="#{var.user.firstName} / #{var.user.firstName} / #{var.user.firstName} ">
+								<h:outputText
+									value="#{var.user.firstName} / #{var.user.middleName} / #{var.user.lastName}" />
+							</p:column>
+
+
+
+
+							<p:column headerText="space" sortBy="#{var.space}"
+								filterBy="#{var.space}">
+								<h:outputText value="#{var.space}" />
+							</p:column>
+
+
+							<p:column headerText="price" sortBy="#{var.price}"
+								filterBy="#{var.price}">
+								<h:outputText value="#{var.price}" />
+							</p:column>
+
+							<p:column headerText="price Public" sortBy="#{var.pricePublic}"
+								filterBy="#{var.pricePublic}">
+								<em
+									class="   #{var.pricePublic  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+
+
+
+							</p:column>
+
+
+
 
 						</p:dataTable>
 

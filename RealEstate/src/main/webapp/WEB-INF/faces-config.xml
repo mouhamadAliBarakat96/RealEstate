@@ -30,6 +30,15 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	
+		<navigation-rule>
+		<navigation-case>
+			<from-outcome>post-list</from-outcome>
+			<to-view-id>/views/post/post-list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
 
 
 	<navigation-rule>

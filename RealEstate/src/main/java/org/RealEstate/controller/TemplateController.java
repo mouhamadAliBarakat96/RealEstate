@@ -66,6 +66,16 @@ public class TemplateController implements Serializable {
 		m2 = new MenuItem("", "", "village", true, "display: none;");
 		m1.addChild(m2);
 
+		
+		//--//
+		m2 = new MenuItem("Post List", "       mdi mdi-note-multiple-outline      ", "post-list", true, "addButton");
+		m1.addChild(m2);
+		m2 = new MenuItem("", "", "village", true, "display: none;");
+		m1.addChild(m2);
+
+		
+		
+		
 		// mdi mdi-cogs
 
 		m2 = new MenuItem("Configuration", "      mdi mdi-cogs     ", "configuration", true, "addButton");

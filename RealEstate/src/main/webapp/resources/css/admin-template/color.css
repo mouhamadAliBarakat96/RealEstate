@@ -1,0 +1,39 @@
+.our-green {
+	color: #009B77;
+}
+
+.our-yellow {
+	color: #f7c346;
+}
+
+.our-red {
+	color: #af0a0a
+}
+
+.our-blue {
+	color: #34568B;
+}
+
+.our-turquoise {
+	color: #55B4B0;
+}
+
+.our-badge-yellow {
+	background-color: #f7c346 !important;
+}
+
+.our-badge-green {
+	background-color: #009B77 !important;
+}
+
+.our-badge-blue {
+	background-color: #3567f5 !important;
+}
+
+.our-badge-red {
+	background-color: #af0a0a !important;
+}
+
+.our-badge-turquoise {
+	background-color: #55B4B0 !important;
+}
