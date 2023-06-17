@@ -6,6 +6,7 @@ import org.RealEstate.model.Chalet;
 import org.RealEstate.model.Land;
 import org.RealEstate.model.OfficeRent;
 import org.RealEstate.model.OfficeSell;
+import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
 import org.RealEstate.utils.Utility;
@@ -33,6 +34,36 @@ public enum PostType {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public static Class<? extends RealEstate> getEntityType(String postType) {
+		switch (postType) {
+		case "APPRATMENT_RENT":
+
+			return AppratmentRent.class;
+		case "APPRATMENT_SELL":
+
+			return AppratmentSell.class;
+		case "LAND":
+
+			return Land.class;
+
+		case "SHOP_RENT":
+
+			return ShopRent.class;
+		case "SHOP_SELL":
+
+			return ShopSell.class;
+		case "OFFICE_RENT":
+
+			return OfficeRent.class;
+		case "OFFICE_SELL":
+
+			return OfficeSell.class;
+		default:
+
+			return null;
+		}
 	}
 
 	public static PostType findEnum(String postType) {

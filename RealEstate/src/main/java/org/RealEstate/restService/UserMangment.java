@@ -61,20 +61,6 @@ public class UserMangment implements Serializable {
 
 	}
 
-	@GET
-	@Path("/v1/post-buy-user")
-	@Produces(MediaType.APPLICATION_JSON)
-
-	// TOODO BAAD FI BATHROOM W BedRom
-	public Response findAllPostByUser(@QueryParam("userId") Long userId, @QueryParam("postType") String postType,
-			@QueryParam("minPrice") int minPrice, @QueryParam("maxPrice") int maxPrice,
-			@QueryParam("villageId") Long villageId ,@QueryParam("page") int page , @QueryParam("size") int size
-			
-			) {
-
-		return userService.findAllPostByUser(userId, postType, minPrice, maxPrice , villageId , page , size  );
-
-	}
 
 	private Response analyzeException(Exception e) {
 		e.printStackTrace();

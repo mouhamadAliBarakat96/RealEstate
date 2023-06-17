@@ -4,16 +4,20 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.RealEstate.dto.PaginationResponse;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.facade.AppratmentRentFacade;
 import org.RealEstate.facade.AppratmentSellFacade;
 import org.RealEstate.facade.ChaletFacade;
+import org.RealEstate.facade.DistrictFacade;
+import org.RealEstate.facade.GovernorateFacade;
 import org.RealEstate.facade.LandFacade;
 import org.RealEstate.facade.OfficeRentFacade;
 import org.RealEstate.facade.OfficeSellFacade;
@@ -21,9 +25,12 @@ import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.ShopRentFacade;
 import org.RealEstate.facade.ShopSellFacade;
 import org.RealEstate.facade.UserFacade;
+import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.model.AppratmentRent;
 import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.Chalet;
+import org.RealEstate.model.District;
+import org.RealEstate.model.Governorate;
 import org.RealEstate.model.Land;
 import org.RealEstate.model.OfficeRent;
 import org.RealEstate.model.OfficeSell;
@@ -31,6 +38,7 @@ import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
 import org.RealEstate.model.User;
+import org.RealEstate.model.Village;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
@@ -72,6 +80,16 @@ public class PostService implements Serializable {
 	@EJB
 	private AppSinglton appSinglton;
 
+	
+	@EJB
+	private VillageFacade villageFacade;
+
+	@EJB
+	private DistrictFacade districtFacade;
+	@EJB
+	private GovernorateFacade governorateFacade;
+	
+	
 	/*
 	 * Manage Add post
 	 */
@@ -368,5 +386,50 @@ public class PostService implements Serializable {
 		}
 
 	}
+	public Response findAllPostByUser(Long userId, String postType, int minPrice, int maxPrice, Long villageId,
+			int page, int size, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, Long districtId,
+			Long governorateId) {
 
+		try {
+			Village village = null;
+			User user = null;
+			District district = null;
+			Governorate governorate = null;
+			if (userId != null && userId > 0) {
+				user = userFacade.findWithExcption(userId);
+			}
+
+			// check priority
+			// villageId
+			// districtId
+			// governorateId
+			if (villageId != null && villageId > 0) {
+				village = villageFacade.findWithExcption(villageId);
+
+			} else if (districtId != null && villageId > 0) {
+				district = districtFacade.findWithExcption(villageId);
+
+			} else if (governorateId != null && governorateId > 0) {
+				governorate = governorateFacade.findWithExcption(governorateId);
+
+			}
+
+			AtomicLong totalResults = new AtomicLong();
+			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice,
+					village, page, size, totalResults, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
+
+			PaginationResponse<RealEstate> response = new PaginationResponse<>();
+			response.setPage(page);
+			response.setSize(size);
+			response.setTotalCount(totalResults.get());
+			response.setData(realEstate);
+			//System.out.println(realEstate);
+			//realEstate.get(0).getPostType()
+			//AppratmentRent t = (AppratmentRent) realEstate.get(0)
+			return Response.status(Status.OK).entity(Utils.objectToString(response)).build();
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+
+	}
 }

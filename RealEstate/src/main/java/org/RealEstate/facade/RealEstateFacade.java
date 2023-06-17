@@ -12,6 +12,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 import org.RealEstate.enumerator.PostType;
+import org.RealEstate.model.AppratmentRent;
+import org.RealEstate.model.District;
+import org.RealEstate.model.Governorate;
+import org.RealEstate.model.Land;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
@@ -39,13 +43,32 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	}
 
 	public List<RealEstate> findAllRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice,
-			Village village, int page, int size  , AtomicLong totalCount ) throws Exception {
-		List<RealEstate> realEstates;
+			Village village, int page, int size, AtomicLong totalCount, int bedRoom, boolean bedRoomEq, int bathRoom,
+			boolean bathRoomEq, District district, Governorate governorate
+
+	) throws Exception {
+		List<? extends RealEstate> realEstates;
 
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<RealEstate> criteriaQuery = criteriaBuilder.createQuery(RealEstate.class);
+		CriteriaQuery<? extends RealEstate> criteriaQuery;
 		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-		Root<RealEstate> root = countQuery.from(RealEstate.class);
+
+		Root<? extends RealEstate> root;
+		Class classType;
+		if (postType != null) {
+
+			classType = PostType.getEntityType(postType);
+
+			if (classType == null) {
+				throw new Exception(Constants.POST_TYPE_NOT_SUPPORTED);
+			}
+
+		} else {
+			classType = RealEstate.class;
+		}
+
+		criteriaQuery = criteriaBuilder.createQuery(classType);
+		root = countQuery.from(classType);
 
 		// Create a list of predicates based on your runtime conditions
 		List<Predicate> predicates = new ArrayList<>();
@@ -76,6 +99,38 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		if (village != null) {
 			predicates.add(criteriaBuilder.equal(root.get("village"), village));
 
+		} else if (district != null) {
+			predicates.add(criteriaBuilder.equal(root.get("village.district"), district));
+
+		} else if (governorate != null) {
+			predicates.add(criteriaBuilder.equal(root.get("village.district.governorate"), governorate));
+
+		}
+
+		// asln el land ma ha yje 3aded 8oraf bas ehtyat
+		if (!classType.equals(Land.class)) {
+
+			if (bedRoom > 0) {
+				if (bedRoomEq) {
+					Predicate maxPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("nbRoom"), bedRoom);
+					predicates.add(maxPricePredicate);
+				} else {
+					Predicate maxPricePredicate = criteriaBuilder.equal(root.get("nbRoom"), bedRoom);
+					predicates.add(maxPricePredicate);
+				}
+			}
+
+			if (bathRoom > 0) {
+				if (bathRoomEq) {
+					Predicate maxPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("nbBathRoom"),
+							bathRoom);
+					predicates.add(maxPricePredicate);
+				} else {
+					Predicate maxPricePredicate = criteriaBuilder.equal(root.get("nbBathRoom"), bathRoom);
+					predicates.add(maxPricePredicate);
+				}
+			}
+
 		}
 
 		// Combine the predicates using conjunction (AND) or disjunction (OR)
@@ -85,22 +140,22 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 		countQuery.select(criteriaBuilder.count(root)).where(finalPredicate);
 
-		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult()); ;
-		 
-		criteriaQuery.select(root).where(finalPredicate);
-		TypedQuery<RealEstate> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult());
+
+		criteriaQuery.multiselect(root).where(finalPredicate);
+		TypedQuery<? extends RealEstate> typedQuery = getEntityManager().createQuery(criteriaQuery);
 		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
 				.setHint("eclipselink.join-fetch", "RealEstate.user");
 		typedQuery.setFirstResult((page - 1) * size);
-		typedQuery.setMaxResults(page);
+		typedQuery.setMaxResults(size);
 
 		// Add predicates based on your conditions
 		realEstates = typedQuery
 
 				.getResultList();
-		return realEstates;
+		return (List<RealEstate>) realEstates;
 
 	}
 

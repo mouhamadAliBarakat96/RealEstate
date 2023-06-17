@@ -1,15 +1,12 @@
 package org.RealEstate.facade;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
+import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
 import org.RealEstate.utils.Constants;
-import org.RealEstate.utils.Utils;
 
 @Stateless
 
@@ -22,6 +19,15 @@ public class GovernorateFacade extends AbstractFacade<Governorate> implements Se
 
 	public GovernorateFacade() {
 		super(Governorate.class);
+	}
+	public Governorate findWithExcption(Long id) throws Exception {
+		Governorate Governorate = this.find(id);
+		if(Governorate !=null) {
+			return Governorate;
+		}
+		else {
+			throw new Exception(Constants.GOVERNORTE_NOT_EXISTS);
+		}
 	}
 
 
