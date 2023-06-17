@@ -386,6 +386,125 @@ public class PostService implements Serializable {
 
 	}
 
+	// to use by kassem
+		public Response updateCallPost(Long id, String postType) {
+			try {
+
+				switch (postType) {
+				case "APPRATMENT_RENT":
+					AppratmentRent appratmentRent = appratmentRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+					if (appratmentRent != null) {
+						appratmentRent.setNumberOfCall(appratmentRent.getNumberOfCall() + 1);
+						appratmentRentFacade.save(appratmentRent);
+						return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+
+					} else {
+						return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+
+					}
+
+				case "APPRATMENT_SELL":
+
+					AppratmentSell appratmentSell = appratmentSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+					if (appratmentSell != null) {
+						appratmentSell.setNumberOfCall(appratmentSell.getNumberOfCall() + 1);
+						appratmentSellFacade.save(appratmentSell);
+						return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+
+					} else {
+						return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+
+					}
+
+				case "LAND":
+
+					Land land = landFacade.findWithLockPessimisticWriteWithoutException(id);
+
+					if (land != null) {
+						land.setNumberOfCall(land.getNumberOfCall() + 1);
+						landFacade.save(land);
+						return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+					} else {
+						return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					}
+
+				case "CHALET":
+
+					Chalet chalet = chaletFacade.findWithLockPessimisticWriteWithoutException(id);
+
+					if (chalet != null) {
+						chalet.setNumberOfCall(chalet.getNumberOfCall() + 1);
+						chaletFacade.save(chalet);
+						return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+					} else {
+						return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					}
+
+				case "SHOP_RENT":
+
+					ShopRent shopRent = shopRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+					if (shopRent != null) {
+						shopRent.setNumberOfCall(shopRent.getNumberOfCall() + 1);
+						shopRentFacade.save(shopRent);
+						return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+					} else {
+						return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					}
+
+				case "SHOP_SELL":
+
+					ShopSell shopSell = shopSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+					if (shopSell != null) {
+						shopSell.setNumberOfCall(shopSell.getNumberOfCall() + 1);
+						shopSellFacade.save(shopSell);
+						return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+					} else {
+						return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					}
+
+				case "OFFICE_RENT":
+
+					OfficeRent officeRent = officeRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+					if (officeRent != null) {
+						officeRent.setNumberOfCall(officeRent.getNumberOfCall() + 1);
+						officeRentFacade.save(officeRent);
+						return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+					} else {
+						return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					}
+
+				case "OFFICE_SELL":
+
+					OfficeSell officeSell = officeSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+					if (officeSell != null) {
+						officeSell.setNumberOfCall(officeSell.getNumberOfCall() + 1);
+						officeSellFacade.save(officeSell);
+						return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+					} else {
+						return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					}
+
+				default:
+
+					return Response.status(Status.BAD_REQUEST).entity(Constants.POST_TYPE_NOT_SUPPORTED).build();
+
+				}
+			} catch (Exception e) {
+
+				e.printStackTrace();
+				return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+			}
+
+		}
+
+		
 	
 	public Response updatePostLike(Long id, String postType) {
 		try {

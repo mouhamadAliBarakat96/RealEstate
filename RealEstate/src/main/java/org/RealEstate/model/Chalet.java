@@ -24,7 +24,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import org.RealEstate.enumerator.PostStatus;
-import org.RealEstate.enumerator.PostType;
 
 import com.google.gson.annotations.Expose;
 
@@ -95,6 +94,9 @@ public class Chalet extends MainEntity implements Serializable {
 	@JoinColumn(name = "user_id")
 	@Expose
 	private User user;
+
+	@Expose
+	private int numberOfCall;
 
 	@ElementCollection(targetClass = String.class)
 	@Expose
@@ -254,6 +256,14 @@ public class Chalet extends MainEntity implements Serializable {
 
 	public User getUser() {
 		return user;
+	}
+
+	public int getNumberOfCall() {
+		return numberOfCall;
+	}
+
+	public void setNumberOfCall(int numberOfCall) {
+		this.numberOfCall = numberOfCall;
 	}
 
 	public void setUser(User user) {

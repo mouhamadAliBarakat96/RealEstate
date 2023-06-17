@@ -93,8 +93,17 @@ public class PostMangment {
 	// add call
 	
 	
+	@PUT
+	@Path("/v1/add-like/{id}/{postType}")
+	@Produces(MediaType.APPLICATION_JSON)
+
+	public Response updateCallPost(@PathParam("id") Long id, @PathParam("postType") String postType) {
+
+		return postService.updateCallPost(id, postType);
+
+	}
 	
-	// add wpp call
+	
 
 	
 
