@@ -13,6 +13,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.RealEstate.dto.RealEstateLazyDataModel;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.facade.DistrictFacade;
@@ -46,6 +47,8 @@ public class IndexController implements Serializable {
 	private VillageFacade villageFacade;
 	@Inject
 	private RealEstateFacade realEstateFacade;
+	@Inject
+	private RealEstateLazyDataModel lazyModel;
 
 	private List<RealEstate> realEstates = new ArrayList<>();
 
@@ -70,8 +73,13 @@ public class IndexController implements Serializable {
 	@PostConstruct
 	public void init() {
 		governorates = governorateFacade.findAll();
-		genrateFakeData();
-		filteredRealEstates = new ArrayList<>(realEstates);
+
+//		int[] range = { 1, 10 };
+//		filteredRealEstates = realEstateFacade.findRange(range);
+//		lazyModel.getPageItems().addAll(filteredRealEstates);
+
+		 genrateFakeData();
+		 filteredRealEstates = new ArrayList<>(realEstates);
 	}
 
 	public void listenerSelectGovernate() {
@@ -85,12 +93,11 @@ public class IndexController implements Serializable {
 	}
 
 	public void search() {
-		AtomicLong l = new AtomicLong(10);
-		try {
-			
-			realEstateFacade.findAllRealSatateWithFilter(null, selectPostType.toString(), 0, 0, selecteVillage, 10, 0,
-					l, 0, false, 0, false, selecteDistrict, selecteGovernorate);
+		AtomicLong l = new AtomicLong(0);
 
+		try {
+			filteredRealEstates = realEstateFacade.findAllRealSatateWithFilter(null, selectPostType.toString(), 0, 0,
+					selecteVillage, 0, 0, l, 0, false, 0, false, selecteDistrict, selecteGovernorate);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
