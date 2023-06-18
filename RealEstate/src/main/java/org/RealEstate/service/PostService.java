@@ -665,15 +665,17 @@ public class PostService implements Serializable {
 			AtomicLong totalResults = new AtomicLong();
 			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice,
 					village, page, size, totalResults, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
-
-			PaginationResponse<RealEstate> response = new PaginationResponse<>();
+		Long x =	restateFacade.countRealSatateWithFilter(user, postType, minPrice, maxPrice,
+					village, page, size, totalResults, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
+			
+		
+		PaginationResponse<RealEstate> response = new PaginationResponse<>();
 			response.setPage(page);
 			response.setSize(size);
 			response.setTotalCount(totalResults.get());
 			response.setData(realEstate);
-			// System.out.println(realEstate);
-			// realEstate.get(0).getPostType()
-			// AppratmentRent t = (AppratmentRent) realEstate.get(0)
+			
+		
 			return Response.status(Status.OK).entity(Utils.objectToString(response)).build();
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();

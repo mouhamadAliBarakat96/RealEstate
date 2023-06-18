@@ -95,6 +95,40 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		root = countQuery.from(classType);
 
 		// Create a list of predicates based on your runtime conditions
+
+		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, postType, minPrice, maxPrice,
+				village, page, size, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
+
+		criteriaQuery.where(finalPredicate);
+
+		countQuery.select(criteriaBuilder.count(root)).where(finalPredicate);
+
+		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult());
+
+		criteriaQuery.multiselect(root).where(finalPredicate);
+		TypedQuery<? extends RealEstate> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
+				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
+				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
+				.setHint("eclipselink.join-fetch", "RealEstate.user");
+		typedQuery.setFirstResult((page - 1) * size);
+		typedQuery.setMaxResults(size);
+
+		// Add predicates based on your conditions
+		realEstates = typedQuery
+
+				.getResultList();
+		return (List<RealEstate>) realEstates;
+
+	}
+
+	private Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<? extends RealEstate> root, Class classType
+
+			, User user, String postType, int minPrice, int maxPrice, Village village, int page, int size,
+			AtomicLong totalCount, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, District district,
+			Governorate governorate
+
+	) throws Exception {
 		List<Predicate> predicates = new ArrayList<>();
 
 		if (user != null) {
@@ -165,35 +199,45 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		// Combine the predicates using conjunction (AND) or disjunction (OR)
 		Predicate finalPredicate = criteriaBuilder.and(predicates.toArray(new Predicate[0]));
 
+		return finalPredicate;
+	}
+
+	// start here create predict
+// to use by kasssem
+	public Long countRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice, Village village,
+			int page, int size, AtomicLong totalCount, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq,
+			District district, Governorate governorate) throws Exception {
+
+		CriteriaQuery<? extends RealEstate> criteriaQuery;
+
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+		Root<? extends RealEstate> root;
+		Class classType;
+		if (postType != null) {
+
+			classType = PostType.getEntityType(postType);
+
+			if (classType == null) {
+				throw new Exception(Constants.POST_TYPE_NOT_SUPPORTED);
+			}
+
+		} else {
+			classType = RealEstate.class;
+		}
+
+		criteriaQuery = criteriaBuilder.createQuery(classType);
+		root = countQuery.from(classType);
+
+		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, postType, minPrice, maxPrice,
+				village, page, size, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
+
 		criteriaQuery.where(finalPredicate);
 
 		countQuery.select(criteriaBuilder.count(root)).where(finalPredicate);
 
-		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult());
-
-		criteriaQuery.multiselect(root).where(finalPredicate);
-		TypedQuery<? extends RealEstate> typedQuery = getEntityManager().createQuery(criteriaQuery);
-		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
-				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
-				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
-				.setHint("eclipselink.join-fetch", "RealEstate.user");
-		typedQuery.setFirstResult((page - 1) * size);
-		typedQuery.setMaxResults(size);
-
-		// Add predicates based on your conditions
-		realEstates = typedQuery
-
-				.getResultList();
-		return (List<RealEstate>) realEstates;
+		return getEntityManager().createQuery(countQuery).getSingleResult();
 
 	}
-
-	// TODO
-
-	// start here create predict
-
-//	public Long  countRealSatateWithFilter () {
-//		
-//	}
 
 }
