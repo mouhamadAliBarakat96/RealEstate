@@ -81,14 +81,14 @@ function initDatePicker() {
 	$('.datepicker').datepicker({
 		todayHighlight : true,
 		format : 'dd/mm/yyyy',
-		language : "ar",
+		language : "en",
 		autoclose : true,
 
 	});
 	$('.datetimepicker').datetimepicker({
 		todayHighlight : true,
 		format : 'dd/mm/yyyy hh:ii',
-		language : "ar",
+		language : "en",
 		autoclose : true
 	});
 	$('.timepicker').timepicker({

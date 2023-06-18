@@ -27,8 +27,6 @@ public class UploadImagesMultiPart implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-
-
 	public List<String> uploadImage(List<InputPart> inputParts) throws IOException {
 
 		String fileName = null;
@@ -43,6 +41,11 @@ public class UploadImagesMultiPart implements Serializable {
 			byte[] bytes = IOUtils.toByteArray(inputStream);
 			//
 			File customDir = new File(Constants.UPLOAD_DIR + Constants.POST_IMAGE_DIR_NAME);
+			if (!customDir.exists()) {
+				customDir.mkdirs();
+
+			}
+
 			fileName = customDir.getAbsolutePath() + File.separator + fileName;
 			Files.write(Paths.get(fileName), bytes, StandardOpenOption.CREATE_NEW);
 		}
@@ -71,7 +74,6 @@ public class UploadImagesMultiPart implements Serializable {
 
 		// Add the random number before the extension
 		String modifiedNameWithoutExtension = nameWithoutExtension + "_" + Utils.radnomIntBasedToDate();
-		
 
 		// Combine the modified name and extension
 		return modifiedNameWithoutExtension + "." + extension;
