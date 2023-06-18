@@ -1,13 +1,17 @@
 package org.RealEstate.LazyDataModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.RealEstate.enumerator.PostStatus;
+import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
 import org.primefaces.model.FilterMeta;
@@ -31,17 +35,23 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
-		CriteriaBuilder cb = realEstateFacade.getEm().getCriteriaBuilder();
-		CriteriaQuery<Long> query = cb.createQuery(Long.class);
-		Root<RealEstate> root = query.from(RealEstate.class);
+
+		CriteriaBuilder criteriaBuilder = realEstateFacade.getEm().getCriteriaBuilder();
+		CriteriaQuery<RealEstate> criteriaQuery;
+		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+
+		Root<RealEstate> root = countQuery.from(RealEstate.class);
 
 		// Apply filters
-		Predicate predicate = applyFilters(cb, root, filterBy);
+		Predicate finalPredicate = applyFilters(criteriaBuilder, root, filterBy);
+		criteriaQuery = criteriaBuilder.createQuery(RealEstate.class);
+		root = countQuery.from(RealEstate.class);
 
-		// Count the total number of customers
-		Long count = countPosts(predicate);
+		criteriaQuery.where(finalPredicate);
 
-		return count.intValue();
+		countQuery.select(criteriaBuilder.count(root)).where(finalPredicate);
+
+		return Math.toIntExact(realEstateFacade.getEm().createQuery(countQuery).getSingleResult());
 	}
 
 	@Override
@@ -50,78 +60,83 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 	}
 
 	private Predicate applyFilters(CriteriaBuilder cb, Root<RealEstate> root, Map<String, FilterMeta> filterBy) {
-		Predicate predicate = cb.conjunction();
+		List<Predicate> predicates = new ArrayList<>();
 		for (Map.Entry<String, FilterMeta> entry : filterBy.entrySet()) {
 			String field = entry.getKey();
 			FilterMeta filterMeta = entry.getValue();
 			Object filterValue = filterMeta.getFilterValue();
 
 			if (filterValue != null) {
-				if ("fieldName".equals(field)) {
-					// Apply filtering logic for "fieldName"
-					// Example: predicate = cb.and(predicate, cb.equal(root.get("fieldName"),
-					// filterValue));
-				} else if ("anotherField".equals(field)) {
-					// Apply filtering logic for "anotherField"
-					// Example: predicate = cb.and(predicate, cb.like(root.get("anotherField"), "%"
-					// + filterValue + "%"));
+
+				if ("postType".equals(field)) {
+					PostType postTypeEnum = PostType.findEnum(filterValue.toString());
+					predicates.add(cb.equal(root.get("postType"), postTypeEnum));
+
 				}
+
+				else if ("id".equals(field)) {
+
+					predicates.add(cb.like(cb.function("text", String.class, root.get("id")), "%" + filterValue + "%"));
+
+					
+					
+				}
+
+				else if ("postStatus".equals(field)) {
+					PostStatus postStatus = PostStatus.findEnum(filterValue.toString());
+					predicates.add(cb.equal(root.get("postStatus"), postStatus));
+
+				} else if ("pricePublic".equals(field)) {
+
+					predicates.add(cb.equal(root.get("pricePublic"), filterValue));
+					
+
+				}
+
 				// Add more conditions for other fields as needed
 			}
 		}
-		return predicate;
-	}
+		Predicate finalPredicate = cb.and(predicates.toArray(new Predicate[0]));
 
-	private Long countPosts(Predicate predicate) {
-		CriteriaBuilder cb = realEstateFacade.getEm().getCriteriaBuilder();
-		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-		Root<RealEstate> root = countQuery.from(RealEstate.class);
-		countQuery.select(cb.count(root));
-		countQuery.where(predicate);
-		return realEstateFacade.getEm().createQuery(countQuery).getSingleResult();
+		return finalPredicate;
 	}
 
 	@Override
 	public List<RealEstate> load(int first, int pageSize, Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
-		CriteriaBuilder cb = realEstateFacade.getEm().getCriteriaBuilder();
-		CriteriaQuery<RealEstate> query = cb.createQuery(RealEstate.class);
-		Root<RealEstate> root = query.from(RealEstate.class);
+		CriteriaBuilder criteriaBuilder = realEstateFacade.getEm().getCriteriaBuilder();
+
+		CriteriaQuery<RealEstate> criteriaQuery = criteriaBuilder.createQuery(RealEstate.class);
+
+		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+
+		Root<RealEstate> root = criteriaQuery.from(RealEstate.class);
 
 		// Apply filters
-		Predicate predicate = applyFilters(query, cb, root, filterBy);
-
+		Predicate finalPredicate = applyFilters(criteriaBuilder, root, filterBy);
+		criteriaQuery.where(finalPredicate);
 		// Apply sorting
-		applySorting(query, cb, root, sortBy);
+		applySorting(criteriaQuery, criteriaBuilder, root, sortBy);
 
-		// Count the total number of customers
-		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-		countQuery.select(cb.count(countQuery.from(RealEstate.class)));
-		countQuery.where(predicate);
-		Long count = realEstateFacade.getEm().createQuery(countQuery).getSingleResult();
+		countQuery.select(criteriaBuilder.count(root)).where(finalPredicate);
 
-		// Load the customers with pagination
-		List<RealEstate> customers = realEstateFacade.getEm().createQuery(query).setFirstResult(first)
-				.setMaxResults(pageSize).setHint("eclipselink.join-fetch", "RealEstate.village")
+		int totalCount = Math.toIntExact((realEstateFacade.getEm().createQuery(countQuery).getSingleResult()));
+
+		TypedQuery<? extends RealEstate> typedQuery = realEstateFacade.getEm().createQuery(criteriaQuery);
+		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
-				.setHint("eclipselink.join-fetch", "RealEstate.user").getResultList();
+				.setHint("eclipselink.join-fetch", "RealEstate.user");
+
+		typedQuery.setFirstResult(first);
+		typedQuery.setMaxResults(pageSize);
+		List<? extends RealEstate> realEstates = typedQuery
+
+				.getResultList();
 
 		// Set the total count and return the loaded customers
-		setRowCount(count.intValue());
-		return customers;
-	}
-
-	private Predicate applyFilters(CriteriaQuery<RealEstate> query, CriteriaBuilder cb, Root<RealEstate> root,
-			Map<String, FilterMeta> filterBy) {
-		Predicate predicate = cb.conjunction();
-// Apply your filters logic here
-// Example: FilterMeta filterMeta = filterBy.get("fieldName");
-//          if (filterMeta != null && filterMeta.getFilterValue() != null) {
-//              String filterValue = filterMeta.getFilterValue().toString();
-//              predicate = cb.and(predicate, cb.like(root.get("fieldName"), "%" + filterValue + "%"));
-//          }
-		return predicate;
+		setRowCount(totalCount);
+		return (List<RealEstate>) realEstates;
 	}
 
 	private void applySorting(CriteriaQuery<RealEstate> query, CriteriaBuilder cb, Root<RealEstate> root,

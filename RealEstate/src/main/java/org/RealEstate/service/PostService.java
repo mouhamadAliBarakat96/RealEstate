@@ -248,8 +248,6 @@ public class PostService implements Serializable {
 		JsonNode villageJson = jsonNode.get("village");
 		Village village = Utils.getObjectFromString(villageJson.toString(), Village.class);
 		villageFacade.findWithExcption(village.getId());
-	
-		
 
 	}
 
@@ -665,17 +663,13 @@ public class PostService implements Serializable {
 			AtomicLong totalResults = new AtomicLong();
 			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice,
 					village, page, size, totalResults, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
-		Long x =	restateFacade.countRealSatateWithFilter(user, postType, minPrice, maxPrice,
-					village, page, size, totalResults, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
-			
-		
-		PaginationResponse<RealEstate> response = new PaginationResponse<>();
+
+			PaginationResponse<RealEstate> response = new PaginationResponse<>();
 			response.setPage(page);
 			response.setSize(size);
 			response.setTotalCount(totalResults.get());
 			response.setData(realEstate);
-			
-		
+
 			return Response.status(Status.OK).entity(Utils.objectToString(response)).build();
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();

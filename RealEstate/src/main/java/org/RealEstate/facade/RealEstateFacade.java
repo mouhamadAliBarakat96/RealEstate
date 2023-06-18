@@ -46,6 +46,16 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 				.setParameter("userId", userId).getSingleResult();
 	}
 
+	public Long findUserCountPostByStatus(PostStatus postStatus) {
+		return (Long) getEntityManager().createNamedQuery(RealEstate.FIND_COUNT_POST_BY_STATUS)
+				.setParameter("postStatus", postStatus).getSingleResult();
+	}
+	
+	public Long findUserCountPostByType(PostType postType) {
+		return (Long) getEntityManager().createNamedQuery(RealEstate.FIND_COUNT_POST_BY_TYPE)
+				.setParameter("postType", postType).getSingleResult();
+	}
+
 	public RealEstate findWithQueryHint(Long id) {
 		EntityManager entityManager = getEntityManager();
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -106,11 +116,13 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult());
 
 		criteriaQuery.multiselect(root).where(finalPredicate);
+		
 		TypedQuery<? extends RealEstate> typedQuery = getEntityManager().createQuery(criteriaQuery);
 		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
 				.setHint("eclipselink.join-fetch", "RealEstate.user");
+		
 		typedQuery.setFirstResult((page - 1) * size);
 		typedQuery.setMaxResults(size);
 

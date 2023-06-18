@@ -1,5 +1,11 @@
 
+ $(".filterNumbersOnly").keydown(function(evt) {
+	    	var charCode = (evt.which) ? evt.which : event.keyCode ;
+		if (charCode > 31 && (charCode < 48 || charCode > 57))
+			return false;
 
+		return true;
+	    })
 
 	$(".thousand-number").on('input', function(){
 	    var n = parseInt($(this).val().replace(/\D/g,''),10);

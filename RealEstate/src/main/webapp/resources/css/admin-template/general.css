@@ -442,6 +442,39 @@ div.fixed {
 	margin: 2% 15px;
 }
 
+.card.dashbord {
+	margin:0 ; 
+margin-top:5%;
+}
+.card-body.dashbord{
+	padding:0.75rem;
+}
+.card.dashbord.green {
+border-left: 0.75rem solid #009B77 !important;
+}
+.card.dashbord.yellow {
+border-left: 0.75rem solid #f7c346 !important;
+}
+.card.dashbord.red {
+border-left: 0.75rem solid #af0a0a !important;
+}
+.card.dashbord.blue {
+border-left: 0.75rem solid #34568B !important;
+}
+
+.card.dashbord.turquoise {
+border-left: 0.75rem solid #55B4B0 !important;
+}
+
+
+
+
+
+.card-body.dashbord{
+	padding: 0.75rem;
+}
+
+
 .btn-danger:not (:disabled ):not (.disabled ).active, .btn-danger:not (:disabled
 	 ):not (.disabled ):active, .show>.btn-danger.dropdown-toggle {
 	background-color: #f1646c !important;

@@ -36,12 +36,19 @@ import com.google.gson.annotations.Expose;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 20)
 @NamedQueries({
-		@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and realEstate.freezed=false ") })
+		// change to enum accepted
+		@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and realEstate.postStatus = org.RealEstate.enumerator.PostStatus.ACCEPTED "),
+		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_STATUS, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postStatus= :postStatus ") , 
+		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_TYPE, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postType= :postType ")
+
+})
 
 public abstract class RealEstate extends MainEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FING_NB_POST_FOR_USER = "RealEstate.FING_NB_POST_FOR_USER";
+	public static final String FIND_COUNT_POST_BY_STATUS = "RealEstate.FIND_COUNT_POST_BY_STATUS";
+	public static final String FIND_COUNT_POST_BY_TYPE= "RealEstate.FIND_COUNT_POST_BY_TYPE";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -94,8 +101,8 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@Expose
 	private int numberOfCall;
 
-	@Expose
-	private boolean freezed;
+
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Expose
 	private Date postDate;
@@ -224,13 +231,7 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		this.liked = liked;
 	}
 
-	public boolean isFreezed() {
-		return freezed;
-	}
 
-	public void setFreezed(boolean freezed) {
-		this.freezed = freezed;
-	}
 
 	public Date getPostDate() {
 		return postDate;
@@ -287,7 +288,5 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	public void setNumberOfCall(int numberOfCall) {
 		this.numberOfCall = numberOfCall;
 	}
-	
-	
 
 }

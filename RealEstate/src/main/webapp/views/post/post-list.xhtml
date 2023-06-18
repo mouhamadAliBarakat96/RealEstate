@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html">
 
@@ -15,6 +17,12 @@
 	<ui:param name="subtitle" value="#{bundle.main_page}" />
 
 	<ui:define name="breadcrumb">
+		<style>
+.font-weight-bold {
+	padding: 0;
+	margin: 0;
+}
+</style>
 
 		<div class="row">
 
@@ -31,45 +39,398 @@
 	</ui:define>
 	<ui:define name="customFormContent">
 
-		<h:panelGroup>
+		<o:importConstants type="org.RealEstate.enumerator.PostStatus"
+			var="postStatus" />
 
-			<div class="card">
-				<div class="card-body">
-					<h:panelGroup id="header-panel" style="width:100%">
-						<div class="row">
+		<o:importConstants type="org.RealEstate.enumerator.PostType"
+			var="postType" />
 
-							
+
+		<div class="card" style="margin-bottom: 0%;">
+			<h3 style="margin-left: 2%">Real Estate Statistics (Post Type)</h3>
+		</div>
+
+		<div class="card"
+			style="background: transparent; -webkit-box-shadow: none; margin-top: 1%;">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="card dashbord green " style="">
+						<div class="card-body dashbord ">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">APPRATMENT_RENT</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.numOfPostAppartmentRent} <i
+												class=" text-success font-12"></i>
+										</p>
+									</div>
+
+									<div class="col-4 align-self-center"></div>
+
+
+
+								</div>
+
+							</div>
 
 						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-lg-3">
+					<div class="card dashbord red " style="">
+						<div class="card-body dashbord">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">APPRATMENT_SELL</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.numOfPostOfficeSell} <i
+												class=""></i>
+										</p>
+									</div>
+
+									<div class="col-4 align-self-center"></div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				<!--end col-->
+
+				<div class="col-lg-3">
+					<div class="card dashbord blue" style="">
+						<div class="card-body dashbord">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">LAND</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.numOfPostLand}<i class=""></i>
+										</p>
+									</div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				<div class="col-lg-3">
+					<div class="card dashbord turquoise" style="">
+						<div class="card-body dashbord">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">SHOP_RENT</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.numOfPostShopRent} <i class=""></i>
+										</p>
+									</div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				<div class="col-lg-3">
+					<div class="card dashbord yellow" style="">
+						<div class="card-body dashbord">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">SHOP_SELL</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.numOfPostShopSell} <i class=""></i>
+										</p>
+									</div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				<div class="col-lg-3">
+					<div class="card dashbord red" style="">
+						<div class="card-body dashbord">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">OFFICE_RENT</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.numOfPostOfficeRent} <i
+												class=""></i>
+										</p>
+									</div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-lg-3">
+					<div class="card dashbord green" style="">
+						<div class="card-body dashbord">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">OFFICE_SELL</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.numOfPostOfficeSell} <i
+												class=""></i>
+										</p>
+									</div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<!--end row-->
+
+
+		<div class="card" style="margin-bottom: 0%;">
+			<h3 style="margin-left: 2%">Real Estate Statistics (Post Status)</h3>
+		</div>
+
+		<div class="card"
+			style="background: transparent; -webkit-box-shadow: none; margin-top: 1%;">
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="card dashbord green " style="">
+						<div class="card-body dashbord ">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">ACCEPTED</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.nmOfPostAccepted} <i class=""></i>
+										</p>
+									</div>
+
+									<div class="col-4 align-self-center"></div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-lg-4">
+					<div class="card dashbord red " style="">
+						<div class="card-body dashbord">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">PENDING</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.nbOfPostPending} <i class=""></i>
+										</p>
+									</div>
+
+									<div class="col-4 align-self-center"></div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				<!--end col-->
+
+				<div class="col-lg-4">
+					<div class="card dashbord blue" style="">
+						<div class="card-body dashbord">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">REVIEUX_BY_USER</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.nbOfPostRevieuxByUser} <i
+												class=""></i>
+										</p>
+									</div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				<div class="col-lg-4">
+					<div class="card dashbord turquoise" style="">
+						<div class="card-body dashbord">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">REFFUSED</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.nbOfPostReffused} <i class=""></i>
+										</p>
+									</div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				<div class="col-lg-4">
+					<div class="card dashbord yellow" style="">
+						<div class="card-body dashbord">
+							<div class="icon-contain">
+								<div class="row">
+									<div class="col-10 align-self-center">
+										<h5 class="">EXPIRED</h5>
+										<p class="font-weight-bold">
+											Number : #{postListController.nbOfPostExpired} <i class=""></i>
+										</p>
+									</div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+		<!--end row-->
+		<h:panelGroup>
+
+			<div class="card " style="margin-top: 1%;">
+				<div class="card-body  ">
+					<h:panelGroup id="header-panel" style="width:100%">
+						<div class="row"></div>
 					</h:panelGroup>
 					<div
 						style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
 
 
-						<p:dataTable var="var" value="#{postListController.lazyModel}"
-							paginator="true" rows="10" rowKey="#{var.id}"
-							paginatorPosition="bottom"
+						<p:dataTable id="tbl" var="var"
+							value="#{postListController.lazyModel}" paginator="true"
+							rows="10" rowKey="#{var.id}" paginatorPosition="bottom"
+							widgetVar="pageItemsTableWgVar"
 							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-							rowsPerPageTemplate="2,5,10,15" id="postTable">
+							rowsPerPageTemplate="2,5,10,15">
 
-							<p:column headerText="Name" sortBy="#{var.id}"
-								filterBy="#{var.id}">
+							<p:column headerText="Id" sortBy="#{var.id}" filterBy="#{var.id}">
 								<h:outputText value="#{var.id}" />
 							</p:column>
-							<p:column headerText="postType" sortBy="#{var.postType}"
-								filterBy="#{var.postType}">
+							<p:column filterBy="#{var.postType}" filterMatchMode="exact"
+								headerText="postType" sortBy="#{var.postType}">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('pageItemsTableWgVar').filter()"
+										style="width:100% ;   " styleClass="inputtext-filter">
+										<f:selectItem itemLabel="postType" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{postType.values()}" var="var"
+											itemLabel="#{var}" itemValue="#{var}" />
+									</p:selectOneMenu>
+								</f:facet>
+
+
+
 								<h:outputText value="#{var.postType}" />
 							</p:column>
 
-							<p:column headerText="location " filterBy="#{var.village.name}">
+
+
+
+							<p:column filterBy="#{var.postStatus}" filterMatchMode="exact"
+								headerText="postStatus" sortBy="#{var.postStatus}">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('pageItemsTableWgVar').filter()"
+										style="width:100% ;   " styleClass="inputtext-filter">
+										<f:selectItem itemLabel="postType" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{postStatus.values()}" var="var"
+											itemLabel="#{var}" itemValue="#{var}" />
+									</p:selectOneMenu>
+								</f:facet>
+
+								<h:outputText value="#{var.postStatus}" />
+							</p:column>
+
+							<p:column headerText="location ">
 								<h:outputText
 									value="#{var.village.district.governorate.name} /  #{var.village.district.name} / #{var.village.name }" />
 							</p:column>
 
 
 
-							<p:column headerText="user "
-								filterBy="#{var.user.firstName} / #{var.user.firstName} / #{var.user.firstName} ">
+							<p:column headerText="user ">
 								<h:outputText
 									value="#{var.user.firstName} / #{var.user.middleName} / #{var.user.lastName}" />
 							</p:column>
@@ -77,22 +438,45 @@
 
 
 
-							<p:column headerText="space" sortBy="#{var.space}"
-								filterBy="#{var.space}">
+							<p:column filterStyleClass="filterNumbersOnly" headerText="space"
+								sortBy="#{var.space}">
 								<h:outputText value="#{var.space}" />
 							</p:column>
 
 
-							<p:column headerText="price" sortBy="#{var.price}"
-								filterBy="#{var.price}">
+							<p:column headerText="price" sortBy="#{var.price}">
+
+
 								<h:outputText value="#{var.price}" />
 							</p:column>
 
-							<p:column headerText="price Public" sortBy="#{var.pricePublic}"
-								filterBy="#{var.pricePublic}">
+							<p:column headerText="Post Date" sortBy="#{var.postDate}"
+								width="100" style="padding-bottom: 45px;">
+								<h:outputText id="postDate" styleClass="text-ellipsis"
+									title="#{var.postDate}" value="#{var.postDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+
+							<p:column filterBy="#{var.pricePublic}" filterMatchMode="exact"
+								headerText="price public" sortBy="#{var.pricePublic}"
+								width="180">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('pageItemsTableWgVar').filter()"
+										converter="javax.faces.Boolean" style="width:100% ;   "
+										styleClass="inputtext-filter">
+										<f:selectItem itemLabel="All" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItem itemLabel="No" itemValue="false" />
+										<f:selectItem itemLabel="Yes" itemValue="true" />
+										<f:ajax></f:ajax>
+									</p:selectOneMenu>
+								</f:facet>
+
+
 								<em
 									class="   #{var.pricePublic  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
-
 
 
 							</p:column>
@@ -109,33 +493,16 @@
 
 		</h:panelGroup>
 
-		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-			<h:commandLink
-				style="color:white; margin-left:5px; margin-top:5px; margin-bottom:5px;"
-				styleClass="ui-confirmdialog-no btn btn-danger">
-				<em class="fa fa-times" />
 
-				<span> no</span>
-
-
-				<f:ajax></f:ajax>
-			</h:commandLink>
-
-			<h:commandLink
-				style="margin-left:10px  ; margin-top:5px;  margin-bottom:5px; color: white;"
-				styleClass="ui-confirmdialog-yes  btn btn-primary "
-				icon="ui-icon-check">
-				<f:ajax render=":messageScript"></f:ajax>
-				<em class="fa fa-check" />
-
-				<span> yes</span>
-
-
-			</h:commandLink>
-
-
-		</p:confirmDialog>
 	</ui:define>
+
+	<ui:define name="customOutputScript">
+
+
+
+
+	</ui:define>
+
 </ui:decorate>
 </html>
 
