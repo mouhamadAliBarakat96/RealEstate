@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:decorate template="/views/template/template.xhtml">
+
+
+	<ui:param name="title" value="#{bundle.main_page}" />
+	<ui:param name="subtitle" value="#{bundle.main_page}" />
+
+	<ui:define name="breadcrumb">
+
+		<!-- Page-Title -->
+		<div class="row">
+
+			<li class="breadcrumb-item ">#{bundle.card}</li>
+			<li class="breadcrumb-item "><h:link outcome="post-list"> Post List </h:link></li>
+
+			<li class="breadcrumb-item active">Management Post</li>
+
+
+		</div>
+		<!--end col-->
+	</ui:define>
+	<ui:define name="customStyleSheet">
+		<style>
+body .ui-panelgrid .ui-panelgrid-cell {
+	border: none !important;
+}
+</style>
+	</ui:define>
+	<ui:define name="pageTittle">
+
+
+
+		<h4 class="page-title">Mangment Post</h4>
+	</ui:define>
+	<ui:define name="customFormContent">
+		<o:onloadScript>
+	select2me();
+	</o:onloadScript>
+		<h:panelGroup id="crud-id">
+			<div class="panel-body">
+
+				<div class="card">
+					<div class="card-body">
+
+
+						<div class="row">
+							<div class="col-md-12">
+								<p:galleria value="#{postController.realEstate.images}"
+									var="photo" numVisible="5"
+									style="max-width: 20% ; display:inline-block">
+
+									<p:graphicImage url="#{postController.fullUrl}#{photo}"
+										alt="aa" style="width: 100%" />
+
+									<f:facet name="thumbnail">
+										<p:graphicImage url="#{postController.fullUrl}#{photo}"
+											style="width: 100%" alt="#{photo}" />
+									</f:facet>
+
+								</p:galleria>
+
+								<div
+									style="width: 75%  ;margin-left: 3%; display: inline-block; position: absolute">
+
+									<div class="card">
+										<div class="card-body">
+											<h3 style="text-align: center;">Post Information</h3>
+										</div>
+
+										<p:panelGrid style="width:35%" columns="2">
+
+											<h:outputText value="Tittle:" />
+											<h:outputText value="#{postController.realEstate.tittle}" />
+
+											<h:outputText value="sub Tittle:" />
+											<h:outputText value="#{postController.realEstate.subTittle}" />
+
+											<h:outputText value="Location:" />
+											<h:outputText
+												value="#{postController.realEstate.village.district.governorate.name} / #{postController.realEstate.village.district.name} / #{postController.realEstate.village.name}" />
+
+											<h:outputText value="Price :" />
+											<h:outputText
+												value="#{of:formatCurrency(postController.realEstate.price, '')} USD " />
+										</p:panelGrid>
+									</div>
+
+
+								</div>
+
+							</div>
+
+
+						</div>
+
+
+
+					</div>
+				</div>
+
+
+
+			</div>
+
+		</h:panelGroup>
+
+	</ui:define>
+
+</ui:decorate>
+
+</html>

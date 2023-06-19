@@ -72,7 +72,8 @@ public class TemplateController implements Serializable {
 		m1.addChild(m2);
 		m2 = new MenuItem("", "", "village", true, "display: none;");
 		m1.addChild(m2);
-
+		m2 = new MenuItem("", "", "post", true, "display: none;");
+		m1.addChild(m2);
 		
 		
 		

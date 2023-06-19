@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.RealEstate.utils.Constants;
 
 
-@WebServlet("/image/*")
+@WebServlet("/images/*")
 public class ImageServlet extends HttpServlet {
 
 	// Properties

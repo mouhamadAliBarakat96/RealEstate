@@ -41,6 +41,17 @@
 	
 
 
+		<navigation-rule>
+		<navigation-case>
+			<from-outcome>post</from-outcome>
+			<to-view-id>/views/post/post.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+
+
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>district</from-outcome>

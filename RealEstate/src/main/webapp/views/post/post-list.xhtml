@@ -541,11 +541,16 @@
 							rows="10" rowKey="#{var.id}" paginatorPosition="bottom"
 							widgetVar="pageItemsTableWgVar"
 							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-							rowsPerPageTemplate="2,5,10,15">
+							rowsPerPageTemplate="5,10,15,20">
 
 							<p:column headerText="Id" sortBy="#{var.id}" filterBy="#{var.id}">
-								<h:outputText value="#{var.id}" />
+								<h:link value="#{var.id}" outcome="post">
+									<f:param name="id" value="#{var.id}" />
+								</h:link>
+
 							</p:column>
+
+
 							<p:column filterBy="#{var.postType}" filterMatchMode="exact"
 								headerText="postType" sortBy="#{var.postType}">
 								<f:facet name="filter">

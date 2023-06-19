@@ -25,6 +25,7 @@ public interface Constants {
 		}
 	}
 
+	final String IMAGES = "images";
 	final String POST_IMAGE_DIR_NAME = "POST";
 	final String PROFILE_IMAGE_DIR_NAME = "PROFILE";
 
