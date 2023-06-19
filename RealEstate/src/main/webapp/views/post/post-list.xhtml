@@ -4,6 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions"
+	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html">
 
@@ -28,6 +29,7 @@
 
      initDatePicker();
      select2me();
+       inputNumberPicker();
        </o:onloadScript>
 
 
@@ -483,7 +485,29 @@
 							</div>
 
 
-							price range
+							<div class="col-md-3">
+								<p:outputLabel class="control-label" for="minPrice"
+									value="min price ">
+								</p:outputLabel>
+								<h:inputText id="minPrice" label="min price" h5:step="1"
+									value="#{postListController.minPrice}" type="number"
+									styleClass="form-control-sm input-number-picker" />
+								<h:message for="minPrice" styleClass="error-message" />
+							</div>
+
+
+							<div class="col-md-3">
+								<p:outputLabel class="control-label" for="minPrice"
+									value="max price ">
+								</p:outputLabel>
+								<h:inputText id="maxPrice" label="max price" h5:step="1"
+									value="#{postListController.maxPrice}" type="number"
+									styleClass="form-control-sm input-number-picker" />
+								<h:message for="maxPrice" styleClass="error-message" />
+							</div>
+
+
+
 
 
 						</div>
