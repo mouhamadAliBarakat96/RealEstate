@@ -163,10 +163,10 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 			predicates.add(criteriaBuilder.equal(root.get("village"), village));
 
 		} else if (district != null) {
-			predicates.add(criteriaBuilder.equal(root.get("village.district"), district));
+			predicates.add(criteriaBuilder.equal(root.get("village").get("district"), district));
 
 		} else if (governorate != null) {
-			predicates.add(criteriaBuilder.equal(root.get("village.district.governorate"), governorate));
+			predicates.add(criteriaBuilder.equal(root.get("village").get("district").get("governorate"), governorate));
 
 		}
 

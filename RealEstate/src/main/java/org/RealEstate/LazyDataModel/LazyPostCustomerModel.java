@@ -114,8 +114,43 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 
 				}
 
+				
+
 				// Add more conditions for other fields as needed
 			}
+			
+		}
+		
+		if (village != null) {
+			predicates.add(cb.equal(root.get("village"), village));
+
+		} else if (district != null) {
+			predicates.add(cb.equal(root.get("village").get("district"), district));
+
+		} else if (governorate != null) {
+			predicates.add(cb.equal(root.get("village").get("district").get("governorate"), governorate));
+
+		}
+
+		if (minPrice > 0) {
+
+			Predicate minPricePredicate = cb.greaterThanOrEqualTo(root.get("price"), minPrice);
+			predicates.add(minPricePredicate);
+		}
+		if (maxPrice > 0) {
+			Predicate maxPricePredicate = cb.lessThanOrEqualTo(root.get("price"), maxPrice);
+			predicates.add(maxPricePredicate);
+		}
+
+		if (fromDate != null) {
+			Predicate datePredicateFrom = cb.greaterThanOrEqualTo(root.<Date>get("postDate"), fromDate);
+			predicates.add(datePredicateFrom);
+
+		}
+		if (toDate != null) {
+			Predicate datePredicateTo = cb.lessThanOrEqualTo(root.get("postDate"), toDate);
+		
+			predicates.add(datePredicateTo);
 		}
 		Predicate finalPredicate = cb.and(predicates.toArray(new Predicate[0]));
 

@@ -20,6 +20,7 @@ import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.Village;
+import org.RealEstate.utils.CommonUtility;
 import org.omnifaces.util.Ajax;
 import org.primefaces.model.LazyDataModel;
 
@@ -102,10 +103,18 @@ public class PostListController implements Serializable {
 	}
 
 	public void search() {
+		
+		if (toDate!=null && fromDate !=null && toDate.compareTo(fromDate)<0) {
+			CommonUtility.addMessageToFacesContext("toDate its before fromDate ", "error");
 
-		lazyModel = new LazyPostCustomerModel(realEstateFacade, fromDate, toDate, governorate, district, village,
-				minPrice, maxPrice);
-		Ajax.oncomplete("PF('pageItemsTableWgVar').filter(); ");
+		} else if (minPrice > maxPrice) {
+			CommonUtility.addMessageToFacesContext("minPrice greater than maxPrice ", "error");
+
+		} else {
+			lazyModel = new LazyPostCustomerModel(realEstateFacade, fromDate, toDate, governorate, district, village,
+					minPrice, maxPrice);
+			Ajax.oncomplete("PF('pageItemsTableWgVar').filter(); ");
+		}
 
 	}
 
