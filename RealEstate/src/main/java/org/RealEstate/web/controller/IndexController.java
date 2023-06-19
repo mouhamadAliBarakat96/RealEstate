@@ -2,7 +2,6 @@ package org.RealEstate.web.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -26,7 +25,6 @@ import org.RealEstate.model.Chalet;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
 import org.RealEstate.model.Land;
-import org.RealEstate.model.OfficeRent;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
@@ -61,9 +59,6 @@ public class IndexController implements Serializable {
 
 	private List<District> districts = new ArrayList<>();
 
-	private List<String> imagesUrl = Arrays.asList("property-1.jpg", "property-2.jpg", "property-3.jpg",
-			"property-4.jpg");
-
 	// Search Bar Filters
 
 	private User user;
@@ -86,8 +81,8 @@ public class IndexController implements Serializable {
 	public void init() {
 		governorates = governorateFacade.findAll();
 
-	//	realEstates = realEstateFacade.findAll();// GET RECOMMEND PROPERTIES LATER
-	//	totalCount.set(realEstates.size());
+		// realEstates = realEstateFacade.findAll();// GET RECOMMEND PROPERTIES LATER
+		// totalCount.set(realEstates.size());
 
 		lazyModel = new RealEstateLazyDataModel(realEstateFacade);
 	}
@@ -118,46 +113,7 @@ public class IndexController implements Serializable {
 		lazyModel.setMaxPrice(maxPrice);
 		lazyModel.setMinPrice(minPrice);
 		lazyModel.setPostType(selectPostType.toString());
-		//lazyModel.setTotalCount(totalCount);
-
-	}
-
-	public void saveAllFakeData() {
-		try {
-
-			genrateFakeData();
-			realEstates = realEstateFacade.saveAll(realEstates);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public void genrateFakeData() {
-
-		Governorate governorate = new Governorate("Janoub");
-		District district = new District("Tyre");
-		district.setGovernorate(governorate);
-
-		Village vill = new Village("Chehour");
-		vill.setDistrict(district);
-
-		addToRealEstate(new AppratmentRent(5, 2, true, 1, vill, imagesUrl));
-		addToRealEstate(new AppratmentRent(5, 2, true, 1, vill, imagesUrl));
-
-		addToRealEstate(new AppratmentSell(3, 1, false, 1, vill, imagesUrl));
-		addToRealEstate(new AppratmentSell(3, 1, false, 1, vill, imagesUrl));
-
-		addToRealEstate(new Land(5, false, true, vill, imagesUrl));
-		addToRealEstate(new Land(5, false, true, vill, imagesUrl));
-		addToRealEstate(new Land(5, false, true, vill, imagesUrl));
-		addToRealEstate(new Land(5, false, true, vill, imagesUrl));
-
-		addToRealEstate(new OfficeRent(3, false, 1, 1, vill, imagesUrl));
-
-		addToChalet(new Chalet("Joulie", true, false, "for couples", vill, 100, 150));
-		addToChalet(new Chalet("Corner", true, false, "over 10 person", vill, 100, 150));
-		addToChalet(new Chalet("Zoz", true, false, "for families", vill, 100, 150));
+		// lazyModel.setTotalCount(totalCount);
 
 	}
 
@@ -177,8 +133,6 @@ public class IndexController implements Serializable {
 							|| x.getPostType().equals(PostType.SHOP_SELL) || x.getPostType().equals(PostType.LAND))
 					.collect(Collectors.toList());
 
-		} else {
-			realEstates = realEstates;
 		}
 	}
 
@@ -284,14 +238,6 @@ public class IndexController implements Serializable {
 
 	public void setSelecteDistrict(District selecteDistrict) {
 		this.selecteDistrict = selecteDistrict;
-	}
-
-	public List<String> getImagesUrl() {
-		return imagesUrl;
-	}
-
-	public void setImagesUrl(List<String> imagesUrl) {
-		this.imagesUrl = imagesUrl;
 	}
 
 	public RealEstateLazyDataModel getLazyModel() {
