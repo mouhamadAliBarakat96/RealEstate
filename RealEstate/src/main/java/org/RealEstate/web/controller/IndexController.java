@@ -28,6 +28,7 @@ import org.RealEstate.model.Governorate;
 import org.RealEstate.model.Land;
 import org.RealEstate.model.OfficeRent;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 
 @Named
@@ -47,8 +48,6 @@ public class IndexController implements Serializable {
 	private VillageFacade villageFacade;
 	@Inject
 	private RealEstateFacade realEstateFacade;
-	@Inject
-	private RealEstateLazyDataModel lazyModel;
 
 	private List<RealEstate> realEstates = new ArrayList<>();
 
@@ -59,48 +58,76 @@ public class IndexController implements Serializable {
 	private PostType selectPostType = PostType.APPRATMENT_RENT;
 
 	private List<Governorate> governorates = new ArrayList<>();
-	private Governorate selecteGovernorate = new Governorate();
 
 	private List<Village> villages = new ArrayList<>();
-	private Village selecteVillage = new Village();
 
 	private List<District> districts = new ArrayList<>();
-	private District selecteDistrict = new District();
 
 	private List<String> imagesUrl = Arrays.asList("property-1.jpg", "property-2.jpg", "property-3.jpg",
 			"property-4.jpg");
+
+	// Search Bar Filters
+
+	private User user;
+	private String postType;
+	private int minPrice;
+	private int maxPrice;
+	private AtomicLong totalCount;
+	private int bedRoom;
+	private boolean bedRoomEq;
+	private int bathRoom;
+	private boolean bathRoomEq;
+	private Governorate selecteGovernorate = new Governorate();
+	private District selecteDistrict = new District();
+	private Village selecteVillage = new Village();
+
+	// lazy model
+	private RealEstateLazyDataModel lazyModel;
 
 	@PostConstruct
 	public void init() {
 		governorates = governorateFacade.findAll();
 
-//		int[] range = { 1, 10 };
-//		filteredRealEstates = realEstateFacade.findRange(range);
-//		lazyModel.getPageItems().addAll(filteredRealEstates);
-
-		 genrateFakeData();
-		 filteredRealEstates = new ArrayList<>(realEstates);
+		// genrateFakeData();
+		// filteredRealEstates = new ArrayList<>(realEstates);
+		lazyModel = new RealEstateLazyDataModel(realEstateFacade);
 	}
 
 	public void listenerSelectGovernate() {
-		villages = new ArrayList<>();
-		districts = districtFacade.findByGovernorate(selecteGovernorate.getId());
+		if (selecteGovernorate != null) {
+			villages = new ArrayList<>();
+			districts = districtFacade.findByGovernorate(selecteGovernorate.getId());
+		}
 
 	}
 
 	public void listenerSelectDistrict() {
-		villages = villageFacade.findByDisctrict(selecteDistrict.getId());
+		if (selecteDistrict != null) {
+			villages = villageFacade.findByDisctrict(selecteDistrict.getId());
+		}
 	}
 
 	public void search() {
-		AtomicLong l = new AtomicLong(0);
-
-		try {
-			filteredRealEstates = realEstateFacade.findAllRealSatateWithFilter(null, selectPostType.toString(), 0, 0,
-					selecteVillage, 0, 0, l, 0, false, 0, false, selecteDistrict, selecteGovernorate);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		lazyModel.setBathRoom(bathRoom);
+		lazyModel.setUser(null);
+		lazyModel.setBathRoomEq(bathRoomEq);
+		lazyModel.setDistrict(selecteDistrict);
+		lazyModel.setGovernorate(selecteGovernorate);
+		lazyModel.setVillage(selecteVillage);
+		lazyModel.setBedRoom(0);
+		lazyModel.setBedRoomEq(false);
+		lazyModel.setMaxPrice(maxPrice);
+		lazyModel.setMinPrice(minPrice);
+		lazyModel.setPostType(selectPostType.toString());
+		// AtomicLong l = new AtomicLong(0);
+		// try {
+		// filteredRealEstates = realEstateFacade.findAllRealSatateWithFilter(null,
+		// selectPostType.toString(), 0, 0,
+		// selecteVillage, 0, 0, l, 0, false, 0, false, selecteDistrict,
+		// selecteGovernorate);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	public void genrateFakeData() {
@@ -270,6 +297,14 @@ public class IndexController implements Serializable {
 
 	public void setImagesUrl(List<String> imagesUrl) {
 		this.imagesUrl = imagesUrl;
+	}
+
+	public RealEstateLazyDataModel getLazyModel() {
+		return lazyModel;
+	}
+
+	public void setLazyModel(RealEstateLazyDataModel lazyModel) {
+		this.lazyModel = lazyModel;
 	}
 
 }

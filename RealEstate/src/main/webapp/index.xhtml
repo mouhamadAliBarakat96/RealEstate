@@ -87,7 +87,7 @@
 						</div>
 
 						<div class="col-md-2">
-							<h:commandButton action="#{indexController.search()}"
+							<h:commandButton onclick="dataViewPageLoad();" action="#{indexController.search()}"
 								value="#{bundle.search}"
 								styleClass="btn btn-dark border-0 w-100 py-3">
 								<!-- <f:ajax execute="myForm:panelSearchBar" /> -->
@@ -122,9 +122,9 @@
 			<div class="tab-content">
 				<div id="tab-1" class="tab-pane fade show p-0 active">
 					<div class="row g-4">
-						<p:dataView var="real" value="#{indexController.filteredRealEstates}" rows="6"
+						<p:dataView var="real" value="#{indexController.lazyModel}" rows="6"
 							lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
-							paginatorPosition="bottom"
+							paginatorPosition="bottom" widgetVar="realEstatesDataView"
 							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 							gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 							<p:dataViewGridItem>
