@@ -51,8 +51,6 @@ public class IndexController implements Serializable {
 
 	private List<RealEstate> realEstates = new ArrayList<>();
 
-	private List<RealEstate> filteredRealEstates = new ArrayList<>();
-
 	private List<Chalet> chaletList = new ArrayList<>();
 
 	private PostType selectPostType = PostType.APPRATMENT_RENT;
@@ -72,7 +70,7 @@ public class IndexController implements Serializable {
 	private String postType;
 	private int minPrice;
 	private int maxPrice;
-	private AtomicLong totalCount;
+	private AtomicLong totalCount = new AtomicLong();
 	private int bedRoom;
 	private boolean bedRoomEq;
 	private int bathRoom;
@@ -88,8 +86,9 @@ public class IndexController implements Serializable {
 	public void init() {
 		governorates = governorateFacade.findAll();
 
-		// genrateFakeData();
-		// filteredRealEstates = new ArrayList<>(realEstates);
+	//	realEstates = realEstateFacade.findAll();// GET RECOMMEND PROPERTIES LATER
+	//	totalCount.set(realEstates.size());
+
 		lazyModel = new RealEstateLazyDataModel(realEstateFacade);
 	}
 
@@ -119,15 +118,19 @@ public class IndexController implements Serializable {
 		lazyModel.setMaxPrice(maxPrice);
 		lazyModel.setMinPrice(minPrice);
 		lazyModel.setPostType(selectPostType.toString());
-		// AtomicLong l = new AtomicLong(0);
-		// try {
-		// filteredRealEstates = realEstateFacade.findAllRealSatateWithFilter(null,
-		// selectPostType.toString(), 0, 0,
-		// selecteVillage, 0, 0, l, 0, false, 0, false, selecteDistrict,
-		// selecteGovernorate);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+		//lazyModel.setTotalCount(totalCount);
+
+	}
+
+	public void saveAllFakeData() {
+		try {
+
+			genrateFakeData();
+			realEstates = realEstateFacade.saveAll(realEstates);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void genrateFakeData() {
@@ -161,21 +164,21 @@ public class IndexController implements Serializable {
 	public void listenerSelect(RealEstateTypeEnum type) {
 
 		if (type == RealEstateTypeEnum.FORRENT) {
-			filteredRealEstates = realEstates.stream()
+			realEstates = realEstates.stream()
 					.filter(x -> x.getPostType().equals(PostType.APPRATMENT_RENT)
 							|| x.getPostType().equals(PostType.OFFICE_RENT)
 							|| x.getPostType().equals(PostType.SHOP_RENT))
 					.collect(Collectors.toList());
 
 		} else if (type == RealEstateTypeEnum.FORSELL) {
-			filteredRealEstates = realEstates.stream()
+			realEstates = realEstates.stream()
 					.filter(x -> x.getPostType().equals(PostType.APPRATMENT_SELL)
 							|| x.getPostType().equals(PostType.OFFICE_SELL)
 							|| x.getPostType().equals(PostType.SHOP_SELL) || x.getPostType().equals(PostType.LAND))
 					.collect(Collectors.toList());
 
 		} else {
-			filteredRealEstates = realEstates;
+			realEstates = realEstates;
 		}
 	}
 
@@ -225,14 +228,6 @@ public class IndexController implements Serializable {
 		Random random = new Random();
 		int randomValue = random.nextInt(3) + 1;
 		return randomValue;
-	}
-
-	public List<RealEstate> getFilteredRealEstates() {
-		return filteredRealEstates;
-	}
-
-	public void setFilteredRealEstates(List<RealEstate> filteredRealEstates) {
-		this.filteredRealEstates = filteredRealEstates;
 	}
 
 	public PostType getSelectPostType() {
@@ -305,6 +300,110 @@ public class IndexController implements Serializable {
 
 	public void setLazyModel(RealEstateLazyDataModel lazyModel) {
 		this.lazyModel = lazyModel;
+	}
+
+	public GovernorateFacade getGovernorateFacade() {
+		return governorateFacade;
+	}
+
+	public void setGovernorateFacade(GovernorateFacade governorateFacade) {
+		this.governorateFacade = governorateFacade;
+	}
+
+	public DistrictFacade getDistrictFacade() {
+		return districtFacade;
+	}
+
+	public void setDistrictFacade(DistrictFacade districtFacade) {
+		this.districtFacade = districtFacade;
+	}
+
+	public VillageFacade getVillageFacade() {
+		return villageFacade;
+	}
+
+	public void setVillageFacade(VillageFacade villageFacade) {
+		this.villageFacade = villageFacade;
+	}
+
+	public RealEstateFacade getRealEstateFacade() {
+		return realEstateFacade;
+	}
+
+	public void setRealEstateFacade(RealEstateFacade realEstateFacade) {
+		this.realEstateFacade = realEstateFacade;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getPostType() {
+		return postType;
+	}
+
+	public void setPostType(String postType) {
+		this.postType = postType;
+	}
+
+	public int getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(int minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public int getMaxPrice() {
+		return maxPrice;
+	}
+
+	public void setMaxPrice(int maxPrice) {
+		this.maxPrice = maxPrice;
+	}
+
+	public AtomicLong getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(AtomicLong totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public int getBedRoom() {
+		return bedRoom;
+	}
+
+	public void setBedRoom(int bedRoom) {
+		this.bedRoom = bedRoom;
+	}
+
+	public boolean isBedRoomEq() {
+		return bedRoomEq;
+	}
+
+	public void setBedRoomEq(boolean bedRoomEq) {
+		this.bedRoomEq = bedRoomEq;
+	}
+
+	public int getBathRoom() {
+		return bathRoom;
+	}
+
+	public void setBathRoom(int bathRoom) {
+		this.bathRoom = bathRoom;
+	}
+
+	public boolean isBathRoomEq() {
+		return bathRoomEq;
+	}
+
+	public void setBathRoomEq(boolean bathRoomEq) {
+		this.bathRoomEq = bathRoomEq;
 	}
 
 }

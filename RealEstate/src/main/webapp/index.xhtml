@@ -14,6 +14,11 @@
 
 		<link href="/resources/makaan/css/index.css" rel="stylesheet" />
 
+		<h:outputStylesheet>
+
+
+		</h:outputStylesheet>
+
 	</ui:define>
 
 
@@ -31,67 +36,94 @@
 			<div class="container-fluid bg-primary mb-5 wow "
 				data-wow-delay="0.1s" style="padding: 35px;">
 				<div class="container">
-					<div class="row g-2">
-						<div class="col-md-10">
-							<div class="row g-2">
-								<div class="col-md-3">
-									<h:selectOneMenu styleClass="form-select border-0 py-3"
-										converter="omnifaces.SelectItemsConverter"
-										value="#{indexController.selectPostType}">
-										<f:selectItem itemLabel="Property Type" itemValue="" />
-										<f:selectItems value="#{PostType.values()}" var="option"
-											itemLabel="#{option.name}" itemValue="#{option}" />
-										<f:ajax execute="@this"></f:ajax>
-									</h:selectOneMenu>
-								</div>
-
-								<div class="col-md-3">
-									<h:selectOneMenu id="governateSelectId"
-										styleClass="form-select border-0 py-3"
-										converter="omnifaces.SelectItemsConverter"
-										value="#{indexController.selecteGovernorate}">
-										<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
-										<f:selectItems value="#{indexController.governorates}"
-											var="option" itemLabel="#{option.name}" itemValue="#{option}" />
-										<f:ajax execute="@this"
-											render="myForm:districtSelectId myForm:villageSelectId"
-											listener="#{indexController.listenerSelectGovernate()}" />
-									</h:selectOneMenu>
-								</div>
-
-								<div class="col-md-3">
-									<h:selectOneMenu id="districtSelectId"
-										converter="omnifaces.SelectItemsConverter"
-										styleClass="form-select border-0 py-3"
-										value="#{indexController.selecteDistrict}">
-										<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
-										<f:selectItems value="#{indexController.districts}"
-											var="option" itemLabel="#{option.name}" itemValue="#{option}" />
-										<f:ajax execute="@this"
-											listener="#{indexController.listenerSelectDistrict()}"
-											render="myForm:villageSelectId" />
-									</h:selectOneMenu>
-								</div>
-								<div class="col-md-3">
-									<h:selectOneMenu id="villageSelectId"
-										converter="omnifaces.SelectItemsConverter"
-										styleClass="form-select border-0 py-3"
-										value="#{indexController.selecteVillage}">
-										<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
-										<f:selectItems value="#{indexController.villages}"
-											var="option" itemLabel="#{option.name}" itemValue="#{option}" />
-										<f:ajax execute="@this" />
-									</h:selectOneMenu>
-								</div>
+					<div class="row  g-2">
+						<div class="row g-2">
+							<div class="col-md-3">
+								<h:selectOneMenu styleClass="form-select border-0 py-3"
+									converter="omnifaces.SelectItemsConverter"
+									value="#{indexController.selectPostType}">
+									<f:selectItem itemLabel="Property Type" itemValue="" />
+									<f:selectItems value="#{PostType.values()}" var="option"
+										itemLabel="#{option.name}" itemValue="#{option}" />
+									<f:ajax execute="@this"></f:ajax>
+								</h:selectOneMenu>
 							</div>
-						</div>
 
-						<div class="col-md-2">
-							<h:commandButton onclick="dataViewPageLoad();" action="#{indexController.search()}"
-								value="#{bundle.search}"
-								styleClass="btn btn-dark border-0 w-100 py-3">
-								<!-- <f:ajax execute="myForm:panelSearchBar" /> -->
-							</h:commandButton>
+							<div class="col-md-3">
+								<h:selectOneMenu id="governateSelectId"
+									styleClass="form-select border-0 py-3"
+									converter="omnifaces.SelectItemsConverter"
+									value="#{indexController.selecteGovernorate}">
+									<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
+									<f:selectItems value="#{indexController.governorates}"
+										var="option" itemLabel="#{option.name}" itemValue="#{option}" />
+									<f:ajax execute="@this"
+										render="myForm:districtSelectId myForm:villageSelectId"
+										listener="#{indexController.listenerSelectGovernate()}" />
+								</h:selectOneMenu>
+							</div>
+
+							<div class="col-md-3">
+								<h:selectOneMenu id="districtSelectId"
+									converter="omnifaces.SelectItemsConverter"
+									styleClass="form-select border-0 py-3"
+									value="#{indexController.selecteDistrict}">
+									<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
+									<f:selectItems value="#{indexController.districts}"
+										var="option" itemLabel="#{option.name}" itemValue="#{option}" />
+									<f:ajax execute="@this"
+										listener="#{indexController.listenerSelectDistrict()}"
+										render="myForm:villageSelectId" />
+								</h:selectOneMenu>
+							</div>
+							<div class="col-md-3">
+								<h:selectOneMenu id="villageSelectId"
+									converter="omnifaces.SelectItemsConverter"
+									styleClass="form-select border-0 py-3"
+									value="#{indexController.selecteVillage}">
+									<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
+									<f:selectItems value="#{indexController.villages}" var="option"
+										itemLabel="#{option.name}" itemValue="#{option}" />
+									<f:ajax execute="@this" />
+								</h:selectOneMenu>
+							</div>
+							<div class="col-md-3">
+								<h:outputLabel value="Min Price" />
+								<p:inputNumber placeholder="min price"
+									styleClass=" form-control  " minValue="0"
+									maxValue="999999999999" thousandSeparator="," decimalPlaces="0"
+									emptyValue="0" value="#{indexController.minPrice}" />
+							</div>
+							<div class="col-md-3">
+								<h:outputLabel value="Max Price" />
+								<p:inputNumber placeholder="max price"
+									styleClass=" form-control" minValue="0" maxValue="999999999999"
+									thousandSeparator="," decimalPlaces="0" emptyValue="0"
+									value="#{indexController.maxPrice}" />
+							</div>
+
+							<div class="col-md-2">
+								<h:panelGroup layout="block" styleClass="styled-checkbox">
+									<h:outputLabel value="bed Room" />
+									<h:selectBooleanCheckbox value="#{indexController.bedRoomEq}" />
+
+								</h:panelGroup>
+							</div>
+							<div class="col-md-2">
+								<h:panelGroup layout="block" styleClass="styled-checkbox">
+									<h:outputLabel value="bed Room" />
+									<h:selectBooleanCheckbox value="#{indexController.bathRoomEq}" />
+
+								</h:panelGroup>
+							</div>
+
+							<div class="col-md-2">
+								<h:commandButton action="#{indexController.search()}"
+									value="#{bundle.search}"
+									styleClass="btn btn-dark border-0 w-100 py-3">
+									<!-- <f:ajax execute="myForm:panelSearchBar" /> -->
+								</h:commandButton>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -122,9 +154,10 @@
 			<div class="tab-content">
 				<div id="tab-1" class="tab-pane fade show p-0 active">
 					<div class="row g-4">
-						<p:dataView var="real" value="#{indexController.lazyModel}" rows="6"
-							lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
-							paginatorPosition="bottom" widgetVar="realEstatesDataView"
+						<p:dataView var="real" value="#{indexController.lazyModel}"
+							rows="3" lazy="true" paginator="true"
+							rowsPerPageTemplate="3,12,16" paginatorPosition="bottom"
+							widgetVar="realEstatesDataView"
 							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 							gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 							<p:dataViewGridItem>
@@ -134,8 +167,7 @@
 											<div class="position-relative overflow-hidden">
 												<h:link outcome="realEstate-card">
 													<img class="img-fluid"
-														src="/resources/makaan/img/#{real.images[indexController.random()]}"
-														alt="" />
+														src="/resources/makaan/img/#{real.images[0]}" alt="" />
 													<ui:param name="id" value="#{real.id}" />
 												</h:link>
 												<div
@@ -197,8 +229,7 @@
 												<div class="position-relative overflow-hidden">
 													<h:link outcome="realEstate-card">
 														<img class="img-fluid"
-															src="/resources/makaan/img/#{real.images[indexController.random()]}"
-															alt="" />
+															src="/resources/makaan/img/#{real.images[0]}" alt="" />
 														<ui:param name="id" value="#{real.id}" />
 													</h:link>
 													<div

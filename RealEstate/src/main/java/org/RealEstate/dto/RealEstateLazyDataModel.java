@@ -36,7 +36,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 	private int minPrice;
 	private int maxPrice;
 	private Village village;
-	private AtomicLong totalCount;
+	private AtomicLong totalCount = new AtomicLong();
 	private int bedRoom;
 	private boolean bedRoomEq;
 	private int bathRoom;
@@ -45,30 +45,32 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 	private Governorate governorate;
 
 	public RealEstateLazyDataModel(RealEstateFacade facade) {
+		// this.pageItems = pageItems;
 		this.facade = facade;
 	}
 
 	@Override
 	public int count(Map<String, FilterMeta> arg0) {
-		// TODO Auto-generated method stub
-		if (pageItems == null)
+
+		try {
+			return Math.toIntExact(facade.countRealSatateWithFilter(user, postType, minPrice, maxPrice, village,
+					totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate));
+		} catch (Exception e) {
+			e.printStackTrace();
 			return 0;
-		else
-			return pageItems.size();
+		}
 	}
 
 	@Override
 	public List<RealEstate> load(int first, int pageSize, Map<String, SortMeta> sortMap,
 			Map<String, FilterMeta> filterMap) {
 		try {
-			
-			// get the recommeded posts later
-			//int[] range = { 1, 10 };
-			//pageItems = facade.findRange(range);
-			
 			pageItems = facade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice, village,
 					(first / pageSize) + 1, pageSize, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district,
 					governorate);
+			
+			
+			setRowCount(Math.toIntExact(totalCount.get()));
 
 		} catch (Exception e) {
 			e.printStackTrace();

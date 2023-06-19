@@ -131,5 +131,15 @@ public abstract class AbstractFacade<T> implements Serializable, ICRUDOperations
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
+	
+	
+	public List<T> saveAll(List<T> list) throws Exception{
+
+		for (int i = 0; i < list.size(); i++) {
+			list.set(i, save(list.get(i)));
+		}
+
+		return list;
+	}
 
 }
