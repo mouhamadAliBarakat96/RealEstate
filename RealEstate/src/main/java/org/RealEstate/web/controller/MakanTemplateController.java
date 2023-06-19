@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -34,6 +36,39 @@ public class MakanTemplateController implements Serializable {
 		m1 = new MenuItem("Contact us", "", "contact-us", true, "nav-item nav-link");
 		menu.add(m1);
 
+	}
+
+	public List<FacesMessage> getMessages() {
+
+		List<FacesMessage> uniqueMessages = new ArrayList<>();
+
+		for (FacesMessage message : FacesContext.getCurrentInstance().getMessageList()) {
+
+			if (uniqueMessages.isEmpty()) {
+
+				uniqueMessages.add(message);
+
+			} else {
+
+				boolean addMessage = true;
+
+				for (FacesMessage currentMessage : uniqueMessages) {
+
+					if (currentMessage.getDetail().equals(message.getDetail())) {
+						addMessage = false;
+						break;
+					}
+				}
+
+				if (addMessage) {
+					uniqueMessages.add(message);
+				}
+
+			}
+
+		}
+
+		return uniqueMessages;
 	}
 
 	public List<MenuItem> getMenu() {

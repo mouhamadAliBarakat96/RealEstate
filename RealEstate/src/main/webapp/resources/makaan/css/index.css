@@ -1,13 +1,76 @@
 .header-container {
-  background-image: url("/resources/makaan/img/1.jpg");
-  background-size: cover;
-  background-position: center;
+	background-image: url("/resources/makaan/img/1.jpg");
+	background-size: cover;
+	background-position: center;
 }
 
 body .ui-dataview .ui-dataview-header {
-    background: #00b98e;
+	background: #00b98e;
 }
 
 body .ui-paginator {
-    background: #fff;
+	background: #fff;
+}
+
+.ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.ui-state-filled
+	{
+	width: inherit;
+}
+
+.ui-inputnumber.ui-widget.form-control.ui-inputwrapper-filled {
+	padding: 0px;
+}
+
+ 
+
+.ui-inputnumber.ui-widget.form-control{
+	padding: 0px;
+	 
+}
+
+
+input[type="checkbox"] {
+  /* Set the dimensions of the checkbox */
+  width: 20px;
+  height: 20px;
+
+  /* Remove the default appearance of the checkbox */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Add a custom background and border */
+  background-color: #fff;
+  border: 2px solid #ccc;
+
+  /* Add a custom checkmark */
+  position: relative;
+}
+input[type="checkbox"]:checked::before {
+  content: "\2714";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #000;
+}
+
+
+.form-c label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-c input[type="checkbox"] {
+  margin-top: 5px;
+}
+
+
+
+.search-checkbox {
+    background-color: #00b98e !important;
+    display: inline-block;
+    border: 0px;
 }

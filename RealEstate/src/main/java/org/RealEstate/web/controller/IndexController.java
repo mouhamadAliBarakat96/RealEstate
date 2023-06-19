@@ -28,6 +28,7 @@ import org.RealEstate.model.Land;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
+import org.RealEstate.utils.Utility;
 
 @Named
 @ViewScoped
@@ -51,7 +52,7 @@ public class IndexController implements Serializable {
 
 	private List<Chalet> chaletList = new ArrayList<>();
 
-	private PostType selectPostType = PostType.APPRATMENT_RENT;
+	private PostType selectPostType;
 
 	private List<Governorate> governorates = new ArrayList<>();
 
@@ -102,19 +103,28 @@ public class IndexController implements Serializable {
 	}
 
 	public void search() {
+		
+//		boolean searchFeildsError=false;
+		
+		if(maxPrice!=0 && minPrice>maxPrice) {
+			Utility.addErrorMessage("min_price_mut_be _less_than_max");
+			return;
+		}
+		
 		lazyModel.setBathRoom(bathRoom);
-		lazyModel.setUser(null);
+		lazyModel.setUser(user != null ? user : null);
 		lazyModel.setBathRoomEq(bathRoomEq);
-		lazyModel.setDistrict(selecteDistrict);
-		lazyModel.setGovernorate(selecteGovernorate);
-		lazyModel.setVillage(selecteVillage);
+		lazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
+		lazyModel.setGovernorate(selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
+		lazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
 		lazyModel.setBedRoom(0);
 		lazyModel.setBedRoomEq(false);
 		lazyModel.setMaxPrice(maxPrice);
 		lazyModel.setMinPrice(minPrice);
-		lazyModel.setPostType(selectPostType.toString());
+		lazyModel.setPostType(selectPostType == null ? null : selectPostType.toString());
 		// lazyModel.setTotalCount(totalCount);
 
+		Utility.addSuccessMessage("search_complete");
 	}
 
 	public void listenerSelect(RealEstateTypeEnum type) {

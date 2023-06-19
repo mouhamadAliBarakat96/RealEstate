@@ -16,7 +16,6 @@
 
 		<h:outputStylesheet>
 
-
 		</h:outputStylesheet>
 
 	</ui:define>
@@ -87,41 +86,59 @@
 									<f:ajax execute="@this" />
 								</h:selectOneMenu>
 							</div>
-							<div class="col-md-3">
-								<h:outputLabel value="Min Price" />
-								<p:inputNumber placeholder="min price"
-									styleClass=" form-control  " minValue="0"
-									maxValue="999999999999" thousandSeparator="," decimalPlaces="0"
-									emptyValue="0" value="#{indexController.minPrice}" />
+							<div class="col-md-2">
+								<h:outputLabel value="Min Price" style="color:white" />
+								<h:inputText onkeypress="return isNumberKey(event)"
+									placeholder="min price" styleClass="form-control"
+									value="#{indexController.minPrice}">
+								</h:inputText>
 							</div>
-							<div class="col-md-3">
-								<h:outputLabel value="Max Price" />
-								<p:inputNumber placeholder="max price"
-									styleClass=" form-control" minValue="0" maxValue="999999999999"
-									thousandSeparator="," decimalPlaces="0" emptyValue="0"
-									value="#{indexController.maxPrice}" />
+							<div class="col-md-2">
+								<h:outputLabel value="Max Price" style="color:white" />
+								<h:inputText onkeypress="return isNumberKey(event)"
+									placeholder="max price" styleClass="form-control"
+									value="#{indexController.maxPrice}">
+								</h:inputText>
+							</div>
+
+
+							<div class="col-md-2">
+								<h:outputLabel value="Bed Rooms Count" style="color:white" />
+								<h:inputText onkeypress="return isNumberKey(event)"
+									placeholder="max price" styleClass="form-control"
+									value="#{indexController.bedRoom}">
+								</h:inputText>
+							</div>
+							<div class="col-md-1">
+								<h:outputLabel value="Exact Value" style="color:white" />
+
+								<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
+										value="#{indexController.bedRoomEq}" />
+								</span>
+
 							</div>
 
 							<div class="col-md-2">
-								<h:panelGroup layout="block" styleClass="styled-checkbox">
-									<h:outputLabel value="bed Room" />
-									<h:selectBooleanCheckbox value="#{indexController.bedRoomEq}" />
-
-								</h:panelGroup>
+								<h:outputLabel value="Bath Rooms Count" style="color:white" />
+								<h:inputText placeholder="max price" styleClass="form-control"
+									value="#{indexController.bathRoom}">
+								</h:inputText>
 							</div>
-							<div class="col-md-2">
-								<h:panelGroup layout="block" styleClass="styled-checkbox">
-									<h:outputLabel value="bed Room" />
-									<h:selectBooleanCheckbox value="#{indexController.bathRoomEq}" />
+							<div class="col-md-1">
+								<h:outputLabel value="Exact Value" style="color:white" />
 
-								</h:panelGroup>
+								<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
+										value="#{indexController.bathRoomEq}" />
+								</span>
+
 							</div>
 
 							<div class="col-md-2">
 								<h:commandButton action="#{indexController.search()}"
 									value="#{bundle.search}"
-									styleClass="btn btn-dark border-0 w-100 py-3">
-									<!-- <f:ajax execute="myForm:panelSearchBar" /> -->
+									style="float:right;background-color: #007ad9;color:white"
+									styleClass="btn   mt-3  ">
+									<f:ajax execute="myForm:panelSearchBar" render="myForm:propertyListId :messageScript"/>
 								</h:commandButton>
 							</div>
 						</div>
@@ -155,8 +172,8 @@
 				<div id="tab-1" class="tab-pane fade show p-0 active">
 					<div class="row g-4">
 						<p:dataView var="real" value="#{indexController.lazyModel}"
-							rows="3" lazy="true" paginator="true"
-							rowsPerPageTemplate="3,12,16" paginatorPosition="bottom"
+							rows="6" lazy="true" paginator="true"
+							rowsPerPageTemplate="6,12,16" paginatorPosition="bottom"
 							widgetVar="realEstatesDataView"
 							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 							gridIcon="pi pi-th-large" listIcon="pi pi-bars">

@@ -79,3 +79,38 @@
     
 })(jQuery);
 
+
+
+function isNumberKey(evt) {
+
+	var charCode = (evt.which) ? evt.which : event.keyCode
+	if (charCode > 31 && (charCode < 48 || charCode > 57))
+		return false;
+
+	return true;
+}
+
+function generate(text, detail) {
+	console.log('text :' +text + ' detail' + detail
+			);
+	toastr.options.timeOut = 5000;
+	toastr.options.positionClass = "toast-top-right";
+	toastr.options.showDuration = 800;
+	toastr.options.hideDuration = 1000;
+	toastr.options.showMethod = 'slideDown';
+	toastr.options.hideMethod = 'slideUp';
+	toastr.options.progressBar = true;
+	toastr.options.closeButton = true;
+	if (detail == "error") {
+		toastr.error(text);
+	} else if (detail == "info") {
+		toastr.info(text);
+	} else if (detail == "warn") {
+		toastr.warning(text);
+	} else if (detail == "success") {
+		toastr.success(text);
+	} else {
+		toastr.warning(text);
+	}
+
+}

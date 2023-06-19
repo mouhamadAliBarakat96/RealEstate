@@ -122,9 +122,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		typedQuery.setMaxResults(size);
 
 		// Add predicates based on your conditions
-		realEstates = typedQuery
-
-				.getResultList();
+		realEstates = typedQuery.getResultList();
 		return (List<RealEstate>) realEstates;
 
 	}
