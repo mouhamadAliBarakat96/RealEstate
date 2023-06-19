@@ -3,13 +3,11 @@ package org.RealEstate.facade;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.model.District;
-import org.RealEstate.model.Village;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
 
@@ -51,9 +49,8 @@ public class DistrictFacade extends AbstractFacade<District> implements Serializ
 
 	public List<District> findByGovernorate(Long governorateId) {
 
-		List<District> list = getEntityManager().createNamedQuery(District.FING_BY_GOVERNORATE, District.class)
+		return getEntityManager().createNamedQuery(District.FING_BY_GOVERNORATE, District.class)
 				.setParameter("governorateId", governorateId).getResultList();
-		return list;
 
 	}
 

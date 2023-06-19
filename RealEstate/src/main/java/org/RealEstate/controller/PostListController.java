@@ -1,6 +1,8 @@
 package org.RealEstate.controller;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -10,8 +12,15 @@ import javax.inject.Named;
 import org.RealEstate.LazyDataModel.LazyPostCustomerModel;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
+import org.RealEstate.facade.DistrictFacade;
+import org.RealEstate.facade.GovernorateFacade;
 import org.RealEstate.facade.RealEstateFacade;
+import org.RealEstate.facade.VillageFacade;
+import org.RealEstate.model.District;
+import org.RealEstate.model.Governorate;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.model.Village;
+import org.omnifaces.util.Ajax;
 import org.primefaces.model.LazyDataModel;
 
 @ViewScoped
@@ -21,8 +30,22 @@ public class PostListController implements Serializable {
 
 	private LazyDataModel<RealEstate> lazyModel;
 
+	// EJB
 	@Inject
 	private RealEstateFacade realEstateFacade;
+	@Inject
+	private GovernorateFacade governorateFacade;
+	@Inject
+	private DistrictFacade districtFacade;
+	@Inject
+	private VillageFacade villageFacade;
+
+	// List
+	private List<Governorate> governorates;
+
+	private List<District> districts;
+
+	private List<Village> villages;
 
 	// post status
 	private Long nmOfPostAccepted;
@@ -40,9 +63,20 @@ public class PostListController implements Serializable {
 	private Long numOfPostOfficeRent;
 	private Long numOfPostOfficeSell;
 
+	// Filters ;
+	private Date fromDate;
+	private Date toDate;
+	private Governorate governorate;
+	private District district;
+	private Village village;
+	private int minPrice;
+	private int maxPrice;
+
 	@PostConstruct
 	public void init() {
-		lazyModel = new LazyPostCustomerModel(realEstateFacade);
+		lazyModel = new LazyPostCustomerModel(realEstateFacade, fromDate, toDate, governorate, district, village,
+				minPrice, maxPrice);
+
 		fillData();
 	}
 
@@ -55,7 +89,6 @@ public class PostListController implements Serializable {
 		nbOfPostExpired = realEstateFacade.findUserCountPostByStatus(PostStatus.EXPIRED);
 		// post type
 		numOfPostAppartmentRent = realEstateFacade.findUserCountPostByType(PostType.APPRATMENT_RENT);
-
 		numOfPostAppartmentSell = realEstateFacade.findUserCountPostByType(PostType.APPRATMENT_SELL);
 		numOfPostLand = realEstateFacade.findUserCountPostByType(PostType.LAND);
 		numOfPostShopRent = realEstateFacade.findUserCountPostByType(PostType.SHOP_RENT);
@@ -63,6 +96,29 @@ public class PostListController implements Serializable {
 		numOfPostOfficeRent = realEstateFacade.findUserCountPostByType(PostType.OFFICE_RENT);
 		numOfPostOfficeSell = realEstateFacade.findUserCountPostByType(PostType.OFFICE_SELL);
 
+		// List
+		governorates = governorateFacade.findAll();
+
+	}
+
+	public void search() {
+
+		lazyModel = new LazyPostCustomerModel(realEstateFacade, fromDate, toDate, governorate, district, village,
+				minPrice, maxPrice);
+		Ajax.oncomplete("PF('pageItemsTableWgVar').filter(); ");
+
+	}
+
+	public void fillDistrict() {
+		if (governorate != null) {
+			districts = districtFacade.findByGovernorate(governorate.getId());
+		}
+	}
+
+	public void fillVillage() {
+		if (district != null) {
+			villages = villageFacade.findByDisctrict(district.getId());
+		}
 	}
 
 	public LazyDataModel<RealEstate> getLazyModel() {
@@ -175,6 +231,86 @@ public class PostListController implements Serializable {
 
 	public void setNumOfPostOfficeSell(Long numOfPostOfficeSell) {
 		this.numOfPostOfficeSell = numOfPostOfficeSell;
+	}
+
+	public List<Governorate> getGovernorates() {
+		return governorates;
+	}
+
+	public void setGovernorates(List<Governorate> governorates) {
+		this.governorates = governorates;
+	}
+
+	public List<District> getDistricts() {
+		return districts;
+	}
+
+	public void setDistricts(List<District> districts) {
+		this.districts = districts;
+	}
+
+	public List<Village> getVillages() {
+		return villages;
+	}
+
+	public void setVillages(List<Village> villages) {
+		this.villages = villages;
+	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
+	public Governorate getGovernorate() {
+		return governorate;
+	}
+
+	public void setGovernorate(Governorate governorate) {
+		this.governorate = governorate;
+	}
+
+	public District getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
+	}
+
+	public Village getVillage() {
+		return village;
+	}
+
+	public void setVillage(Village village) {
+		this.village = village;
+	}
+
+	public int getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(int minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public int getMaxPrice() {
+		return maxPrice;
+	}
+
+	public void setMaxPrice(int maxPrice) {
+		this.maxPrice = maxPrice;
 	}
 
 }

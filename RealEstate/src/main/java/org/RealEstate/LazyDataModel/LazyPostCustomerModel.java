@@ -1,6 +1,7 @@
 package org.RealEstate.LazyDataModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,10 @@ import javax.persistence.criteria.Root;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.RealEstateFacade;
+import org.RealEstate.model.District;
+import org.RealEstate.model.Governorate;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.model.Village;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
@@ -28,9 +32,29 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 
 	private RealEstateFacade realEstateFacade;
 
-	public LazyPostCustomerModel(RealEstateFacade realEstateFacade) {
-		this.setRowCount(10);
+	// out fillter
+
+	private Date fromDate;
+	private Date toDate;
+	private Governorate governorate;
+	private District district;
+	private Village village;
+	private int minPrice;
+	private int maxPrice;
+
+	public LazyPostCustomerModel(RealEstateFacade realEstateFacade, Date fromDate, Date toDate, Governorate governorate,
+			District district, Village village, int minPrice, int maxPrice) {
+
 		this.realEstateFacade = realEstateFacade;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.governorate = governorate;
+		this.district = district;
+		this.village = village;
+		this.minPrice = minPrice;
+
+		this.maxPrice = maxPrice;
+
 	}
 
 	@Override
@@ -78,8 +102,6 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 
 					predicates.add(cb.like(cb.function("text", String.class, root.get("id")), "%" + filterValue + "%"));
 
-					
-					
 				}
 
 				else if ("postStatus".equals(field)) {
@@ -89,7 +111,6 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 				} else if ("pricePublic".equals(field)) {
 
 					predicates.add(cb.equal(root.get("pricePublic"), filterValue));
-					
 
 				}
 
@@ -149,4 +170,61 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 			}
 		});
 	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
+	public Governorate getGovernorate() {
+		return governorate;
+	}
+
+	public void setGovernorate(Governorate governorate) {
+		this.governorate = governorate;
+	}
+
+	public District getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
+	}
+
+	public Village getVillage() {
+		return village;
+	}
+
+	public void setVillage(Village village) {
+		this.village = village;
+	}
+
+	public int getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(int minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public int getMaxPrice() {
+		return maxPrice;
+	}
+
+	public void setMaxPrice(int maxPrice) {
+		this.maxPrice = maxPrice;
+	}
+
 }

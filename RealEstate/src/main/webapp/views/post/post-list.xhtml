@@ -24,18 +24,25 @@
 }
 </style>
 
+		<o:onloadScript>
+
+     initDatePicker();
+     select2me();
+       </o:onloadScript>
+
+
 		<div class="row">
 
 
 			<li class="breadcrumb-item active">#{bundle.card}</li>
-			<li class="breadcrumb-item active">Post List</li>
+			<li class="breadcrumb-item active">Post Repport</li>
 
 
 		</div>
 	</ui:define>
 	<ui:define name="pageTittle">
 
-		<h4 class="page-title">Post List</h4>
+		<h4 class="page-title">Post Repport</h4>
 	</ui:define>
 	<ui:define name="customFormContent">
 
@@ -371,6 +378,133 @@
 
 			<div class="card " style="margin-top: 1%;">
 				<div class="card-body  ">
+					<h3>Table Represent RealEstate</h3>
+
+
+					<h4>Filters</h4>
+
+
+					<h:panelGroup id="filters">
+						<div class="row">
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<h:outputLabel class="control-label" for="fromDate"
+										style="padding-left:1.5%" value="From Date ">
+
+									</h:outputLabel>
+									<h:inputText id="fromDate" style=" margin-top:2%; "
+										value="#{postListController.fromDate}"
+										styleClass="form-control datepicker">
+										<f:convertDateTime dateStyle="full" pattern="dd/mm/yyy" />
+									</h:inputText>
+								</div>
+							</div>
+
+
+
+
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<h:outputLabel class="control-label" for="toDate"
+										style="padding-left:1.5%" value="To Date ">
+
+									</h:outputLabel>
+									<h:inputText id="toDate" style=" margin-top:2%; "
+										styleClass="form-control datepicker"
+										value="#{postListController.toDate}">
+										<f:convertDateTime dateStyle="full" pattern="dd/mm/yyy" />
+									</h:inputText>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<p:outputLabel class="control-label" for="governorate"
+									value="governorate ">
+								</p:outputLabel>
+								<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+									styleClass="select2 select2me form-control   custom-select"
+									converter="omnifaces.SelectItemsConverter" id="governorate"
+									label="governorate" value="#{postListController.governorate}"
+									placeHolder="#set">
+									<f:selectItem itemLabel="governorate" itemValue="" />
+									<f:selectItems value="#{postListController.governorates}"
+										var="re" itemLabel="  #{re.name}" itemValue="#{re}" />
+
+									<f:ajax render="disctrict"
+										listener="#{postListController.fillDistrict()}"></f:ajax>
+
+								</h:selectOneMenu>
+								<h:message for="governorate" styleClass="error-message" />
+
+
+
+
+							</div>
+
+
+							<div class="col-md-3">
+								<p:outputLabel class="control-label" for="disctrict"
+									value="disctrict ">
+								</p:outputLabel>
+								<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+									styleClass="select2 select2me form-control   custom-select"
+									converter="omnifaces.SelectItemsConverter" id="disctrict"
+									label="disctrict" value="#{postListController.district}"
+									placeHolder="#set">
+									<f:selectItem itemLabel="disctrict" itemValue="" />
+									<f:selectItems value="#{postListController.districts}" var="re"
+										itemLabel="     #{re.name} " itemValue="#{re}" />
+
+									<f:ajax render="village"
+										listener="#{postListController.fillVillage()}"></f:ajax>
+
+								</h:selectOneMenu>
+								<h:message for="disctrict" styleClass="error-message" />
+							</div>
+
+
+							<div class="col-md-3">
+								<p:outputLabel class="control-label" for="village"
+									value="Village ">
+								</p:outputLabel>
+								<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+									styleClass="select2 select2me form-control   custom-select"
+									converter="omnifaces.SelectItemsConverter" id="village"
+									label="village" value="#{postListController.village}"
+									placeHolder="#set">
+									<f:selectItem itemLabel="disctrict" itemValue="" />
+									<f:selectItems value="#{postListController.villages}" var="re"
+										itemLabel="    #{re.name} " itemValue="#{re}" />
+
+								</h:selectOneMenu>
+								<h:message for="disctrict" styleClass="error-message" />
+							</div>
+
+
+							price range
+
+
+						</div>
+					</h:panelGroup>
+					<div class="row">
+						<div class="col-md-12">
+							<h:commandLink id="saveId"
+								style=" float:right ; margin-left:10px;"
+								action='#{postListController.search}'
+								styleClass="btn btn-primary ">
+								<f:ajax render=":messageScript " execute=" filters   " />
+								<i class="fa fa-search" />
+								<span>Search</span>
+
+
+							</h:commandLink>
+
+						</div>
+
+					</div>
+
 					<h:panelGroup id="header-panel" style="width:100%">
 						<div class="row"></div>
 					</h:panelGroup>
