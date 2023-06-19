@@ -62,4 +62,61 @@
   PATH="/views/village/village.xhtml" SHAPE="256,481,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#views#village#village-list.xhtml"
   PATH="/views/village/village-list.xhtml" SHAPE="240,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::6" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::6" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="village-list::#views#village#village-list.xhtml" NAME="output"
+    PATH="/views/village/village-list.xhtml"
+    TARGET="rules:#views#village#village-list.xhtml"
+    TITLE="village-list" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::7" SHAPE="32,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::7" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="village::#views#village#village.xhtml"
+    NAME="output" PATH="/views/village/village.xhtml"
+    TARGET="rules:#views#village#village.xhtml" TITLE="village" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::8" SHAPE="32,913,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::8" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="configuration::#views#configuration#configuration.xhtml"
+    NAME="output" PATH="/views/configuration/configuration.xhtml"
+    TARGET="rules:#views#configuration#configuration.xhtml"
+    TITLE="configuration" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::9" SHAPE="32,1025,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::9" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="index-page::#index.xhtml" NAME="output"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index-page" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#realEstate-card.xhtml"
+  PATH="/realEstate-card.xhtml" SHAPE="240,1041,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="240,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#views#configuration#configuration.xhtml"
+  PATH="/views/configuration/configuration.xhtml" SHAPE="240,705,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#contact-us.xhtml" PATH="/contact-us.xhtml"
+  SHAPE="240,929,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::10" SHAPE="32,1137,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::10" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="contact-us::#contact-us.xhtml" NAME="output"
+    PATH="/contact-us.xhtml" TARGET="rules:#contact-us.xhtml"
+    TITLE="contact-us" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#views#post#post-list.xhtml"
+  PATH="/views/post/post-list.xhtml" SHAPE="240,1153,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::11" SHAPE="32,1249,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::11" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="realEstate-card::#realEstate-card.xhtml"
+    NAME="output" PATH="/realEstate-card.xhtml"
+    TARGET="rules:#realEstate-card.xhtml" TITLE="realEstate-card" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#views#post#post.xhtml"
+  PATH="/views/post/post.xhtml" SHAPE="240,1265,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

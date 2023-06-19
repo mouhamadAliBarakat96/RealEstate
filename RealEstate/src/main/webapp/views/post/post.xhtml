@@ -69,29 +69,74 @@ body .ui-panelgrid .ui-panelgrid-cell {
 								</p:galleria>
 
 								<div
-									style="width: 75%  ;margin-left: 3%; display: inline-block; position: absolute">
+									style="width: 75%; margin-left: 3%; display: inline-block; position: absolute">
 
-									<div class="card">
+									<div class="card ">
 										<div class="card-body">
 											<h3 style="text-align: center;">Post Information</h3>
 										</div>
 
-										<p:panelGrid style="width:35%" columns="2">
 
-											<h:outputText value="Tittle:" />
-											<h:outputText value="#{postController.realEstate.tittle}" />
+										<div
+											style="margin-top: 0%; width: 50%; border: 1px solid #e6e9ed;"
+											class="card dashbord green ">
+											<p:panelGrid style="width:100%" columns="2"
+											  columnClasses="col-md-4,col-md-8"
+											>
 
-											<h:outputText value="sub Tittle:" />
-											<h:outputText value="#{postController.realEstate.subTittle}" />
 
-											<h:outputText value="Location:" />
-											<h:outputText
-												value="#{postController.realEstate.village.district.governorate.name} / #{postController.realEstate.village.district.name} / #{postController.realEstate.village.name}" />
 
-											<h:outputText value="Price :" />
-											<h:outputText
-												value="#{of:formatCurrency(postController.realEstate.price, '')} USD " />
-										</p:panelGrid>
+												<h:outputText value=" Tittle:" />
+												<h:outputText value="#{postController.realEstate.tittle}" />
+
+
+												<h:outputText value="Sub Tittle:" />
+												<h:outputText value="#{postController.realEstate.subTittle}" />
+
+
+												<h:outputText value=" Post Type : " />
+												<h:outputText value="#{postController.realEstate.postType}" />
+
+
+												<h:outputText value=" Space : " />
+												<h:outputText value="#{postController.realEstate.space}" />
+
+
+												<h:outputText value=" User : " />
+												<h:outputText
+													value="#{postController.realEstate.user.phoneNumber}" />
+
+												<h:outputText value="Location:" />
+												<h:outputText
+													value="#{postController.realEstate.village.district.governorate.name} / #{postController.realEstate.village.district.name} / #{postController.realEstate.village.name}" />
+
+
+
+
+												<h:outputText value="Price :" />
+												<h:outputText
+													value="#{of:formatCurrency(postController.realEstate.price, '')} USD " />
+
+
+
+												<h:outputText styleClass="key" value="Price Public :" />
+												<h:outputText styleClass="value"
+													class=" #{postController.realEstate.pricePublic  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
+
+
+
+												<h:outputText value="Post Date :" />
+												<h:outputText id="postDate" styleClass="text-ellipsis"
+													title="#{postController.realEstate.postDate}"
+													value="#{postController.realEstate.postDate}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+
+
+											</p:panelGrid>
+										</div>
+
+
 									</div>
 
 
