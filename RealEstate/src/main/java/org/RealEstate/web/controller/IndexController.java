@@ -25,6 +25,8 @@ import org.RealEstate.model.Chalet;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
 import org.RealEstate.model.Land;
+import org.RealEstate.model.OfficeRent;
+import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
@@ -103,21 +105,22 @@ public class IndexController implements Serializable {
 	}
 
 	public void search() {
-		
-//		boolean searchFeildsError=false;
-		
-		if(maxPrice!=0 && minPrice>maxPrice) {
+
+		// boolean searchFeildsError=false;
+
+		if (maxPrice != 0 && minPrice > maxPrice) {
 			Utility.addErrorMessage("min_price_mut_be _less_than_max");
 			return;
 		}
-		
+
 		lazyModel.setBathRoom(bathRoom);
 		lazyModel.setUser(user != null ? user : null);
 		lazyModel.setBathRoomEq(bathRoomEq);
 		lazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
-		lazyModel.setGovernorate(selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
+		lazyModel.setGovernorate(
+				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
 		lazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
-		lazyModel.setBedRoom(0);
+		lazyModel.setBedRoom(bedRoom);
 		lazyModel.setBedRoomEq(false);
 		lazyModel.setMaxPrice(maxPrice);
 		lazyModel.setMinPrice(minPrice);
@@ -162,10 +165,12 @@ public class IndexController implements Serializable {
 		this.chaletList = chaletList;
 	}
 
-	public boolean hasRoomsAndBathRooms(RealEstate item) {
-		return (item.getPostType().equals(PostType.APPRATMENT_RENT)
-				|| item.getPostType().equals(PostType.APPRATMENT_SELL)
-				|| item.getPostType().equals(PostType.OFFICE_RENT) || item.getPostType().equals(PostType.OFFICE_SELL));
+	public boolean hasRoomsAndBathRooms(PostType type) {
+		if (type == null) {
+			return true;
+		} else
+			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
+					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
 
 	public int numberOfSellAppartments() {
@@ -178,6 +183,14 @@ public class IndexController implements Serializable {
 
 	public int numberOfLands() {
 		return realEstates.stream().filter(x -> x instanceof Land).collect(Collectors.toList()).size();
+	}
+	
+	public int numberOfSellOffices() {
+		return realEstates.stream().filter(x -> x instanceof OfficeSell).collect(Collectors.toList()).size();
+	}
+
+	public int numberOfRentOffices() {
+		return realEstates.stream().filter(x -> x instanceof OfficeRent).collect(Collectors.toList()).size();
 	}
 
 	public void addToRealEstate(RealEstate item) {

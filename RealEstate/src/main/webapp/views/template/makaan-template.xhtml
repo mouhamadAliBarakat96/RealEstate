@@ -46,8 +46,9 @@
 	<!-- Template Stylesheet -->
 	<link href="/resources/makaan/css/style.css" rel="stylesheet" />
 
-<h:outputStylesheet name="admin-template/toastr-rtl.min.css" library="css" />
-		
+	<h:outputStylesheet name="admin-template/toastr-rtl.min.css"
+		library="css" />
+
 	<ui:insert name="customStylesheet"></ui:insert>
 
 
@@ -130,8 +131,9 @@
 								</div>
 								<div class="col-md-6 text-center text-md-end">
 									<div class="footer-menu">
-										<a href="index.xhtml">Home</a> <a href="contact-us.xhtml">Contact
-											us</a>
+										<h:link value="Home" outcome="index.xhtml" />
+										<h:link value="Contact us" outcome="contact-us.xhtml" />
+										<h:link value="Login In" outcome="" />
 									</div>
 								</div>
 							</div>
@@ -157,7 +159,7 @@
 
 	<!-- BEGIN TOASTR -->
 	<h:outputScript name="toastr.min.js" library="js" />
-	
+
 	<h:panelGroup id="messageScript">
 		<h:outputScript rendered="#{not empty facesContext.messageList}">
 			<ui:repeat value="#{makanTemplateController.messages}" var="message">
@@ -165,7 +167,7 @@
 			</ui:repeat>
 		</h:outputScript>
 	</h:panelGroup>
-	
+
 	<!-- END TOASTR -->
 </h:body>
 </html>

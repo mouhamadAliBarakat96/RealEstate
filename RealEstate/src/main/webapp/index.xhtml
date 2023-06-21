@@ -33,116 +33,115 @@
 	<ui:define name="searchBar">
 		<h:panelGroup id="panelSearchBar">
 			<div class="container-fluid bg-primary mb-5 wow "
-				data-wow-delay="0.1s" style="padding: 35px;">
-				<div class="container">
-					<div class="row  g-2">
-						<div class="row g-2">
-							<div class="col-md-3">
-								<h:selectOneMenu styleClass="form-select border-0 py-3"
-									converter="omnifaces.SelectItemsConverter"
-									value="#{indexController.selectPostType}">
-									<f:selectItem itemLabel="Property Type" itemValue="" />
-									<f:selectItems value="#{PostType.values()}" var="option"
-										itemLabel="#{option.name}" itemValue="#{option}" />
-									<f:ajax execute="@this"></f:ajax>
-								</h:selectOneMenu>
-							</div>
+				data-wow-delay="0.1s" style="padding: 15px 5px 5px 5px;">
+				<div class="row">
+					<div class="col-md-3 col-sm-12 mt-2">
+						<h:selectOneMenu styleClass="form-select border-0  "
+							converter="omnifaces.SelectItemsConverter"
+							value="#{indexController.selectPostType}">
+							<f:selectItem itemLabel="Property Type" itemValue="" />
+							<f:selectItems value="#{PostType.values()}" var="option"
+								itemLabel="#{option.name}" itemValue="#{option}" />
+							<f:ajax execute="@this" render="myForm:realSatatebathBedRoomsId" />
+						</h:selectOneMenu>
+					</div>
 
-							<div class="col-md-3">
-								<h:selectOneMenu id="governateSelectId"
-									styleClass="form-select border-0 py-3"
-									converter="omnifaces.SelectItemsConverter"
-									value="#{indexController.selecteGovernorate}">
-									<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
-									<f:selectItems value="#{indexController.governorates}"
-										var="option" itemLabel="#{option.name}" itemValue="#{option}" />
-									<f:ajax execute="@this"
-										render="myForm:districtSelectId myForm:villageSelectId"
-										listener="#{indexController.listenerSelectGovernate()}" />
-								</h:selectOneMenu>
-							</div>
+					<div class="col-md-3 col-sm-12 mt-2">
+						<h:selectOneMenu id="governateSelectId"
+							styleClass="form-select border-0 "
+							converter="omnifaces.SelectItemsConverter"
+							value="#{indexController.selecteGovernorate}">
+							<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
+							<f:selectItems value="#{indexController.governorates}"
+								var="option" itemLabel="#{option.name}" itemValue="#{option}" />
+							<f:ajax execute="@this"
+								render="myForm:districtSelectId myForm:villageSelectId"
+								listener="#{indexController.listenerSelectGovernate()}" />
+						</h:selectOneMenu>
+					</div>
 
-							<div class="col-md-3">
-								<h:selectOneMenu id="districtSelectId"
-									converter="omnifaces.SelectItemsConverter"
-									styleClass="form-select border-0 py-3"
-									value="#{indexController.selecteDistrict}">
-									<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
-									<f:selectItems value="#{indexController.districts}"
-										var="option" itemLabel="#{option.name}" itemValue="#{option}" />
-									<f:ajax execute="@this"
-										listener="#{indexController.listenerSelectDistrict()}"
-										render="myForm:villageSelectId" />
-								</h:selectOneMenu>
-							</div>
-							<div class="col-md-3">
-								<h:selectOneMenu id="villageSelectId"
-									converter="omnifaces.SelectItemsConverter"
-									styleClass="form-select border-0 py-3"
-									value="#{indexController.selecteVillage}">
-									<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
-									<f:selectItems value="#{indexController.villages}" var="option"
-										itemLabel="#{option.name}" itemValue="#{option}" />
-									<f:ajax execute="@this" />
-								</h:selectOneMenu>
-							</div>
-							<div class="col-md-2">
-								<h:outputLabel value="Min Price" style="color:white" />
-								<h:inputText onkeypress="return isNumberKey(event)"
-									placeholder="min price" styleClass="form-control"
-									value="#{indexController.minPrice}">
-								</h:inputText>
-							</div>
-							<div class="col-md-2">
-								<h:outputLabel value="Max Price" style="color:white" />
-								<h:inputText onkeypress="return isNumberKey(event)"
-									placeholder="max price" styleClass="form-control"
-									value="#{indexController.maxPrice}">
-								</h:inputText>
-							</div>
+					<div class="col-md-3 col-sm-12 mt-2">
+						<h:selectOneMenu id="districtSelectId"
+							converter="omnifaces.SelectItemsConverter"
+							styleClass="form-select border-0  "
+							value="#{indexController.selecteDistrict}">
+							<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
+							<f:selectItems value="#{indexController.districts}" var="option"
+								itemLabel="#{option.name}" itemValue="#{option}" />
+							<f:ajax execute="@this"
+								listener="#{indexController.listenerSelectDistrict()}"
+								render="myForm:villageSelectId" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-md-3 col-sm-12 mt-2">
+						<h:selectOneMenu id="villageSelectId"
+							converter="omnifaces.SelectItemsConverter"
+							styleClass="form-select border-0  "
+							value="#{indexController.selecteVillage}">
+							<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
+							<f:selectItems value="#{indexController.villages}" var="option"
+								itemLabel="#{option.name}" itemValue="#{option}" />
+							<f:ajax execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-md-2 mt-2 col-sm-12">
+						<h:outputLabel value="Min Price" style="color:white" />
+						<h:inputText onkeypress="return isNumberKey(event)"
+							placeholder="min price" styleClass="form-control"
+							value="#{indexController.minPrice}">
+						</h:inputText>
+					</div>
+					<div class="col-md-2 mt-2 col-sm-12">
+						<h:outputLabel value="Max Price" style="color:white" />
+						<h:inputText onkeypress="return isNumberKey(event)"
+							placeholder="max price" styleClass="form-control"
+							value="#{indexController.maxPrice}">
+						</h:inputText>
+					</div>
 
-
-							<div class="col-md-2">
+					<h:panelGroup id="realSatatebathBedRoomsId" layout="block"
+						styleClass="row col-md-7 mt-2 pr-0" >
+						<h:panelGroup
+							rendered="#{indexController.hasRoomsAndBathRooms(indexController.postType)}">
+						
+							<div class="col-md-4 col-sm-12">
 								<h:outputLabel value="Bed Rooms Count" style="color:white" />
 								<h:inputText onkeypress="return isNumberKey(event)"
 									placeholder="max price" styleClass="form-control"
 									value="#{indexController.bedRoom}">
 								</h:inputText>
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-2 col-sm-12">
 								<h:outputLabel value="Exact Value" style="color:white" />
-
 								<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
 										value="#{indexController.bedRoomEq}" />
 								</span>
-
 							</div>
-
-							<div class="col-md-2">
+							<div class="col-md-4 col-sm-12">
 								<h:outputLabel value="Bath Rooms Count" style="color:white" />
 								<h:inputText placeholder="max price" styleClass="form-control"
 									value="#{indexController.bathRoom}">
 								</h:inputText>
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-2 col-sm-12">
 								<h:outputLabel value="Exact Value" style="color:white" />
 
 								<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
 										value="#{indexController.bathRoomEq}" />
 								</span>
-
 							</div>
-
-							<div class="col-md-2">
-								<h:commandButton action="#{indexController.search()}"
-									value="#{bundle.search}"
-									style="float:right;background-color: #007ad9;color:white"
-									styleClass="btn   mt-3  ">
-									<f:ajax execute="myForm:panelSearchBar" render="myForm:propertyListId :messageScript"/>
-								</h:commandButton>
-							</div>
-						</div>
+						</h:panelGroup>
+					</h:panelGroup>
+					<div class="col-md-1 col-sm-12">
+						<h:commandButton action="#{indexController.search()}"
+							value="#{bundle.search}"
+							style=" background-color: #007ad9;color:white"
+							styleClass="btn mt-3">
+							<f:ajax execute="myForm:panelSearchBar"
+								render="myForm:propertyListId :messageScript" />
+						</h:commandButton>
 					</div>
+
 				</div>
 			</div>
 		</h:panelGroup>
@@ -185,7 +184,7 @@
 												<h:link outcome="realEstate-card">
 													<img class="img-fluid"
 														src="/resources/makaan/img/#{real.images[0]}" alt="" />
-													<ui:param name="id" value="#{real.id}" />
+													<f:param name="id" value="#{real.id}" />
 												</h:link>
 												<div
 													class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">#{real.postType.name}</div>
@@ -207,7 +206,7 @@
 												</small>
 
 												<h:panelGroup
-													rendered="#{indexController.hasRoomsAndBathRooms(real)}">
+													rendered="#{indexController.hasRoomsAndBathRooms(real.postType)}">
 													<small class="flex-fill text-center border-end py-2">
 														<i class="fa fa-bed text-primary me-2" /> #{real.nbRoom}
 														#{bundle.real_estate_rooms}
@@ -219,7 +218,7 @@
 
 												</h:panelGroup>
 												<h:panelGroup
-													rendered="#{!indexController.hasRoomsAndBathRooms(real)}">
+													rendered="#{!indexController.hasRoomsAndBathRooms(real.postType)}">
 													<small class="flex-fill text-center border-end py-2">
 														<i class="fa fa-solid fa-road text-primary me-2" />#{bundle.real_estate_road}:
 														<i
@@ -247,7 +246,7 @@
 													<h:link outcome="realEstate-card">
 														<img class="img-fluid"
 															src="/resources/makaan/img/#{real.images[0]}" alt="" />
-														<ui:param name="id" value="#{real.id}" />
+														<f:param name="id" value="#{real.id}" />
 													</h:link>
 													<div
 														class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
@@ -257,7 +256,11 @@
 											<div class="col-md-8 ">
 												<div class="p-4 pb-0">
 													<h5 class="text-primary mb-3">$ #{real.price}</h5>
-													<a class="d-block h5 mb-2" href="">#{real.subTittle}</a>
+												
+													<h:link value="#{real.subTittle}" outcome="realEstate-card" styleClass="d-block h5 mb-2">
+														<f:param name="id" value="#{real.id}" />
+													</h:link>
+													 
 													<p>
 														<i class="fa fa-map-marker-alt text-primary me-2"></i>#{real.village.fullAddress()}
 													</p>
@@ -271,7 +274,7 @@
 													</small>
 
 													<h:panelGroup
-														rendered="#{indexController.hasRoomsAndBathRooms(real)}">
+														rendered="#{indexController.hasRoomsAndBathRooms(real.postType)}">
 														<small class="flex-fill text-center border-end py-2">
 															<i class="fa fa-bed text-primary me-2" /> #{real.nbRoom}
 															#{bundle.real_estate_rooms}
@@ -283,7 +286,7 @@
 
 													</h:panelGroup>
 													<h:panelGroup
-														rendered="#{!indexController.hasRoomsAndBathRooms(real)}">
+														rendered="#{!indexController.hasRoomsAndBathRooms(real.postType)}">
 														<small class="flex-fill text-center border-end py-2">
 															<i class="fa fa-solid fa-road text-primary me-2" />#{bundle.real_estate_road}:
 															<i
@@ -308,90 +311,127 @@
 		</h:panelGroup>
 	</ui:define>
 
-	<ui:define name="statistic-content">
-		<div class="container-xxl py-5">
-			<div class="container">
-				<div class="text-center mx-auto mb-5 wow fadeInUp"
-					data-wow-delay="0.1s" style="max-width: 600px;">
-					<h1 class="mb-3">#{bundle.property_type}</h1>
-					<p>#{bundle.property_type_description}</p>
-				</div>
-				<div class="row g-4">
-					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<a class="cat-item d-block bg-light text-center rounded p-3"
-							href="">
-							<div class="rounded p-4">
-								<div class="icon mb-3">
-									<img class="img-fluid"
-										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
-								</div>
-								<h6>#{bundle.appartment_sell}</h6>
-
-								<h:outputText
-									value="#{indexController.numberOfSellAppartments()}">
-									<f:convertNumber pattern="#,###.##" />
-								</h:outputText>
-
-							</div>
-						</a>
+	<ui:remove>
+		<ui:define name="statistic-content">
+			<div class="container-xxl py-5">
+				<div class="container">
+					<div class="text-center mx-auto mb-5 wow fadeInUp"
+						data-wow-delay="0.1s" style="max-width: 600px;">
+						<h1 class="mb-3">#{bundle.property_type}</h1>
+						<p>#{bundle.property_type_description}</p>
 					</div>
-					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<a class="cat-item d-block bg-light text-center rounded p-3"
-							href="">
-							<div class="rounded p-4">
-								<div class="icon mb-3">
-									<img class="img-fluid"
-										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+					<div class="row g-4">
+						<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+							<a class="cat-item d-block bg-light text-center rounded p-3"
+								href="">
+								<div class="rounded p-4">
+									<div class="icon mb-3">
+										<img class="img-fluid"
+											src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+									</div>
+									<h6>#{bundle.appartment_sell}</h6>
+
+									<h:outputText
+										value="#{indexController.numberOfSellAppartments()}">
+										<f:convertNumber pattern="#,###.##" />
+									</h:outputText>
+
 								</div>
-								<h6>#{bundle.appartment_rent}</h6>
+							</a>
+						</div>
+						<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+							<a class="cat-item d-block bg-light text-center rounded p-3"
+								href="">
+								<div class="rounded p-4">
+									<div class="icon mb-3">
+										<img class="img-fluid"
+											src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+									</div>
+									<h6>#{bundle.appartment_rent}</h6>
 
-								<h:outputText
-									value="#{indexController.numberOfRentAppartments()}">
-									<f:convertNumber pattern="#,###.##" />
-								</h:outputText>
+									<h:outputText
+										value="#{indexController.numberOfRentAppartments()}">
+										<f:convertNumber pattern="#,###.##" />
+									</h:outputText>
 
-							</div>
-						</a>
-					</div>
-					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<a class="cat-item d-block bg-light text-center rounded p-3"
-							href="">
-							<div class="rounded p-4">
-								<div class="icon mb-3">
-									<img class="img-fluid"
-										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
 								</div>
-								<h6>#{bundle.land}</h6>
+							</a>
+						</div>
+						<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+							<a class="cat-item d-block bg-light text-center rounded p-3"
+								href="">
+								<div class="rounded p-4">
+									<div class="icon mb-3">
+										<img class="img-fluid"
+											src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+									</div>
+									<h6>#{bundle.land}</h6>
 
-								<h:outputText value="#{indexController.numberOfLands()}">
-									<f:convertNumber pattern="#,###.##" />
-								</h:outputText>
+									<h:outputText value="#{indexController.numberOfLands()}">
+										<f:convertNumber pattern="#,###.##" />
+									</h:outputText>
 
-							</div>
-						</a>
-					</div>
-
-					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<a class="cat-item d-block bg-light text-center rounded p-3"
-							href="">
-							<div class="rounded p-4">
-								<div class="icon mb-3">
-									<img class="img-fluid"
-										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
 								</div>
-								<h6>#{bundle.chalet}</h6>
+							</a>
+						</div>
 
-								<h:outputText value="#{indexController.chaletList.size()}">
-									<f:convertNumber pattern="#,###.##" />
-								</h:outputText>
+						<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+							<a class="cat-item d-block bg-light text-center rounded p-3"
+								href="">
+								<div class="rounded p-4">
+									<div class="icon mb-3">
+										<img class="img-fluid"
+											src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+									</div>
+									<h6>#{bundle.office_sell}</h6>
 
-							</div>
-						</a>
+									<h:outputText value="#{indexController.numberOfSellOffices()}">
+										<f:convertNumber pattern="#,###.##" />
+									</h:outputText>
+
+								</div>
+							</a>
+						</div>
+						<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+							<a class="cat-item d-block bg-light text-center rounded p-3"
+								href="">
+								<div class="rounded p-4">
+									<div class="icon mb-3">
+										<img class="img-fluid"
+											src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+									</div>
+									<h6>#{bundle.office_rent}</h6>
+
+									<h:outputText value="#{indexController.numberOfRentOffices()}">
+										<f:convertNumber pattern="#,###.##" />
+									</h:outputText>
+
+								</div>
+							</a>
+						</div>
+
+						<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+							<a class="cat-item d-block bg-light text-center rounded p-3"
+								href="">
+								<div class="rounded p-4">
+									<div class="icon mb-3">
+										<img class="img-fluid"
+											src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+									</div>
+									<h6>#{bundle.chalet}</h6>
+
+									<h:outputText value="#{indexController.chaletList.size()}">
+										<f:convertNumber pattern="#,###.##" />
+									</h:outputText>
+
+								</div>
+							</a>
+						</div>
+
 					</div>
-
 				</div>
 			</div>
-		</div>
-	</ui:define>
+		</ui:define>
+	</ui:remove>
 </ui:composition>
 </html>

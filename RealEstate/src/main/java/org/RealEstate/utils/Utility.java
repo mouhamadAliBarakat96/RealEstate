@@ -7,6 +7,17 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.RealEstate.enumerator.PostType;
+import org.RealEstate.enumerator.RealEstateTypeEnum;
+import org.RealEstate.model.AppratmentRent;
+import org.RealEstate.model.AppratmentSell;
+import org.RealEstate.model.Land;
+import org.RealEstate.model.OfficeRent;
+import org.RealEstate.model.OfficeSell;
+import org.RealEstate.model.RealEstate;
+import org.RealEstate.model.ShopRent;
+import org.RealEstate.model.ShopSell;
+
 public class Utility {
 
 	public final static String BUNDLE_FILE_NAME_AR = "resources.Bundle-ar";
@@ -66,5 +77,31 @@ public class Utility {
 	public static void addMessage(String msg) {
 		FacesMessage facesMessage = new FacesMessage(msg, "warn");
 		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+	}
+	
+	public static RealEstate createObject(RealEstate item) {
+		switch (item.getPostType()) {
+		
+		case APPRATMENT_RENT:
+			return (AppratmentRent) item;
+
+		case APPRATMENT_SELL:
+			return (AppratmentSell) item;
+
+		case OFFICE_RENT:
+			return (OfficeRent) item;
+
+		case OFFICE_SELL:
+			return (OfficeSell) item;
+
+		case SHOP_RENT:
+			return (ShopRent) item;
+		case SHOP_SELL:
+			return (ShopSell) item;
+		case LAND:
+			return (Land) item;
+		default:
+			return null;
+		}
 	}
 }

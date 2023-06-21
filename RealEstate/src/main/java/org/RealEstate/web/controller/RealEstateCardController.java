@@ -5,16 +5,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.AppratmentRentFacade;
+import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.utils.Utility;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.ResponsiveOption;
 
@@ -33,6 +38,11 @@ public class RealEstateCardController implements Serializable {
 			"property-4.jpg");
 	private List<ResponsiveOption> responsiveOptions1;
 
+	private int activeIndex = 0;
+
+	@Inject
+	private RealEstateFacade facade;
+
 	@PostConstruct
 	public void init() {
 
@@ -43,19 +53,31 @@ public class RealEstateCardController implements Serializable {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
+
 		if (!facesContext.isPostback()) {
 			String id = externalContext.getRequestParameterMap().get(REQUEST_PARAM);
-			if (id != null && Double.parseDouble(id) > 0) {
+
+			if (id != null && Long.parseLong(id) > 0) {
 				// find item by id
+
+				item = facade.find(Long.parseLong(id) );
+
 				if (item == null) {
 					try {
 						Faces.redirect("/error.xhtml");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				}
+				} 
+//				else {
+//					item = Utility.createObject(item);
+//				}
 			} else {
-				// initiate by type
+				try {
+					Faces.redirect("/error.xhtml");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 
 		}
@@ -70,6 +92,11 @@ public class RealEstateCardController implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void changeActiveIndex() {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		activeIndex = Integer.valueOf(params.get("index"));
 	}
 
 	public RealEstate getItem() {
@@ -94,6 +121,22 @@ public class RealEstateCardController implements Serializable {
 
 	public void setResponsiveOptions1(List<ResponsiveOption> responsiveOptions1) {
 		this.responsiveOptions1 = responsiveOptions1;
+	}
+
+	public int getActiveIndex() {
+		return activeIndex;
+	}
+
+	public void setActiveIndex(int activeIndex) {
+		this.activeIndex = activeIndex;
+	}
+	
+	public boolean hasRoomsAndBathRooms(PostType type) {
+		if (type == null) {
+			return true;
+		} else
+			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
+					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
 
 }
