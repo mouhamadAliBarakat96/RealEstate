@@ -19,6 +19,7 @@ import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.AppratmentRentFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.ResponsiveOption;
@@ -34,15 +35,13 @@ public class RealEstateCardController implements Serializable {
 
 	private final String REQUEST_PARAM = "id";
 	private RealEstate item;
-	private List<String> imagesUrl = Arrays.asList("property-1.jpg", "property-2.jpg", "property-3.jpg",
-			"property-4.jpg");
-	private List<ResponsiveOption> responsiveOptions1;
-
+ 	private List<ResponsiveOption> responsiveOptions1;
 	private int activeIndex = 0;
 
 	@Inject
 	private RealEstateFacade facade;
-
+	private String fullUrl = "";
+	private String ipAddressWithPort;
 	@PostConstruct
 	public void init() {
 
@@ -68,10 +67,11 @@ public class RealEstateCardController implements Serializable {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				} 
-//				else {
-//					item = Utility.createObject(item);
-//				}
+				}else { 
+
+					fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
+							.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
+				}
 			} else {
 				try {
 					Faces.redirect("/error.xhtml");
@@ -81,6 +81,17 @@ public class RealEstateCardController implements Serializable {
 			}
 
 		}
+	}
+	
+
+	public String getIpAddressWithPort() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		String ipAddress = request.getRemoteAddr();
+		int port = request.getLocalPort();
+		ipAddressWithPort = ipAddress + ":" + port;
+		System.out.println(ipAddressWithPort);
+		return ipAddressWithPort;
 	}
 
 	private void changeUrl() {
@@ -107,14 +118,6 @@ public class RealEstateCardController implements Serializable {
 		this.item = item;
 	}
 
-	public List<String> getImagesUrl() {
-		return imagesUrl;
-	}
-
-	public void setImagesUrl(List<String> imagesUrl) {
-		this.imagesUrl = imagesUrl;
-	}
-
 	public List<ResponsiveOption> getResponsiveOptions1() {
 		return responsiveOptions1;
 	}
@@ -137,6 +140,16 @@ public class RealEstateCardController implements Serializable {
 		} else
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
+	}
+
+
+	public String getFullUrl() {
+		return fullUrl;
+	}
+
+
+	public void setFullUrl(String fullUrl) {
+		this.fullUrl = fullUrl;
 	}
 
 }

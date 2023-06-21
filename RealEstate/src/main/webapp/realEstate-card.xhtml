@@ -7,6 +7,23 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <ui:composition template="/views/template/makaan-template.xhtml">
+
+	<ui:define name="customOutputScript">
+		<!-- Use noConflict to release control of the $ variable -->
+		<script>
+ 			 jQuery.noConflict();
+		</script>
+
+		<!-- Use jQuery with the "jQuery" variable instead of "$" -->
+			<script>
+			  jQuery(document).ready(function() {
+			    jQuery('p').click(function() {
+			      jQuery(this).hide();
+			    });
+			  });
+			</script>
+	</ui:define>
+
 	<ui:define name="property-content">
 		<div class="container-xxl py-5">
 			<div class="container">
@@ -15,41 +32,57 @@
 						<div class="card">
 							<div class="row">
 								<div class="col-md-4">
-									<!-- 					<p:galleria value="#{realEstateCardController.imagesUrl}" -->
-									<!-- 						var="photo" numVisible="5"> -->
-									<!-- 						<p:graphicImage name="/resources/makaan/img/property-2.jpg" -->
-									<!-- 							alt="photo" style="width:100%" /> -->
-									<!-- 						<f:facet name="thumbail"> -->
-									<!-- 							<p:graphicImage name="/resources/makaan/img/#{photo}" alt="photo"></p:graphicImage> -->
-									<!-- 						</f:facet> -->
-									<!-- 					</p:galleria> -->
+									<p:galleria value="#{realEstateCardController.item.images}"
+										var="photo" numVisible="3"
+										responsiveOptions="#{realEstateCardController.responsiveOptions1}"
+										style="max-width: 100% ; display:inline-block">
+										<p:graphicImage
+											url="#{realEstateCardController.fullUrl}#{photo}"
+											alt="the photos" style="width: 100%" />
+										<f:facet name="thumbnail">
+											<p:graphicImage
+												url="#{realEstateCardController.fullUrl}#{photo}"
+												style="width: 100%" alt="#{photo}" />
+										</f:facet>
+									</p:galleria>
 								</div>
 
 								<div class="col-md-8 ">
+									
+									
 									<div class="p-4 pb-0">
 										<h5 class="text-primary mb-3">
 											#{realEstateCardController.item.tittle}</h5>
-
-										<h:outputLabel styleClass="d-block h5 mb-2"
-											value="#{realEstateCardController.item.subTittle}" />
+									
+									 
+										<h:outputLabel styleClass="d-block h5 mb-2" style="height: 150px;width: 100%;" value="#{realEstateCardController.item.subTittle}" />
+										 
 										<p>
 											<i class="fa fa-map-marker-alt text-primary me-2"></i>#{realEstateCardController.item.village.fullAddress()}
 										</p>
 									</div>
 
 									<div class="d-flex border-top">
+										
 										<small class="flex-fill text-center border-end py-2">
-
+											<h:outputLabel value="#{realEstateCardController.item.views}">
+												<f:convertNumber pattern="#,###" />
+												 <i class=" fa fa-regular fa-eye text-primary"/>
+											</h:outputLabel>
+										</small>
+									
+										<small class="flex-fill text-center border-end py-2">
 											<h:outputLabel value="#{realEstateCardController.item.price}">
 												<f:convertNumber pattern="#,###" />
-											</h:outputLabel> <i class="fa fa-ligth fa-dollar-sign text-primary me-2" />
-										</small> <small class="flex-fill text-center border-end py-2">
+												<i class="fa fa-ligth fa-dollar-sign text-primary me-2" />
+											</h:outputLabel> 
+										</small> 
+										<small class="flex-fill text-center border-end py-2">
 											<i class="fa fa-ruler-combined text-primary me-2" /> <h:outputLabel
 												value="#{realEstateCardController.item.space}">
 												<f:convertNumber pattern="#,###" />
 											</h:outputLabel> #{bundle.real_state_distance}
 										</small>
-
 										<h:panelGroup
 											rendered="#{indexController.hasRoomsAndBathRooms(realEstateCardController.item.postType)}">
 											<small class="flex-fill text-center border-end py-2">

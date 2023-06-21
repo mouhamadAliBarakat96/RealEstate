@@ -49,7 +49,8 @@
 	<h:outputStylesheet name="admin-template/toastr-rtl.min.css"
 		library="css" />
 
-	<ui:insert name="customStylesheet"></ui:insert>
+	<ui:insert name="customStylesheet">
+	</ui:insert>
 
 
 </h:head>
@@ -144,9 +145,6 @@
 
 		</div>
 	</h:form>
-	<!-- custom Output Script -->
-	<ui:insert name="customOutputScript" />
-
 	<!-- JavaScript Libraries -->
 	<script src="/resources/makaan/js/jquery-3.4.1.min.js"></script>
 	<script src="/resources/makaan/js/bootstrap.min.js"></script>
@@ -167,6 +165,10 @@
 			</ui:repeat>
 		</h:outputScript>
 	</h:panelGroup>
+
+	<!-- custom Output Script -->
+	<ui:insert name="customOutputScript">
+	</ui:insert>
 
 	<!-- END TOASTR -->
 </h:body>
