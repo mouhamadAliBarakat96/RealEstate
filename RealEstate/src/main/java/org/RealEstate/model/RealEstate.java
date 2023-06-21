@@ -66,13 +66,14 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@Expose
 	private String subTittle;
 
+	
+	// hon leh nrafad
 	@Column(length = 1000)
 	@Expose
 	private String reffuseCause;
 
-	@Column(length = 1000)
-	@Expose
-	private String reviuexCause;
+	
+
 
 	@Expose
 	private boolean negotiable;
@@ -265,13 +266,7 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		this.reffuseCause = reffuseCause;
 	}
 
-	public String getReviuexCause() {
-		return reviuexCause;
-	}
 
-	public void setReviuexCause(String reviuexCause) {
-		this.reviuexCause = reviuexCause;
-	}
 
 	public boolean isPricePublic() {
 		return pricePublic;

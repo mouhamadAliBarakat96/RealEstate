@@ -33,6 +33,16 @@
 body .ui-panelgrid .ui-panelgrid-cell {
 	border: none !important;
 }
+
+.ui-panel-images {
+	width: 100%;
+	height: 100%;
+}
+
+.ui-galleria-panel {
+	width: 100%;
+	height: 100%;
+}
 </style>
 	</ui:define>
 	<ui:define name="pageTittle">
@@ -45,119 +55,261 @@ body .ui-panelgrid .ui-panelgrid-cell {
 		<o:onloadScript>
 	select2me();
 	</o:onloadScript>
-		<h:panelGroup id="crud-id">
-			<div class="panel-body">
 
-				<div class="card">
-					<div class="card-body">
+		<o:importConstants type="org.RealEstate.enumerator.PostStatus"
+			var="postStatus" />
 
 
-						<div class="row">
-							<div class="col-md-12">
-								<p:galleria value="#{postController.realEstate.images}"
-									var="photo" numVisible="5"
-									style="max-width: 20% ; display:inline-block">
+		<div class="panel-body">
 
+			<div class="card">
+				<div class="card-body">
+
+
+
+
+
+					<div class="row">
+						<div class="col-md-2">
+
+							<p:galleria value="#{postController.realEstate.images}"
+								var="photo" numVisible="5"
+								style="max-width: 100% ; display:inline-block">
+
+								<p:graphicImage url="#{postController.fullUrl}#{photo}" alt="aa"
+									style="width: 100%" />
+
+								<f:facet name="thumbnail">
 									<p:graphicImage url="#{postController.fullUrl}#{photo}"
-										alt="aa" style="width: 100%" />
+										style="width: 100%" alt="#{photo}" />
+								</f:facet>
 
-									<f:facet name="thumbnail">
-										<p:graphicImage url="#{postController.fullUrl}#{photo}"
-											style="width: 100%" alt="#{photo}" />
-									</f:facet>
+							</p:galleria>
 
-								</p:galleria>
+							<p:galleria widgetVar="galleria1"
+								value="#{postController.realEstate.images}" var="photo"
+								numVisible="9"
+								responsiveOptions="#{galleriaView.responsiveOptions3}"
+								circular="true" fullScreen="true" showItemNavigators="true"
+								style="max-width: 50%">
 
-								<div
-									style="width: 75%; margin-left: 3%; display: inline-block; position: absolute">
+								<p:graphicImage url="#{postController.fullUrl}#{photo}" alt="aa"
+									style="width: 100%" />
+								<f:facet name="thumbnail">
+									<p:graphicImage url="#{postController.fullUrl}#{photo}"
+										style="width: 100%" alt="#{photo}" />
+								</f:facet>
+							</p:galleria>
 
-									<div class="card ">
-										<div class="card-body">
-											<h3 style="text-align: center;">Post Information</h3>
+							<p:commandButton value="Show Full Screen"
+								icon="pi pi-external-link" style="margin-top:4%"
+								onclick="PF('galleria1').show()">
+								<p:ajax></p:ajax>
+							</p:commandButton>
+
+						</div>
+						<div class="col-md-5">
+
+
+
+
+
+
+
+							<h3 style="text-align: center;">Post Information</h3>
+
+
+
+
+
+							<div
+								style="margin-top: 2%; width: 100%; border: 1px solid #e6e9ed;"
+								class="card dashbord green ">
+
+								<p:panelGrid style="width:100%" columns="2"
+									columnClasses="col-md-4,col-md-8">
+
+									<h:outputText value="  Post Status :" />
+									<h:outputText
+										style="margin-left:15px;font-size:15px ; padding:10px ; border-radius:5px  "
+										class="  badge our-badge-green "
+										value=" #{postController.realEstate.postStatus}  " />
+
+
+
+
+									<h:outputText value=" Post Type :" />
+									<h:outputText
+										style="margin-left:15px;font-size:15px ; padding:10px ; border-radius:5px  "
+										class="  badge our-badge-blue "
+										value="  #{postController.realEstate.postType}  " />
+
+
+									<h:outputText value=" Tittle:" />
+									<h:outputText value="#{postController.realEstate.tittle}" />
+
+
+									<h:outputText value="Sub Tittle:" />
+									<h:outputText value="#{postController.realEstate.subTittle}" />
+
+
+
+
+									<h:outputText value=" Space : " />
+									<h:outputText
+										value="#{postController.realEstate.space}  m&sup2; ">
+									</h:outputText>
+
+
+
+
+									<h:outputText value=" User Name : " />
+									<h:outputText
+										value="#{postController.realEstate.user.firstName} / #{postController.realEstate.user.middleName} / #{postController.realEstate.user.lastName}" />
+
+
+
+									<h:outputText value=" User Phone : " />
+									<h:outputText
+										value="#{postController.realEstate.user.phoneNumber}" />
+
+									<h:outputText value="Location:" />
+									<h:outputText
+										value="#{postController.realEstate.village.district.governorate.name} / #{postController.realEstate.village.district.name} / #{postController.realEstate.village.name}" />
+
+
+
+
+									<h:outputText value="Price :" />
+									<h:outputText
+										value="#{of:formatCurrency(postController.realEstate.price, '')}  &#36; " />
+
+
+
+									<h:outputText styleClass="key" value="Price Public :" />
+									<h:outputText styleClass="value"
+										class=" #{postController.realEstate.pricePublic  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
+
+
+
+									<h:outputText value="Post Date :" />
+									<h:outputText id="postDate" styleClass="text-ellipsis"
+										title="#{postController.realEstate.postDate}"
+										value="#{postController.realEstate.postDate}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+
+
+								</p:panelGrid>
+
+
+
+
+							</div>
+
+
+
+
+
+
+
+
+
+						</div>
+
+						<div class="col-md-5" style="padding-left: 0;">
+							<h3 style="text-align: center;">Post Information</h3>
+
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class=" col-md-12">
+
+
+											<div class="col-md-10">
+												<p:outputLabel class="control-label" for="postStatus"
+													value="disctrict ">
+												</p:outputLabel>
+												<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+													styleClass="select2 select2me form-control   custom-select"
+													converter="omnifaces.SelectItemsConverter" id="postStatus"
+													label="disctrict"
+													value="#{postController.realEstate.postStatus}"
+													placeHolder="#set">
+													<f:selectItem itemLabel="disctrict" itemValue="" />
+													<f:selectItems value="#{postStatus.values()}" var="var"
+														itemLabel="#{var}" itemValue="#{var}" />
+
+													<f:ajax render=" test "></f:ajax>
+												</h:selectOneMenu>
+												<h:message for="postStatus" styleClass="error-message" />
+											</div>
+
+
+
+
+											<h:panelGroup id="test">
+												<div class="col-md-10">
+
+													<div class="form-group">
+														<h:outputLabel class="control-label" for="reffuseCause"
+															style="padding-left:1.5%" value="reffuseCause ">
+
+														</h:outputLabel>
+
+														<h:inputText id="reffuseCause"
+															rendered="#{postController.realEstate.postStatus.toString() eq 'REFFUSED' }"
+															f5:placeholder="
+														reffuseCause "
+															label="reffuseCause " title="reffuseCause "
+															value="#{postController.realEstate.reffuseCause}"
+															styleClass="form-control">
+															<f:ajax render=":messageScript"></f:ajax>
+														</h:inputText>
+														<h:message for="reffuseCause" styleClass="error-message" />
+
+
+													</div>
+												</div>
+											</h:panelGroup>
+
+
+
+
+
 										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<h:commandLink id="saveId"
+													style=" float:right ; margin-left:10px;"
+													action='#{postController.save()}'
+													styleClass="btn btn-primary btn-save">
+													<f:ajax render=":messageScript "
+														execute="  postStatus reffuseCause  " />
+													<i class="fa fa-save" />
+													<span>Save</span>
 
 
-										<div
-											style="margin-top: 0%; width: 50%; border: 1px solid #e6e9ed;"
-											class="card dashbord green ">
-											<p:panelGrid style="width:100%" columns="2"
-											  columnClasses="col-md-4,col-md-8"
-											>
-
-
-
-												<h:outputText value=" Tittle:" />
-												<h:outputText value="#{postController.realEstate.tittle}" />
-
-
-												<h:outputText value="Sub Tittle:" />
-												<h:outputText value="#{postController.realEstate.subTittle}" />
-
-
-												<h:outputText value=" Post Type : " />
-												<h:outputText value="#{postController.realEstate.postType}" />
-
-
-												<h:outputText value=" Space : " />
-												<h:outputText value="#{postController.realEstate.space}" />
-
-
-												<h:outputText value=" User : " />
-												<h:outputText
-													value="#{postController.realEstate.user.phoneNumber}" />
-
-												<h:outputText value="Location:" />
-												<h:outputText
-													value="#{postController.realEstate.village.district.governorate.name} / #{postController.realEstate.village.district.name} / #{postController.realEstate.village.name}" />
-
-
-
-
-												<h:outputText value="Price :" />
-												<h:outputText
-													value="#{of:formatCurrency(postController.realEstate.price, '')} USD " />
-
-
-
-												<h:outputText styleClass="key" value="Price Public :" />
-												<h:outputText styleClass="value"
-													class=" #{postController.realEstate.pricePublic  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
-
-
-
-												<h:outputText value="Post Date :" />
-												<h:outputText id="postDate" styleClass="text-ellipsis"
-													title="#{postController.realEstate.postDate}"
-													value="#{postController.realEstate.postDate}">
-													<f:convertDateTime pattern="dd/MM/yyyy" />
-												</h:outputText>
-
-
-											</p:panelGrid>
+												</h:commandLink>
+											</div>
 										</div>
-
-
 									</div>
-
 
 								</div>
 
 							</div>
 
 
+
 						</div>
-
-
-
 					</div>
+
+
+
+
 				</div>
-
-
-
 			</div>
-
-		</h:panelGroup>
-
+		</div>
 	</ui:define>
 
 </ui:decorate>
