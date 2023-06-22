@@ -112,6 +112,25 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>user-list</from-outcome>
+				<to-view-id>/views/user/user-list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+		<navigation-rule>
+		<navigation-case>
+			<from-outcome>user-post-list</from-outcome>
+				<to-view-id>/views/user/user-post-list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
 
 	<application>
 		<locale-config>

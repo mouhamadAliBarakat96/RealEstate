@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:decorate template="/views/template/template.xhtml">
+
+
+	<ui:param name="title" value="#{bundle.main_page}" />
+	<ui:param name="subtitle" value="#{bundle.main_page}" />
+
+	<ui:define name="breadcrumb">
+
+		<!-- Page-Title -->
+		<div class="row">
+
+			<li class="breadcrumb-item ">#{bundle.card}</li>
+			<li class="breadcrumb-item "><h:link outcome="governorate-list"> User List </h:link></li>
+
+			<li class="breadcrumb-item active">User Posts</li>
+
+
+		</div>
+		<!--end col-->
+	</ui:define>
+	<ui:define name="pageTittle">
+
+		<h4 class="page-title">User Posts</h4>
+	</ui:define>
+	<ui:define name="customFormContent">
+
+		<o:onloadScript>
+
+     initDatePicker();
+     select2me();
+       inputNumberPicker();
+       </o:onloadScript>
+
+		<o:importConstants type="org.RealEstate.enumerator.PostStatus"
+			var="postStatus" />
+
+		<o:importConstants type="org.RealEstate.enumerator.PostType"
+			var="postType" />
+
+		<div class="col-md-12 " style="display: flex; margin-top: 2%;">
+
+			<!-- Nav tabs -->
+
+			<ul class="nav nav-tabs" role="tablist"
+				style="width: 100%; display: flex;">
+
+
+
+
+				<li class="nav-item"><a class="nav-link active "
+					data-toggle="tab" href="#realEstate" role="tab">Real Estate
+						Posts </a></li>
+
+
+				<li class="nav-item"><a class="nav-link  " data-toggle="tab"
+					href="#chaletPosts" role="tab">Chalet Posts </a></li>
+
+			</ul>
+		</div>
+
+		<div class="tab-content">
+
+
+
+
+
+			<div class="tab-pane active p-3" id="realEstate" f5:role="tabpanel">
+				<div
+					style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
+
+
+
+					<p:dataTable var="entity" paginator="true" rows="10"
+						paginatorPosition="bottom" style="margin-top: 2%"
+						rowKey="#{item.id}"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+						rowsPerPageTemplate="5,10,15" styleClass="border-none"
+						value="#{postUserListController.realEstateList}"
+						widgetVar="tableRealEstateWidget"
+						emptyMessage="No RealEstate was added"
+						filteredValue="#{postUserListController.realEstateFilters}">
+
+
+
+						<p:column headerText="Id" sortBy="#{entity.id}"
+							filterBy="#{entity.id}">
+							<h:link value="#{entity.id}" outcome="post">
+								<f:param name="id" value="#{entity.id}" />
+							</h:link>
+
+						</p:column>
+
+
+						<p:column filterBy="#{entity.postType}" filterMatchMode="exact"
+							headerText="postType" sortBy="#{entity.postType}">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
+									style="width:100% ;   " styleClass="inputtext-filter">
+									<f:selectItem itemLabel="postType" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItems value="#{postType.values()}" entity="entity"
+										itemLabel="#{entity}" itemValue="#{entity}" />
+								</p:selectOneMenu>
+							</f:facet>
+
+
+
+							<h:outputText value="#{entity.postType}" />
+						</p:column>
+
+
+
+
+						<p:column filterBy="#{entity.postStatus}" filterMatchMode="exact"
+							headerText="postStatus" sortBy="#{entity.postStatus}">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
+									style="width:100% ;   " styleClass="inputtext-filter">
+									<f:selectItem itemLabel="postType" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItems value="#{postStatus.values()}" entity="entity"
+										itemLabel="#{entity}" itemValue="#{entity}" />
+								</p:selectOneMenu>
+							</f:facet>
+
+							<h:outputText value="#{entity.postStatus}" />
+						</p:column>
+
+
+						<p:column headerText="Reffuse Cause ">
+							<h:outputText value="#{entity.reffuseCause}" />
+						</p:column>
+
+
+						<p:column headerText="location ">
+							<h:outputText
+								value="#{entity.village.district.governorate.name} /  #{entity.village.district.name} / #{entity.village.name }" />
+						</p:column>
+
+
+
+						<p:column headerText="user ">
+							<h:outputText
+								value="#{entity.user.firstName} / #{entity.user.middleName} / #{entity.user.lastName}" />
+						</p:column>
+
+
+
+
+						<p:column filterStyleClass="filterNumbersOnly" headerText="space"
+							sortBy="#{entity.space}">
+							<h:outputText value="#{entity.space}" />
+						</p:column>
+
+
+						<p:column headerText="price" sortBy="#{entity.price}">
+
+
+							<h:outputText value="#{entity.price}" />
+						</p:column>
+
+						<p:column headerText="Post Date" sortBy="#{entity.postDate}"
+							width="100" style="padding-bottom: 45px;">
+							<h:outputText id="postDate" styleClass="text-ellipsis"
+								title="#{entity.postDate}" value="#{entity.postDate}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+
+						<p:column filterBy="#{entity.pricePublic}" filterMatchMode="exact"
+							headerText="price public" sortBy="#{entity.pricePublic}"
+							width="180">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
+									converter="javax.faces.Boolean" style="width:100% ;   "
+									styleClass="inputtext-filter">
+									<f:selectItem itemLabel="All" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="No" itemValue="false" />
+									<f:selectItem itemLabel="Yes" itemValue="true" />
+									<f:ajax></f:ajax>
+								</p:selectOneMenu>
+							</f:facet>
+
+
+							<em
+								class="   #{entity.pricePublic  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+
+
+						</p:column>
+
+
+
+
+
+					</p:dataTable>
+				</div>
+			</div>
+
+
+
+
+			<div class="tab-pane  p-3" id="chaletPosts" f5:role="tabpanel">
+
+				<div
+					style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
+
+
+
+					<p:dataTable var="entity" paginator="true" rows="10"
+						paginatorPosition="bottom" style="margin-top: 2%"
+						rowKey="#{entity.id}"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+						rowsPerPageTemplate="5,10,15" styleClass="border-none"
+						value="#{postUserListController.chaletList}"
+						widgetVar="tableChaletWidget" lazy="false"
+						emptyMessage="No RealEstate was added"
+						filteredValue="#{postUserListController.chaletFilters}">
+						
+						
+						
+						
+					</p:dataTable>
+					
+					
+					
+				</div>
+
+
+
+			</div>
+		</div>
+	</ui:define>
+
+</ui:decorate>
+
+</html>

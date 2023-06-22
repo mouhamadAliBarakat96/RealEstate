@@ -257,15 +257,14 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 														</h:outputLabel>
 
-														<h:inputText id="reffuseCause"
+														<h:inputTextarea id="reffuseCause" rows="4"
 															rendered="#{postController.realEstate.postStatus.toString() eq 'REFFUSED' }"
-															f5:placeholder="
-														reffuseCause "
-															label="reffuseCause " title="reffuseCause "
+															f5:placeholder="reffuseCause " label="reffuseCause "
+															title="reffuseCause "
 															value="#{postController.realEstate.reffuseCause}"
 															styleClass="form-control">
 															<f:ajax render=":messageScript"></f:ajax>
-														</h:inputText>
+														</h:inputTextarea>
 														<h:message for="reffuseCause" styleClass="error-message" />
 
 

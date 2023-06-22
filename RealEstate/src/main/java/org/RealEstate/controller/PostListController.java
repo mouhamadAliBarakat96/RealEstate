@@ -64,6 +64,8 @@ public class PostListController implements Serializable {
 	private Long numOfPostOfficeRent;
 	private Long numOfPostOfficeSell;
 
+	private Long numAllPost;
+
 	// Filters ;
 	private Date fromDate;
 	private Date toDate;
@@ -96,15 +98,15 @@ public class PostListController implements Serializable {
 		numOfPostShopSell = realEstateFacade.findUserCountPostByType(PostType.SHOP_SELL);
 		numOfPostOfficeRent = realEstateFacade.findUserCountPostByType(PostType.OFFICE_RENT);
 		numOfPostOfficeSell = realEstateFacade.findUserCountPostByType(PostType.OFFICE_SELL);
-
+		numAllPost = (long) realEstateFacade.count();
 		// List
 		governorates = governorateFacade.findAll();
 
 	}
 
 	public void search() {
-		
-		if (toDate!=null && fromDate !=null && toDate.compareTo(fromDate)<0) {
+
+		if (toDate != null && fromDate != null && toDate.compareTo(fromDate) < 0) {
 			CommonUtility.addMessageToFacesContext("toDate its before fromDate ", "error");
 
 		} else if (minPrice > maxPrice) {
@@ -320,6 +322,14 @@ public class PostListController implements Serializable {
 
 	public void setMaxPrice(int maxPrice) {
 		this.maxPrice = maxPrice;
+	}
+
+	public Long getNumAllPost() {
+		return numAllPost;
+	}
+
+	public void setNumAllPost(Long numAllPost) {
+		this.numAllPost = numAllPost;
 	}
 
 }
