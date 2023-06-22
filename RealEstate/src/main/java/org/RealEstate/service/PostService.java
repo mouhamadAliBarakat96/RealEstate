@@ -118,6 +118,7 @@ public class PostService implements Serializable {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.EMPTY_REQUEST_DONT_CONTAIN_DATA).build();
 			}
 
+			// waiting mojtaba
 			User user = checkUserConstraint(data.get(0).getBodyAsString());
 
 			// check village Exist
@@ -182,7 +183,7 @@ public class PostService implements Serializable {
 			addCommonsFieldChalet(chalet);
 			checkChaletConstraintFields(chalet);
 			chalet.setUser(user);
-
+			user.getChales().add(chalet);
 			return chaletFacade.mangmentSavePost(chalet, inputParts);
 		case "SHOP_RENT":
 

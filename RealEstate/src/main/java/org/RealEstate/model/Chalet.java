@@ -90,6 +90,7 @@ public class Chalet extends MainEntity implements Serializable {
 
 	@Expose
 	private PostStatus postStatus;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	@Expose

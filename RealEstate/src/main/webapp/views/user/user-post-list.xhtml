@@ -159,12 +159,13 @@
 
 
 						<p:column filterStyleClass="filterNumbersOnly" headerText="space"
-							sortBy="#{entity.space}">
+							sortBy="#{entity.space}" filterBy="#{entity.space}">
 							<h:outputText value="#{entity.space}" />
 						</p:column>
 
 
-						<p:column headerText="price" sortBy="#{entity.price}">
+						<p:column filterStyleClass="filterNumbersOnly" headerText="price"
+							sortBy="#{entity.price}" filterBy="#{entity.price}">
 
 
 							<h:outputText value="#{entity.price}" />
@@ -229,14 +230,137 @@
 						widgetVar="tableChaletWidget" lazy="false"
 						emptyMessage="No RealEstate was added"
 						filteredValue="#{postUserListController.chaletFilters}">
+
+
+
+						<p:column headerText="Id" sortBy="#{entity.id}"
+							filterBy="#{entity.id}">
+							<h:link value="#{entity.id}" outcome="post">
+								<f:param name="id" value="#{entity.id}" />
+							</h:link>
+
+						</p:column>
+						<p:column headerText="name " sortBy="#{entity.name}"
+							filterBy="#{entity.name}">
+							<h:outputText value="#{entity.name}" />
+						</p:column>
+
+						<p:column filterBy="#{entity.pool}" filterMatchMode="exact"
+							headerText="pool " sortBy="#{entity.pool}" width="100">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
+									converter="javax.faces.Boolean" style="width:100% ;   "
+									styleClass="inputtext-filter">
+									<f:selectItem itemLabel="All" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="No" itemValue="false" />
+									<f:selectItem itemLabel="Yes" itemValue="true" />
+									<f:ajax></f:ajax>
+								</p:selectOneMenu>
+							</f:facet>
+
+
+							<em
+								class="   #{entity.pool  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+
+
+						</p:column>
 						
 						
-						
-						
+						<p:column filterBy="#{entity.chimney}" filterMatchMode="exact"
+							headerText="pool " sortBy="#{entity.pool}" width="100">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
+									converter="javax.faces.Boolean" style="width:100% ;   "
+									styleClass="inputtext-filter">
+									<f:selectItem itemLabel="All" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="No" itemValue="false" />
+									<f:selectItem itemLabel="Yes" itemValue="true" />
+									<f:ajax></f:ajax>
+								</p:selectOneMenu>
+							</f:facet>
+
+
+							<em
+								class="   #{entity.chimney  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+
+
+						</p:column>
+
+
+
+
+
+						<p:column filterBy="#{entity.postStatus}" filterMatchMode="exact"
+							headerText="postStatus" sortBy="#{entity.postStatus}">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('tableChaletWidget').filter()"
+									style="width:100% ;   " styleClass="inputtext-filter">
+									<f:selectItem itemLabel="postType" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItems value="#{postStatus.values()}" entity="entity"
+										itemLabel="#{entity}" itemValue="#{entity}" />
+								</p:selectOneMenu>
+							</f:facet>
+
+							<h:outputText value="#{entity.postStatus}" />
+						</p:column>
+
+
+						<p:column headerText="Reffuse Cause ">
+							<h:outputText value="#{entity.reffuseCause}" />
+						</p:column>
+
+
+						<p:column headerText="location ">
+							<h:outputText
+								value="#{entity.village.district.governorate.name} /  #{entity.village.district.name} / #{entity.village.name }" />
+						</p:column>
+
+
+
+
+
+
+
+						<p:column filterStyleClass="filterNumbersOnly" headerText="space"
+							filterBy="#{entity.space}" sortBy="#{entity.space}">
+							<h:outputText value="#{entity.space}" />
+						</p:column>
+
+
+						<p:column filterStyleClass="filterNumbersOnly"
+							filterBy="#{entity.weekdays}" headerText=" weekdays price"
+							sortBy="#{entity.weekdays}">
+
+
+							<h:outputText value="#{entity.weekdays}" />
+						</p:column>
+						<p:column filterStyleClass="filterNumbersOnly"
+							sortBy="#{entity.weekdays}" filterBy="#{entity.weekdays}"
+							headerText=" weekdays price">
+
+
+							<h:outputText value="#{entity.weekdays}" />
+						</p:column>
+
+
+						<p:column headerText="Post Date" sortBy="#{entity.postDate}"
+							width="100" style="padding-bottom: 45px;">
+							<h:outputText id="postDate" styleClass="text-ellipsis"
+								title="#{entity.postDate}" value="#{entity.postDate}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+
+
+
 					</p:dataTable>
-					
-					
-					
+
+
+
 				</div>
 
 

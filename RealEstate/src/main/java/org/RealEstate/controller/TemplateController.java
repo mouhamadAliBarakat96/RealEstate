@@ -85,6 +85,10 @@ public class TemplateController implements Serializable {
 
 		m2 = new MenuItem("User List", "       mdi mdi-note-multiple-outline      ", "user-list", true, "addButton");
 		m1.addChild(m2);
+		
+		m2 = new MenuItem("", "", "user-post", true, "display: none;");
+		m1.addChild(m2);
+		
 	
 		
 		menu.add(m1);
