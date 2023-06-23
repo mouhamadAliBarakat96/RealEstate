@@ -1,5 +1,6 @@
 package org.RealEstate.web.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +9,15 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.dto.RealEstateLazyDataModel;
 import org.RealEstate.enumerator.PostType;
@@ -30,7 +37,9 @@ import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
+import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Utility;
+import org.omnifaces.util.Faces;
 
 @Named
 @ViewScoped
@@ -40,6 +49,7 @@ public class IndexController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private final String REQUEST_PARAM = "id";
 
 	@Inject
 	private GovernorateFacade governorateFacade;
@@ -49,6 +59,8 @@ public class IndexController implements Serializable {
 	private VillageFacade villageFacade;
 	@Inject
 	private RealEstateFacade realEstateFacade;
+	@Inject
+	private PostService postService;
 
 	private List<RealEstate> realEstates = new ArrayList<>();
 
@@ -88,6 +100,35 @@ public class IndexController implements Serializable {
 		// totalCount.set(realEstates.size());
 
 		lazyModel = new RealEstateLazyDataModel(realEstateFacade);
+	}
+
+	public void addViewsAfterClick(RealEstate item) {
+		try {
+			Response response = postService.updatePostVieux(item.getId(), item.getPostType().toString());
+
+			if (response.getStatus() == Status.ACCEPTED.getStatusCode()) {
+				System.out.println("Post Viewed ACCEPTED");
+
+			} else if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
+				System.out.println("Post Viewed NOT_FOUND");
+
+			} else {
+				System.out.println("Status NO CONTENT" + (String) response.getEntity());
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	public void navigate(RealEstate item) {
+		// Build the URL with the parameter values
+		String url = "realEstate-card.xhtml?id=" + item.getId();
+		// Use the ExternalContext object to redirect to the new page
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+		} catch (IOException e) {
+			// Handle the exception appropriately
+		}
 	}
 
 	public void listenerSelectGovernate() {
@@ -184,7 +225,7 @@ public class IndexController implements Serializable {
 	public int numberOfLands() {
 		return realEstates.stream().filter(x -> x instanceof Land).collect(Collectors.toList()).size();
 	}
-	
+
 	public int numberOfSellOffices() {
 		return realEstates.stream().filter(x -> x instanceof OfficeSell).collect(Collectors.toList()).size();
 	}

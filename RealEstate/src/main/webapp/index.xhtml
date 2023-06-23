@@ -100,10 +100,10 @@
 					</div>
 
 					<h:panelGroup id="realSatatebathBedRoomsId" layout="block"
-						styleClass="row col-md-7 mt-2 pr-0" >
+						styleClass="row col-md-7 mt-2 pr-0">
 						<h:panelGroup
 							rendered="#{indexController.hasRoomsAndBathRooms(indexController.postType)}">
-						
+
 							<div class="col-md-4 col-sm-12">
 								<h:outputLabel value="Bed Rooms Count" style="color:white" />
 								<h:inputText onkeypress="return isNumberKey(event)"
@@ -181,11 +181,16 @@
 									<div class="col-md-12 wow fadeInUp" data-wow-delay="0.1s">
 										<div class="property-item rounded overflow-hidden">
 											<div class="position-relative overflow-hidden">
-												<h:link outcome="realEstate-card">
+
+												<h:commandLink action="#{indexController.navigate(real)}" styleClass="d-block h5 mb-2">
 													<img class="img-fluid"
-														src="/resources/makaan/img/#{real.images[0]}" alt="" />
-													<f:param name="id" value="#{real.id}" />
-												</h:link>
+														src="/resources/makaan/img/#{real.images[0]}"
+														alt="no photos" />
+													<f:actionListener
+														binding="#{indexController.addViewsAfterClick(real)}" />
+												</h:commandLink>
+
+
 												<div
 													class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">#{real.postType.name}</div>
 												<div
@@ -193,14 +198,25 @@
 											</div>
 											<div class="p-4 pb-0">
 												<h5 class="text-primary mb-3">$ #{real.price}</h5>
-												<a class="d-block h5 mb-2" href="">#{real.subTittle}</a>
+												<h:commandLink action="#{indexController.navigate(real)}"
+													value="#{real.subTittle} me" styleClass="d-block h5 mb-2">
+													<f:actionListener
+														binding="#{indexController.addViewsAfterClick(real)}" />
+												</h:commandLink>
 												<p>
 													<i class="fa fa-map-marker-alt text-primary me-2"></i>#{real.village.fullAddress()}
 												</p>
 											</div>
 											<div class="d-flex border-top">
-
 												<small class="flex-fill text-center border-end py-2">
+													<h:outputLabel
+														value="#{real.views}">
+														<f:convertNumber pattern="#,###" />
+														<i class=" fa fa-regular fa-eye text-primary" />
+													</h:outputLabel>
+												</small>
+												
+												 <small class="flex-fill text-center border-end py-2">
 													<i class="fa fa-ruler-combined text-primary me-2" />
 													#{real.space} #{bundle.real_state_distance}
 												</small>
@@ -243,11 +259,13 @@
 										<div class="row">
 											<div class="col-md-4 ">
 												<div class="position-relative overflow-hidden">
-													<h:link outcome="realEstate-card">
+													<h:commandLink action="#{indexController.navigate(real)}" styleClass="d-block h5 mb-2">
 														<img class="img-fluid"
-															src="/resources/makaan/img/#{real.images[0]}" alt="" />
-														<f:param name="id" value="#{real.id}" />
-													</h:link>
+															src="/resources/makaan/img/#{real.images[0]}"
+															alt="no photos" />
+														<f:actionListener
+															binding="#{indexController.addViewsAfterClick(real)}" />
+													</h:commandLink>
 													<div
 														class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
 														#{real.postType.name}</div>
@@ -256,11 +274,13 @@
 											<div class="col-md-8 ">
 												<div class="p-4 pb-0">
 													<h5 class="text-primary mb-3">$ #{real.price}</h5>
-												
-													<h:link value="#{real.subTittle}" outcome="realEstate-card" styleClass="d-block h5 mb-2">
-														<f:param name="id" value="#{real.id}" />
-													</h:link>
-													 
+
+													<h:commandLink action="#{indexController.navigate(real)}"
+														value="#{real.subTittle} me" styleClass="d-block h5 mb-2">
+														<f:actionListener
+															binding="#{indexController.addViewsAfterClick(real)}" />
+													</h:commandLink>
+
 													<p>
 														<i class="fa fa-map-marker-alt text-primary me-2"></i>#{real.village.fullAddress()}
 													</p>
@@ -268,6 +288,14 @@
 
 												<div class="d-flex border-top">
 
+												<small class="flex-fill text-center border-end py-2">
+													<h:outputLabel
+														value="#{real.views}">
+														<f:convertNumber pattern="#,###" />
+														<i class=" fa fa-regular fa-eye text-primary" />
+													</h:outputLabel>
+												</small>
+												
 													<small class="flex-fill text-center border-end py-2">
 														<i class="fa fa-ruler-combined text-primary me-2" />
 														#{real.space} #{bundle.real_state_distance}

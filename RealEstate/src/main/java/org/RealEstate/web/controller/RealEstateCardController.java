@@ -2,8 +2,6 @@ package org.RealEstate.web.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -14,13 +12,14 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.enumerator.PostType;
-import org.RealEstate.facade.AppratmentRentFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Constants;
-import org.RealEstate.utils.Utility;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.ResponsiveOption;
 
@@ -35,20 +34,19 @@ public class RealEstateCardController implements Serializable {
 
 	private final String REQUEST_PARAM = "id";
 	private RealEstate item;
- 	private List<ResponsiveOption> responsiveOptions1;
+	private List<ResponsiveOption> responsiveOptions1;
 	private int activeIndex = 0;
 
 	@Inject
 	private RealEstateFacade facade;
+	@Inject
+	private PostService postService;
+
 	private String fullUrl = "";
 	private String ipAddressWithPort;
+
 	@PostConstruct
 	public void init() {
-
-		responsiveOptions1 = new ArrayList<>();
-		responsiveOptions1.add(new ResponsiveOption("1024px", 5));
-		responsiveOptions1.add(new ResponsiveOption("768px", 3));
-		responsiveOptions1.add(new ResponsiveOption("560px", 1));
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
@@ -59,7 +57,7 @@ public class RealEstateCardController implements Serializable {
 			if (id != null && Long.parseLong(id) > 0) {
 				// find item by id
 
-				item = facade.find(Long.parseLong(id) );
+				item = facade.find(Long.parseLong(id));
 
 				if (item == null) {
 					try {
@@ -67,10 +65,9 @@ public class RealEstateCardController implements Serializable {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				}else { 
-
-					fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
-							.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
+				} else {
+					fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/")
+							.concat(Constants.IMAGES).concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 				}
 			} else {
 				try {
@@ -82,7 +79,8 @@ public class RealEstateCardController implements Serializable {
 
 		}
 	}
-	
+
+
 
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
@@ -133,7 +131,7 @@ public class RealEstateCardController implements Serializable {
 	public void setActiveIndex(int activeIndex) {
 		this.activeIndex = activeIndex;
 	}
-	
+
 	public boolean hasRoomsAndBathRooms(PostType type) {
 		if (type == null) {
 			return true;
@@ -142,11 +140,9 @@ public class RealEstateCardController implements Serializable {
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
 
-
 	public String getFullUrl() {
 		return fullUrl;
 	}
-
 
 	public void setFullUrl(String fullUrl) {
 		this.fullUrl = fullUrl;
