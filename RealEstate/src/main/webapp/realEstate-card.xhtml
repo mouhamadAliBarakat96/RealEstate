@@ -15,7 +15,7 @@
 		</script>
 
 		<!-- Use jQuery with the "jQuery" variable instead of "$" -->
-			<script>
+		<script>
 			  jQuery(document).ready(function() {
 			    jQuery('p').click(function() {
 			      jQuery(this).hide();
@@ -42,74 +42,100 @@
 										<f:facet name="thumbnail">
 											<p:graphicImage
 												url="#{realEstateCardController.fullUrl}#{photo}"
-												style="width: 100%" alt="#{photo}" />
+												style="width: 100%;max-height:70px;" alt="#{photo}" />
 										</f:facet>
 									</p:galleria>
 								</div>
 
 								<div class="col-md-8 ">
-									
-									
 									<div class="p-4 pb-0">
 										<h5 class="text-primary mb-3">
 											#{realEstateCardController.item.tittle}</h5>
-									
-									 
-										<h:outputLabel styleClass="d-block h5 mb-2" style="height: 150px;width: 100%;" value="#{realEstateCardController.item.subTittle}" />
-										 
+										<h:outputLabel styleClass="d-block h5 mb-2"
+											style="height: 150px;width: 100%;"
+											value="#{realEstateCardController.item.subTittle}" />
 										<p>
 											<i class="fa fa-map-marker-alt text-primary me-2"></i>#{realEstateCardController.item.village.fullAddress()}
 										</p>
 									</div>
 
-									<div class="d-flex border-top">
-										
-										<small class="flex-fill text-center border-end py-2">
-											<h:outputLabel value="#{realEstateCardController.item.views}">
-												<f:convertNumber pattern="#,###" />
-												 <i class=" fa fa-regular fa-eye text-primary"/>
-											</h:outputLabel>
-										</small>
-									
-										<small class="flex-fill text-center border-end py-2">
+									<div class="row col-md-12 border-top border-end">
+										 <small class="col-md-3 text-center border-end py-2">
 											<h:outputLabel value="#{realEstateCardController.item.price}">
 												<f:convertNumber pattern="#,###" />
 												<i class="fa fa-ligth fa-dollar-sign text-primary me-2" />
-											</h:outputLabel> 
-										</small> 
-										<small class="flex-fill text-center border-end py-2">
-											<i class="fa fa-ruler-combined text-primary me-2" /> <h:outputLabel
+											</h:outputLabel>
+										</small>
+										
+										 <small class="col-md-3 text-center border-end py-2">
+											<i class="fa fa-ruler-combined text-primary me-2" />
+											 <h:outputLabel 
 												value="#{realEstateCardController.item.space}">
 												<f:convertNumber pattern="#,###" />
-											</h:outputLabel> #{bundle.real_state_distance}
+											</h:outputLabel>
+											 <h:outputLabel  value=" #{bundle.real_state_distance}" />
+
 										</small>
 										<h:panelGroup
 											rendered="#{indexController.hasRoomsAndBathRooms(realEstateCardController.item.postType)}">
-											<small class="flex-fill text-center border-end py-2">
+											<small class="col-md-3 text-center border-end py-2">
 												<i class="fa fa-bed text-primary me-2" />
-												#{realEstateCardController.item.nbRoom}
-												#{bundle.real_estate_rooms}
+												#{realEstateCardController.item.nbRoom} <h:outputLabel
+													 value="#{bundle.real_estate_rooms}" />
+
 											</small>
-											<small class="flex-fill text-center py-2"> <i
+											<small class="col-md-3 text-center py-2"> <i
 												class="fa fa-bath text-primary me-2" />
-												#{realEstateCardController.item.nbBathRoom}
-												#{bundle.real_estate_bathrooms}
+												#{realEstateCardController.item.nbBathRoom} <h:outputLabel
+													 value="#{bundle.real_estate_bathrooms}" />
+
 											</small>
 
 										</h:panelGroup>
 										<h:panelGroup
 											rendered="#{!realEstateCardController.hasRoomsAndBathRooms(realEstateCardController.item.postType)}">
-											<small class="flex-fill text-center border-end py-2">
-												<i class="fa fa-solid fa-road text-primary me-2" />#{bundle.real_estate_road}:
-												<i
+											<small class="col-md-3 text-center border-end py-2">
+												<i class="fa fa-solid fa-road text-primary me-2" /> <h:outputLabel
+													 value="#{bundle.real_estate_road}:" /> <i
 												class="text-primary #{realEstateCardController.item.road ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
 											</small>
-											<small class="flex-fill text-center py-2"> <i
-												class="fa fa-solid fa-water text-primary me-2" />#{bundle.real_estate_water}:
-												<i
+											<small class="col-md-3 text-center py-2"> <i
+												class="fa fa-solid fa-water text-primary me-2" /> <h:outputLabel
+													 value="#{bundle.real_estate_water}:" /> <i
 												class="text-primary #{realEstateCardController.item.water ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
 											</small>
 										</h:panelGroup>
+									</div>
+									<div class="row col-md-12 border-top  border-bottom">
+										<small class="col-md-3 text-center border-end py-2">
+											<h:outputLabel 
+												value="#{bundle.realestate_negotible}">
+												<i
+													class="text-primary #{realEstateCardController.item.negotiable ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
+											</h:outputLabel>
+										</small> 
+										
+										<small class="col-md-3 text-center border-end py-2">
+											<h:outputLabel value="#{realEstateCardController.item.views}">
+												<f:convertNumber pattern="#,###" />
+												<i class=" fa fa-regular fa-eye text-primary" />
+											</h:outputLabel>
+										</small>
+										
+										<small class="col-md-3 text-center border-end py-2">
+											<h:outputLabel 
+												value="#{realEstateCardController.item.liked}">
+												<f:convertNumber pattern="#,###" />
+												<i class=" fa fa-heart text-primary" />
+											</h:outputLabel>
+										</small>
+										
+										<small class="col-md-3 text-center border-end py-2">
+											<h:outputLabel 
+												value="#{realEstateCardController.item.postDate}">
+												<f:convertDateTime  pattern="yyyy-MM-dd" />
+											</h:outputLabel>
+										</small>
 									</div>
 								</div>
 							</div>
