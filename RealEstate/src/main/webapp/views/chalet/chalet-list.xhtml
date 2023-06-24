@@ -44,7 +44,7 @@
 	</ui:define>
 	<ui:define name="pageTittle">
 
-		<h4 class="page-title">Post Repport</h4>
+		<h4 class="page-title">Chalet Repport</h4>
 	</ui:define>
 	<ui:define name="customFormContent">
 
@@ -55,7 +55,7 @@
 
 
 		<div class="card" style="margin-bottom: 0%;">
-			<h3 style="margin-left: 2%">Real Estate Statistics (Post Type)</h3>
+			<h3 style="margin-left: 2%">Chalet Estate Statistics (Post Type)</h3>
 		</div>
 
 
@@ -239,48 +239,48 @@
 								<h:outputText value="#{var.reffuseCause}" />
 							</p:column>
 
-	<p:column filterBy="#{var.pool}" filterMatchMode="exact"
-							headerText="pool " sortBy="#{var.pool}" width="100">
-							<f:facet name="filter">
-								<p:selectOneMenu onchange="PF('tableChaletWidget').filter()"
-									converter="javax.faces.Boolean" style="width:100% ;   "
-									styleClass="inputtext-filter">
-									<f:selectItem itemLabel="All" itemValue="#{null}"
-										noSelectionOption="true" />
-									<f:selectItem itemLabel="No" itemValue="false" />
-									<f:selectItem itemLabel="Yes" itemValue="true" />
-									<f:ajax></f:ajax>
-								</p:selectOneMenu>
-							</f:facet>
+							<p:column filterBy="#{var.pool}" filterMatchMode="exact"
+								headerText="pool " sortBy="#{var.pool}" width="100">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tableChaletWidget').filter()"
+										converter="javax.faces.Boolean" style="width:100% ;   "
+										styleClass="inputtext-filter">
+										<f:selectItem itemLabel="All" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItem itemLabel="No" itemValue="false" />
+										<f:selectItem itemLabel="Yes" itemValue="true" />
+										<f:ajax></f:ajax>
+									</p:selectOneMenu>
+								</f:facet>
 
 
-							<em
-								class="   #{var.pool  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+								<em
+									class="   #{var.pool  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
 
 
-						</p:column>
-						
-						
-						<p:column filterBy="#{var.chimney}" filterMatchMode="exact"
-							headerText="chimney " sortBy="#{var.pool}" width="100">
-							<f:facet name="filter">
-								<p:selectOneMenu onchange="PF('tableChaletWidget').filter()"
-									converter="javax.faces.Boolean" style="width:100% ;   "
-									styleClass="inputtext-filter">
-									<f:selectItem itemLabel="All" itemValue="#{null}"
-										noSelectionOption="true" />
-									<f:selectItem itemLabel="No" itemValue="false" />
-									<f:selectItem itemLabel="Yes" itemValue="true" />
-									<f:ajax></f:ajax>
-								</p:selectOneMenu>
-							</f:facet>
+							</p:column>
 
 
-							<em
-								class="   #{var.chimney  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+							<p:column filterBy="#{var.chimney}" filterMatchMode="exact"
+								headerText="chimney " sortBy="#{var.pool}" width="100">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tableChaletWidget').filter()"
+										converter="javax.faces.Boolean" style="width:100% ;   "
+										styleClass="inputtext-filter">
+										<f:selectItem itemLabel="All" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItem itemLabel="No" itemValue="false" />
+										<f:selectItem itemLabel="Yes" itemValue="true" />
+										<f:ajax></f:ajax>
+									</p:selectOneMenu>
+								</f:facet>
 
 
-						</p:column>
+								<em
+									class="   #{var.chimney  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+
+
+							</p:column>
 
 
 
