@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.NavigationHandler;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
@@ -119,7 +120,39 @@ public class IndexController implements Serializable {
 			// TODO: handle exception
 		}
 	}
+	
+	public void addCallNumber(RealEstate item) {
+		try {
+			Response response = postService.updateCallPost(item.getId(), item.getPostType().toString());
 
+			if (response.getStatus() == Status.ACCEPTED.getStatusCode()) {
+				System.out.println("Calls ACCEPTED");
+
+			} else if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
+				System.out.println("Calls NOT_FOUND");
+
+			} else {
+				System.out.println("Status NO CONTENT" + (String) response.getEntity());
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	
+	public void navigateToWhatsApp(RealEstate item) throws IOException {
+		// Get the phone number parameter from the request
+		if (item.getUser() != null && item.getUser().getPhoneNumber()!=null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			String phoneNumber = item.getUser().getPhoneNumber();
+			// Construct the WhatsApp URL
+			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
+			// Navigate to the URL
+			externalContext.redirect(url);
+		}
+	}
+	//navigate to real estate Card
 	public void navigate(RealEstate item) {
 		// Build the URL with the parameter values
 		String url = "realEstate-card.xhtml?id=" + item.getId();
