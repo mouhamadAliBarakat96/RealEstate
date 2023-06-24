@@ -20,9 +20,9 @@
 		<div class="row">
 
 			<li class="breadcrumb-item ">#{bundle.card}</li>
-			<li class="breadcrumb-item "><h:link outcome="post-list"> Post List </h:link></li>
+			<li class="breadcrumb-item "><h:link outcome="post-list"> Chalet List </h:link></li>
 
-			<li class="breadcrumb-item active">Management Post</li>
+			<li class="breadcrumb-item active">Management Chalet</li>
 
 
 		</div>
@@ -48,6 +48,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 	float: right;
 	color: #009B77 !important;
 }
+
 .fa-phone::before {
 	float: right;
 	color: #009B77 !important;
@@ -58,7 +59,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 
 
-		<h4 class="page-title">Mangment Post</h4>
+		<h4 class="page-title">Mangment Chalet</h4>
 	</ui:define>
 	<ui:define name="customFormContent">
 		<o:onloadScript>
@@ -81,31 +82,30 @@ body .ui-panelgrid .ui-panelgrid-cell {
 					<div class="row">
 						<div class="col-md-2">
 
-							<p:galleria value="#{postController.realEstate.images}"
-								var="photo" numVisible="5"
-								style="max-width: 100% ; display:inline-block">
+							<p:galleria value="#{chaletController.chalet.images}" var="photo"
+								numVisible="5" style="max-width: 100% ; display:inline-block">
 
-								<p:graphicImage url="#{postController.fullUrl}#{photo}" alt="aa"
-									style="width: 100%" />
+								<p:graphicImage url="#{chaletController.fullUrl}#{photo}"
+									alt="aa" style="width: 100%" />
 
 								<f:facet name="thumbnail">
-									<p:graphicImage url="#{postController.fullUrl}#{photo}"
+									<p:graphicImage url="#{chaletController.fullUrl}#{photo}"
 										style="width: 100%" alt="#{photo}" />
 								</f:facet>
 
 							</p:galleria>
 
 							<p:galleria widgetVar="galleria1"
-								value="#{postController.realEstate.images}" var="photo"
+								value="#{chaletController.chalet.images}" var="photo"
 								numVisible="9"
 								responsiveOptions="#{galleriaView.responsiveOptions3}"
 								circular="true" fullScreen="true" showItemNavigators="true"
 								style="max-width: 50%">
 
-								<p:graphicImage url="#{postController.fullUrl}#{photo}" alt="aa"
-									style="width: 100%" />
+								<p:graphicImage url="#{chaletController.fullUrl}#{photo}"
+									alt="aa" style="width: 100%" />
 								<f:facet name="thumbnail">
-									<p:graphicImage url="#{postController.fullUrl}#{photo}"
+									<p:graphicImage url="#{chaletController.fullUrl}#{photo}"
 										style="width: 100%" alt="#{photo}" />
 								</f:facet>
 							</p:galleria>
@@ -142,31 +142,25 @@ body .ui-panelgrid .ui-panelgrid-cell {
 									<h:outputText
 										style="margin-left:15px;font-size:15px ; padding:10px ; border-radius:5px  "
 										class="  badge our-badge-green "
-										value=" #{postController.realEstate.postStatus}  " />
+										value=" #{chaletController.chalet.postStatus}  " />
 
 
 
 
-									<h:outputText value=" Post Type :" />
-									<h:outputText
-										style="margin-left:15px;font-size:15px ; padding:10px ; border-radius:5px  "
-										class="  badge our-badge-blue "
-										value="  #{postController.realEstate.postType}  " />
-
-
+									
 									<h:outputText value=" Tittle:" />
-									<h:outputText value="#{postController.realEstate.tittle}" />
+									<h:outputText value="#{chaletController.chalet.name}" />
 
 
-									<h:outputText value="Sub Tittle:" />
-									<h:outputText value="#{postController.realEstate.subTittle}" />
+									<h:outputText value="Descrption:" />
+									<h:outputText value="#{chaletController.chalet.descrption}" />
 
 
 
 
 									<h:outputText value=" Space : " />
 									<h:outputText
-										value="#{postController.realEstate.space}  m&sup2; ">
+										value="#{chaletController.chalet.space}  m&sup2; ">
 									</h:outputText>
 
 
@@ -174,54 +168,58 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 									<h:outputText value=" User Name : " />
 									<h:outputText
-										value="#{postController.realEstate.user.firstName} / #{postController.realEstate.user.middleName} / #{postController.realEstate.user.lastName}" />
+										value="#{chaletController.chalet.user.firstName} / #{chaletController.chalet.user.middleName} / #{chaletController.chalet.user.lastName}" />
 
 
 
 									<h:outputText value=" User Phone : " />
 									<h:outputText
-										value="#{postController.realEstate.user.phoneNumber}" />
+										value="#{chaletController.chalet.user.phoneNumber}" />
 
 									<h:outputText value="Location:" />
 									<h:outputText
-										value="#{postController.realEstate.village.district.governorate.name} / #{postController.realEstate.village.district.name} / #{postController.realEstate.village.name}" />
+										value="#{chaletController.chalet.village.district.governorate.name} / #{chaletController.chalet.village.district.name} / #{chaletController.chalet.village.name}" />
 
 
 
 
-									<h:outputText value="Price :" />
-									<h:outputText
-										value="#{of:formatCurrency(postController.realEstate.price, '')}  &#36; " />
+		
 
-
-
-									<h:outputText styleClass="key" value="Price Public :" />
+									<h:outputText styleClass="key" value="chimney :" />
 									<h:outputText styleClass="value"
-										class=" #{postController.realEstate.pricePublic  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
+										class=" #{chaletController.chalet.chimney  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
+
+									<h:outputText styleClass="key" value="pool :" />
+									<h:outputText styleClass="value"
+										class=" #{chaletController.chalet.pool  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
 
 
 
 									<h:outputText value="Post Date :" />
 									<h:outputText id="postDate" styleClass="text-ellipsis"
-										title="#{postController.realEstate.postDate}"
-										value="#{postController.realEstate.postDate}">
+										title="#{chaletController.chalet.postDate}"
+										value="#{chaletController.chalet.postDate}">
 										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</h:outputText>
 
 
-									<h:outputText value="Price :" />
+									<h:outputText value="weekdays :" />
 									<h:outputText
-										value="#{of:formatCurrency(postController.realEstate.price, '')}  &#36; " />
+										value="#{of:formatCurrency(chaletController.chalet.weekdays, '')}  &#36; " />
+									<h:outputText value="weekenddays :" />
+									<h:outputText
+										value="#{of:formatCurrency(chaletController.chalet.weekenddays, '')}  &#36; " />
+
+
 
 									<h:outputText value="Nb Of views :" />
-									<h:outputText value="#{postController.realEstate.views}  "
+									<h:outputText value="#{chaletController.chalet.views}  "
 										styleClass=" fa fa-regular fa-eye  ">
 
 									</h:outputText>
 
 									<h:outputText value="Nb Of Call :" />
-									<h:outputText
-										value="#{postController.realEstate.numberOfCall}  "
+									<h:outputText value="#{chaletController.chalet.numberOfCall}  "
 										styleClass=" fa fa-phone  ">
 
 									</h:outputText>
@@ -259,7 +257,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 													styleClass="select2 select2me form-control   custom-select"
 													converter="omnifaces.SelectItemsConverter" id="postStatus"
 													label="disctrict"
-													value="#{postController.realEstate.postStatus}"
+													value="#{chaletController.chalet.postStatus}"
 													placeHolder="#set">
 													<f:selectItem itemLabel="disctrict" itemValue="" />
 													<f:selectItems value="#{postStatus.values()}" var="var"
@@ -283,10 +281,10 @@ body .ui-panelgrid .ui-panelgrid-cell {
 														</h:outputLabel>
 
 														<h:inputTextarea id="reffuseCause" rows="4"
-															rendered="#{postController.realEstate.postStatus.toString() eq 'REFFUSED' }"
+															rendered="#{chaletController.chalet.postStatus.toString() eq 'REFFUSED' }"
 															f5:placeholder="reffuseCause " label="reffuseCause "
 															title="reffuseCause "
-															value="#{postController.realEstate.reffuseCause}"
+															value="#{chaletController.chalet.reffuseCause}"
 															styleClass="form-control">
 															<f:ajax render=":messageScript"></f:ajax>
 														</h:inputTextarea>
@@ -306,7 +304,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 											<div class="col-md-12">
 												<h:commandLink id="saveId"
 													style=" float:right ; margin-left:10px;"
-													action='#{postController.save()}'
+													action='#{chaletController.save()}'
 													styleClass="btn btn-primary btn-save">
 													<f:ajax render=":messageScript "
 														execute="  postStatus reffuseCause  " />

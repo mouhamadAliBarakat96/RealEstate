@@ -48,7 +48,13 @@
 		</navigation-case>
 	</navigation-rule>
 	
-
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>chalet</from-outcome>
+			<to-view-id>/views/chalet/chalet.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 		<navigation-rule>
 		<navigation-case>

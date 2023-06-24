@@ -111,12 +111,12 @@ public class LazyChalelModel extends LazyDataModel<Chalet> {
 		}
 
 		if (fromDate != null) {
-			Predicate datePredicateFrom = cb.greaterThanOrEqualTo(root.<Date>get("postDate"), fromDate);
+			Predicate datePredicateFrom = cb.lessThanOrEqualTo(root.<Date>get("postDate"), fromDate);
 			predicates.add(datePredicateFrom);
 
 		}
 		if (toDate != null) {
-			Predicate datePredicateTo = cb.lessThanOrEqualTo(root.get("postDate"), toDate);
+			Predicate datePredicateTo = cb.greaterThanOrEqualTo(root.get("postDate"), toDate);
 
 			predicates.add(datePredicateTo);
 		}

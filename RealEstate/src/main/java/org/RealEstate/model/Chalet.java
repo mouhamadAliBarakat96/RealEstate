@@ -45,6 +45,11 @@ public class Chalet extends MainEntity implements Serializable {
 	@Size(min = 1)
 	@Expose
 	private String name;
+
+	
+
+
+
 	@Expose
 	private boolean pool;
 	@Expose
@@ -90,7 +95,7 @@ public class Chalet extends MainEntity implements Serializable {
 
 	@Expose
 	private PostStatus postStatus;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	@Expose
@@ -271,6 +276,7 @@ public class Chalet extends MainEntity implements Serializable {
 		this.user = user;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
