@@ -23,7 +23,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
 
-public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
+public class LazyPostModel extends LazyDataModel<RealEstate> {
 
 	/**
 	 * 
@@ -42,7 +42,7 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 	private int minPrice;
 	private int maxPrice;
 
-	public LazyPostCustomerModel(RealEstateFacade realEstateFacade, Date fromDate, Date toDate, Governorate governorate,
+	public LazyPostModel(RealEstateFacade realEstateFacade, Date fromDate, Date toDate, Governorate governorate,
 			District district, Village village, int minPrice, int maxPrice) {
 
 		this.realEstateFacade = realEstateFacade;
@@ -152,9 +152,9 @@ public class LazyPostCustomerModel extends LazyDataModel<RealEstate> {
 		
 			predicates.add(datePredicateTo);
 		}
-		Predicate finalPredicate = cb.and(predicates.toArray(new Predicate[0]));
+		return  cb.and(predicates.toArray(new Predicate[0]));
 
-		return finalPredicate;
+		
 	}
 
 	@Override

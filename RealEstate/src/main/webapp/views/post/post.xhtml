@@ -43,6 +43,10 @@ body .ui-panelgrid .ui-panelgrid-cell {
 	width: 100%;
 	height: 100%;
 }
+.fa-eye::before{
+float:right;
+color:#009B77 !important;
+}
 </style>
 	</ui:define>
 	<ui:define name="pageTittle">
@@ -199,6 +203,18 @@ body .ui-panelgrid .ui-panelgrid-cell {
 										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</h:outputText>
 
+
+									<h:outputText value="Price :" />
+									<h:outputText
+										value="#{of:formatCurrency(postController.realEstate.price, '')}  &#36; " />
+
+									<h:outputText value="Nb Of views :" />
+									<h:outputText
+									value="#{postController.realEstate.views}  "
+										styleClass=" fa fa-regular fa-eye  "
+										 >
+										
+										</h:outputText>
 
 								</p:panelGrid>
 

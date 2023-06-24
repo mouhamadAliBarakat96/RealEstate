@@ -248,7 +248,7 @@
 						<p:column filterBy="#{entity.pool}" filterMatchMode="exact"
 							headerText="pool " sortBy="#{entity.pool}" width="100">
 							<f:facet name="filter">
-								<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
+								<p:selectOneMenu onchange="PF('tableChaletWidget').filter()"
 									converter="javax.faces.Boolean" style="width:100% ;   "
 									styleClass="inputtext-filter">
 									<f:selectItem itemLabel="All" itemValue="#{null}"
@@ -268,9 +268,9 @@
 						
 						
 						<p:column filterBy="#{entity.chimney}" filterMatchMode="exact"
-							headerText="pool " sortBy="#{entity.pool}" width="100">
+							headerText="chimney " sortBy="#{entity.pool}" width="100">
 							<f:facet name="filter">
-								<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
+								<p:selectOneMenu onchange="PF('tableChaletWidget').filter()"
 									converter="javax.faces.Boolean" style="width:100% ;   "
 									styleClass="inputtext-filter">
 									<f:selectItem itemLabel="All" itemValue="#{null}"

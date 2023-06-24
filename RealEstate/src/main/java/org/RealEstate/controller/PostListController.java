@@ -9,7 +9,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.RealEstate.LazyDataModel.LazyPostCustomerModel;
+import org.RealEstate.LazyDataModel.LazyPostModel;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.DistrictFacade;
@@ -77,7 +77,7 @@ public class PostListController implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		lazyModel = new LazyPostCustomerModel(realEstateFacade, fromDate, toDate, governorate, district, village,
+		lazyModel = new LazyPostModel(realEstateFacade, fromDate, toDate, governorate, district, village,
 				minPrice, maxPrice);
 
 		fillData();
@@ -113,7 +113,7 @@ public class PostListController implements Serializable {
 			CommonUtility.addMessageToFacesContext("minPrice greater than maxPrice ", "error");
 
 		} else {
-			lazyModel = new LazyPostCustomerModel(realEstateFacade, fromDate, toDate, governorate, district, village,
+			lazyModel = new LazyPostModel(realEstateFacade, fromDate, toDate, governorate, district, village,
 					minPrice, maxPrice);
 			Ajax.oncomplete("PF('pageItemsTableWgVar').filter(); ");
 		}
@@ -121,12 +121,15 @@ public class PostListController implements Serializable {
 	}
 
 	public void fillDistrict() {
+		district = null ;
+		village = null;
 		if (governorate != null) {
 			districts = districtFacade.findByGovernorate(governorate.getId());
 		}
 	}
 
 	public void fillVillage() {
+		village = null;
 		if (district != null) {
 			villages = villageFacade.findByDisctrict(district.getId());
 		}

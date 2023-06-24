@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:decorate template="/views/template/template.xhtml">
+
+
+
+
+	<ui:param name="title" value="#{bundle.main_page}" />
+	<ui:param name="subtitle" value="#{bundle.main_page}" />
+
+	<ui:define name="breadcrumb">
+		<style>
+.font-weight-bold {
+	padding: 0;
+	margin: 0;
+}
+</style>
+
+		<o:onloadScript>
+
+     initDatePicker();
+     select2me();
+       inputNumberPicker();
+       </o:onloadScript>
+
+
+		<div class="row">
+
+
+			<li class="breadcrumb-item active">#{bundle.card}</li>
+			<li class="breadcrumb-item active">Chalet Repport</li>
+
+
+		</div>
+	</ui:define>
+	<ui:define name="pageTittle">
+
+		<h4 class="page-title">Post Repport</h4>
+	</ui:define>
+	<ui:define name="customFormContent">
+
+		<o:importConstants type="org.RealEstate.enumerator.PostStatus"
+			var="postStatus" />
+
+
+
+
+		<div class="card" style="margin-bottom: 0%;">
+			<h3 style="margin-left: 2%">Real Estate Statistics (Post Type)</h3>
+		</div>
+
+
+
+		<h:panelGroup>
+
+			<div class="card " style="margin-top: 1%;">
+				<div class="card-body  ">
+					<h3>Table Represent Chalet</h3>
+
+
+					<h4>Filters</h4>
+
+
+					<h:panelGroup id="filters">
+						<div class="row">
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<h:outputLabel class="control-label" for="fromDate"
+										style="padding-left:1.5%" value="From Date ">
+
+									</h:outputLabel>
+									<h:inputText id="fromDate" style=" margin-top:2%; "
+										value="#{chaletListController.fromDate}"
+										styleClass="form-control datepicker">
+										<f:convertDateTime dateStyle="full" pattern="dd/mm/yyy" />
+									</h:inputText>
+								</div>
+							</div>
+
+
+
+
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<h:outputLabel class="control-label" for="toDate"
+										style="padding-left:1.5%" value="To Date ">
+
+									</h:outputLabel>
+									<h:inputText id="toDate" style=" margin-top:2%; "
+										styleClass="form-control datepicker"
+										value="#{chaletListController.toDate}">
+										<f:convertDateTime dateStyle="full" pattern="dd/mm/yyy" />
+									</h:inputText>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<p:outputLabel class="control-label" for="governorate"
+									value="governorate ">
+								</p:outputLabel>
+								<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+									styleClass="select2 select2me form-control   custom-select"
+									converter="omnifaces.SelectItemsConverter" id="governorate"
+									label="governorate" value="#{chaletListController.governorate}"
+									placeHolder="#set">
+									<f:selectItem itemLabel="governorate" itemValue="" />
+									<f:selectItems value="#{chaletListController.governorates}"
+										var="re" itemLabel="  #{re.name}" itemValue="#{re}" />
+
+									<f:ajax render="disctrict"
+										listener="#{chaletListController.fillDistrict()}"></f:ajax>
+
+								</h:selectOneMenu>
+								<h:message for="governorate" styleClass="error-message" />
+
+
+
+
+							</div>
+
+
+							<div class="col-md-3">
+								<p:outputLabel class="control-label" for="disctrict"
+									value="disctrict ">
+								</p:outputLabel>
+								<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+									styleClass="select2 select2me form-control   custom-select"
+									converter="omnifaces.SelectItemsConverter" id="disctrict"
+									label="disctrict" value="#{chaletListController.district}"
+									placeHolder="#set">
+									<f:selectItem itemLabel="disctrict" itemValue="" />
+									<f:selectItems value="#{chaletListController.districts}"
+										var="re" itemLabel="     #{re.name} " itemValue="#{re}" />
+
+									<f:ajax render="village"
+										listener="#{chaletListController.fillVillage()}"></f:ajax>
+
+								</h:selectOneMenu>
+								<h:message for="disctrict" styleClass="error-message" />
+							</div>
+
+
+							<div class="col-md-3">
+								<p:outputLabel class="control-label" for="village"
+									value="Village ">
+								</p:outputLabel>
+								<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+									styleClass="select2 select2me form-control   custom-select"
+									converter="omnifaces.SelectItemsConverter" id="village"
+									label="village" value="#{chaletListController.village}"
+									placeHolder="#set">
+									<f:selectItem itemLabel="disctrict" itemValue="" />
+									<f:selectItems value="#{chaletListController.villages}"
+										var="re" itemLabel="    #{re.name} " itemValue="#{re}" />
+
+								</h:selectOneMenu>
+								<h:message for="disctrict" styleClass="error-message" />
+							</div>
+
+
+
+
+
+
+
+						</div>
+					</h:panelGroup>
+					<div class="row">
+						<div class="col-md-12">
+							<h:commandLink id="saveId"
+								style=" float:right ; margin-left:10px;"
+								action='#{chaletListController.search}'
+								styleClass="btn btn-primary ">
+								<f:ajax render=":messageScript " execute=" filters   " />
+								<i class="fa fa-search" />
+								<span>Search</span>
+
+
+							</h:commandLink>
+
+						</div>
+
+					</div>
+
+					<h:panelGroup id="header-panel" style="width:100%">
+						<div class="row"></div>
+					</h:panelGroup>
+					<div
+						style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
+
+
+						<p:dataTable id="tbl" var="var"
+							value="#{chaletListController.lazyModel}" paginator="true"
+							rows="10" rowKey="#{var.id}" paginatorPosition="bottom"
+							widgetVar="pageItemsTableWgVar"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							rowsPerPageTemplate="5,10,15,20">
+
+							<p:column headerText="Id" sortBy="#{var.id}" filterBy="#{var.id}">
+								<h:link value="#{var.id}" outcome="post">
+									<f:param name="id" value="#{var.id}" />
+								</h:link>
+
+							</p:column>
+
+
+
+
+
+
+							<p:column filterBy="#{var.postStatus}" filterMatchMode="exact"
+								headerText="postStatus" sortBy="#{var.postStatus}">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('pageItemsTableWgVar').filter()"
+										style="width:100% ;   " styleClass="inputtext-filter">
+										<f:selectItem itemLabel="postType" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{postStatus.values()}" var="var"
+											itemLabel="#{var}" itemValue="#{var}" />
+									</p:selectOneMenu>
+								</f:facet>
+
+								<h:outputText value="#{var.postStatus}" />
+							</p:column>
+
+
+							<p:column headerText="Reffuse Cause ">
+								<h:outputText value="#{var.reffuseCause}" />
+							</p:column>
+
+	<p:column filterBy="#{var.pool}" filterMatchMode="exact"
+							headerText="pool " sortBy="#{var.pool}" width="100">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('tableChaletWidget').filter()"
+									converter="javax.faces.Boolean" style="width:100% ;   "
+									styleClass="inputtext-filter">
+									<f:selectItem itemLabel="All" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="No" itemValue="false" />
+									<f:selectItem itemLabel="Yes" itemValue="true" />
+									<f:ajax></f:ajax>
+								</p:selectOneMenu>
+							</f:facet>
+
+
+							<em
+								class="   #{var.pool  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+
+
+						</p:column>
+						
+						
+						<p:column filterBy="#{var.chimney}" filterMatchMode="exact"
+							headerText="chimney " sortBy="#{var.pool}" width="100">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('tableChaletWidget').filter()"
+									converter="javax.faces.Boolean" style="width:100% ;   "
+									styleClass="inputtext-filter">
+									<f:selectItem itemLabel="All" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="No" itemValue="false" />
+									<f:selectItem itemLabel="Yes" itemValue="true" />
+									<f:ajax></f:ajax>
+								</p:selectOneMenu>
+							</f:facet>
+
+
+							<em
+								class="   #{var.chimney  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+
+
+						</p:column>
+
+
+
+							<p:column headerText="location ">
+								<h:outputText
+									value="#{var.village.district.governorate.name} /  #{var.village.district.name} / #{var.village.name }" />
+							</p:column>
+
+
+
+							<p:column headerText="user ">
+								<h:outputText
+									value="#{var.user.firstName} / #{var.user.middleName} / #{var.user.lastName}" />
+							</p:column>
+
+
+
+
+							<p:column filterStyleClass="filterNumbersOnly" headerText="space"
+								sortBy="#{var.space}">
+								<h:outputText value="#{var.space}" />
+							</p:column>
+
+
+							<p:column headerText="weekdays" sortBy="#{var.weekdays}">
+
+
+								<h:outputText value="#{var.weekdays}" />
+							</p:column>
+
+							<p:column headerText="weekdays" sortBy="#{var.weekenddays}">
+
+
+								<h:outputText value="#{var.weekenddays}" />
+							</p:column>
+
+							<p:column headerText="Post Date" sortBy="#{var.postDate}"
+								width="100" style="padding-bottom: 45px;">
+								<h:outputText id="postDate" styleClass="text-ellipsis"
+									title="#{var.postDate}" value="#{var.postDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+
+
+
+
+
+
+						</p:dataTable>
+
+					</div>
+				</div>
+			</div>
+
+
+		</h:panelGroup>
+
+
+	</ui:define>
+
+	<ui:define name="customOutputScript">
+
+
+
+
+	</ui:define>
+
+</ui:decorate>
+</html>
+
