@@ -22,8 +22,7 @@ public class ShopRent extends RealEstate implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Expose
-	private boolean electricElevator;
+	
 	@Expose
 	private int nbOfCarPark;
 
@@ -48,13 +47,6 @@ public class ShopRent extends RealEstate implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean isElectricElevator() {
-		return electricElevator;
-	}
-
-	public void setElectricElevator(boolean electricElevator) {
-		this.electricElevator = electricElevator;
-	}
 
 	public int getNbOfCarPark() {
 		return nbOfCarPark;
