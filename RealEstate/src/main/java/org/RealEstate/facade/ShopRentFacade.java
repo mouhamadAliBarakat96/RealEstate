@@ -32,4 +32,6 @@ public class ShopRentFacade extends AbstractFacade<ShopRent> implements Serializ
 			obj.setImages(imagesUrl);
 		return this.save(obj);
 	}
+	
+
 }

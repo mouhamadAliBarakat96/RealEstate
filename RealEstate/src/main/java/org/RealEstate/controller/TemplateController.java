@@ -76,20 +76,20 @@ public class TemplateController implements Serializable {
 		menu.add(m1);
 
 		// mdi mdi-cogs
-		m1 = new MenuItem("3", "Management", " fa fa-cogs ", "", getValue("card"), true);
-		m2 = new MenuItem("Post List", "       mdi mdi-note-multiple-outline      ", "post-list", true, "addButton");
+		m1 = new MenuItem("3", "Management", "  fa fa-list-ol  ", "", getValue("card"), true);
+		m2 = new MenuItem("Post List", "      mdi mdi-hospital-building     ", "post-list", true, "addButton");
 		m1.addChild(m2);
 		m2 = new MenuItem("", "", "post", true, "display: none;");
 		m1.addChild(m2);
 
-		m2 = new MenuItem("Chalet List", "       mdi mdi-note-multiple-outline      ", "chalet-list", true, "addButton");
+		m2 = new MenuItem("Chalet List", "        mdi mdi-hospital-building      ", "chalet-list", true, "addButton");
 		m1.addChild(m2);
 		
 		m2 = new MenuItem("", "", "chalet", true, "display: none;");		m1.addChild(m2);
 		m1.addChild(m2);
 		
 		
-		m2 = new MenuItem("User List", "       mdi mdi-note-multiple-outline      ", "user-list", true, "addButton");
+		m2 = new MenuItem("User List", "       dripicons-user-group     ", "user-list", true, "addButton");
 		m1.addChild(m2);
 		
 		m2 = new MenuItem("", "", "user-post", true, "display: none;");

@@ -33,6 +33,21 @@ public class PostMangment {
 
 	}
 
+	// update post
+
+	@PUT
+	@Path("/v1")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+
+	public Response updatePost(@MultipartForm MultipartFormDataInput input) {
+
+		return postService.mangmentUpdatePost(input);
+
+	}
+
+	
+	
 	// add views
 	@PUT
 	@Path("/v1/add-view/{id}/{postType}")
@@ -90,9 +105,6 @@ public class PostMangment {
 	
 
 	
-	// add call
-	
-	
 	@PUT
 	@Path("/v1/add-like/{id}/{postType}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -107,7 +119,6 @@ public class PostMangment {
 
 	
 
-	// update post
-
+	
 	
 }

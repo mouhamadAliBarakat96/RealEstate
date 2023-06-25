@@ -143,7 +143,45 @@ public class PostService implements Serializable {
 
 	}
 
-	private Object savePost(String jsonString, List<InputPart> inputParts, User user) throws Exception {
+	public Response mangmentUpdatePost(MultipartFormDataInput input) {
+
+		try {
+
+			Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+
+			// json in data to save
+			List<InputPart> data = uploadForm.get("data");
+			if (data == null) {
+
+				return Response.status(Status.BAD_REQUEST).entity(Constants.EMPTY_REQUEST_DONT_CONTAIN_DATA).build();
+			}
+
+			// waiting mojtaba
+			User user = findUser(data.get(0).getBodyAsString());
+
+			// check village Exist
+			checkVillageExist(data.get(0).getBodyAsString());
+			String jsonDataFromRequest = data.get(0).getBodyAsString();
+			Object obj = updatePost(jsonDataFromRequest, user);
+
+			if (obj == null) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.POST_TYPE_NOT_SUPPORTED).build();
+
+			} else {
+				return Response.status(Status.OK).entity(Utils.objectToString(obj)).build();
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+
+	}
+
+	private Object updatePost(String jsonString, User user) throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jsonNode = mapper.readTree(jsonString);
@@ -159,7 +197,7 @@ public class PostService implements Serializable {
 			addCommonsField(appratmentRent);
 			checkPostConstraintFields(appratmentRent);
 			appratmentRent.setUser(user);
-			return appratmentRentFacade.mangmentSavePost(appratmentRent, inputParts);
+			return appratmentRentFacade.save(appratmentRent);
 		case "APPRATMENT_SELL":
 
 			AppratmentSell appratmentSell = Utils.getObjectFromString(jsonString, AppratmentSell.class);
@@ -168,7 +206,7 @@ public class PostService implements Serializable {
 			checkPostConstraintFields(appratmentSell);
 			appratmentSell.setUser(user);
 
-			return appratmentSellFacade.mangmentSavePost(appratmentSell, inputParts);
+			return appratmentSellFacade.save(appratmentSell);
 		case "LAND":
 
 			Land land = Utils.getObjectFromString(jsonString, Land.class);
@@ -176,7 +214,7 @@ public class PostService implements Serializable {
 			land.setUser(user);
 
 			checkPostConstraintFields(land);
-			return landFacade.mangmentSavePost(land, inputParts);
+			return landFacade.save(land);
 		case "CHALET":
 
 			Chalet chalet = Utils.getObjectFromString(jsonString, Chalet.class);
@@ -184,7 +222,7 @@ public class PostService implements Serializable {
 			checkChaletConstraintFields(chalet);
 			chalet.setUser(user);
 			user.getChales().add(chalet);
-			return chaletFacade.mangmentSavePost(chalet, inputParts);
+			return chaletFacade.save(chalet);
 		case "SHOP_RENT":
 
 			ShopRent shopRent = Utils.getObjectFromString(jsonString, ShopRent.class);
@@ -192,7 +230,7 @@ public class PostService implements Serializable {
 			checkPostConstraintFields(shopRent);
 			shopRent.setUser(user);
 
-			return shopRentFacade.mangmentSavePost(shopRent, inputParts);
+			return shopRentFacade.save(shopRent);
 		case "SHOP_SELL":
 
 			ShopSell shopSell = Utils.getObjectFromString(jsonString, ShopSell.class);
@@ -200,7 +238,7 @@ public class PostService implements Serializable {
 			checkPostConstraintFields(shopSell);
 			shopSell.setUser(user);
 
-			return shopSellFacade.mangmentSavePost(shopSell, inputParts);
+			return shopSellFacade.save(shopSell);
 		case "OFFICE_RENT":
 
 			OfficeRent officeRent = Utils.getObjectFromString(jsonString, OfficeRent.class);
@@ -208,10 +246,90 @@ public class PostService implements Serializable {
 			checkPostConstraintFields(officeRent);
 			officeRent.setUser(user);
 
-			return officeRentFacade.mangmentSavePost(officeRent, inputParts);
+			return officeRentFacade.save(officeRent);
 		case "OFFICE_SELL":
 			OfficeSell officeSell = Utils.getObjectFromString(jsonString, OfficeSell.class);
 			addCommonsField(officeSell);
+			checkPostConstraintFields(officeSell);
+			officeSell.setUser(user);
+
+			return officeSellFacade.save(officeSell);
+		default:
+
+			return null;
+		}
+
+	}
+
+	private Object savePost(String jsonString, List<InputPart> inputParts, User user) throws Exception {
+
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(jsonString);
+		String postType = jsonNode.get("postType").asText();
+
+		if (postType == null) {
+			return null;
+		}
+
+		switch (postType) {
+		case "APPRATMENT_RENT":
+			AppratmentRent appratmentRent = Utils.getObjectFromString(jsonString, AppratmentRent.class);
+			addCommonsFieldWithoutPostDate(appratmentRent);
+			checkPostConstraintFields(appratmentRent);
+			appratmentRent.setUser(user);
+			return appratmentRentFacade.mangmentSavePost(appratmentRent, inputParts);
+		case "APPRATMENT_SELL":
+
+			AppratmentSell appratmentSell = Utils.getObjectFromString(jsonString, AppratmentSell.class);
+			addCommonsFieldWithoutPostDate(appratmentSell);
+
+			checkPostConstraintFields(appratmentSell);
+			appratmentSell.setUser(user);
+
+			return appratmentSellFacade.mangmentSavePost(appratmentSell, inputParts);
+		case "LAND":
+
+			Land land = Utils.getObjectFromString(jsonString, Land.class);
+			addCommonsFieldWithoutPostDate(land);
+			land.setUser(user);
+
+			checkPostConstraintFields(land);
+			return landFacade.mangmentSavePost(land, inputParts);
+		case "CHALET":
+
+			Chalet chalet = Utils.getObjectFromString(jsonString, Chalet.class);
+			addCommonsFieldChaletWithoutPostDate(chalet);
+			checkChaletConstraintFields(chalet);
+			chalet.setUser(user);
+			user.getChales().add(chalet);
+			return chaletFacade.mangmentSavePost(chalet, inputParts);
+		case "SHOP_RENT":
+
+			ShopRent shopRent = Utils.getObjectFromString(jsonString, ShopRent.class);
+			addCommonsFieldWithoutPostDate(shopRent);
+			checkPostConstraintFields(shopRent);
+			shopRent.setUser(user);
+
+			return shopRentFacade.mangmentSavePost(shopRent, inputParts);
+		case "SHOP_SELL":
+
+			ShopSell shopSell = Utils.getObjectFromString(jsonString, ShopSell.class);
+			addCommonsFieldWithoutPostDate(shopSell);
+			checkPostConstraintFields(shopSell);
+			shopSell.setUser(user);
+
+			return shopSellFacade.mangmentSavePost(shopSell, inputParts);
+		case "OFFICE_RENT":
+
+			OfficeRent officeRent = Utils.getObjectFromString(jsonString, OfficeRent.class);
+			addCommonsFieldWithoutPostDate(officeRent);
+			checkPostConstraintFields(officeRent);
+			officeRent.setUser(user);
+
+			return officeRentFacade.mangmentSavePost(officeRent, inputParts);
+		case "OFFICE_SELL":
+			OfficeSell officeSell = Utils.getObjectFromString(jsonString, OfficeSell.class);
+			addCommonsFieldWithoutPostDate(officeSell);
 			checkPostConstraintFields(officeSell);
 			officeSell.setUser(user);
 
@@ -223,11 +341,22 @@ public class PostService implements Serializable {
 
 	}
 
-	private User checkUserConstraint(String jsonString) throws Exception {
+	private User findUser(String jsonString) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jsonNode = mapper.readTree(jsonString);
 		Long id = jsonNode.get("userId").asLong();
 		User user = userFacade.find(id);
+		if (user == null) {
+			throw new Exception(Constants.USER_NOT_EXISTS);
+		} else {
+			return user;
+		}
+	}
+
+	private User checkUserConstraint(String jsonString) throws Exception {
+
+		User user = findUser(jsonString);
+
 		if (user == null) {
 			throw new Exception(Constants.USER_NOT_EXISTS);
 		} else {
@@ -253,13 +382,23 @@ public class PostService implements Serializable {
 	}
 
 	private void addCommonsField(RealEstate realEstate) {
-		realEstate.setPostStatus(PostStatus.PENDING);
+		addCommonsFieldWithoutPostDate(realEstate);
 		realEstate.setPostDate(new Date());
 	}
 
 	private void addCommonsFieldChalet(Chalet chalet) {
-		chalet.setPostStatus(PostStatus.PENDING);
+		addCommonsFieldChaletWithoutPostDate(chalet);
 		chalet.setPostDate(new Date());
+
+	}
+
+	private void addCommonsFieldWithoutPostDate(RealEstate realEstate) {
+		realEstate.setPostStatus(PostStatus.PENDING);
+
+	}
+
+	private void addCommonsFieldChaletWithoutPostDate(Chalet chalet) {
+		chalet.setPostStatus(PostStatus.PENDING);
 
 	}
 
