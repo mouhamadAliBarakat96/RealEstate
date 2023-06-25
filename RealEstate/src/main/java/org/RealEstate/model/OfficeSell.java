@@ -25,6 +25,8 @@ public class OfficeSell extends RealEstate implements Serializable {
 	@Expose
 	private int nbRoom;
 	@Expose
+	private int nbBathRoom;
+	@Expose
 	private boolean electricElevator;
 	@Expose
 	private int nbOfCarPark;
@@ -35,8 +37,7 @@ public class OfficeSell extends RealEstate implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Expose
 	private List<WaterResources> waterResources = new ArrayList<>();
-	@Expose
-	private int nbBathRoom;
+	
 	@Expose
 	private boolean greenBond;
 	@Expose

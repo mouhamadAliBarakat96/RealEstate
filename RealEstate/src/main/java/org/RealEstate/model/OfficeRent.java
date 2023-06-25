@@ -28,6 +28,9 @@ public class OfficeRent extends RealEstate implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Expose
 	private int nbRoom;
+
+	private int blockNb;
+
 	@Expose
 	private boolean electricElevator;
 	@Expose
@@ -45,22 +48,19 @@ public class OfficeRent extends RealEstate implements Serializable {
 	public OfficeRent() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
-	public OfficeRent(int nbRoom, boolean electricElevator, int floor, int nbBathRoom,Village vill,List<String> images) {
+	public OfficeRent(int nbRoom, boolean electricElevator, int floor, int nbBathRoom, Village vill,
+			List<String> images) {
 		super("Office Rent", "the Office is for you", 3500, vill, 150000);
 		super.setImages(images);
 		super.setPostType(PostType.OFFICE_RENT);
-		
+
 		this.nbRoom = nbRoom;
 		this.electricElevator = electricElevator;
 		this.floor = floor;
 		this.nbBathRoom = nbBathRoom;
-		 
+
 	}
-
-
 
 	public int getNbRoom() {
 		return nbRoom;
@@ -108,6 +108,14 @@ public class OfficeRent extends RealEstate implements Serializable {
 
 	public void setNbBathRoom(int nbBathRoom) {
 		this.nbBathRoom = nbBathRoom;
+	}
+
+	public int getBlockNb() {
+		return blockNb;
+	}
+
+	public void setBlockNb(int blockNb) {
+		this.blockNb = blockNb;
 	}
 
 	@Override

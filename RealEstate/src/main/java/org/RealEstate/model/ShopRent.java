@@ -33,7 +33,16 @@ public class ShopRent extends RealEstate implements Serializable {
 	private List<WaterResources> waterResources = new ArrayList<>();
 	@Expose
 	private int storefronts;
+	@Expose
+	private int blockNb;
 
+	public int getBlockNb() {
+		return blockNb;
+	}
+
+	public void setBlockNb(int blockNb) {
+		this.blockNb = blockNb;
+	}
 
 	public ShopRent() {
 		// TODO Auto-generated constructor stub

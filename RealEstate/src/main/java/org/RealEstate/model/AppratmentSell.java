@@ -29,6 +29,9 @@ public class AppratmentSell extends RealEstate implements Serializable {
 	@Expose
 	private int nbRoom;
 	@Expose
+	private int nbBathRoom;
+	
+	@Expose
 	private boolean electricElevator;
 	@Expose
 	private int nbOfCarPark;
@@ -41,8 +44,7 @@ public class AppratmentSell extends RealEstate implements Serializable {
 	private List<WaterResources> waterResources = new ArrayList<>();
 	@Expose
 	private boolean garden;
-	@Expose
-	private int nbBathRoom;
+	
 	@Expose
 	private boolean greenBond;
 	@Expose

@@ -22,8 +22,7 @@ public class ShopSell extends RealEstate implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Expose
-	private boolean electricElevator;
+	
 	@Expose
 	private int nbOfCarPark;
 
@@ -36,19 +35,12 @@ public class ShopSell extends RealEstate implements Serializable {
 	@Expose
 	private boolean greenBond;
 	@Expose
-	private boolean blockNb;
+	private int blockNb;
 
 	public ShopSell() {
 
 	}
 
-	public boolean isElectricElevator() {
-		return electricElevator;
-	}
-
-	public void setElectricElevator(boolean electricElevator) {
-		this.electricElevator = electricElevator;
-	}
 
 	public int getNbOfCarPark() {
 		return nbOfCarPark;
@@ -82,13 +74,17 @@ public class ShopSell extends RealEstate implements Serializable {
 		this.greenBond = greenBond;
 	}
 
-	public boolean isBlockNb() {
+
+
+	public int getBlockNb() {
 		return blockNb;
 	}
 
-	public void setBlockNb(boolean blockNb) {
+
+	public void setBlockNb(int blockNb) {
 		this.blockNb = blockNb;
 	}
+
 
 	@Override
 	public int hashCode() {
