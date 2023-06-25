@@ -228,25 +228,8 @@
 														<i class="fa fa-bed text-primary me-2" /> #{real.nbRoom}
 														#{bundle.real_estate_rooms}
 													</small>
-													<small class="flex-fill text-center py-2"> <i
-														class="fa fa-bath text-primary me-2" />
-														#{real.nbBathRoom} #{bundle.real_estate_bathrooms}
-													</small>
-
 												</h:panelGroup>
-												<h:panelGroup
-													rendered="#{!indexController.hasRoomsAndBathRooms(real.postType)}">
-													<small class="flex-fill text-center border-end py-2 border-end">
-														<i class="fa fa-solid fa-road text-primary me-2" />#{bundle.real_estate_road}:
-														<i
-														class="text-primary #{real.road ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
-													</small>
-													<small class="flex-fill text-center py-2 border-end"> <i
-														class="fa fa-solid fa-water text-primary me-2" />#{bundle.real_estate_water}:
-														<i
-														class="text-primary #{real.water ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
-													</small>
-												</h:panelGroup>
+												 
 												
 												<small class="flex-fill text-center border-end py-2">
 														<h:commandLink style="font-weight: bold;"

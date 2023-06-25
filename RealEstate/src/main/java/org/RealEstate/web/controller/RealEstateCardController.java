@@ -80,8 +80,6 @@ public class RealEstateCardController implements Serializable {
 		}
 	}
 
-
-
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -132,20 +130,50 @@ public class RealEstateCardController implements Serializable {
 		this.activeIndex = activeIndex;
 	}
 
-	public boolean hasRoomsAndBathRooms(PostType type) {
-		if (type == null) {
-			return true;
-		} else
+	public boolean hasRoomsAndBathRoomsAndFloor(PostType type) {
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
 
+	public boolean hasElevator(PostType type) {//why not shop sell ?
+		return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
+				|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL)
+				|| type.equals(PostType.SHOP_RENT));
+	}
+
+	public boolean hasPark(PostType type) {
+		return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
+				|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL)
+				|| type.equals(PostType.SHOP_RENT) || type.equals(PostType.SHOP_SELL));
+	}
+
+	public boolean hasGarden(PostType type) {
+		return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL));
+	}
+	
+	public boolean hasGreenBand(PostType type) {
+		return (type.equals(PostType.OFFICE_SELL) || type.equals(PostType.APPRATMENT_SELL)
+				|| type.equals(PostType.SHOP_SELL) || type.equals(PostType.LAND));
+	}
+	
+	public boolean hasBlockNo(PostType type) {// why not appart Rent
+		return (type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL)
+				|| type.equals(PostType.APPRATMENT_SELL) || type.equals(PostType.SHOP_RENT)
+				|| type.equals(PostType.SHOP_SELL) || type.equals(PostType.LAND));
+	}
+	
+	public boolean aShop(PostType type) {
+		return (type.equals(PostType.SHOP_SELL) || type.equals(PostType.SHOP_RENT));
+	}
+	
+	public boolean aLand(PostType type) {
+		return (type.equals(PostType.LAND));
+	}
+	
 	public String getFullUrl() {
 		return fullUrl;
 	}
-
 	public void setFullUrl(String fullUrl) {
 		this.fullUrl = fullUrl;
 	}
-
 }
