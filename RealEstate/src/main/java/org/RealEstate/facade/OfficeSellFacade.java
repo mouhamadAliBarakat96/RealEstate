@@ -28,7 +28,7 @@ public class OfficeSellFacade extends AbstractFacade<OfficeSell> implements Seri
 
 	public OfficeSell mangmentSavePost(OfficeSell obj , List<InputPart> inputParts) throws Exception {
 
-		List<String> imagesUrl = uploadImagesMultiPart.uploadImage(inputParts);
+		List<String> imagesUrl = uploadImagesMultiPart.uploadImagePost(inputParts);
 			obj.setImages(imagesUrl);
 		return this.save(obj);
 	}

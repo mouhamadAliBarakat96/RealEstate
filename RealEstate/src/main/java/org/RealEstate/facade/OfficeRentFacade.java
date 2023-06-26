@@ -30,7 +30,7 @@ public class OfficeRentFacade extends AbstractFacade<OfficeRent> implements Seri
 	
 	public OfficeRent mangmentSavePost(OfficeRent obj , List<InputPart> inputParts) throws Exception {
 
-		List<String> imagesUrl = uploadImagesMultiPart.uploadImage(inputParts);
+		List<String> imagesUrl = uploadImagesMultiPart.uploadImagePost(inputParts);
 			obj.setImages(imagesUrl);
 		return this.save(obj);
 	

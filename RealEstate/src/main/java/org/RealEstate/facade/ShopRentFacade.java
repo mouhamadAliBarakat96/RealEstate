@@ -28,7 +28,7 @@ public class ShopRentFacade extends AbstractFacade<ShopRent> implements Serializ
 	
 	public ShopRent mangmentSavePost(ShopRent obj , List<InputPart> inputParts) throws Exception {
 
-		List<String> imagesUrl = uploadImagesMultiPart.uploadImage(inputParts);
+		List<String> imagesUrl = uploadImagesMultiPart.uploadImagePost(inputParts);
 			obj.setImages(imagesUrl);
 		return this.save(obj);
 	}

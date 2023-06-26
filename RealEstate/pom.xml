@@ -80,6 +80,18 @@
 			<version>1.19</version>
 		</dependency>
 		
+			<dependency>
+    <groupId>com.sun.jersey.contribs</groupId>
+    <artifactId>jersey-multipart</artifactId>
+    <version>1.19</version>
+</dependency>
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-multipart-provider</artifactId>
+    <version>3.1.4.Final</version>
+    <scope>provided</scope>
+</dependency>
+		
 		
 		 <dependency>
         <groupId>org.jboss.resteasy</groupId>

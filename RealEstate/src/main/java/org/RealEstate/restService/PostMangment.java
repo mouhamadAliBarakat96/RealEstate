@@ -27,7 +27,7 @@ public class PostMangment {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 
-	public Response savePost(@MultipartForm MultipartFormDataInput input) {
+	public Response savePost(@MultipartForm MultipartFormDataInput input ) {
 
 		return postService.mangmentAddPost(input);
 

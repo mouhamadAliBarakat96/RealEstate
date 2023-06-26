@@ -26,7 +26,7 @@ public class AppratmentSellFacade extends AbstractFacade<AppratmentSell> impleme
 	}
 
 	public AppratmentSell mangmentSavePost(AppratmentSell obj, List<InputPart> inputParts) throws Exception {
-		List<String> imagesUrl = uploadImagesMultiPart.uploadImage(inputParts);
+		List<String> imagesUrl = uploadImagesMultiPart.uploadImagePost(inputParts);
 		obj.setImages(imagesUrl);
 		return this.save(obj);
 	}

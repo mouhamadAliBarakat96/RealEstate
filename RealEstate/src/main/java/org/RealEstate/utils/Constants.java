@@ -33,6 +33,8 @@ public interface Constants {
 	public static final String POST_TYPE_NOT_SUPPORTED = "POST_TYPE_NOT_SUPPORTED";
 
 	public static final String NB_OF_IMAGE_GREATER_NUMBER_OF_IMAGE_ALLOWED = "NB_OF_IMAGE_GREATER_NUMBER_OF_IMAGE_ALLOWED";
+	public static final String ONLY_ONE_IMAGE_ALLOWED_FOR_USER = "ONLY_ONE_IMAGE_ALLOWED_FOR_USER";
+
 	public static final String AT_LAST_ONE_IMAGE_REQUIRED = "AT_LAST_ONE_IMAGE_REQUIRED";
 	public static final String PHONE_NUMBER_NOT_CORRECT = "PHONE_NUMBER_NOT_CORRECT";
 	public static final String USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_SHOULD_NOT_BE_EMPTY = "USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_SHOULD_NOT_BE_EMPTY";
@@ -44,5 +46,10 @@ public interface Constants {
 	public static final String VILLAGE_NOT_EXISTS = "VILLAGE_NOT_EXISTS";
 	public static final String DISTRICT_NOT_EXISTS = "DISTRICT_NOT_EXISTS";
 	public static final String GOVERNORTE_NOT_EXISTS = "GOVERNORTE_NOT_EXISTS";
-
+	public static final String USER_NAME_OR_PASSWORD_INVALID = "USER_NAME_OR_PASSWORD_INVALID";
+	
+	
+	
+	
+	
 }

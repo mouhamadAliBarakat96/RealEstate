@@ -24,13 +24,19 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "tbl_user")
+@NamedQueries({
+		// change to enum accepted
+		@NamedQuery(name = User.LOGIN_USER, query = "SELECT user FROM User user WHERE  user.userName= :userName and user.passowrd = :password "),
 
+})
 public class User extends MainEntity implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public static final String LOGIN_USER = "USER.LOGIN";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -44,6 +50,11 @@ public class User extends MainEntity implements Serializable {
 	private String middleName;
 	@Expose
 	private String profileImageUrl;
+
+	@Expose
+	// because on every change image we need to agree by admin
+	private boolean showProfilePicture;
+
 	@Expose
 	@Column(unique = true)
 	private String userName;
@@ -169,5 +180,16 @@ public class User extends MainEntity implements Serializable {
 	public void setChales(List<Chalet> chales) {
 		this.chales = chales;
 	}
+
+	public boolean isShowProfilePicture() {
+		return showProfilePicture;
+	}
+
+	public void setShowProfilePicture(boolean showProfilePicture) {
+		this.showProfilePicture = showProfilePicture;
+	}
+	
+	
+	
 
 }
