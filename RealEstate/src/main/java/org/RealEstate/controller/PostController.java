@@ -2,6 +2,7 @@ package org.RealEstate.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -13,10 +14,12 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import org.RealEstate.enumerator.PostStatus;
+import org.RealEstate.enumerator.WaterResources;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 
@@ -47,17 +50,28 @@ public class PostController implements Serializable {
 
 			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
-			
+
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			if (flash.containsKey("update-card")) {
 
 				flash.setKeepMessages(true);
 				CommonUtility.addMessageToFacesContext("Update successfully   ", "success");
 			}
-			
-			
+
 		}
 
+	}
+
+	public String waterResouces(List<WaterResources> list) {
+		list.size();
+		String result = "";
+		for (WaterResources var : list) {
+			result = result.concat(var.toString().toLowerCase()) + ",";
+		}
+		if(!result.isEmpty()) {
+			result =	StringUtils.substring(result, 0, result.length() - 1);
+		}
+		return result;
 	}
 
 	public String getIpAddressWithPort() {
@@ -86,7 +100,7 @@ public class PostController implements Serializable {
 
 				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 				flash.put("update-card", "true");
-				
+
 				changeUrl();
 			}
 		} catch (Exception e) {

@@ -278,37 +278,48 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_SELL'   or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'    }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_RENT'   or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'    }"
+										value="water resources :" />
+									<h:outputText
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'  or  postController.realEstate.postType eq 'OFFICE_RENT'    }"
+										value=" #{  postController.waterResouces( postController.realEstate.waterResources)  } " />
+
+
+
+
+
+									<h:outputText
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_RENT'   or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'    }"
 										value="nb of Room :" />
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_RENT'  or  postController.realEstate.postType eq 'OFFICE_RENT'    }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'  or  postController.realEstate.postType eq 'OFFICE_RENT'    }"
 										value=" #{postController.realEstate.nbRoom  } " />
 
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL' or  postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'  or  postController.realEstate.postType eq 'OFFICE_RENT'     }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL' or  postController.realEstate.postType eq 'APPRATMENT_RENT'  or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'  or  postController.realEstate.postType eq 'OFFICE_RENT'     }"
 										value="nb of Bath Room :" />
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL' or  postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_RENT'     }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL' or  postController.realEstate.postType eq 'APPRATMENT_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'     }"
 										value=" #{postController.realEstate.nbBathRoom  } " />
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_RENT'    }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'    }"
 										value="Electric Elevator :" />
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_RENT'   }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'   }"
 										class=" #{postController.realEstate.electricElevator  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
 
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'SHOP_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL' or  postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'SHOP_RENT'         }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'SHOP_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL' or  postController.realEstate.postType eq 'APPRATMENT_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'SHOP_RENT'         }"
 										value="nb of Car Park :" />
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'SHOP_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_RENT'   or  postController.realEstate.postType eq 'SHOP_RENT'     }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'SHOP_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'   or  postController.realEstate.postType eq 'SHOP_RENT'     }"
 										value=" #{postController.realEstate.nbOfCarPark  } " />
 
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL' or  postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_RENT'     }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL' or  postController.realEstate.postType eq 'APPRATMENT_RENT'  or  postController.realEstate.postType eq 'OFFICE_RENT'     }"
 										value="floor :" />
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL'  	or  postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_RENT'    }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL'  	or  postController.realEstate.postType eq 'APPRATMENT_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT'    }"
 										value=" #{postController.realEstate.floor  } " />
 
 									<h:outputText
@@ -319,10 +330,10 @@ body .ui-panelgrid .ui-panelgrid-cell {
 										class=" #{postController.realEstate.garden  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
 
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'SHOP_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'SHOP_RENT'     }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL'  or  postController.realEstate.postType eq 'SHOP_SELL'  or  postController.realEstate.postType eq 'OFFICE_SELL'  or  postController.realEstate.postType eq 'APPRATMENT_RENT'  or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'SHOP_RENT'     }"
 										value="blockNb :" />
 									<h:outputText
-										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'SHOP_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'   or  postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'SHOP_RENT'      }"
+										rendered="#{postController.realEstate.postType eq 'APPRATMENT_SELL' or  postController.realEstate.postType eq 'SHOP_SELL' or  postController.realEstate.postType eq 'OFFICE_SELL'   or  postController.realEstate.postType eq 'APPRATMENT_RENT' or  postController.realEstate.postType eq 'OFFICE_RENT' or  postController.realEstate.postType eq 'SHOP_RENT'      }"
 										value=" #{postController.realEstate.blockNb  } " />
 
 									<h:outputText

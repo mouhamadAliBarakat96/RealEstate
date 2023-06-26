@@ -41,12 +41,14 @@ public class AppratmentRent extends RealEstate implements Serializable {
 	private boolean garden;
 	@Expose
 	private int nbBathRoom;
+	@Expose
+	private boolean blockNb;
 
 	public AppratmentRent() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AppratmentRent(int nbRoom, int floor, boolean garden, int nbBathRoom, Village village,List<String> images) {
+	public AppratmentRent(int nbRoom, int floor, boolean garden, int nbBathRoom, Village village, List<String> images) {
 		super("Appratment Rent", "this Appratment is for you", 3500, village, 200000);
 		this.nbRoom = nbRoom;
 		this.floor = floor;
@@ -110,6 +112,14 @@ public class AppratmentRent extends RealEstate implements Serializable {
 
 	public void setNbBathRoom(int nbBathRoom) {
 		this.nbBathRoom = nbBathRoom;
+	}
+
+	public boolean isBlockNb() {
+		return blockNb;
+	}
+
+	public void setBlockNb(boolean blockNb) {
+		this.blockNb = blockNb;
 	}
 
 	@Override

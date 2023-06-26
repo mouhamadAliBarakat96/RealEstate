@@ -10,3 +10,4 @@ workflow steps to Kassem:
 8-sing in with google facebook 
 9-create new Post (chalet , post)
 
+10- add WaterResources in card
