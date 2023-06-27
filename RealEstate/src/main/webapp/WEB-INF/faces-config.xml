@@ -30,24 +30,24 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-		<navigation-rule>
+
+	<navigation-rule>
 		<navigation-case>
 			<from-outcome>post-list</from-outcome>
 			<to-view-id>/views/post/post-list.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-		
-		<navigation-rule>
+
+
+	<navigation-rule>
 		<navigation-case>
 			<from-outcome>chalet-list</from-outcome>
 			<to-view-id>/views/chalet/chalet-list.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>chalet</from-outcome>
@@ -56,22 +56,42 @@
 		</navigation-case>
 	</navigation-rule>
 
-		<navigation-rule>
+	<navigation-rule>
 		<navigation-case>
 			<from-outcome>post</from-outcome>
 			<to-view-id>/views/post/post.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>user-profile-picture-list</from-outcome>
+			<to-view-id>/views/user/user-profile-picture-list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>user-profile-picture</from-outcome>
+			<to-view-id>/views/user/user-profile-picture.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 	
 
-		<navigation-rule>
+
+	<navigation-rule>
 		<navigation-case>
 			<from-outcome>user-post</from-outcome>
 			<to-view-id>/views/user/user-post-list.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+
+
 
 
 	<navigation-rule>
@@ -126,7 +146,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>realEstate-card</from-outcome>
@@ -134,25 +154,25 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
+
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>user-list</from-outcome>
-				<to-view-id>/views/user/user-list.xhtml</to-view-id>
+			<to-view-id>/views/user/user-list.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
-		<navigation-rule>
+
+
+	<navigation-rule>
 		<navigation-case>
 			<from-outcome>user-post-list</from-outcome>
-				<to-view-id>/views/user/user-post-list.xhtml</to-view-id>
+			<to-view-id>/views/user/user-post-list.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 
 	<application>
 		<locale-config>

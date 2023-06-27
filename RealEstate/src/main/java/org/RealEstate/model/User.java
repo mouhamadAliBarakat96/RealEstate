@@ -27,6 +27,7 @@ import com.google.gson.annotations.Expose;
 @NamedQueries({
 		// change to enum accepted
 		@NamedQuery(name = User.LOGIN_USER, query = "SELECT user FROM User user WHERE  user.userName= :userName and user.passowrd = :password "),
+		@NamedQuery(name = User.USER_PROFILE_PICTURE_FALSE, query = "SELECT user FROM User user WHERE  user.showProfilePicture =  false"),
 
 })
 public class User extends MainEntity implements Serializable {
@@ -37,6 +38,8 @@ public class User extends MainEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String LOGIN_USER = "USER.LOGIN";
+
+	public static final String USER_PROFILE_PICTURE_FALSE = "USER.USER_PROFILE_PICTURE_FALSE";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -188,8 +191,5 @@ public class User extends MainEntity implements Serializable {
 	public void setShowProfilePicture(boolean showProfilePicture) {
 		this.showProfilePicture = showProfilePicture;
 	}
-	
-	
-	
 
 }

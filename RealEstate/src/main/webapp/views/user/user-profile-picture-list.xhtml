@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:decorate template="/views/template/template.xhtml">
+
+
+
+
+	<ui:param name="title" value="#{bundle.main_page}" />
+	<ui:param name="subtitle" value="#{bundle.main_page}" />
+
+	<ui:define name="breadcrumb">
+
+		<div class="row">
+
+
+			<li class="breadcrumb-item active">#{bundle.card}</li>
+			<li class="breadcrumb-item active">User List Pending Profile
+				Picture</li>
+
+
+		</div>
+	</ui:define>
+	<ui:define name="pageTittle">
+
+		<h4 class="page-title">User List Pending Profile Picture</h4>
+	</ui:define>
+	<ui:define name="customFormContent">
+
+		<h:panelGroup>
+
+			<div class="card">
+				<div class="card-body">
+					<h:panelGroup id="header-panel" style="width:100%">
+						<div class="row">
+
+							<div class="col-md-8 col-sm-12">
+								<span style="font-size: 20px;"> Table Represent Users </span> <span
+									style="font-size: 14px;" class="label label-warning countClass"
+									id="countId">#{userProfilePictureList.pageItems.size()}
+								</span>
+							</div>
+
+
+						</div>
+					</h:panelGroup>
+					<div
+						style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
+
+
+
+						<p:dataTable var="entity" paginator="true" rows="10"
+							paginatorPosition="bottom" style="margin-top: 2%"
+							rowKey="#{item.id}"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+							rowsPerPageTemplate="5,10,15" styleClass="border-none"
+							value="#{userProfilePictureList.pageItems}"
+							widgetVar="tableWidget" emptyMessage="No Governorate was added"
+							filteredValue="#{userProfilePictureList.filteredList}">
+
+
+							<p:column styleClass="no-header table-actions-column" width="120">
+								<span> <h:link outcome='user-profile-picture'
+										styleClass="btn btn-warning  waves-effect waves-light   btn-xs">
+										<f:param name="id" value="#{entity.id}" />
+										<span class=" dripicons-document-edit  " style="color: white;" />
+										<f:ajax></f:ajax>
+									</h:link>
+								</span>
+							</p:column>
+
+							<p:column filterBy="#{entity.id}" headerText="id"
+								style="vertical-align: middle; margin-left: .5rem"
+								sortBy="#{entity.id}" filterMatchMode="contains">
+								<h:outputText value="#{entity.id}" />
+							</p:column>
+							<p:column filterBy="#{entity.userName}"
+								sortBy="#{entity.userName}"
+								style="vertical-align: middle; margin-left: .5rem"
+								headerText="  User Name" filterMatchMode="contains">
+								<h:outputText value="#{entity.userName}" />
+							</p:column>
+
+
+							<p:column filterBy="#{entity.middleName}"
+								sortBy="#{entity.middleName}"
+								style="vertical-align: middle; margin-left: .5rem"
+								headerText="  Middle Name " filterMatchMode="contains">
+								<h:outputText value="#{entity.middleName}" />
+							</p:column>
+
+
+
+							<p:column filterBy="#{entity.lastName}"
+								sortBy="#{entity.lastName}"
+								style="vertical-align: middle; margin-left: .5rem"
+								headerText="  Last Name " filterMatchMode="contains">
+								<h:outputText value="#{entity.lastName}" />
+							</p:column>
+
+
+
+							<p:column filterBy="#{entity.phoneNumber}"
+								sortBy="#{entity.phoneNumber}"
+								style="vertical-align: middle; margin-left: .5rem"
+								headerText="  Phone Number  " filterMatchMode="contains">
+								<h:outputText value="#{entity.phoneNumber}" />
+							</p:column>
+
+
+							<p:column filterBy="#{entity.freezed}" filterMatchMode="exact"
+								headerText="freezed " sortBy="#{entity.freezed}" width="180">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tableWidget').filter()"
+										converter="javax.faces.Boolean" style="width:100% ;   "
+										styleClass="inputtext-filter">
+										<f:selectItem itemLabel="All" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItem itemLabel="No" itemValue="false" />
+										<f:selectItem itemLabel="Yes" itemValue="true" />
+										<f:ajax></f:ajax>
+									</p:selectOneMenu>
+								</f:facet>
+
+
+								<em
+									class="   #{entity.freezed  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+
+
+							</p:column>
+
+
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+
+
+		</h:panelGroup>
+
+		
+	</ui:define>
+</ui:decorate>
+</html>
+

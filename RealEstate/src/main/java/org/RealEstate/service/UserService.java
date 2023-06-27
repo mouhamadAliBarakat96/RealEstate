@@ -118,7 +118,7 @@ public class UserService implements Serializable {
 		String imageUrl = uploadImagesMultiPart.uploadImagePost(inputPart);
 		user.setShowProfilePicture(false);
 		user.setProfileImageUrl(imageUrl);
-		userFacade.save(user);
+			userFacade.save(user);
 		return true;
 	}
 

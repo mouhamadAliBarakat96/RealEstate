@@ -30,12 +30,14 @@ public class UploadImagesMultiPart implements Serializable {
 	public List<String> uploadImagePost(List<InputPart> inputParts) throws IOException {
 
 		String fileName = null;
+
 		List<String> fileNames = new ArrayList<>();
 
 		for (InputPart inputPart : inputParts) {
 
 			MultivaluedMap<String, String> header = inputPart.getHeaders();
 			fileName = getFileName(header);
+
 			fileNames.add(fileName);
 			InputStream inputStream = inputPart.getBody(InputStream.class, null);
 			byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -57,10 +59,10 @@ public class UploadImagesMultiPart implements Serializable {
 	public String uploadImagePost(InputPart inputPart) throws IOException {
 
 		String fileName = null;
-
+		String fileNameOrgin = null;
 		MultivaluedMap<String, String> header = inputPart.getHeaders();
 		fileName = getFileName(header);
-
+		fileNameOrgin =fileName;
 		InputStream inputStream = inputPart.getBody(InputStream.class, null);
 
 		byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -70,11 +72,11 @@ public class UploadImagesMultiPart implements Serializable {
 			customDir.mkdirs();
 		}
 
-		fileName = customDir.getAbsolutePath() + File.separator + addRandomBeforeExtension(fileName);
+		fileName = customDir.getAbsolutePath() + File.separator + fileName;
 		Files.write(Paths.get(fileName), bytes, StandardOpenOption.CREATE_NEW);
 
 		// files li nzlo li bdna nrdon 3al data base
-		return fileName;
+		return fileNameOrgin;
 	}
 
 	private String getFileName(MultivaluedMap<String, String> header) {

@@ -61,6 +61,7 @@ public class PostController implements Serializable {
 		}
 
 	}
+	
 
 	public String waterResouces(List<WaterResources> list) {
 		list.size();

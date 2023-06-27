@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:decorate template="/views/template/template.xhtml">
+
+
+	<ui:param name="title" value="#{bundle.main_page}" />
+	<ui:param name="subtitle" value="#{bundle.main_page}" />
+
+	<ui:define name="breadcrumb">
+
+		<!-- Page-Title -->
+		<div class="row">
+
+			<li class="breadcrumb-item ">#{bundle.card}</li>
+			<li class="breadcrumb-item "><h:link
+					outcome="user-profile-picture-list"> profile picture List </h:link></li>
+
+			<li class="breadcrumb-item active">User profile Picture Mangment</li>
+
+
+		</div>
+		<!--end col-->
+	</ui:define>
+	<ui:define name="pageTittle">
+
+		<h4 class="page-title">User profile Picture Mangment</h4>
+	</ui:define>
+	<ui:define name="customFormContent">
+		<h:panelGroup id="crud-id">
+			<div class="panel-body">
+
+
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class=" col-md-12">
+
+								<p:graphicImage url="#{userProfilePicture.fullUrl}"
+									style="width: 80%" alt="#{photo}" />
+
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<h:commandLink id="saveId"
+									style=" float:right ; margin-left:10px;margin-top:10%;"
+									action='#{userProfilePicture.changeProfilePictureStatus()}'
+									styleClass="btn btn-primary btn-save">
+									<f:ajax render=":messageScript saveId" execute="  name  " />
+									<i class="fa fa-save" />
+									<span>change show profile to #{!userProfilePicture.user.showProfilePicture} </span>
+
+
+								</h:commandLink>
+
+
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+
+
+			</div>
+
+		</h:panelGroup>
+
+	</ui:define>
+
+</ui:decorate>
+
+</html>

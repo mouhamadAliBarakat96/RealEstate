@@ -15,8 +15,6 @@ public class UserFacade extends AbstractFacade<User> implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-
-
 	public UserFacade() {
 		super(User.class);
 	}
@@ -30,8 +28,6 @@ public class UserFacade extends AbstractFacade<User> implements Serializable {
 		}
 	}
 
-
-
 	public User findUserByUserNameAndPassword(String userName, String password) throws Exception {
 
 		List<User> users = getEntityManager().createNamedQuery(User.LOGIN_USER, User.class)
@@ -42,6 +38,12 @@ public class UserFacade extends AbstractFacade<User> implements Serializable {
 		} else {
 			return users.get(0);
 		}
+
+	}
+
+	public List<User> findUserProfilePictureFalse()   {
+
+		return getEntityManager().createNamedQuery(User.USER_PROFILE_PICTURE_FALSE, User.class).getResultList();
 
 	}
 
