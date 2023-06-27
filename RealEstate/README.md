@@ -1,17 +1,27 @@
-workflow steps to Kassem:
+Project Stories.
 
-1-home page (na2sa el chalet)
-2-real estate card
-3-filters and search
+
+Done :
+*****
+1-realEstate list and card
+2-add calls and views
+3-navigate to whatsapp via click call
 4-error page
-5-contact us
-6-add calls and views
-7-navigate to whatsapp via click call
-8-sing in with google facebook 
-9-create new Post (chalet , post)
 
-10- add WaterResources in card
+To Do:
+*****
+1-Chalet list in homepage with filters
+2-Chalet-card
+3-Sing In & Sign Up (front-end)
+4-sing in with google facebook (by MohamdAli) 
+5-add WaterResources in card
+6-create new Post (chalet , post)
+7- posted by user in card and navigate to user page list of real estate showing to public users.
+ 
+To Discusion:
+*************
+ 1-contact us
 
-11- taht b safhet el card bdak t3rod esm el user wel profile picture t3olto bel user 
-fi flag iza bnbynlo yeha aaw laa +  lama ykbos 3leh bnbaynlo kel postet hayda el user 
- ba nafs el query t3olt el home basssssss btb3att el user id
+ 
+
+ 
