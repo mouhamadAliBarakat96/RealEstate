@@ -12,13 +12,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
-import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Constants;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.ResponsiveOption;
@@ -39,9 +36,7 @@ public class RealEstateCardController implements Serializable {
 
 	@Inject
 	private RealEstateFacade facade;
-	@Inject
-	private PostService postService;
-
+	
 	private String fullUrl = "";
 	private String ipAddressWithPort;
 

@@ -3,6 +3,8 @@ package org.RealEstate.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.RealEstate.enumerator.PropertyKindEnum;
+
 
 public class MenuItem {
 
@@ -14,6 +16,7 @@ public class MenuItem {
 	private String subMenuTitle;
 	private List<MenuItem> subMenuDetails = new ArrayList<MenuItem>();
 	private String styleClass ;
+	private PropertyKindEnum kindEnum;
 	
 	private String href; 
 	
@@ -49,6 +52,16 @@ public class MenuItem {
 		this.Url = url;
 		this.permission = permission;
 		this.styleClass = styleClass;
+	}
+	
+	public MenuItem(String itemLabel, String iconName, String url, boolean permission,String styleClass, PropertyKindEnum kindEnum) {
+		super();
+		this.itemLabel = itemLabel;
+		this.iconName = iconName;
+		this.Url = url;
+		this.permission = permission;
+		this.styleClass = styleClass;
+		this.kindEnum = kindEnum;
 
 	}
 
@@ -139,7 +152,10 @@ public class MenuItem {
 	public void setHref(String href) {
 		this.href = href;
 	}
-
-	
-	
+	public PropertyKindEnum getKindEnum() {
+		return kindEnum;
+	}
+	public void setKindEnum(PropertyKindEnum kindEnum) {
+		this.kindEnum = kindEnum;
+	}
 }

@@ -114,3 +114,16 @@ function generate(text, detail) {
 	}
 
 }
+
+
+function updateActiveMenu() {
+    var links = $(".navbar-nav > a");
+    for (var i = 0; i < links.length; i++) {
+        var link = links[i];
+        if (link.href === location.href) {
+            link.classList.add("active");
+        } else {
+            link.classList.remove("active");
+        }
+    }
+}

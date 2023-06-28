@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:component>
+	<div class="container-fluid bg-primary mb-5 wow " data-wow-delay="0.1s"
+		style="padding: 15px 5px 5px 5px;">
+		<div class="row">
+			<div class="col-md-3 col-sm-12 mt-2">
+				<h:selectOneMenu styleClass="form-select border-0  "
+					converter="omnifaces.SelectItemsConverter"
+					value="#{indexController.selectPostType}">
+					<f:selectItem itemLabel="Property Type" itemValue="" />
+					<f:selectItems value="#{PostType.values()}" var="option"
+						itemLabel="#{option.name}" itemValue="#{option}" />
+					<f:ajax execute="@this" render="myForm:realSatatebathBedRoomsId" />
+				</h:selectOneMenu>
+			</div>
+
+			<div class="col-md-3 col-sm-12 mt-2">
+				<h:selectOneMenu id="governateSelectId"
+					styleClass="form-select border-0 "
+					converter="omnifaces.SelectItemsConverter"
+					value="#{indexController.selecteGovernorate}">
+					<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
+					<f:selectItems value="#{indexController.governorates}" var="option"
+						itemLabel="#{option.name}" itemValue="#{option}" />
+					<f:ajax execute="@this"
+						render="myForm:districtSelectId myForm:villageSelectId"
+						listener="#{indexController.listenerSelectGovernate()}" />
+				</h:selectOneMenu>
+			</div>
+
+			<div class="col-md-3 col-sm-12 mt-2">
+				<h:selectOneMenu id="districtSelectId"
+					converter="omnifaces.SelectItemsConverter"
+					styleClass="form-select border-0  "
+					value="#{indexController.selecteDistrict}">
+					<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
+					<f:selectItems value="#{indexController.districts}" var="option"
+						itemLabel="#{option.name}" itemValue="#{option}" />
+					<f:ajax execute="@this"
+						listener="#{indexController.listenerSelectDistrict()}"
+						render="myForm:villageSelectId" />
+				</h:selectOneMenu>
+			</div>
+			<div class="col-md-3 col-sm-12 mt-2">
+				<h:selectOneMenu id="villageSelectId"
+					converter="omnifaces.SelectItemsConverter"
+					styleClass="form-select border-0  "
+					value="#{indexController.selecteVillage}">
+					<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
+					<f:selectItems value="#{indexController.villages}" var="option"
+						itemLabel="#{option.name}" itemValue="#{option}" />
+					<f:ajax execute="@this" />
+				</h:selectOneMenu>
+			</div>
+			<div class="col-md-2 mt-2 col-sm-12">
+				<h:outputLabel value="Min Price" style="color:white" />
+				<h:inputText onkeypress="return isNumberKey(event)"
+					placeholder="min price" styleClass="form-control"
+					value="#{indexController.minPrice}">
+				</h:inputText>
+			</div>
+			<div class="col-md-2 mt-2 col-sm-12">
+				<h:outputLabel value="Max Price" style="color:white" />
+				<h:inputText onkeypress="return isNumberKey(event)"
+					placeholder="max price" styleClass="form-control"
+					value="#{indexController.maxPrice}">
+				</h:inputText>
+			</div>
+
+			<h:panelGroup id="realSatatebathBedRoomsId" layout="block"
+				styleClass="row col-md-7 mt-2 pr-0">
+				<h:panelGroup
+					rendered="#{indexController.hasRoomsAndBathRooms(indexController.postType)}">
+
+					<div class="col-md-4 col-sm-12">
+						<h:outputLabel value="Bed Rooms Count" style="color:white" />
+						<h:inputText onkeypress="return isNumberKey(event)"
+							placeholder="max price" styleClass="form-control"
+							value="#{indexController.bedRoom}">
+						</h:inputText>
+					</div>
+					<div class="col-md-2 col-sm-12">
+						<h:outputLabel value="Exact Value" style="color:white" />
+						<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
+								value="#{indexController.bedRoomEq}" />
+						</span>
+					</div>
+					<div class="col-md-4 col-sm-12">
+						<h:outputLabel value="Bath Rooms Count" style="color:white" />
+						<h:inputText placeholder="max price" styleClass="form-control"
+							value="#{indexController.bathRoom}">
+						</h:inputText>
+					</div>
+					<div class="col-md-2 col-sm-12">
+						<h:outputLabel value="Exact Value" style="color:white" />
+
+						<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
+								value="#{indexController.bathRoomEq}" />
+						</span>
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+			<div class="col-md-1 col-sm-12">
+				<h:commandButton action="#{indexController.search()}"
+					value="#{bundle.search}"
+					style=" background-color: #007ad9;color:white"
+					styleClass="btn mt-3">
+					<f:ajax execute="myForm:panelSearchBar"
+						render="myForm:propertyListId :messageScript" />
+				</h:commandButton>
+			</div>
+
+		</div>
+	</div>
+</ui:component>
+</html>

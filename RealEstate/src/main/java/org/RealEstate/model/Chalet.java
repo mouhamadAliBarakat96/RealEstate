@@ -46,10 +46,6 @@ public class Chalet extends MainEntity implements Serializable {
 	@Expose
 	private String name;
 
-	
-
-
-
 	@Expose
 	private boolean pool;
 	@Expose
@@ -276,7 +272,6 @@ public class Chalet extends MainEntity implements Serializable {
 		this.user = user;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

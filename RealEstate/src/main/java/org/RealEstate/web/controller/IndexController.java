@@ -9,10 +9,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,9 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.RealEstate.dto.ChaletLazyDataModel;
 import org.RealEstate.dto.RealEstateLazyDataModel;
 import org.RealEstate.enumerator.PostType;
+import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.enumerator.RealEstateTypeEnum;
+import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.DistrictFacade;
 import org.RealEstate.facade.GovernorateFacade;
 import org.RealEstate.facade.RealEstateFacade;
@@ -39,8 +40,9 @@ import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.service.PostService;
+import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
-import org.omnifaces.util.Faces;
+import org.apache.commons.lang3.StringUtils;
 
 @Named
 @ViewScoped
@@ -62,12 +64,16 @@ public class IndexController implements Serializable {
 	private RealEstateFacade realEstateFacade;
 	@Inject
 	private PostService postService;
+	@Inject
+	private ChaletFacade chaletFacade;
 
 	private List<RealEstate> realEstates = new ArrayList<>();
 
 	private List<Chalet> chaletList = new ArrayList<>();
 
 	private PostType selectPostType;
+
+	private PropertyKindEnum propertyKind;
 
 	private List<Governorate> governorates = new ArrayList<>();
 
@@ -91,7 +97,13 @@ public class IndexController implements Serializable {
 	private Village selecteVillage = new Village();
 
 	// lazy model
-	private RealEstateLazyDataModel lazyModel;
+	private RealEstateLazyDataModel realLazyModel;
+
+	// chalet lazyModel
+	private ChaletLazyDataModel chaletLazyModel;
+
+	private String fullUrl = "";
+	private String ipAddressWithPort;
 
 	@PostConstruct
 	public void init() {
@@ -100,7 +112,39 @@ public class IndexController implements Serializable {
 		// realEstates = realEstateFacade.findAll();// GET RECOMMEND PROPERTIES LATER
 		// totalCount.set(realEstates.size());
 
-		lazyModel = new RealEstateLazyDataModel(realEstateFacade);
+		realLazyModel = new RealEstateLazyDataModel(realEstateFacade);
+		chaletLazyModel = new ChaletLazyDataModel(chaletFacade);
+
+		fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
+				.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
+
+		propertyKind = parameterPropertyKind();
+	}
+
+	private PropertyKindEnum parameterPropertyKind() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		
+		if (!facesContext.isPostback()) {
+			String kind = externalContext.getRequestParameterMap().get("property");
+			if (!StringUtils.isBlank(kind) && kind.equals(PropertyKindEnum.REALESTATE.toString())) {
+				return PropertyKindEnum.REALESTATE;
+			}else if(!StringUtils.isBlank(kind) && kind.equals(PropertyKindEnum.CHALET.toString())) {
+				return PropertyKindEnum.CHALET;
+			}
+		}
+		
+		return PropertyKindEnum.REALESTATE;
+	}
+
+	public String getIpAddressWithPort() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		String ipAddress = request.getRemoteAddr();
+		int port = request.getLocalPort();
+		ipAddressWithPort = ipAddress + ":" + port;
+		System.out.println(ipAddressWithPort);
+		return ipAddressWithPort;
 	}
 
 	public void addViewsAfterClick(RealEstate item) {
@@ -120,7 +164,7 @@ public class IndexController implements Serializable {
 			// TODO: handle exception
 		}
 	}
-	
+
 	public void addCallNumber(RealEstate item) {
 		try {
 			Response response = postService.updateCallPost(item.getId(), item.getPostType().toString());
@@ -138,11 +182,10 @@ public class IndexController implements Serializable {
 			// TODO: handle exception
 		}
 	}
-	
-	
+
 	public void navigateToWhatsApp(RealEstate item) throws IOException {
 		// Get the phone number parameter from the request
-		if (item.getUser() != null && item.getUser().getPhoneNumber()!=null) {
+		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
 			String phoneNumber = item.getUser().getPhoneNumber();
@@ -152,7 +195,8 @@ public class IndexController implements Serializable {
 			externalContext.redirect(url);
 		}
 	}
-	//navigate to real estate Card
+
+	// navigate to real estate Card
 	public void navigate(RealEstate item) {
 		// Build the URL with the parameter values
 		String url = "realEstate-card.xhtml?id=" + item.getId();
@@ -187,19 +231,19 @@ public class IndexController implements Serializable {
 			return;
 		}
 
-		lazyModel.setBathRoom(bathRoom);
-		lazyModel.setUser(user != null ? user : null);
-		lazyModel.setBathRoomEq(bathRoomEq);
-		lazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
-		lazyModel.setGovernorate(
+		realLazyModel.setBathRoom(bathRoom);
+		realLazyModel.setUser(user != null ? user : null);
+		realLazyModel.setBathRoomEq(bathRoomEq);
+		realLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
+		realLazyModel.setGovernorate(
 				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
-		lazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
-		lazyModel.setBedRoom(bedRoom);
-		lazyModel.setBedRoomEq(false);
-		lazyModel.setMaxPrice(maxPrice);
-		lazyModel.setMinPrice(minPrice);
-		lazyModel.setPostType(selectPostType == null ? null : selectPostType.toString());
-		// lazyModel.setTotalCount(totalCount);
+		realLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
+		realLazyModel.setBedRoom(bedRoom);
+		realLazyModel.setBedRoomEq(false);
+		realLazyModel.setMaxPrice(maxPrice);
+		realLazyModel.setMinPrice(minPrice);
+		realLazyModel.setPostType(selectPostType == null ? null : selectPostType.toString());
+		// RealLazyModel.setTotalCount(totalCount);
 
 		Utility.addSuccessMessage("search_complete");
 	}
@@ -337,12 +381,20 @@ public class IndexController implements Serializable {
 		this.selecteDistrict = selecteDistrict;
 	}
 
-	public RealEstateLazyDataModel getLazyModel() {
-		return lazyModel;
+	public RealEstateLazyDataModel getRealLazyModel() {
+		return realLazyModel;
 	}
 
-	public void setLazyModel(RealEstateLazyDataModel lazyModel) {
-		this.lazyModel = lazyModel;
+	public void setRealLazyModel(RealEstateLazyDataModel realLazyModel) {
+		this.realLazyModel = realLazyModel;
+	}
+
+	public ChaletLazyDataModel getChaletLazyModel() {
+		return chaletLazyModel;
+	}
+
+	public void setChaletLazyModel(ChaletLazyDataModel chaletLazyModel) {
+		this.chaletLazyModel = chaletLazyModel;
 	}
 
 	public GovernorateFacade getGovernorateFacade() {
@@ -447,6 +499,22 @@ public class IndexController implements Serializable {
 
 	public void setBathRoomEq(boolean bathRoomEq) {
 		this.bathRoomEq = bathRoomEq;
+	}
+
+	public String getFullUrl() {
+		return fullUrl;
+	}
+
+	public void setFullUrl(String fullUrl) {
+		this.fullUrl = fullUrl;
+	}
+
+	public PropertyKindEnum getPropertyKind() {
+		return propertyKind;
+	}
+
+	public void setPropertyKind(PropertyKindEnum propertyKind) {
+		this.propertyKind = propertyKind;
 	}
 
 }

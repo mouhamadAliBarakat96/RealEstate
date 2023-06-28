@@ -18,6 +18,11 @@ To Do:
 6-create new Post (chalet , post)
 7- posted by user in card and navigate to user page list of real estate showing to public users.
  
+ 
+Arabic Websites
+***************
+1-template styles and redirect bundle to arabic
+
 To Discusion:
 *************
  1-contact us

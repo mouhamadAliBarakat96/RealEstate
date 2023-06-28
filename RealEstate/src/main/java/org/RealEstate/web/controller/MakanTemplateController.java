@@ -11,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.RealEstate.dto.MenuItem;
+import org.RealEstate.enumerator.PropertyKindEnum;
 
 @Named
 @ViewScoped
@@ -30,13 +31,17 @@ public class MakanTemplateController implements Serializable {
 	public void fillMenuItems(List<MenuItem> menu) {
 		MenuItem m1 = null;
 
-		m1 = new MenuItem("Home", "", "index-page", true, "nav-item nav-link active");
-		menu.add(m1);
-
-		m1 = new MenuItem("Contact us", "", "contact-us", true, "nav-item nav-link");
+		m1 = new MenuItem("Real Estate", "", "index-page", true, "nav-item nav-link active",PropertyKindEnum.REALESTATE);
 		menu.add(m1);
 		
-		m1 = new MenuItem("Login", "", "login-page", true, "nav-item nav-link");
+		m1 = new MenuItem("Chalet", "", "index-page", true, "nav-item nav-link",PropertyKindEnum.CHALET);
+		menu.add(m1);
+
+
+		m1 = new MenuItem("Contact us", "", "contact-us", true, "nav-item nav-link",PropertyKindEnum.REALESTATE);
+		menu.add(m1);
+		
+		m1 = new MenuItem("Login", "", "login-page", true, "nav-item nav-link",PropertyKindEnum.REALESTATE);
 		menu.add(m1);
 
 	}

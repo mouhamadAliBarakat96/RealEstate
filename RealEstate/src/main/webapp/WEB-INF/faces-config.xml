@@ -172,7 +172,19 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+<<<<<<< Upstream, based on origin/development
 
+=======
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>chalet-card</from-outcome>
+			<to-view-id>/chalet-card.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+>>>>>>> c5a821c chalet and real estate
 
 	<application>
 		<locale-config>
