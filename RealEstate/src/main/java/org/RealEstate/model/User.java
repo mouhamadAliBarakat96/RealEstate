@@ -1,4 +1,8 @@
+
 package org.RealEstate.model;
+
+
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,7 +31,7 @@ import com.google.gson.annotations.Expose;
 @NamedQueries({
 		// change to enum accepted
 		@NamedQuery(name = User.LOGIN_USER, query = "SELECT user FROM User user WHERE  user.userName= :userName and user.passowrd = :password "),
-		@NamedQuery(name = User.USER_PROFILE_PICTURE_FALSE, query = "SELECT user FROM User user WHERE  user.showProfilePicture =  false"),
+		@NamedQuery(name = User.USER_PROFILE_PICTURE_FALSE, query = "SELECT user FROM User user WHERE  user.showProfilePicture =  :param"),
 
 })
 public class User extends MainEntity implements Serializable {
@@ -193,4 +197,3 @@ public class User extends MainEntity implements Serializable {
 	}
 
 }
- 

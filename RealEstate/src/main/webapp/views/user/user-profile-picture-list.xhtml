@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html">
 
 
@@ -15,6 +15,10 @@
 	<ui:param name="subtitle" value="#{bundle.main_page}" />
 
 	<ui:define name="breadcrumb">
+
+		<o:onloadScript>
+	select2me();
+	</o:onloadScript>
 
 		<div class="row">
 
@@ -49,8 +53,46 @@
 
 						</div>
 					</h:panelGroup>
+					<div class="row">
+						<div class="col-md-4">
+							<p:outputLabel class="control-label" for="imageParam"
+								value="profile picture show ">
+							</p:outputLabel>
+							<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+								styleClass="select2 select2me form-control   custom-select"
+								converter="omnifaces.SelectItemsConverter" id="imageParam"
+								label="disctrict" value="#{userProfilePictureList.param}"
+								placeHolder="#set">
+								<f:selectItem itemLabel="profile picture show" itemValue="" />
+								<f:selectItem itemLabel="false" itemValue="false" />
+								<f:selectItem itemLabel="true" itemValue="true" />
+
+							</h:selectOneMenu>
+							<h:message for="imageParam" styleClass="error-message" />
+						</div>
+						<div class="col-md-2 d-flex justify-content-center">
+
+
+							<p:commandLink id="saveId"
+								oncomplete="PF('tableWidget').filter()"
+								update="header-panel"
+								styleClass="btn btn-primary waves-effect waves-light btn-xs "
+								style="margin-top:15% ;color:white; float:right ; margin-left:10px" value="search"
+								actionListener="#{userProfilePictureList.search()}">
+
+
+								<i class="fa fa-search" />
+
+
+							</p:commandLink>
+						</div>
+					</div>
+
 					<div
 						style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
+
+
+
 
 
 
@@ -144,7 +186,7 @@
 
 		</h:panelGroup>
 
-		
+
 	</ui:define>
 </ui:decorate>
 </html>

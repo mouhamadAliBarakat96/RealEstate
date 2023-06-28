@@ -23,9 +23,16 @@ public class UserProfilePictureList implements Serializable {
 	private List<User> pageItems = new ArrayList<>();
 	private List<User> filteredList;
 
+	private boolean param;
+
 	@PostConstruct
 	public void init() {
-		pageItems = userFacade.findUserProfilePictureFalse();
+		pageItems = userFacade.findUserProfilePicture(param);
+
+	}
+
+	public void search() {
+		pageItems = userFacade.findUserProfilePicture(param);
 
 	}
 
@@ -43,6 +50,14 @@ public class UserProfilePictureList implements Serializable {
 
 	public void setFilteredList(List<User> filteredList) {
 		this.filteredList = filteredList;
+	}
+
+	public boolean isParam() {
+		return param;
+	}
+
+	public void setParam(boolean param) {
+		this.param = param;
 	}
 
 }
