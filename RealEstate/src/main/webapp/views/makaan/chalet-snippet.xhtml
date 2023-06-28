@@ -37,18 +37,23 @@
 							<div class="col-md-12 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="property-item rounded overflow-hidden">
 									<div class="position-relative overflow-hidden">
-										<h:commandLink 
-											styleClass="d-block h5 mb-2" target="_blank">
-											<p:graphicImage alt="no photos" styleClass="img-fluid"
-												url="#{indexController.fullUrl}#{chalet.images[0]}">
-											</p:graphicImage>
-										</h:commandLink>
+											<h:commandLink action="#{indexController.navigate(chalet)}"
+												styleClass="d-block h5 mb-2" target="_blank">
+												<p:graphicImage alt="no photos" styleClass="img-fluid"
+													url="#{indexController.fullUrl}#{chalet.images[0]}">
+												</p:graphicImage>
+												<f:actionListener binding="#{indexController.addViewsAfterClick(chalet)}" />
+											</h:commandLink>
 									</div>
 									<div class="p-4 pb-0">
-										<h:commandLink target="_blank" value="#{chalet.name}"
-											styleClass="text-primary d-block h5 mb-2">
-										</h:commandLink>
 										
+										<h:commandLink action="#{indexController.navigate(chalet)}"
+											target="_blank" value="#{chalet.name}"
+											styleClass="text-primary d-block h5 mb-2">
+											<f:actionListener
+												binding="#{indexController.addViewsAfterClick(chalet)}" />
+										</h:commandLink>
+
 										<h6 class="mb-3">
 												<span class=" ">#{bundle.chalet_weekdays}:</span>
 												<span class="text-primary">#{chalet.weekdays} $</span>
@@ -75,9 +80,12 @@
 										</small>
 										
 										 <small class="flex-fill text-center border-end py-2">
-											<h:commandLink style="font-weight: bold;" target="_blank"
-												value="#{bundle.whatsapp}">
+											<h:commandLink style="font-weight: bold;"
+												action="#{indexController.navigateToWhatsApp(chalet)}"
+												target="_blank" value="#{bundle.whatsapp}">
 												<i class="fab fa-whatsapp text-primary me-2"></i>
+												<f:actionListener
+													binding="#{indexController.addCallNumber(chalet)}" />
 											</h:commandLink>
 										</small>
 
@@ -94,19 +102,22 @@
 								<div class="row">
 									<div class="col-md-4 ">
 										<div class="position-relative overflow-hidden">
-											<h:link  outcome="chalet-card"
+											<h:commandLink action="#{indexController.navigate(chalet)}"
 												styleClass="d-block h5 mb-2" target="_blank">
 												<p:graphicImage alt="no photos" styleClass="img-fluid"
-												  url="#{indexController.fullUrl}#{chalet.images[0]}">
-											   </p:graphicImage>
-											   <f:param name="id" value="#{chalet.id}"></f:param>
-											</h:link>
+													url="#{indexController.fullUrl}#{chalet.images[0]}">
+												</p:graphicImage>
+												<f:actionListener binding="#{indexController.addViewsAfterClick(chalet)}" />
+											</h:commandLink>
 										</div>
 									</div>
 									<div class="col-md-8 ">
 										 <div class="p-4 pb-0">
-											<h:commandLink target="_blank" value="#{chalet.name}"
+											<h:commandLink action="#{indexController.navigate(chalet)}"
+												target="_blank" value="#{chalet.name}"
 												styleClass="text-primary d-block h5 mb-2">
+												<f:actionListener
+													binding="#{indexController.addViewsAfterClick(chalet)}" />
 											</h:commandLink>
 											
 											<h6 class="mb-3">
@@ -136,9 +147,12 @@
 										</small>
 										
 										 <small class="flex-fill text-center border-end py-2">
-											<h:commandLink style="font-weight: bold;" target="_blank"
-												value="#{bundle.whatsapp}">
+											<h:commandLink style="font-weight: bold;"
+												action="#{indexController.navigateToWhatsApp(chalet)}"
+												target="_blank" value="#{bundle.whatsapp}">
 												<i class="fab fa-whatsapp text-primary me-2"></i>
+												<f:actionListener
+													binding="#{indexController.addCallNumber(chalet)}" />
 											</h:commandLink>
 										</small>
 										</div>

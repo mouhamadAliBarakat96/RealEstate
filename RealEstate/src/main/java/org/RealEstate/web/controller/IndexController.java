@@ -80,8 +80,9 @@ public class IndexController implements Serializable {
 
 	private List<District> districts = new ArrayList<>();
 
+	// lazy model
+	private RealEstateLazyDataModel realLazyModel;
 	// Search Bar Filters
-
 	private User user;
 	private String postType;
 	private int minPrice;
@@ -95,12 +96,13 @@ public class IndexController implements Serializable {
 	private District selecteDistrict = new District();
 	private Village selecteVillage = new Village();
 
-	// lazy model
-	private RealEstateLazyDataModel realLazyModel;
 
 	// chalet lazyModel
 	private ChaletLazyDataModel chaletLazyModel;
-
+	// Search Bar Filters
+	private boolean hasChimney;
+	private boolean hasPool;
+	
 	private String fullUrl = "";
 	private String ipAddressWithPort;
 
@@ -123,22 +125,21 @@ public class IndexController implements Serializable {
 	private PropertyKindEnum parameterPropertyKind() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
-		
+
 		if (!facesContext.isPostback()) {
 			String kind = externalContext.getRequestParameterMap().get("property");
 			if (!StringUtils.isBlank(kind) && kind.equals(PropertyKindEnum.REALESTATE.toString())) {
 				return PropertyKindEnum.REALESTATE;
-			}else if(!StringUtils.isBlank(kind) && kind.equals(PropertyKindEnum.CHALET.toString())) {
+			} else if (!StringUtils.isBlank(kind) && kind.equals(PropertyKindEnum.CHALET.toString())) {
 				return PropertyKindEnum.CHALET;
 			}
 		}
-		
+
 		return PropertyKindEnum.REALESTATE;
 	}
 
 	public String getIpAddressWithPort() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-				.getRequest();
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		String ipAddress = request.getRemoteAddr();
 		int port = request.getLocalPort();
 		ipAddressWithPort = ipAddress + ":" + port;
@@ -149,54 +150,48 @@ public class IndexController implements Serializable {
 	public void addViewsAfterClick(RealEstate item) {
 		try {
 			Response response = postService.updatePostVieux(item.getId(), item.getPostType().toString());
-
-			if (response.getStatus() == Status.ACCEPTED.getStatusCode()) {
-				System.out.println("Post Viewed ACCEPTED");
-
-			} else if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
-				System.out.println("Post Viewed NOT_FOUND");
-
-			} else {
-				System.out.println("Status NO CONTENT" + (String) response.getEntity());
-			}
+			System.out.println(response.getStatus());
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 	
-	public void addViewsAfterClickToChalet(Chalet item) {
+	public void addViewsAfterClick(Chalet item) {
 		try {
-			Response response ; //postService.updatePostVieux(item.getId());
-
-			if (response.getStatus() == Status.ACCEPTED.getStatusCode()) {
-				System.out.println("Post Viewed ACCEPTED");
-
-			} else if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
-				System.out.println("Post Viewed NOT_FOUND");
-
-			} else {
-				System.out.println("Status NO CONTENT" + (String) response.getEntity());
-			}
+			Response response = postService.updateChaletViews(item.getId());
+			System.out.println(response.getStatus());
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 
 	public void addCallNumber(RealEstate item) {
 		try {
 			Response response = postService.updateCallPost(item.getId(), item.getPostType().toString());
-
-			if (response.getStatus() == Status.ACCEPTED.getStatusCode()) {
-				System.out.println("Calls ACCEPTED");
-
-			} else if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
-				System.out.println("Calls NOT_FOUND");
-
-			} else {
-				System.out.println("Status NO CONTENT" + (String) response.getEntity());
-			}
+			System.out.println(response.getStatus());
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	public void addCallNumber(Chalet item) {
+		try {
+			Response response = postService.updateChaletCall(item.getId());
+			System.out.println(response.getStatus());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void navigateToWhatsApp(Chalet item) throws IOException {
+		// Get the phone number parameter from the request
+		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			String phoneNumber = item.getUser().getPhoneNumber();
+			// Construct the WhatsApp URL
+			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
+			// Navigate to the URL
+			externalContext.redirect(url);
 		}
 	}
 
@@ -217,6 +212,17 @@ public class IndexController implements Serializable {
 	public void navigate(RealEstate item) {
 		// Build the URL with the parameter values
 		String url = "realEstate-card.xhtml?id=" + item.getId();
+		// Use the ExternalContext object to redirect to the new page
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+		} catch (IOException e) {
+			// Handle the exception appropriately
+		}
+	}
+	// navigate to real chalet Card
+	public void navigate(Chalet item) {
+		// Build the URL with the parameter values
+		String url = "chalet-card.xhtml?id=" + item.getId();
 		// Use the ExternalContext object to redirect to the new page
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
@@ -263,6 +269,21 @@ public class IndexController implements Serializable {
 		// RealLazyModel.setTotalCount(totalCount);
 
 		Utility.addSuccessMessage("search_complete");
+	}
+	
+	public void chaletSearch() {
+		if (maxPrice != 0 && minPrice > maxPrice) {
+			Utility.addErrorMessage("min_price_mut_be _less_than_max");
+			return;
+		}
+		chaletLazyModel.setChimney(hasChimney);
+		chaletLazyModel.setMaxPrice(maxPrice);
+		chaletLazyModel.setMinPrice(minPrice);
+		chaletLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
+		chaletLazyModel.setGovernorate(selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
+		chaletLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
+		chaletLazyModel.setPool(hasPool);
+		 
 	}
 
 	public void listenerSelect(RealEstateTypeEnum type) {
@@ -532,6 +553,22 @@ public class IndexController implements Serializable {
 
 	public void setPropertyKind(PropertyKindEnum propertyKind) {
 		this.propertyKind = propertyKind;
+	}
+
+	public boolean isHasChimney() {
+		return hasChimney;
+	}
+
+	public void setHasChimney(boolean hasChimney) {
+		this.hasChimney = hasChimney;
+	}
+
+	public boolean isHasPool() {
+		return hasPool;
+	}
+
+	public void setHasPool(boolean hasPool) {
+		this.hasPool = hasPool;
 	}
 
 }

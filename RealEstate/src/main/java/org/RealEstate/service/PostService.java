@@ -868,8 +868,6 @@ public class PostService implements Serializable {
 
 	}
 	
-	
-	
 	public Response findPostById(Long id) {
 
 		try {
@@ -881,4 +879,40 @@ public class PostService implements Serializable {
 		}
 
 	}
+	
+	public Response updateChaletViews(long id) {
+		try {
+			Chalet chalet = chaletFacade.findWithLockPessimisticWriteWithoutException(id);
+
+			if (chalet != null) {
+				chalet.setViews(chalet.getViews() + 1);
+				chaletFacade.save(chalet);
+				return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+			} else {
+				return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+
+	}
+	
+	public Response updateChaletCall(long id) {
+		try {
+			Chalet chalet = chaletFacade.findWithLockPessimisticWriteWithoutException(id);
+
+			if (chalet != null) {
+				chalet.setNumberOfCall(chalet.getNumberOfCall() + 1);
+				chaletFacade.save(chalet);
+				return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+			} else {
+				return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+	}
+	
 }

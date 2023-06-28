@@ -60,6 +60,18 @@
 					value="#{indexController.maxPrice}">
 				</h:inputText>
 			</div>
+			<div class="col-md-2 col-sm-12 mt-2 ">
+				<h:outputLabel value="#{bundle.chalet_chimney}" style="color:white" />
+				<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
+						value="#{indexController.hasChimney}" />
+				</span>
+			</div>
+			<div class="col-md-2 col-sm-12 mt-2 ">
+				<h:outputLabel value="#{bundle.chalet_pool}" style="color:white" />
+				<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
+						value="#{indexController.hasPool}" />
+				</span>
+			</div>
 			<div class="col-md-1 col-sm-12 py-3">
 				<h:commandButton action="#{indexController.search()}"
 					value="#{bundle.search}"
