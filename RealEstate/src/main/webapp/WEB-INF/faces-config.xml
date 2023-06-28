@@ -172,9 +172,6 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-<<<<<<< Upstream, based on origin/development
-
-=======
 	
 	<navigation-rule>
 		<navigation-case>
@@ -184,8 +181,6 @@
 		</navigation-case>
 	</navigation-rule>
 	
->>>>>>> c5a821c chalet and real estate
-
 	<application>
 		<locale-config>
 			<default-locale>en</default-locale>
