@@ -9,18 +9,18 @@
 	<div class="container-fluid bg-primary mb-5 wow " data-wow-delay="0.1s"
 		style="padding: 15px 5px 5px 5px;">
 		<div class="row">
-			<div class="col-md-3 col-sm-12 mt-2">
+			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu styleClass="form-select border-0  "
 					converter="omnifaces.SelectItemsConverter"
 					value="#{indexController.selectPostType}">
 					<f:selectItem itemLabel="Property Type" itemValue="" />
 					<f:selectItems value="#{PostType.values()}" var="option"
 						itemLabel="#{option.name}" itemValue="#{option}" />
-					<f:ajax execute="@this" render="myForm:realSatatebathBedRoomsId" />
+					<f:ajax execute="myForm:searchBarPanel" render="myForm:realSatatebathBedRoomsId" />
 				</h:selectOneMenu>
 			</div>
 
-			<div class="col-md-3 col-sm-12 mt-2">
+			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu id="governateSelectId"
 					styleClass="form-select border-0 "
 					converter="omnifaces.SelectItemsConverter"
@@ -34,7 +34,7 @@
 				</h:selectOneMenu>
 			</div>
 
-			<div class="col-md-3 col-sm-12 mt-2">
+			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu id="districtSelectId"
 					converter="omnifaces.SelectItemsConverter"
 					styleClass="form-select border-0  "
@@ -47,7 +47,7 @@
 						render="myForm:villageSelectId" />
 				</h:selectOneMenu>
 			</div>
-			<div class="col-md-3 col-sm-12 mt-2">
+			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu id="villageSelectId"
 					converter="omnifaces.SelectItemsConverter"
 					styleClass="form-select border-0  "
@@ -58,51 +58,49 @@
 					<f:ajax execute="@this" />
 				</h:selectOneMenu>
 			</div>
-			<div class="col-md-2 mt-2 col-sm-12">
-				<h:outputLabel value="Min Price" style="color:white" />
+			<div class="col-md-3 mt-2 col-sm-12 pe-5">
 				<h:inputText onkeypress="return isNumberKey(event)"
 					placeholder="min price" styleClass="form-control"
 					value="#{indexController.minPrice}">
 				</h:inputText>
+				<h:outputLabel value="Min Price" style="color:white" />
 			</div>
-			<div class="col-md-2 mt-2 col-sm-12">
-				<h:outputLabel value="Max Price" style="color:white" />
+			<div class="col-md-3 mt-2 col-sm-12 pe-5" >
 				<h:inputText onkeypress="return isNumberKey(event)"
 					placeholder="max price" styleClass="form-control"
 					value="#{indexController.maxPrice}">
 				</h:inputText>
+				<h:outputLabel value="Max Price" style="color:white" />
 			</div>
 
 			<h:panelGroup id="realSatatebathBedRoomsId" layout="block"
-				styleClass="row col-md-7 mt-2 pr-0">
+				styleClass="row col-md-6 mt-2 pe-4">
 				<h:panelGroup
 					rendered="#{indexController.hasRoomsAndBathRooms(indexController.postType)}">
-
 					<div class="col-md-4 col-sm-12">
-						<h:outputLabel value="Bed Rooms Count" style="color:white" />
 						<h:inputText onkeypress="return isNumberKey(event)"
 							placeholder="max price" styleClass="form-control"
 							value="#{indexController.bedRoom}">
 						</h:inputText>
+						<h:outputLabel value="Bed Rooms Count" style="color:white" />
 					</div>
-					<div class="col-md-2 col-sm-12">
-						<h:outputLabel value="Exact Value" style="color:white" />
-						<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
-								value="#{indexController.bedRoomEq}" />
+					<div class="col-md-2 col-sm-12 pe-0">
+						<span class="form-control search-checkbox">
+						 <h:selectBooleanCheckbox value="#{indexController.bedRoomEq}" />
 						</span>
+						<h:outputLabel value="Exact Value" style="color:white" />
 					</div>
-					<div class="col-md-4 col-sm-12">
-						<h:outputLabel value="Bath Rooms Count" style="color:white" />
+					<div class="col-md-4 col-sm-12 ps-4">
 						<h:inputText placeholder="max price" styleClass="form-control"
 							value="#{indexController.bathRoom}">
 						</h:inputText>
+						<h:outputLabel value="Bath Rooms Count" style="color:white" />
 					</div>
-					<div class="col-md-2 col-sm-12">
-						<h:outputLabel value="Exact Value" style="color:white" />
-
-						<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
-								value="#{indexController.bathRoomEq}" />
+					<div class="col-md-2 col-sm-12 pe-0">
+						<span class="form-control search-checkbox">
+						 <h:selectBooleanCheckbox value="#{indexController.bathRoomEq}" />
 						</span>
+						<h:outputLabel value="Exact Value" style="color:white" />
 					</div>
 				</h:panelGroup>
 			</h:panelGroup>
@@ -112,7 +110,7 @@
 					style=" background-color: #007ad9;color:white"
 					styleClass="btn mt-3">
 					<f:ajax execute="myForm:panelSearchBar"
-						render="myForm:propertyListId :messageScript" />
+						render="myForm:RealEstatePanelId :messageScript" />
 				</h:commandButton>
 			</div>
 

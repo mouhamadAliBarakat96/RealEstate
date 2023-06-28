@@ -14,7 +14,6 @@ To Do:
 *****
 -add WaterResources in card.
 -page list of real estate and chalet.
-
 -create new Post (chalet , post)
 -Sing In & Sign Up (front-end)
 
