@@ -52,7 +52,6 @@ public class IndexController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final String REQUEST_PARAM = "id";
 
 	@Inject
 	private GovernorateFacade governorateFacade;
@@ -150,6 +149,24 @@ public class IndexController implements Serializable {
 	public void addViewsAfterClick(RealEstate item) {
 		try {
 			Response response = postService.updatePostVieux(item.getId(), item.getPostType().toString());
+
+			if (response.getStatus() == Status.ACCEPTED.getStatusCode()) {
+				System.out.println("Post Viewed ACCEPTED");
+
+			} else if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
+				System.out.println("Post Viewed NOT_FOUND");
+
+			} else {
+				System.out.println("Status NO CONTENT" + (String) response.getEntity());
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void addViewsAfterClickToChalet(Chalet item) {
+		try {
+			Response response ; //postService.updatePostVieux(item.getId());
 
 			if (response.getStatus() == Status.ACCEPTED.getStatusCode()) {
 				System.out.println("Post Viewed ACCEPTED");
