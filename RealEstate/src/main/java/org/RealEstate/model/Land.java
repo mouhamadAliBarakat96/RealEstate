@@ -21,7 +21,7 @@ public class Land extends RealEstate implements Serializable {
 	@Expose
 	private boolean greenBond;
 	@Expose
-	private boolean blockNb;
+	private int blockNb;
 	private int nbOfShares;
 	@Expose
 	private boolean road;
@@ -83,11 +83,13 @@ public class Land extends RealEstate implements Serializable {
 		this.nbOfShares = nbOfShares;
 	}
 
-	public boolean isBlockNb() {
+	
+
+	public int getBlockNb() {
 		return blockNb;
 	}
 
-	public void setBlockNb(boolean blockNb) {
+	public void setBlockNb(int blockNb) {
 		this.blockNb = blockNb;
 	}
 

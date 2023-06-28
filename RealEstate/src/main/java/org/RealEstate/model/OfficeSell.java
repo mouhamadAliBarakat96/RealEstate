@@ -41,7 +41,7 @@ public class OfficeSell extends RealEstate implements Serializable {
 	@Expose
 	private boolean greenBond;
 	@Expose
-	private boolean blockNb;
+	private int blockNb;
 
 
 
@@ -101,11 +101,13 @@ public class OfficeSell extends RealEstate implements Serializable {
 		this.greenBond = greenBond;
 	}
 
-	public boolean isBlockNb() {
+	
+
+	public int getBlockNb() {
 		return blockNb;
 	}
 
-	public void setBlockNb(boolean blockNb) {
+	public void setBlockNb(int blockNb) {
 		this.blockNb = blockNb;
 	}
 

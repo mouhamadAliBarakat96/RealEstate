@@ -403,17 +403,15 @@ public class PostService implements Serializable {
 
 	}
 
-	private void checkPostConstraintFields(RealEstate realEstate) {
+	private void checkPostConstraintFields(RealEstate realEstate) throws Exception {
 
 		// check tittle sub tittle dont have numbet
 
 		if (NumberPatternDetector.checkTextContainNumber(realEstate.getTittle())
 				|| NumberPatternDetector.checkTextContainNumber(realEstate.getSubTittle())) {
 
-		
+			throw new Exception("TITTLE_OR_SUBTTITLE_CONTAIN_PHONE_NUMBER");
 		}
-
-		
 
 	}
 
@@ -828,8 +826,8 @@ public class PostService implements Serializable {
 	}
 
 	// HERE
-	public Response findChalet(Long userId, int minPrice, int maxPrice, Long villageId, int size,
-			int page, Boolean pool, Boolean chimney, Long governorateId, Long districtId) {
+	public Response findChalet(Long userId, int minPrice, int maxPrice, Long villageId, int size, int page,
+			Boolean pool, Boolean chimney, Long governorateId, Long districtId) {
 
 		try {
 			Village village = null;
@@ -857,8 +855,7 @@ public class PostService implements Serializable {
 
 			AtomicLong totalResults = new AtomicLong();
 			List<Chalet> list = chaletFacade.findAllChaletWithFilter(user, village, page, size, totalResults, district,
-					governorate, minPrice, maxPrice, pool, chimney
-					);
+					governorate, minPrice, maxPrice, pool, chimney);
 
 			PaginationResponse<Chalet> response = new PaginationResponse<>();
 			response.setPage(page);

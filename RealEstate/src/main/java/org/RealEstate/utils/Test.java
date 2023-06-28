@@ -52,6 +52,11 @@ import org.RealEstate.model.Village;
 public class Test {
 	public static void main(String[] args) throws IOException {
 		try {
+			
+			Boolean x  = null;
+			
+			System.out.println(x);
+			
 			List<WaterResources> waterResources = new ArrayList<>();
 			waterResources.add(WaterResources.CALCAREOUS_WATER);
 
@@ -62,6 +67,9 @@ public class Test {
 			appratmentRent.setPostType(PostType.APPRATMENT_RENT);
 			appratmentRent.setWaterResources(waterResources);
 			appratmentRent.setVillage(village);
+			appratmentRent.setTittle("dqwdqw");
+			appratmentRent.setSubTittle("dqwdqw");
+			
 			System.out.println("AppratmentRent");
 			System.out.println(Utils.objectToString(appratmentRent));
 			AppratmentSell appratmentSell = new AppratmentSell();

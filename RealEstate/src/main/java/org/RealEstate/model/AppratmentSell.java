@@ -48,7 +48,7 @@ public class AppratmentSell extends RealEstate implements Serializable {
 	@Expose
 	private boolean greenBond;
 	@Expose
-	private boolean blockNb;
+	private int blockNb;
 
 	public AppratmentSell() {
 		// TODO Auto-generated constructor stub
@@ -129,11 +129,12 @@ public class AppratmentSell extends RealEstate implements Serializable {
 		this.greenBond = greenBond;
 	}
 
-	public boolean isBlockNb() {
+
+	public int getBlockNb() {
 		return blockNb;
 	}
 
-	public void setBlockNb(boolean blockNb) {
+	public void setBlockNb(int blockNb) {
 		this.blockNb = blockNb;
 	}
 

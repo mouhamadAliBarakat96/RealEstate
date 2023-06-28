@@ -42,7 +42,7 @@ public class AppratmentRent extends RealEstate implements Serializable {
 	@Expose
 	private int nbBathRoom;
 	@Expose
-	private boolean blockNb;
+	private int blockNb;
 
 	public AppratmentRent() {
 		// TODO Auto-generated constructor stub
@@ -114,11 +114,12 @@ public class AppratmentRent extends RealEstate implements Serializable {
 		this.nbBathRoom = nbBathRoom;
 	}
 
-	public boolean isBlockNb() {
+
+	public int getBlockNb() {
 		return blockNb;
 	}
 
-	public void setBlockNb(boolean blockNb) {
+	public void setBlockNb(int blockNb) {
 		this.blockNb = blockNb;
 	}
 
