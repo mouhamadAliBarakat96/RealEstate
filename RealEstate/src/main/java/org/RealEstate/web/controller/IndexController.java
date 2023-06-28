@@ -99,8 +99,8 @@ public class IndexController implements Serializable {
 	// chalet lazyModel
 	private ChaletLazyDataModel chaletLazyModel;
 	// Search Bar Filters
-	private boolean hasChimney;
-	private boolean hasPool;
+	private Boolean hasChimney;
+	private Boolean hasPool;
 	
 	private String fullUrl = "";
 	private String ipAddressWithPort;
@@ -556,19 +556,19 @@ public class IndexController implements Serializable {
 		this.propertyKind = propertyKind;
 	}
 
-	public boolean isHasChimney() {
+	public Boolean getHasChimney() {
 		return hasChimney;
 	}
 
-	public void setHasChimney(boolean hasChimney) {
+	public void setHasChimney(Boolean hasChimney) {
 		this.hasChimney = hasChimney;
 	}
 
-	public boolean isHasPool() {
+	public Boolean getHasPool() {
 		return hasPool;
 	}
 
-	public void setHasPool(boolean hasPool) {
+	public void setHasPool(Boolean hasPool) {
 		this.hasPool = hasPool;
 	}
 
