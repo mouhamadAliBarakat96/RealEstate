@@ -68,10 +68,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 			pageItems = facade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice, village,
 					(first / pageSize) + 1, pageSize, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district,
 					governorate);
-			
-			
 			setRowCount(Math.toIntExact(totalCount.get()));
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

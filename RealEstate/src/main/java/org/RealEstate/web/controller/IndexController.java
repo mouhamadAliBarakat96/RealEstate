@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.dto.ChaletLazyDataModel;
 import org.RealEstate.dto.RealEstateLazyDataModel;
@@ -283,6 +282,8 @@ public class IndexController implements Serializable {
 		chaletLazyModel.setGovernorate(selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
 		chaletLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
 		chaletLazyModel.setPool(hasPool);
+		
+		Utility.addSuccessMessage("search_complete");
 		 
 	}
 

@@ -63,13 +63,27 @@ public class ChaletLazyDataModel extends LazyDataModel<Chalet> implements Serial
 
 	@Override
 	public int count(Map<String, FilterMeta> arg0) {
-		return 3;
+		try {
+			return 3;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	@Override
 	public List<Chalet> load(int first, int pageSize, Map<String, SortMeta> sortMap,
 			Map<String, FilterMeta> filterMap) {
-		return facade.findAll();
+		try {
+			pageItems = facade.findAllChaletWithFilter(user, village, (first / pageSize) + 1, pageSize, totalCount,
+					district, governorate, minPrice, maxPrice, pool, chimney);
+			
+			setRowCount(Math.toIntExact(totalCount.get()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return pageItems;
 	}
 
 	public List<Chalet> getPageItems() {

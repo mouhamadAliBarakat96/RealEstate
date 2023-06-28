@@ -7,24 +7,26 @@ Done :
 2-add calls and views
 3-navigate to whatsapp via click call
 4-error page
+5-Chalet list in homepage with filters
+6-Chalet-card
 
 To Do:
 *****
-1-Chalet list in homepage with filters
-2-Chalet-card
-3-Sing In & Sign Up (front-end)
-4-add WaterResources in card
-5-create new Post (chalet , post)
-6- posted by user in card and navigate to user page list of real estate showing to public users.
+-add WaterResources in card.
+-page list of real estate and chalet.
+
+-create new Post (chalet , post)
+-Sing In & Sign Up (front-end)
+
  
  
 Arabic Websites
 ***************
-1-template styles and redirect bundle to arabic
+-template styles and redirect bundle to arabic
 
 To Discusion:
 *************
- 1-contact us
+-contact us
 
  
 
