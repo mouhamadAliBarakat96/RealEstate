@@ -35,8 +35,8 @@ public class ChaletLazyDataModel extends LazyDataModel<Chalet> implements Serial
 	private District district;
 	private Governorate governorate;
 	private String name;
-	private boolean pool;
-	private boolean chimney;
+	private Boolean pool;
+	private Boolean chimney;
 	private double weekdays;
 	private double weekenddays;
 
@@ -45,7 +45,7 @@ public class ChaletLazyDataModel extends LazyDataModel<Chalet> implements Serial
 	}
 
 	public void genrateFakeData() {
-		pageItems=new ArrayList<>();
+		pageItems = new ArrayList<>();
 		Governorate governorate = new Governorate("Janoub");
 		District district = new District("Tyre");
 		district.setGovernorate(governorate);
@@ -64,7 +64,9 @@ public class ChaletLazyDataModel extends LazyDataModel<Chalet> implements Serial
 	@Override
 	public int count(Map<String, FilterMeta> arg0) {
 		try {
-			return 3;
+			return Math.toIntExact(facade.countChaletWithFilter(user, village, 0, 0, totalCount, district, governorate,
+					minPrice, maxPrice, pool, chimney));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -77,7 +79,7 @@ public class ChaletLazyDataModel extends LazyDataModel<Chalet> implements Serial
 		try {
 			pageItems = facade.findAllChaletWithFilter(user, village, (first / pageSize) + 1, pageSize, totalCount,
 					district, governorate, minPrice, maxPrice, pool, chimney);
-			
+
 			setRowCount(Math.toIntExact(totalCount.get()));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -158,22 +160,6 @@ public class ChaletLazyDataModel extends LazyDataModel<Chalet> implements Serial
 		this.name = name;
 	}
 
-	public boolean isPool() {
-		return pool;
-	}
-
-	public void setPool(boolean pool) {
-		this.pool = pool;
-	}
-
-	public boolean isChimney() {
-		return chimney;
-	}
-
-	public void setChimney(boolean chimney) {
-		this.chimney = chimney;
-	}
-
 	public double getWeekdays() {
 		return weekdays;
 	}
@@ -189,4 +175,21 @@ public class ChaletLazyDataModel extends LazyDataModel<Chalet> implements Serial
 	public void setWeekenddays(double weekenddays) {
 		this.weekenddays = weekenddays;
 	}
+
+	public Boolean getChimney() {
+		return chimney;
+	}
+
+	public void setChimney(Boolean chimney) {
+		this.chimney = chimney;
+	}
+
+	public Boolean getPool() {
+		return pool;
+	}
+
+	public void setPool(Boolean pool) {
+		this.pool = pool;
+	}
+
 }

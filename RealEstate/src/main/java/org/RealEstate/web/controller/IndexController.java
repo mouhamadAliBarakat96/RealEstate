@@ -275,6 +275,7 @@ public class IndexController implements Serializable {
 			Utility.addErrorMessage("min_price_mut_be _less_than_max");
 			return;
 		}
+		chaletLazyModel.setUser(user != null ? user : null);
 		chaletLazyModel.setChimney(hasChimney);
 		chaletLazyModel.setMaxPrice(maxPrice);
 		chaletLazyModel.setMinPrice(minPrice);
