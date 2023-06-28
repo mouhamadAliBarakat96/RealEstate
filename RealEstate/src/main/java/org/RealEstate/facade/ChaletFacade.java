@@ -14,12 +14,15 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.RealEstate.enumerator.PostStatus;
+import org.RealEstate.enumerator.PostType;
 import org.RealEstate.model.Chalet;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
+import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.service.UploadImagesMultiPart;
+import org.RealEstate.utils.Constants;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 
 @Stateless
@@ -132,6 +135,29 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 		Predicate finalPredicate = criteriaBuilder.and(predicates.toArray(new Predicate[0]));
 
 		return finalPredicate;
+	}
+
+	// start here create predict
+	// to use by kasssem
+	public Long countChaletWithFilter(User user, Village village, int page, int size, AtomicLong totalCount,
+			District district, Governorate governorate, int minPrice, int maxPrice, Boolean pool, Boolean chimney)
+			throws Exception {
+
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+
+		CriteriaQuery<Chalet> criteriaQuery = criteriaBuilder.createQuery(Chalet.class);
+		Root<Chalet> root = countQuery.from(Chalet.class);
+
+		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, user, village, district, governorate, minPrice,
+				maxPrice, pool, chimney);
+
+		criteriaQuery.where(finalPredicate);
+
+		countQuery.select(criteriaBuilder.count(root)).where(finalPredicate);
+
+		return getEntityManager().createQuery(countQuery).getSingleResult();
+
 	}
 
 }
