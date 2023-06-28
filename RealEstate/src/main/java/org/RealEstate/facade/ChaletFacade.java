@@ -14,18 +14,12 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.RealEstate.enumerator.PostStatus;
-import org.RealEstate.enumerator.PostType;
 import org.RealEstate.model.Chalet;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
-import org.RealEstate.model.Land;
-import org.RealEstate.model.RealEstate;
-import org.RealEstate.model.ShopRent;
-import org.RealEstate.model.ShopSell;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.service.UploadImagesMultiPart;
-import org.RealEstate.utils.Constants;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 
 @Stateless
