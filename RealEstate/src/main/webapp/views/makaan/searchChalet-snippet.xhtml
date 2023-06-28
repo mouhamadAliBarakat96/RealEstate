@@ -60,20 +60,31 @@
 					value="#{indexController.maxPrice}">
 				</h:inputText>
 			</div>
+			
 			<div class="col-md-2 col-sm-12 mt-2 ">
 				<h:outputLabel value="#{bundle.chalet_chimney}" style="color:white" />
-				<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
-						value="#{indexController.hasChimney}" />
-				</span>
+				<h:selectOneMenu styleClass="form-select border-0  "
+					converter="omnifaces.SelectItemsConverter"
+					value="#{indexController.chimneyYesNoEnum}">
+					<f:selectItem itemLabel="#{bundle.chalet_pool}" itemValue="" />
+					<f:selectItems value="#{YesNoEnum.values()}" var="option"
+						itemLabel="#{option.answer}" itemValue="#{option}" />
+				</h:selectOneMenu>
 			</div>
+			
 			<div class="col-md-2 col-sm-12 mt-2 ">
 				<h:outputLabel value="#{bundle.chalet_pool}" style="color:white" />
-				<span class="form-control search-checkbox"> <h:selectBooleanCheckbox
-						value="#{indexController.hasPool}" />
-				</span>
+				<h:selectOneMenu styleClass="form-select border-0  "
+					converter="omnifaces.SelectItemsConverter"
+					value="#{indexController.poolYesNoEnum}">
+					<f:selectItem itemLabel="#{bundle.chalet_pool}" itemValue="" />
+					<f:selectItems value="#{YesNoEnum.values()}" var="option"
+						itemLabel="#{option.answer}" itemValue="#{option}" />
+				</h:selectOneMenu>
 			</div>
+			
 			<div class="col-md-1 col-sm-12 py-3">
-				<h:commandButton action="#{indexController.search()}"
+				<h:commandButton action="#{indexController.chaletSearch()}"
 					value="#{bundle.search}"
 					style=" background-color: #007ad9;color:white"
 					styleClass="btn mt-3">

@@ -22,6 +22,7 @@ import org.RealEstate.dto.RealEstateLazyDataModel;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.enumerator.RealEstateTypeEnum;
+import org.RealEstate.enumerator.YesNoEnum;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.DistrictFacade;
 import org.RealEstate.facade.GovernorateFacade;
@@ -95,13 +96,12 @@ public class IndexController implements Serializable {
 	private District selecteDistrict = new District();
 	private Village selecteVillage = new Village();
 
-
 	// chalet lazyModel
 	private ChaletLazyDataModel chaletLazyModel;
 	// Search Bar Filters
-	private Boolean hasChimney;
-	private Boolean hasPool;
-	
+	private YesNoEnum poolYesNoEnum = null;
+	private YesNoEnum chimneyYesNoEnum = null;
+
 	private String fullUrl = "";
 	private String ipAddressWithPort;
 
@@ -138,7 +138,8 @@ public class IndexController implements Serializable {
 	}
 
 	public String getIpAddressWithPort() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
 		String ipAddress = request.getRemoteAddr();
 		int port = request.getLocalPort();
 		ipAddressWithPort = ipAddress + ":" + port;
@@ -154,7 +155,7 @@ public class IndexController implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void addViewsAfterClick(Chalet item) {
 		try {
 			Response response = postService.updateChaletViews(item.getId());
@@ -172,6 +173,7 @@ public class IndexController implements Serializable {
 			e.printStackTrace();
 		}
 	}
+
 	public void addCallNumber(Chalet item) {
 		try {
 			Response response = postService.updateChaletCall(item.getId());
@@ -180,7 +182,7 @@ public class IndexController implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void navigateToWhatsApp(Chalet item) throws IOException {
 		// Get the phone number parameter from the request
 		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
@@ -218,6 +220,7 @@ public class IndexController implements Serializable {
 			// Handle the exception appropriately
 		}
 	}
+
 	// navigate to real chalet Card
 	public void navigate(Chalet item) {
 		// Build the URL with the parameter values
@@ -269,23 +272,42 @@ public class IndexController implements Serializable {
 
 		Utility.addSuccessMessage("search_complete");
 	}
-	
+
 	public void chaletSearch() {
 		if (maxPrice != 0 && minPrice > maxPrice) {
 			Utility.addErrorMessage("min_price_mut_be _less_than_max");
 			return;
 		}
 		chaletLazyModel.setUser(user != null ? user : null);
-		chaletLazyModel.setChimney(hasChimney);
+		chaletLazyModel.setChimney(chimneyValue());
+		chaletLazyModel.setPool(poolValue());
 		chaletLazyModel.setMaxPrice(maxPrice);
 		chaletLazyModel.setMinPrice(minPrice);
 		chaletLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
-		chaletLazyModel.setGovernorate(selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
+		chaletLazyModel.setGovernorate(
+				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
 		chaletLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
-		chaletLazyModel.setPool(hasPool);
-		
+
 		Utility.addSuccessMessage("search_complete");
-		 
+
+	}
+
+	private Boolean poolValue() {
+		if (poolYesNoEnum == null)
+			return null;
+		else if (poolYesNoEnum == YesNoEnum.YES)
+			return true;
+		else
+			return false;
+	}
+
+	private Boolean chimneyValue() {
+		if (chimneyYesNoEnum == null)
+			return null;
+		else if (chimneyYesNoEnum == YesNoEnum.YES)
+			return true;
+		else
+			return false;
 	}
 
 	public void listenerSelect(RealEstateTypeEnum type) {
@@ -557,20 +579,19 @@ public class IndexController implements Serializable {
 		this.propertyKind = propertyKind;
 	}
 
-	public Boolean getHasChimney() {
-		return hasChimney;
+	public YesNoEnum getPoolYesNoEnum() {
+		return poolYesNoEnum;
 	}
 
-	public void setHasChimney(Boolean hasChimney) {
-		this.hasChimney = hasChimney;
+	public void setPoolYesNoEnum(YesNoEnum poolYesNoEnum) {
+		this.poolYesNoEnum = poolYesNoEnum;
 	}
 
-	public Boolean getHasPool() {
-		return hasPool;
+	public YesNoEnum getChimneyYesNoEnum() {
+		return chimneyYesNoEnum;
 	}
 
-	public void setHasPool(Boolean hasPool) {
-		this.hasPool = hasPool;
+	public void setChimneyYesNoEnum(YesNoEnum chimneyYesNoEnum) {
+		this.chimneyYesNoEnum = chimneyYesNoEnum;
 	}
-
 }
