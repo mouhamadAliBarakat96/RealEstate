@@ -91,16 +91,16 @@ public class PostMangment {
 	@Produces(MediaType.APPLICATION_JSON)
 
 	public Response findAllChalet(@QueryParam("userId") Long userId,
-			@QueryParam("weekdaysMinPrice") int weekdaysMinPrice, @QueryParam("weekdaysMaxPrice") int weekdaysMaxPrice,
-			@QueryParam("weekenddaysMinPrice") int weekenddaysMinPrice, @QueryParam("weekenddaysMaxPrice") int weekenddaysMaxPrice,
+			@QueryParam("minPrice") int minPrice, @QueryParam("maxPrice") int maxPrice,
+			
 			@QueryParam("villageId") Long villageId, @QueryParam("page") int page, @QueryParam("size") int size,
 			@QueryParam("pool")Boolean  pool, @QueryParam("chimney") Boolean chimney,
 			@QueryParam("districtId") Long districtId, @QueryParam("governorateId") Long governorateId
 
 	) {
 
-		return postService.findChalet(userId, weekdaysMinPrice, weekdaysMaxPrice, villageId, size, page, pool, chimney,
-				governorateId, districtId  , weekenddaysMinPrice  , weekenddaysMaxPrice );
+		return postService.findChalet(userId, minPrice, maxPrice, villageId, size, page, pool, chimney,
+				governorateId, districtId    );
 
 	}
 

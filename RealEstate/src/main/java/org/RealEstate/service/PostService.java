@@ -40,6 +40,7 @@ import org.RealEstate.model.ShopSell;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.NumberPatternDetector;
 import org.RealEstate.utils.Utils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
@@ -404,7 +405,16 @@ public class PostService implements Serializable {
 
 	private void checkPostConstraintFields(RealEstate realEstate) {
 
-		// TODO
+		// check tittle sub tittle dont have numbet
+
+		if (NumberPatternDetector.checkTextContainNumber(realEstate.getTittle())
+				|| NumberPatternDetector.checkTextContainNumber(realEstate.getSubTittle())) {
+
+		
+		}
+
+		
+
 	}
 
 	private void checkChaletConstraintFields(Chalet chalet) {
@@ -817,12 +827,9 @@ public class PostService implements Serializable {
 
 	}
 
-	
-	
-	//HERE 
-	public Response findChalet(Long userId, int weekdaysMinPrice, int weekdaysMaxPrice, Long villageId,
-			int size,  int page, Boolean pool, Boolean chimney, Long governorateId,
-			Long districtId, int weekenddaysMinPrice, int weekenddaysMaxPrice) {
+	// HERE
+	public Response findChalet(Long userId, int minPrice, int maxPrice, Long villageId, int size,
+			int page, Boolean pool, Boolean chimney, Long governorateId, Long districtId) {
 
 		try {
 			Village village = null;
@@ -847,13 +854,11 @@ public class PostService implements Serializable {
 				governorate = governorateFacade.findWithExcption(governorateId);
 
 			}
-			
-			
 
 			AtomicLong totalResults = new AtomicLong();
-			List<Chalet> list = chaletFacade.findAllChaletWithFilter( user,  village,  page,  size,  totalResults,
-					 district,  governorate,  weekdaysMinPrice,  weekdaysMaxPrice,  pool,
-					 chimney,  weekenddaysMinPrice,  weekenddaysMaxPrice);
+			List<Chalet> list = chaletFacade.findAllChaletWithFilter(user, village, page, size, totalResults, district,
+					governorate, minPrice, maxPrice, pool, chimney
+					);
 
 			PaginationResponse<Chalet> response = new PaginationResponse<>();
 			response.setPage(page);
@@ -867,7 +872,7 @@ public class PostService implements Serializable {
 		}
 
 	}
-	
+
 	public Response findPostById(Long id) {
 
 		try {
@@ -879,7 +884,7 @@ public class PostService implements Serializable {
 		}
 
 	}
-	
+
 	public Response updateChaletViews(long id) {
 		try {
 			Chalet chalet = chaletFacade.findWithLockPessimisticWriteWithoutException(id);
@@ -897,7 +902,7 @@ public class PostService implements Serializable {
 		}
 
 	}
-	
+
 	public Response updateChaletCall(long id) {
 		try {
 			Chalet chalet = chaletFacade.findWithLockPessimisticWriteWithoutException(id);
@@ -914,5 +919,5 @@ public class PostService implements Serializable {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
-	
+
 }

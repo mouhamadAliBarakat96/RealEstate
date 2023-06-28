@@ -44,8 +44,8 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 	}
 
 	public List<Chalet> findAllChaletWithFilter(User user, Village village, int page, int size, AtomicLong totalCount,
-			District district, Governorate governorate, int weekdaysMinPrice, int weekdaysMaxPrice, Boolean pool,
-			Boolean chimney, int weekenddaysMinPrice, int weekenddaysMaxPrice) throws Exception {
+			District district, Governorate governorate, int minPrice, int maxPrice, Boolean pool, Boolean chimney)
+			throws Exception {
 
 		List<Chalet> lists;
 
@@ -58,8 +58,8 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 
 		// Create a list of predicates based on your runtime conditions
 
-		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, user, village, district, governorate,
-				weekdaysMinPrice, weekdaysMaxPrice, pool, chimney, weekenddaysMinPrice, weekenddaysMaxPrice);
+		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, user, village, district, governorate, minPrice,
+				maxPrice, pool, chimney);
 
 		criteriaQuery.where(finalPredicate);
 
@@ -84,8 +84,8 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 	}
 
 	private Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<Chalet> root, User user, Village village,
-			District district, Governorate governorate, int weekdaysMinPrice, int weekdaysMaxPrice, Boolean pool,
-			Boolean chimney, int weekenddaysMinPrice, int weekenddaysMaxPrice) throws Exception {
+			District district, Governorate governorate, int minPrice, int maxPrice, Boolean pool, Boolean chimney)
+			throws Exception {
 
 		List<Predicate> predicates = new ArrayList<>();
 
@@ -103,29 +103,14 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 
 		}
 
-		if (weekdaysMinPrice > 0) {
+		if (minPrice > 0) {
 
-			Predicate weekdaysMinPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("weekdays"), weekdaysMinPrice);
-			predicates.add(weekdaysMinPricePredicate);
-		}
-		if (weekdaysMaxPrice > 0) {
-			Predicate weekdaysMaxPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get("weekdays"), weekdaysMaxPrice);
-			predicates.add(weekdaysMaxPricePredicate);
+			Predicate minPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("weekdays"), minPrice);
+			predicates.add(minPricePredicate);
 		}
 
-		if (weekenddaysMinPrice > 0) {
-			Predicate weekenddaysMinPricePredict = criteriaBuilder.greaterThanOrEqualTo(root.get("weekdays"), weekenddaysMinPrice);
-			predicates.add(weekenddaysMinPricePredict);
-		}
-		if (weekenddaysMaxPrice > 0) {
-			Predicate weekenddaysMaxPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get("weekdays"), weekenddaysMaxPrice);
-			predicates.add(weekenddaysMaxPricePredicate);
-		}
-
-	
-		if (weekenddaysMaxPrice > 0) {
-			Predicate maxPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get("weekenddays"),
-					weekenddaysMaxPrice);
+		if (maxPrice > 0) {
+			Predicate maxPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get("weekenddays"), maxPrice);
 			predicates.add(maxPricePredicate);
 		}
 
