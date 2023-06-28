@@ -111,29 +111,24 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 
 		if (weekdaysMinPrice > 0) {
 
-			Predicate minPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("weekdays"), weekdaysMinPrice);
-			predicates.add(minPricePredicate);
+			Predicate weekdaysMinPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("weekdays"), weekdaysMinPrice);
+			predicates.add(weekdaysMinPricePredicate);
 		}
 		if (weekdaysMaxPrice > 0) {
-			Predicate maxPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get("weekdays"), weekdaysMaxPrice);
-			predicates.add(maxPricePredicate);
-		}
-
-		if (weekdaysMaxPrice > 0) {
-			Predicate maxPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get("weekdays"), weekdaysMaxPrice);
-			predicates.add(maxPricePredicate);
-		}
-		if (weekdaysMaxPrice > 0) {
-			Predicate maxPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get("weekdays"), weekdaysMaxPrice);
-			predicates.add(maxPricePredicate);
+			Predicate weekdaysMaxPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get("weekdays"), weekdaysMaxPrice);
+			predicates.add(weekdaysMaxPricePredicate);
 		}
 
 		if (weekenddaysMinPrice > 0) {
-
-			Predicate minPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("weekenddays"),
-					weekenddaysMinPrice);
-			predicates.add(minPricePredicate);
+			Predicate weekenddaysMinPricePredict = criteriaBuilder.greaterThanOrEqualTo(root.get("weekdays"), weekenddaysMinPrice);
+			predicates.add(weekenddaysMinPricePredict);
 		}
+		if (weekenddaysMaxPrice > 0) {
+			Predicate weekenddaysMaxPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get("weekdays"), weekenddaysMaxPrice);
+			predicates.add(weekenddaysMaxPricePredicate);
+		}
+
+	
 		if (weekenddaysMaxPrice > 0) {
 			Predicate maxPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get("weekenddays"),
 					weekenddaysMaxPrice);
