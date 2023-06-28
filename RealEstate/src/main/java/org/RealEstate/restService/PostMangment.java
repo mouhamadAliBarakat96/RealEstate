@@ -27,7 +27,7 @@ public class PostMangment {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 
-	public Response savePost(@MultipartForm MultipartFormDataInput input ) {
+	public Response savePost(@MultipartForm MultipartFormDataInput input) {
 
 		return postService.mangmentAddPost(input);
 
@@ -46,8 +46,6 @@ public class PostMangment {
 
 	}
 
-	
-	
 	// add views
 	@PUT
 	@Path("/v1/add-view/{id}/{postType}")
@@ -69,7 +67,7 @@ public class PostMangment {
 		return postService.updatePostVieux(id, postType);
 
 	}
-	
+
 	@GET
 	@Path("/v1")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -83,28 +81,41 @@ public class PostMangment {
 
 	) {
 
-		return postService.findPosts(userId, postType, minPrice, maxPrice, villageId, page, size, bedRoom,
-				bedRoomEq, bathRoom, bathRoomEq, districtId, governorateId);
+		return postService.findPosts(userId, postType, minPrice, maxPrice, villageId, page, size, bedRoom, bedRoomEq,
+				bathRoom, bathRoomEq, districtId, governorateId);
 
 	}
-	
-	
-	
+
+	@GET
+	@Path("/chalet/v1")
+	@Produces(MediaType.APPLICATION_JSON)
+
+	public Response findAllChalet(@QueryParam("userId") Long userId,
+			@QueryParam("weekdaysMinPrice") int weekdaysMinPrice, @QueryParam("weekdaysMaxPrice") int weekdaysMaxPrice,
+			@QueryParam("weekenddaysMinPrice") int weekenddaysMinPrice, @QueryParam("weekenddaysMaxPrice") int weekenddaysMaxPrice,
+			@QueryParam("villageId") Long villageId, @QueryParam("page") int page, @QueryParam("size") int size,
+			@QueryParam("pool")Boolean  pool, @QueryParam("chimney") Boolean chimney,
+			@QueryParam("districtId") Long districtId, @QueryParam("governorateId") Long governorateId
+
+	) {
+
+		return postService.findChalet(userId, weekdaysMinPrice, weekdaysMaxPrice, villageId, size, page, pool, chimney,
+				governorateId, districtId  , weekenddaysMinPrice  , weekenddaysMaxPrice );
+
+	}
+
 	// find post by id
 	@GET
 	@Path("/v1/{id}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 
-	public Response findPostById(@PathParam("id") Long id  ) {
+	public Response findPostById(@PathParam("id") Long id) {
 
 		return postService.findPostById(id);
 
 	}
-	
-	
 
-	
 	@PUT
 	@Path("/v1/add-like/{id}/{postType}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -114,11 +125,5 @@ public class PostMangment {
 		return postService.updateCallPost(id, postType);
 
 	}
-	
-	
 
-	
-
-	
-	
 }

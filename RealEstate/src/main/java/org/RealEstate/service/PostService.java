@@ -817,6 +817,59 @@ public class PostService implements Serializable {
 
 	}
 
+	
+	
+	//HERE 
+	public Response findChalet(Long userId, int weekdaysMinPrice, int weekdaysMaxPrice, Long villageId,
+			int size,  int page, Boolean pool, Boolean chimney, Long governorateId,
+			Long districtId, int weekenddaysMinPrice, int weekenddaysMaxPrice) {
+
+		try {
+			Village village = null;
+			User user = null;
+			District district = null;
+			Governorate governorate = null;
+			if (userId != null && userId > 0) {
+				user = userFacade.findWithExcption(userId);
+			}
+
+			// check priority
+			// villageId
+			// districtId
+			// governorateId
+			if (villageId != null && villageId > 0) {
+				village = villageFacade.findWithExcption(villageId);
+
+			} else if (districtId != null && villageId > 0) {
+				district = districtFacade.findWithExcption(villageId);
+
+			} else if (governorateId != null && governorateId > 0) {
+				governorate = governorateFacade.findWithExcption(governorateId);
+
+			}
+			
+			
+
+			AtomicLong totalResults = new AtomicLong();
+			List<Chalet> list = chaletFacade.findAllChaletWithFilter( user,  village,  page,  size,  totalResults,
+					 district,  governorate,  weekdaysMinPrice,  weekdaysMaxPrice,  pool,
+					 chimney,  weekenddaysMinPrice,  weekenddaysMaxPrice);
+
+			PaginationResponse<Chalet> response = new PaginationResponse<>();
+			response.setPage(page);
+			response.setSize(size);
+			response.setTotalCount(totalResults.get());
+			response.setData(list);
+
+			return Response.status(Status.OK).entity(Utils.objectToString(response)).build();
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+
+	}
+	
+	
+	
 	public Response findPostById(Long id) {
 
 		try {
