@@ -439,5 +439,72 @@
     border-right: none;
 }
 
+.error-message {
+	background: #c0392b;
+	color: #fff;
+	padding: 4px 8px;
+	width: 100%;
+	margin-top: 5px;
+	font-size: 12px;
+	display: inline-block;
+}
+
+.skin .ui-chkbox .ui-chkbox-box.ui-state-active {
+	background: #1b7e5a !important;
+}
+
+.skin .ui-chkbox {
+	border-color: #1b7e5a !important;
+}
+
+.skin .ui-chkbox .ui-chkbox-box {
+	width: 25px;
+	height: 25px;
+	border-radius: 1px;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label {
+	text-align: center !important;
+}
+
+.select2-container--default .select2-selection--single {
+	border: 1px solid #e8ebf3 !important;
+	height: calc(2.3rem + 2px) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered
+	{
+	line-height: 36px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow
+	{
+	height: 36px !important;
+}
+
+.ui-inputnumber.ui-widget.form-control {
+	padding: 0 !important;
+}
+
+.ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all {
+	width: 100%;
+	background-color: #fff !important;
+}
+
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield
+	{
+	box-shadow: none !important;
+	height: 100%;
+}
+.ui-inputnumber .ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.ui-state-filled{
+	border: 1px solid #ced4da;
+}
 
  
+ body .ui-selectbooleanbutton, body .ui-selectonebutton > .ui-button, body .ui-selectmanybutton > .ui-button {
+    background: white;
+    color: #333333;
+    border: 1px solid #dadada;
+    outline: 0 none;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}

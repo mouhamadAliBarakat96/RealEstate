@@ -108,16 +108,12 @@ public class Utility {
 		switch (postType) {
 		case APPRATMENT_RENT:
 			return new AppratmentRent();
-
 		case APPRATMENT_SELL:
 			return new AppratmentSell();
-
 		case OFFICE_RENT:
 			return new OfficeRent();
-
 		case OFFICE_SELL:
 			return new OfficeSell();
-
 		case SHOP_RENT:
 			return new ShopRent();
 		case SHOP_SELL:

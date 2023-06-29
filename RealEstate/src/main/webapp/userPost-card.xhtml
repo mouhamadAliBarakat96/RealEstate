@@ -7,7 +7,12 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <ui:composition template="/views/template/makaan-template.xhtml">
+	<ui:define name="customStylesheet">
 
+		<link href="/resources/makaan/css/user-post.css" rel="stylesheet"
+			type="text/css" />
+
+	</ui:define>
 	<ui:define name="customOutputScript">
 		<!-- Use noConflict to release control of the $ variable -->
 		<script>
@@ -25,33 +30,107 @@
 	</ui:define>
 
 	<ui:define name="property-content">
+
 		<o:importConstants type="org.RealEstate.enumerator.PostType" />
 		<div class="container-xxl py-5">
 			<div class="container">
 				<div class="tab-content">
-					<div id="tab-1" class="tab-pane fade show p-0 active">
-						<div class="card">
+					<p:tabView id="tabView" style="border:1px solid #ddd !important">
+						<p:ajax event="tabChange"
+							listener="#{userPostCardController.onTabChange}" />
+
+						<p:tab id="realestate" title="Real Estate"  >
 							<div class="row">
-								<div class="col col-md-12">
-									<div class="col-md-3 col-sm-12 mt-2 pe-5">
-										<h:selectOneMenu styleClass="form-select border-0  "
-											converter="omnifaces.SelectItemsConverter"
-											value="#{realEstatePostController.postType}">
-											<f:selectItem itemLabel="Property Type" itemValue="" />
-											<f:selectItems value="#{PostType.values()}" var="option"
-												itemLabel="#{option.name}" itemValue="#{option}" />
-											<f:ajax execute="@this" render="myForm:inputPanel" />
-										</h:selectOneMenu>
-									</div>
-								</div>
+								<p:selectOneButton value="#{userPostCardController.postType}"
+									styleClass="white" converter="omnifaces.SelectItemsConverter">
+									<f:selectItems value="#{PostType.values()}" var="option"
+										itemLabel="#{option.name}" itemValue="#{option}" />
+									<f:ajax execute="@this" render="myForm:tabView:inputPanel"
+										listener="#{userPostCardController.listenerSelectItemType()}" />
+								</p:selectOneButton>
+							</div>
+							<div  class="row p-3">
 								<h:panelGroup id="inputPanel">
-
-
-
+									<h:panelGroup rendered="#{userPostCardController.item != null}">
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group">
+													<p:outputLabel class="control-label" for="titleId"
+														value="#{bundle.real_estate_title}">
+													</p:outputLabel>
+													<h:inputText id="titleId"
+														label="#{bundle.real_estate_title}" required="true"
+														styleClass="form-control"
+														value="#{userPostCardController.item.tittle}">
+													</h:inputText>
+													<h:message for="titleId" styleClass="error-message" />
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<p:outputLabel class="control-label" for="titleId"
+														value="#{bundle.real_estate_subtitle}">
+													</p:outputLabel>
+													<h:inputText id="subTitleId"
+														label="#{bundle.real_estate_subtitle}" required="true"
+														styleClass="form-control"
+														value="#{userPostCardController.item.subTittle}">
+													</h:inputText>
+													<h:message for="subTitleId" styleClass="error-message" />
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<p:outputLabel class="control-label" for="priceId"
+														value="#{bundle.real_estate_price}">
+													</p:outputLabel>
+													<p:inputNumber decimalPlaces="0" thousandSeparator=","
+														minValue="0" maxValue="9999999999" id="priceId"
+														label="#{bundle.real_estate_price}" required="true"
+														styleClass="form-control"
+														value="#{userPostCardController.item.price}">
+													</p:inputNumber>
+													<h:message for="priceId" styleClass="error-message" />
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<h:outputLabel value="#{bundle.real_estate_negotiable}"
+														styleClass="control-label" />
+													<div class="skin mt-2">
+														<h:selectBooleanCheckbox style="height:20px;width:25px"
+															label="#{bundle.real_estate_negotiable}"
+															id="negotiableId"
+															value="#{userPostCardController.item.negotiable}">
+															<f:ajax></f:ajax>
+														</h:selectBooleanCheckbox>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-3 ">
+												<h:outputLabel value="#{bundle.village}"
+													styleClass="control-label" />
+												<h:selectOneMenu id="villageSelectId"
+													converter="omnifaces.SelectItemsConverter"
+													styleClass="form-select"
+													value="#{userPostCardController.item.village}">
+													<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
+													<f:selectItems value="#{userPostCardController.villages}"
+														var="option" itemLabel="#{option.name}"
+														itemValue="#{option}" />
+													<f:ajax execute="@this" />
+												</h:selectOneMenu>
+											</div>
+										</div>
+									</h:panelGroup>
 								</h:panelGroup>
 							</div>
-						</div>
-					</div>
+						</p:tab>
+
+						<p:tab id="chalet" title="Chalet">
+
+						</p:tab>
+					</p:tabView>
 				</div>
 			</div>
 		</div>

@@ -1,0 +1,7 @@
+.control-label {
+	font-weight: bold;
+}
+
+body .ui-tabs .ui-tabs-panels .ui-tabs-panel {
+	padding: 0;
+}
