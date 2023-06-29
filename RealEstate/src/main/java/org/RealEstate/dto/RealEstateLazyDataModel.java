@@ -1,18 +1,21 @@
 package org.RealEstate.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-
+import org.RealEstate.enumerator.PostType;
+import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.facade.RealEstateFacade;
+import org.RealEstate.model.AppratmentRent;
+import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
+import org.RealEstate.model.Land;
+import org.RealEstate.model.OfficeRent;
+import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
@@ -178,6 +181,26 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 
 	public void setGovernorate(Governorate governorate) {
 		this.governorate = governorate;
+	}
+	
+	
+	public void listenerSelect(RealEstateTypeEnum type) {
+
+		if (type == RealEstateTypeEnum.FORRENT) {
+			pageItems = pageItems.stream()
+					.filter(x -> x.getPostType().equals(PostType.APPRATMENT_RENT)
+							|| x.getPostType().equals(PostType.OFFICE_RENT)
+							|| x.getPostType().equals(PostType.SHOP_RENT))
+					.collect(Collectors.toList());
+
+		} else if (type == RealEstateTypeEnum.FORSELL) {
+			pageItems = pageItems.stream()
+					.filter(x -> x.getPostType().equals(PostType.APPRATMENT_SELL)
+							|| x.getPostType().equals(PostType.OFFICE_SELL)
+							|| x.getPostType().equals(PostType.SHOP_SELL) || x.getPostType().equals(PostType.LAND))
+					.collect(Collectors.toList());
+
+		}
 	}
 
 }

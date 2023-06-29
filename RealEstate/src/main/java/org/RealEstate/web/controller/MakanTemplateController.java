@@ -31,17 +31,22 @@ public class MakanTemplateController implements Serializable {
 	public void fillMenuItems(List<MenuItem> menu) {
 		MenuItem m1 = null;
 
-		m1 = new MenuItem("Real Estate", "", "index-page", true, "nav-item nav-link active",PropertyKindEnum.REALESTATE);
+		m1 = new MenuItem("Real Estate", "", "index-page", true, "nav-item nav-link active",PropertyKindEnum.REALESTATE.toString());
 		menu.add(m1);
 		
-		m1 = new MenuItem("Chalet", "", "index-page", true, "nav-item nav-link",PropertyKindEnum.CHALET);
-		menu.add(m1);
-
-
-		m1 = new MenuItem("Contact us", "", "contact-us", true, "nav-item nav-link",PropertyKindEnum.REALESTATE);
+		m1 = new MenuItem("Chalet", "", "index-page", true, "nav-item nav-link",PropertyKindEnum.CHALET.toString());
 		menu.add(m1);
 		
-		m1 = new MenuItem("Login", "", "login-page", true, "nav-item nav-link",PropertyKindEnum.REALESTATE);
+		m1 = new MenuItem("Add New", "", "userpost-card", true, "nav-item nav-link","post-card");
+		menu.add(m1);
+		
+		m1 = new MenuItem("My Posts", "", "userpost-list", true, "nav-item nav-link","post-list");
+		menu.add(m1);
+
+		m1 = new MenuItem("Contact us", "", "contact-us", true, "nav-item nav-link","contact-us");
+		menu.add(m1);
+		
+		m1 = new MenuItem("Login", "", "login-page", true, "nav-item nav-link","login");
 		menu.add(m1);
 
 	}

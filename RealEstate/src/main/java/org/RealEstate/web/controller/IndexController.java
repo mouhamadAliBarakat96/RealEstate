@@ -66,10 +66,6 @@ public class IndexController implements Serializable {
 	@Inject
 	private ChaletFacade chaletFacade;
 
-	private List<RealEstate> realEstates = new ArrayList<>();
-
-	private List<Chalet> chaletList = new ArrayList<>();
-
 	private PostType selectPostType;
 
 	private PropertyKindEnum propertyKind;
@@ -310,75 +306,12 @@ public class IndexController implements Serializable {
 			return false;
 	}
 
-	public void listenerSelect(RealEstateTypeEnum type) {
-
-		if (type == RealEstateTypeEnum.FORRENT) {
-			realEstates = realEstates.stream()
-					.filter(x -> x.getPostType().equals(PostType.APPRATMENT_RENT)
-							|| x.getPostType().equals(PostType.OFFICE_RENT)
-							|| x.getPostType().equals(PostType.SHOP_RENT))
-					.collect(Collectors.toList());
-
-		} else if (type == RealEstateTypeEnum.FORSELL) {
-			realEstates = realEstates.stream()
-					.filter(x -> x.getPostType().equals(PostType.APPRATMENT_SELL)
-							|| x.getPostType().equals(PostType.OFFICE_SELL)
-							|| x.getPostType().equals(PostType.SHOP_SELL) || x.getPostType().equals(PostType.LAND))
-					.collect(Collectors.toList());
-
-		}
-	}
-
-	public List<RealEstate> getRealEstates() {
-		return realEstates;
-	}
-
-	public void setRealEstates(List<RealEstate> realEstates) {
-		this.realEstates = realEstates;
-	}
-
-	public List<Chalet> getChaletList() {
-		return chaletList;
-	}
-
-	public void setChaletList(List<Chalet> chaletList) {
-		this.chaletList = chaletList;
-	}
-
 	public boolean hasRoomsAndBathRooms(PostType type) {
 		if (type == null) {
 			return true;
 		} else
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
-	}
-
-	public int numberOfSellAppartments() {
-		return realEstates.stream().filter(x -> x instanceof AppratmentRent).collect(Collectors.toList()).size();
-	}
-
-	public int numberOfRentAppartments() {
-		return realEstates.stream().filter(x -> x instanceof AppratmentSell).collect(Collectors.toList()).size();
-	}
-
-	public int numberOfLands() {
-		return realEstates.stream().filter(x -> x instanceof Land).collect(Collectors.toList()).size();
-	}
-
-	public int numberOfSellOffices() {
-		return realEstates.stream().filter(x -> x instanceof OfficeSell).collect(Collectors.toList()).size();
-	}
-
-	public int numberOfRentOffices() {
-		return realEstates.stream().filter(x -> x instanceof OfficeRent).collect(Collectors.toList()).size();
-	}
-
-	public void addToRealEstate(RealEstate item) {
-		realEstates.add(item);
-	}
-
-	public void addToChalet(Chalet item) {
-		this.chaletList.add(item);
 	}
 
 	public int random() {
@@ -594,4 +527,28 @@ public class IndexController implements Serializable {
 	public void setChimneyYesNoEnum(YesNoEnum chimneyYesNoEnum) {
 		this.chimneyYesNoEnum = chimneyYesNoEnum;
 	}
+	
+	public long numberOfSellAppartments() {
+		return realEstateFacade.findCountWithType(PostType.APPRATMENT_SELL);
+	}
+
+	public long numberOfRentAppartments() {
+		return realEstateFacade.findCountWithType(PostType.APPRATMENT_SELL);
+	}
+
+	public long numberOfLands() {
+		return realEstateFacade.findCountWithType(PostType.LAND);
+	}
+
+	public long numberOfSellOffices() {
+		return realEstateFacade.findCountWithType(PostType.OFFICE_SELL);
+	}
+
+	public long numberOfRentOffices() {
+		return realEstateFacade.findCountWithType(PostType.OFFICE_RENT);
+	}
+	public int numberOfChalet() {
+		return chaletFacade.count();
+	}
+	
 }

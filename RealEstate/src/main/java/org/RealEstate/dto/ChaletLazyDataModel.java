@@ -191,5 +191,4 @@ public class ChaletLazyDataModel extends LazyDataModel<Chalet> implements Serial
 	public void setPool(Boolean pool) {
 		this.pool = pool;
 	}
-
 }

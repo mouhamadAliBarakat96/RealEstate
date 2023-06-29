@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" dir="ltr"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="/views/template/makaan-template.xhtml">
+
+	<ui:define name="customOutputScript">
+		<!-- Use noConflict to release control of the $ variable -->
+		<script>
+ 			 jQuery.noConflict();
+		</script>
+
+		<!-- Use jQuery with the "jQuery" variable instead of "$" -->
+		<script>
+			  jQuery(document).ready(function() {
+			    jQuery('p').click(function() {
+			      jQuery(this).hide();
+			    });
+			  });
+			</script>
+	</ui:define>
+
+	<ui:define name="property-content">
+		<div class="container-xxl py-5">
+			<div class="container">
+				<div class="tab-content">
+					<div id="tab-1" class="tab-pane fade show p-0 active">
+						<div class="card">
+						
+						
+						
+						
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

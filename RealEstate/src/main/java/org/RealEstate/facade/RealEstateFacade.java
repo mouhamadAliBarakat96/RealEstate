@@ -243,4 +243,9 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 	}
 
+	public Long findCountWithType(PostType postType) {
+		return (Long) getEntityManager().createNamedQuery(RealEstate.FIND_COUNT_POST_BY_TYPE)
+				.setParameter("postType", postType).getSingleResult();
+	}
+
 }

@@ -23,7 +23,8 @@
 
 	<ui:define name="searchBar">
 		<h:panelGroup id="searchBarPanel">
-			<h:panelGroup rendered="#{indexController.propertyKind == 'REALESTATE'}" >
+			<h:panelGroup
+				rendered="#{indexController.propertyKind == 'REALESTATE'}">
 				<ui:include src="/views/makaan/searchRealestate-snippet.xhtml" />
 			</h:panelGroup>
 			<h:panelGroup rendered="#{indexController.propertyKind == 'CHALET'}">
@@ -33,11 +34,13 @@
 	</ui:define>
 
 	<ui:define name="property-content">
-		<h:panelGroup id="RealEstatePanelId" rendered="#{indexController.propertyKind == 'REALESTATE'}">
+		<h:panelGroup id="RealEstatePanelId"
+			rendered="#{indexController.propertyKind == 'REALESTATE'}">
 			<ui:include src="/views/makaan/realestate-snippet.xhtml" />
 		</h:panelGroup>
 
-		<h:panelGroup id="ChaletPanelId" rendered="#{indexController.propertyKind == 'CHALET'}">
+		<h:panelGroup id="ChaletPanelId"
+			rendered="#{indexController.propertyKind == 'CHALET'}">
 			<ui:include src="/views/makaan/chalet-snippet.xhtml" />
 		</h:panelGroup>
 	</ui:define>
@@ -53,8 +56,7 @@
 				</div>
 				<div class="row g-4">
 					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<a class="cat-item d-block bg-light text-center rounded p-3"
-							href="">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
 							<div class="rounded p-4">
 								<div class="icon mb-3">
 									<img class="img-fluid"
@@ -68,11 +70,10 @@
 								</h:outputText>
 
 							</div>
-						</a>
+						</span>
 					</div>
 					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<a class="cat-item d-block bg-light text-center rounded p-3"
-							href="">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
 							<div class="rounded p-4">
 								<div class="icon mb-3">
 									<img class="img-fluid"
@@ -86,11 +87,10 @@
 								</h:outputText>
 
 							</div>
-						</a>
+						</span>
 					</div>
 					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<a class="cat-item d-block bg-light text-center rounded p-3"
-							href="">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
 							<div class="rounded p-4">
 								<div class="icon mb-3">
 									<img class="img-fluid"
@@ -103,12 +103,11 @@
 								</h:outputText>
 
 							</div>
-						</a>
+						</span>
 					</div>
 
 					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<a class="cat-item d-block bg-light text-center rounded p-3"
-							href="">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
 							<div class="rounded p-4">
 								<div class="icon mb-3">
 									<img class="img-fluid"
@@ -121,11 +120,10 @@
 								</h:outputText>
 
 							</div>
-						</a>
+						</span>
 					</div>
 					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<a class="cat-item d-block bg-light text-center rounded p-3"
-							href="">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
 							<div class="rounded p-4">
 								<div class="icon mb-3">
 									<img class="img-fluid"
@@ -138,12 +136,11 @@
 								</h:outputText>
 
 							</div>
-						</a>
+						</span>
 					</div>
 
 					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<a class="cat-item d-block bg-light text-center rounded p-3"
-							href="">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
 							<div class="rounded p-4">
 								<div class="icon mb-3">
 									<img class="img-fluid"
@@ -151,12 +148,12 @@
 								</div>
 								<h6>#{bundle.chalet}</h6>
 
-								<h:outputText value="#{indexController.chaletList.size()}">
+								<h:outputText value="#{indexController.numberOfChalet()}">
 									<f:convertNumber pattern="#,###.##" />
 								</h:outputText>
 
 							</div>
-						</a>
+						</span>
 					</div>
 
 				</div>

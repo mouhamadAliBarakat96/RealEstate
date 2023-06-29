@@ -45,7 +45,7 @@ public class Utility {
 		MessageFormat msgFormat = new MessageFormat(resourceBundle.getString(key));
 		return msgFormat.format(null);
 	}
-	
+
 	public static String getMessage(String key) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE_FILE_NAME);
 		MessageFormat msgFormat = new MessageFormat(resourceBundle.getString(key));
@@ -78,10 +78,9 @@ public class Utility {
 		FacesMessage facesMessage = new FacesMessage(msg, "warn");
 		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 	}
-	
-	public static RealEstate createObject(RealEstate item) {
+
+	public static RealEstate castingObject(RealEstate item) {
 		switch (item.getPostType()) {
-		
 		case APPRATMENT_RENT:
 			return (AppratmentRent) item;
 
@@ -104,4 +103,30 @@ public class Utility {
 			return null;
 		}
 	}
+
+	public static RealEstate initializeRealEstate(PostType postType) {
+		switch (postType) {
+		case APPRATMENT_RENT:
+			return new AppratmentRent();
+
+		case APPRATMENT_SELL:
+			return new AppratmentSell();
+
+		case OFFICE_RENT:
+			return new OfficeRent();
+
+		case OFFICE_SELL:
+			return new OfficeSell();
+
+		case SHOP_RENT:
+			return new ShopRent();
+		case SHOP_SELL:
+			return new ShopSell();
+		case LAND:
+			return new Land();
+		default:
+			return null;
+		}
+	}
+
 }

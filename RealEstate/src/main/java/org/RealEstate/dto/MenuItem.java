@@ -16,7 +16,7 @@ public class MenuItem {
 	private String subMenuTitle;
 	private List<MenuItem> subMenuDetails = new ArrayList<MenuItem>();
 	private String styleClass ;
-	private PropertyKindEnum kindEnum;
+	private String kindEnum;
 	
 	private String href; 
 	
@@ -54,7 +54,7 @@ public class MenuItem {
 		this.styleClass = styleClass;
 	}
 	
-	public MenuItem(String itemLabel, String iconName, String url, boolean permission,String styleClass, PropertyKindEnum kindEnum) {
+	public MenuItem(String itemLabel, String iconName, String url, boolean permission,String styleClass, String kindEnum) {
 		super();
 		this.itemLabel = itemLabel;
 		this.iconName = iconName;
@@ -152,10 +152,10 @@ public class MenuItem {
 	public void setHref(String href) {
 		this.href = href;
 	}
-	public PropertyKindEnum getKindEnum() {
+	public String getKindEnum() {
 		return kindEnum;
 	}
-	public void setKindEnum(PropertyKindEnum kindEnum) {
+	public void setKindEnum(String kindEnum) {
 		this.kindEnum = kindEnum;
 	}
 }
