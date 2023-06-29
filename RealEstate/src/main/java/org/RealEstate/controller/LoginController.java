@@ -1,5 +1,6 @@
 package org.RealEstate.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -67,6 +68,18 @@ public class LoginController implements Serializable {
 		// bt3ml hon check iza user == null aw 3ade
 
 		// iza null yaane mano mswe login
+	}
+	
+
+	public void logout() {
+
+		try {
+			HttpSession session = request.getSession(true);
+			session.removeAttribute(Constants.USER_SESSION);
+			Faces.redirect("login.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getUserName() {
