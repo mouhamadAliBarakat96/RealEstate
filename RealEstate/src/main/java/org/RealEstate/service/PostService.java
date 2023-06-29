@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.dto.PaginationResponse;
 import org.RealEstate.enumerator.PostStatus;
+import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.AppratmentRentFacade;
 import org.RealEstate.facade.AppratmentSellFacade;
 import org.RealEstate.facade.ChaletFacade;
@@ -196,6 +197,16 @@ public class PostService implements Serializable {
 		case "APPRATMENT_RENT":
 			AppratmentRent appratmentRent = Utils.getObjectFromString(jsonString, AppratmentRent.class);
 			addCommonsField(appratmentRent);
+
+			if (appratmentRent.getSpace() < 50) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
+
+			}
+
+			if (appratmentRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
+
 			checkPostConstraintFields(appratmentRent);
 			appratmentRent.setUser(user);
 			return appratmentRentFacade.save(appratmentRent);
@@ -204,6 +215,15 @@ public class PostService implements Serializable {
 			AppratmentSell appratmentSell = Utils.getObjectFromString(jsonString, AppratmentSell.class);
 			addCommonsField(appratmentSell);
 
+			if (appratmentSell.getSpace() < 50) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
+
+			}
+
+			if (appratmentSell.getSpace() * 100 < appratmentSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			}
+
 			checkPostConstraintFields(appratmentSell);
 			appratmentSell.setUser(user);
 
@@ -211,6 +231,14 @@ public class PostService implements Serializable {
 		case "LAND":
 
 			Land land = Utils.getObjectFromString(jsonString, Land.class);
+			if (land.getSpace() < 200) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_200");
+
+			}
+
+			if (land.getSpace() * 4 < land.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
+			}
 			addCommonsField(land);
 			land.setUser(user);
 
@@ -227,6 +255,13 @@ public class PostService implements Serializable {
 		case "SHOP_RENT":
 
 			ShopRent shopRent = Utils.getObjectFromString(jsonString, ShopRent.class);
+			if (shopRent.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+			if (shopRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
 			addCommonsField(shopRent);
 			checkPostConstraintFields(shopRent);
 			shopRent.setUser(user);
@@ -235,6 +270,16 @@ public class PostService implements Serializable {
 		case "SHOP_SELL":
 
 			ShopSell shopSell = Utils.getObjectFromString(jsonString, ShopSell.class);
+
+			if (shopSell.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+
+			if (shopSell.getSpace() * 100 < shopSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			}
+
 			addCommonsField(shopSell);
 			checkPostConstraintFields(shopSell);
 			shopSell.setUser(user);
@@ -243,6 +288,16 @@ public class PostService implements Serializable {
 		case "OFFICE_RENT":
 
 			OfficeRent officeRent = Utils.getObjectFromString(jsonString, OfficeRent.class);
+
+			if (officeRent.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+
+			if (officeRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
+
 			addCommonsField(officeRent);
 			checkPostConstraintFields(officeRent);
 			officeRent.setUser(user);
@@ -250,6 +305,13 @@ public class PostService implements Serializable {
 			return officeRentFacade.save(officeRent);
 		case "OFFICE_SELL":
 			OfficeSell officeSell = Utils.getObjectFromString(jsonString, OfficeSell.class);
+			if (officeSell.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+			if (officeSell.getSpace() * 100 < officeSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			}
 			addCommonsField(officeSell);
 			checkPostConstraintFields(officeSell);
 			officeSell.setUser(user);
@@ -275,6 +337,15 @@ public class PostService implements Serializable {
 		switch (postType) {
 		case "APPRATMENT_RENT":
 			AppratmentRent appratmentRent = Utils.getObjectFromString(jsonString, AppratmentRent.class);
+
+			if (appratmentRent.getSpace() < 50) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
+
+			}
+			if (appratmentRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
+
 			addCommonsFieldWithoutPostDate(appratmentRent);
 			checkPostConstraintFields(appratmentRent);
 			appratmentRent.setUser(user);
@@ -284,6 +355,14 @@ public class PostService implements Serializable {
 			AppratmentSell appratmentSell = Utils.getObjectFromString(jsonString, AppratmentSell.class);
 			addCommonsFieldWithoutPostDate(appratmentSell);
 
+			if (appratmentSell.getSpace() < 50) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
+
+			}
+			if (appratmentSell.getSpace() * 100 < appratmentSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			}
+
 			checkPostConstraintFields(appratmentSell);
 			appratmentSell.setUser(user);
 
@@ -291,10 +370,21 @@ public class PostService implements Serializable {
 		case "LAND":
 
 			Land land = Utils.getObjectFromString(jsonString, Land.class);
+			if (land.getSpace() < 200) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_200");
+
+			}
+			if (land.getSpace() * 4 < land.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
+			}
+
 			addCommonsFieldWithoutPostDate(land);
 			land.setUser(user);
 
 			checkPostConstraintFields(land);
+			if (land.getSpace() * 4 < land.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
+			}
 			return landFacade.mangmentSavePost(land, inputParts);
 		case "CHALET":
 
@@ -307,6 +397,13 @@ public class PostService implements Serializable {
 		case "SHOP_RENT":
 
 			ShopRent shopRent = Utils.getObjectFromString(jsonString, ShopRent.class);
+			if (shopRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
+			if (shopRent.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
 			addCommonsFieldWithoutPostDate(shopRent);
 			checkPostConstraintFields(shopRent);
 			shopRent.setUser(user);
@@ -315,6 +412,13 @@ public class PostService implements Serializable {
 		case "SHOP_SELL":
 
 			ShopSell shopSell = Utils.getObjectFromString(jsonString, ShopSell.class);
+			if (shopSell.getSpace() * 100 < shopSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			}
+			if (shopSell.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
 			addCommonsFieldWithoutPostDate(shopSell);
 			checkPostConstraintFields(shopSell);
 			shopSell.setUser(user);
@@ -323,6 +427,13 @@ public class PostService implements Serializable {
 		case "OFFICE_RENT":
 
 			OfficeRent officeRent = Utils.getObjectFromString(jsonString, OfficeRent.class);
+			if (officeRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
+			if (officeRent.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
 			addCommonsFieldWithoutPostDate(officeRent);
 			checkPostConstraintFields(officeRent);
 			officeRent.setUser(user);
@@ -330,6 +441,13 @@ public class PostService implements Serializable {
 			return officeRentFacade.mangmentSavePost(officeRent, inputParts);
 		case "OFFICE_SELL":
 			OfficeSell officeSell = Utils.getObjectFromString(jsonString, OfficeSell.class);
+			if (officeSell.getSpace() * 100 < officeSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			}
+			if (officeSell.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
 			addCommonsFieldWithoutPostDate(officeSell);
 			checkPostConstraintFields(officeSell);
 			officeSell.setUser(user);
@@ -412,6 +530,18 @@ public class PostService implements Serializable {
 
 			throw new Exception("TITTLE_OR_SUBTTITLE_CONTAIN_PHONE_NUMBER");
 		}
+		
+		if(realEstate.getPrice()<0) {
+			throw new Exception("PRICE_SHOULD_BE_GREATER_THEN_ZERO");
+
+		}
+		
+		if(realEstate.getSpace()<0) {
+			throw new Exception("SPACE_SHOULD_BE_GREATER_THEN_ZERO");
+
+		}
+		
+				
 
 	}
 

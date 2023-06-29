@@ -32,6 +32,8 @@ public class PostMangment {
 		return postService.mangmentAddPost(input);
 
 	}
+	
+	
 
 	// update post
 
@@ -46,6 +48,8 @@ public class PostMangment {
 
 	}
 
+	// post update image
+	
 	// add views
 	@PUT
 	@Path("/v1/add-view/{id}/{postType}")
