@@ -90,6 +90,9 @@ public class PostService implements Serializable {
 	@EJB
 	private GovernorateFacade governorateFacade;
 
+	@EJB
+	private UploadImagesMultiPart uploadImagesMultiPart;
+
 	/*
 	 * Manage Add post
 	 */
@@ -145,6 +148,165 @@ public class PostService implements Serializable {
 
 	}
 
+	public Response updatePostImage(Long id, MultipartFormDataInput input) {
+
+		try {
+			RealEstate realEstate = restateFacade.find(id);
+			if (realEstate == null) {
+				throw new Exception("REALESTATE_DONT_EXISTS");
+
+			}
+
+			int imageCount = realEstate.getImages().size();
+			// form contain image
+			Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+
+			List<InputPart> inputParts = uploadForm.get("file");
+
+			if (inputParts == null || inputParts.isEmpty()) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.AT_LAST_ONE_IMAGE_REQUIRED).build();
+
+			}
+
+			if (inputParts.size() + imageCount > Constants.NB_IMAGE_IN_POST_ALLOWED) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.NB_OF_IMAGE_GREATER_NUMBER_OF_IMAGE_ALLOWED)
+						.build();
+
+			}
+
+			List<String> imagesUrl = uploadImagesMultiPart.uploadImagePost(inputParts);
+			realEstate.getImages().addAll(imagesUrl);
+			realEstate.setPostStatus(PostStatus.PENDING);
+			realEstate = restateFacade.save(realEstate);
+			return Response.status(Status.OK).entity(Utils.objectToString(realEstate)).build();
+
+		}
+
+		catch (Exception e) {
+
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+
+	}
+
+	public Response updateChaletImage(Long id, MultipartFormDataInput input) {
+
+		try {
+			Chalet chalet = chaletFacade.find(id);
+			if (chalet == null) {
+				throw new Exception("Chalet_DONT_EXISTS");
+
+			}
+			int imageCount = chalet.getImages().size();
+			// form contain image
+			Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+
+			List<InputPart> inputParts = uploadForm.get("file");
+
+			if (inputParts == null || inputParts.isEmpty()) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.AT_LAST_ONE_IMAGE_REQUIRED).build();
+
+			}
+
+			if (inputParts.size() + imageCount > Constants.NB_IMAGE_IN_POST_ALLOWED) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.NB_OF_IMAGE_GREATER_NUMBER_OF_IMAGE_ALLOWED)
+						.build();
+
+			}
+
+			List<String> imagesUrl = uploadImagesMultiPart.uploadImagePost(inputParts);
+			chalet.setImages(imagesUrl);
+
+			chalet = chaletFacade.save(chalet);
+			return Response.status(Status.OK).entity(Utils.objectToString(chalet)).build();
+
+		}
+
+		catch (Exception e) {
+
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+
+	}
+
+	public Response removePostImage(Long id, List<String> imagesToDelete) {
+
+		try {
+			RealEstate realEstate = restateFacade.find(id);
+
+			if (realEstate == null) {
+
+				throw new Exception("REALESTATE_DONT_EXISTS");
+			}
+
+			List<String> listImage = realEstate.getImages();
+
+			if (listImage.size() == 1) {
+				throw new Exception("AT_LEAST_POST_SHOULD_HAVE_ONE_IMAGE");
+			}
+
+			for (String varDelete : imagesToDelete) {
+				if (!listImage.contains(varDelete)) {
+					throw new Exception("THIS_IMAGE_NOT_RELATED_TO_THIS_POST");
+
+				}
+				listImage.remove(varDelete);
+			}
+
+			uploadImagesMultiPart.deleteImagePost(imagesToDelete);
+			realEstate = restateFacade.save(realEstate);
+
+			return Response.status(Status.OK).entity(Utils.objectToString(realEstate)).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+
+	}
+
+	public Response removePostImageChalet(Long id, List<String> imagesToDelete) {
+
+		try {
+			Chalet chalet = chaletFacade.find(id);
+
+			if (chalet == null) {
+
+				throw new Exception("CHALET_DONT_EXISTS");
+			}
+
+			List<String> listImage = chalet.getImages();
+
+			if (listImage.size() == 1) {
+				throw new Exception("AT_LEAST_POST_SHOULD_HAVE_ONE_IMAGE");
+			}
+
+			for (String varDelete : imagesToDelete) {
+				if (!listImage.contains(varDelete)) {
+					throw new Exception("THIS_IMAGE_NOT_RELATED_TO_THIS_POST");
+
+				}
+				listImage.remove(varDelete);
+			}
+
+			uploadImagesMultiPart.deleteImagePost(imagesToDelete);
+			chalet = chaletFacade.save(chalet);
+
+			return Response.status(Status.OK).entity(Utils.objectToString(chalet)).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+
+	}
+
 	public Response mangmentUpdatePost(MultipartFormDataInput input) {
 
 		try {
@@ -158,7 +320,6 @@ public class PostService implements Serializable {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.EMPTY_REQUEST_DONT_CONTAIN_DATA).build();
 			}
 
-			// waiting mojtaba
 			User user = findUser(data.get(0).getBodyAsString());
 
 			// check village Exist
@@ -196,8 +357,9 @@ public class PostService implements Serializable {
 		switch (postType) {
 		case "APPRATMENT_RENT":
 			AppratmentRent appratmentRent = Utils.getObjectFromString(jsonString, AppratmentRent.class);
-			addCommonsField(appratmentRent);
 
+			addCommonsFieldWithoutPostDate(appratmentRent);
+			fielddDontChangeOnUpdate(appratmentRent);
 			if (appratmentRent.getSpace() < 50) {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
 
@@ -208,13 +370,13 @@ public class PostService implements Serializable {
 			}
 
 			checkPostConstraintFields(appratmentRent);
-			appratmentRent.setUser(user);
+
 			return appratmentRentFacade.save(appratmentRent);
 		case "APPRATMENT_SELL":
 
 			AppratmentSell appratmentSell = Utils.getObjectFromString(jsonString, AppratmentSell.class);
-			addCommonsField(appratmentSell);
-
+			addCommonsFieldWithoutPostDate(appratmentSell);
+			fielddDontChangeOnUpdate(appratmentSell);
 			if (appratmentSell.getSpace() < 50) {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
 
@@ -225,12 +387,12 @@ public class PostService implements Serializable {
 			}
 
 			checkPostConstraintFields(appratmentSell);
-			appratmentSell.setUser(user);
 
 			return appratmentSellFacade.save(appratmentSell);
 		case "LAND":
 
 			Land land = Utils.getObjectFromString(jsonString, Land.class);
+			fielddDontChangeOnUpdate(land);
 			if (land.getSpace() < 200) {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_200");
 
@@ -239,18 +401,17 @@ public class PostService implements Serializable {
 			if (land.getSpace() * 4 < land.getPrice()) {
 				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
 			}
-			addCommonsField(land);
-			land.setUser(user);
+			addCommonsFieldWithoutPostDate(land);
 
 			checkPostConstraintFields(land);
 			return landFacade.save(land);
 		case "CHALET":
 
 			Chalet chalet = Utils.getObjectFromString(jsonString, Chalet.class);
-			addCommonsFieldChalet(chalet);
+			fielddDontChangeOnUpdate(chalet);
+			addCommonsFieldChaletWithoutPostDate(chalet);
 			checkChaletConstraintFields(chalet);
-			chalet.setUser(user);
-			user.getChales().add(chalet);
+
 			return chaletFacade.save(chalet);
 		case "SHOP_RENT":
 
@@ -262,9 +423,9 @@ public class PostService implements Serializable {
 			if (shopRent.getPrice() < 60) {
 				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
 			}
-			addCommonsField(shopRent);
+			fielddDontChangeOnUpdate(shopRent);
+			addCommonsFieldWithoutPostDate(shopRent);
 			checkPostConstraintFields(shopRent);
-			shopRent.setUser(user);
 
 			return shopRentFacade.save(shopRent);
 		case "SHOP_SELL":
@@ -279,10 +440,9 @@ public class PostService implements Serializable {
 			if (shopSell.getSpace() * 100 < shopSell.getPrice()) {
 				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
 			}
-
-			addCommonsField(shopSell);
+			fielddDontChangeOnUpdate(shopSell);
+			addCommonsFieldWithoutPostDate(shopSell);
 			checkPostConstraintFields(shopSell);
-			shopSell.setUser(user);
 
 			return shopSellFacade.save(shopSell);
 		case "OFFICE_RENT":
@@ -297,10 +457,9 @@ public class PostService implements Serializable {
 			if (officeRent.getPrice() < 60) {
 				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
 			}
-
-			addCommonsField(officeRent);
+			fielddDontChangeOnUpdate(officeRent);
+			addCommonsFieldWithoutPostDate(officeRent);
 			checkPostConstraintFields(officeRent);
-			officeRent.setUser(user);
 
 			return officeRentFacade.save(officeRent);
 		case "OFFICE_SELL":
@@ -312,15 +471,36 @@ public class PostService implements Serializable {
 			if (officeSell.getSpace() * 100 < officeSell.getPrice()) {
 				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
 			}
-			addCommonsField(officeSell);
+
+			fielddDontChangeOnUpdate(officeSell);
+			addCommonsFieldWithoutPostDate(officeSell);
 			checkPostConstraintFields(officeSell);
-			officeSell.setUser(user);
 
 			return officeSellFacade.save(officeSell);
 		default:
 
 			return null;
 		}
+
+	}
+
+	private void fielddDontChangeOnUpdate(RealEstate r) {
+		// old RealtEstate
+		RealEstate oldRealEstate = restateFacade.find(r.getId());
+		r.setViews(oldRealEstate.getViews());
+		r.setLiked(oldRealEstate.getLiked());
+		r.setNumberOfCall(oldRealEstate.getNumberOfCall());
+		r.setImages(oldRealEstate.getImages());
+
+	}
+
+	private void fielddDontChangeOnUpdate(Chalet chalet) {
+		// old RealtEstate
+		Chalet oldChalet = chaletFacade.find(chalet.getId());
+		chalet.setViews(oldChalet.getViews());
+		chalet.setLiked(oldChalet.getLiked());
+		chalet.setNumberOfCall(oldChalet.getNumberOfCall());
+		chalet.setImages(oldChalet.getImages());
 
 	}
 
@@ -346,14 +526,14 @@ public class PostService implements Serializable {
 				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
 			}
 
-			addCommonsFieldWithoutPostDate(appratmentRent);
+			addCommonsField(appratmentRent);
 			checkPostConstraintFields(appratmentRent);
 			appratmentRent.setUser(user);
 			return appratmentRentFacade.mangmentSavePost(appratmentRent, inputParts);
 		case "APPRATMENT_SELL":
 
 			AppratmentSell appratmentSell = Utils.getObjectFromString(jsonString, AppratmentSell.class);
-			addCommonsFieldWithoutPostDate(appratmentSell);
+			addCommonsField(appratmentSell);
 
 			if (appratmentSell.getSpace() < 50) {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
@@ -378,7 +558,7 @@ public class PostService implements Serializable {
 				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
 			}
 
-			addCommonsFieldWithoutPostDate(land);
+			addCommonsField(land);
 			land.setUser(user);
 
 			checkPostConstraintFields(land);
@@ -389,7 +569,7 @@ public class PostService implements Serializable {
 		case "CHALET":
 
 			Chalet chalet = Utils.getObjectFromString(jsonString, Chalet.class);
-			addCommonsFieldChaletWithoutPostDate(chalet);
+			addCommonsFieldChalet(chalet);
 			checkChaletConstraintFields(chalet);
 			chalet.setUser(user);
 			user.getChales().add(chalet);
@@ -404,7 +584,7 @@ public class PostService implements Serializable {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
 
 			}
-			addCommonsFieldWithoutPostDate(shopRent);
+			addCommonsField(shopRent);
 			checkPostConstraintFields(shopRent);
 			shopRent.setUser(user);
 
@@ -419,7 +599,7 @@ public class PostService implements Serializable {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
 
 			}
-			addCommonsFieldWithoutPostDate(shopSell);
+			addCommonsField(shopSell);
 			checkPostConstraintFields(shopSell);
 			shopSell.setUser(user);
 
@@ -434,7 +614,7 @@ public class PostService implements Serializable {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
 
 			}
-			addCommonsFieldWithoutPostDate(officeRent);
+			addCommonsField(officeRent);
 			checkPostConstraintFields(officeRent);
 			officeRent.setUser(user);
 
@@ -448,7 +628,7 @@ public class PostService implements Serializable {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
 
 			}
-			addCommonsFieldWithoutPostDate(officeSell);
+			addCommonsField(officeSell);
 			checkPostConstraintFields(officeSell);
 			officeSell.setUser(user);
 
@@ -530,18 +710,16 @@ public class PostService implements Serializable {
 
 			throw new Exception("TITTLE_OR_SUBTTITLE_CONTAIN_PHONE_NUMBER");
 		}
-		
-		if(realEstate.getPrice()<0) {
+
+		if (realEstate.getPrice() < 0) {
 			throw new Exception("PRICE_SHOULD_BE_GREATER_THEN_ZERO");
 
 		}
-		
-		if(realEstate.getSpace()<0) {
+
+		if (realEstate.getSpace() < 0) {
 			throw new Exception("SPACE_SHOULD_BE_GREATER_THEN_ZERO");
 
 		}
-		
-				
 
 	}
 

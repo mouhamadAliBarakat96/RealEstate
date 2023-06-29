@@ -1,7 +1,10 @@
 package org.RealEstate.restService;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -32,8 +35,6 @@ public class PostMangment {
 		return postService.mangmentAddPost(input);
 
 	}
-	
-	
 
 	// update post
 
@@ -48,8 +49,46 @@ public class PostMangment {
 
 	}
 
-	// post update image
+	@PUT
+	@Path("/v1/remove-picture-post")
+	public Response removePciture(@QueryParam("id") Long id, List<String> images) {
+
+		return postService.removePostImage(id, images);
+	}
+
 	
+	
+	@PUT
+	@Path("/v1/update-image-post")
+
+	public Response updatePostImage(@QueryParam("id") Long id ,@MultipartForm MultipartFormDataInput input) {
+
+		return postService.updatePostImage(id , input);
+
+	}
+	@PUT
+	@Path("/v1/update-image-post")
+
+	public Response updateChaletImage(@QueryParam("id") Long id ,@MultipartForm MultipartFormDataInput input) {
+
+		return postService.updateChaletImage(id , input);
+
+	}
+
+	
+	
+	@PUT
+	@Path("/v1/remove-picture-chalet")
+	public Response removePcitureChalet(@QueryParam("id") Long id, List<String> images) {
+
+		return postService.removePostImageChalet(id, images);
+
+	}
+
+	// add images
+
+	// post update image
+
 	// add views
 	@PUT
 	@Path("/v1/add-view/{id}/{postType}")
@@ -94,17 +133,17 @@ public class PostMangment {
 	@Path("/chalet/v1")
 	@Produces(MediaType.APPLICATION_JSON)
 
-	public Response findAllChalet(@QueryParam("userId") Long userId,
-			@QueryParam("minPrice") int minPrice, @QueryParam("maxPrice") int maxPrice,
-			
+	public Response findAllChalet(@QueryParam("userId") Long userId, @QueryParam("minPrice") int minPrice,
+			@QueryParam("maxPrice") int maxPrice,
+
 			@QueryParam("villageId") Long villageId, @QueryParam("page") int page, @QueryParam("size") int size,
-			@QueryParam("pool")Boolean  pool, @QueryParam("chimney") Boolean chimney,
+			@QueryParam("pool") Boolean pool, @QueryParam("chimney") Boolean chimney,
 			@QueryParam("districtId") Long districtId, @QueryParam("governorateId") Long governorateId
 
 	) {
 
-		return postService.findChalet(userId, minPrice, maxPrice, villageId, size, page, pool, chimney,
-				governorateId, districtId    );
+		return postService.findChalet(userId, minPrice, maxPrice, villageId, size, page, pool, chimney, governorateId,
+				districtId);
 
 	}
 

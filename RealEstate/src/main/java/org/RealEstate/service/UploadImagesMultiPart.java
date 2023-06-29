@@ -62,7 +62,7 @@ public class UploadImagesMultiPart implements Serializable {
 		String fileNameOrgin = null;
 		MultivaluedMap<String, String> header = inputPart.getHeaders();
 		fileName = getFileName(header);
-		fileNameOrgin =fileName;
+		fileNameOrgin = fileName;
 		InputStream inputStream = inputPart.getBody(InputStream.class, null);
 
 		byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -92,7 +92,7 @@ public class UploadImagesMultiPart implements Serializable {
 		return "unknown";
 	}
 
-	private static String addRandomBeforeExtension(String fileName) {
+	private String addRandomBeforeExtension(String fileName) {
 		Path filePath = Paths.get(fileName);
 		String nameWithoutExtension = removeFileExtension(filePath.getFileName().toString());
 		String extension = getFileExtension(fileName);
@@ -105,7 +105,7 @@ public class UploadImagesMultiPart implements Serializable {
 
 	}
 
-	private static String getFileExtension(String fileName) {
+	private String getFileExtension(String fileName) {
 		int dotIndex = fileName.lastIndexOf('.');
 		if (dotIndex == -1 || dotIndex == fileName.length() - 1) {
 			return ""; // No extension found or the dot is the last character
@@ -113,12 +113,41 @@ public class UploadImagesMultiPart implements Serializable {
 		return fileName.substring(dotIndex + 1);
 	}
 
-	private static String removeFileExtension(String fileName) {
+	private String removeFileExtension(String fileName) {
 		int dotIndex = fileName.lastIndexOf('.');
 		if (dotIndex == -1) {
 			return fileName; // No extension found
 		}
 		return fileName.substring(0, dotIndex);
+	}
+
+	public void deleteImagePost(List<String> images) {
+		try {
+
+			for (String var : images) {
+
+				File customDir = new File(Constants.UPLOAD_DIR + Constants.POST_IMAGE_DIR_NAME + "\\" + var);
+				customDir.delete();
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// TODO
+
+	public boolean isImage(String fileName) {
+		String[] imageExtensions = { ".jpg", ".jpeg", ".png", ".gif" }; // Add more image extensions if needed
+
+		for (String extension : imageExtensions) {
+			if (fileName.toLowerCase().endsWith(extension)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

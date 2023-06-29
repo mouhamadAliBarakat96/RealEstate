@@ -52,11 +52,17 @@ import org.RealEstate.model.Village;
 public class Test {
 	public static void main(String[] args) throws IOException {
 		try {
-			
-			Boolean x  = null;
-			
+
+			List<String> xxx = new ArrayList<String>();
+
+			xxx.add("me_-824870707.jpg");
+			//xxx.add("me_-824870707.jpg");
+			System.out.println(Utils.listToString(xxx));
+
+			Boolean x = null;
+
 			System.out.println(x);
-			
+
 			List<WaterResources> waterResources = new ArrayList<>();
 			waterResources.add(WaterResources.CALCAREOUS_WATER);
 
@@ -69,7 +75,7 @@ public class Test {
 			appratmentRent.setVillage(village);
 			appratmentRent.setTittle("dqwdqw");
 			appratmentRent.setSubTittle("dqwdqw");
-			
+
 			System.out.println("AppratmentRent");
 			System.out.println(Utils.objectToString(appratmentRent));
 			AppratmentSell appratmentSell = new AppratmentSell();
@@ -116,7 +122,6 @@ public class Test {
 			System.out.println(Utils.objectToString(chalet));
 			System.out.println("add post type to json");
 
-			
 			User user = new User();
 			user.setFirstName("dada");
 			user.setLastName("dada");
@@ -127,7 +132,7 @@ public class Test {
 			System.out.println("<<>>");
 			System.out.println("USER");
 			System.out.println(Utils.objectToString(user));
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
