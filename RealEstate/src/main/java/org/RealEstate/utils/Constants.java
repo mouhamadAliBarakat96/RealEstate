@@ -7,7 +7,7 @@ public interface Constants {
 	public final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	public final String DATE_FORMAT_TO_USER = "dd-MM-yyyy";
 	public final String DATE_FORMAT_CARD = "yy-M-dd HH:mm:ss";
-
+	public final String USER_SESSION = "USER_SESSION";
 	public final String JSON_EMPTY_ARRAY = "[]";
 	public final String JSON_EMPTY_OBJECT = "{}";
 
@@ -47,9 +47,5 @@ public interface Constants {
 	public static final String DISTRICT_NOT_EXISTS = "DISTRICT_NOT_EXISTS";
 	public static final String GOVERNORTE_NOT_EXISTS = "GOVERNORTE_NOT_EXISTS";
 	public static final String USER_NAME_OR_PASSWORD_INVALID = "USER_NAME_OR_PASSWORD_INVALID";
-	
-	
-	
-	
-	
+
 }
