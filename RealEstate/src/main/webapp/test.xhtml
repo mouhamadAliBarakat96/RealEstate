@@ -16,10 +16,28 @@
 			sizeLimit="3000000" fileLimit="2"
 			allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
 		</p:fileUpload>
+		
+		
 		<h:commandLink action="#{testController.uploadToServeer()}"
 			value="save">
 			<f:ajax execute="uploadImageRequestinformation"></f:ajax>
 		</h:commandLink>
+		
+		
+			<p:fileUpload id="uploadImageRequestinformation123"
+			listener="#{testController.handleFileUploadProfilePicture}"
+			mode="advanced" dragDropSupport="false" multiple="true"
+			sizeLimit="3000000" fileLimit="2"
+			allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+		</p:fileUpload>
+		
+		
+		<h:commandLink action="#{testController.uploadToServerProfilePicture()}"
+			value="profilePicture TESt">
+			<f:ajax ></f:ajax>
+		</h:commandLink>
+		
+		
 	</h:form>
 
 </body>

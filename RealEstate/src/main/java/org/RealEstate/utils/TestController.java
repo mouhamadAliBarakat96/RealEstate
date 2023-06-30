@@ -57,6 +57,30 @@ public class TestController implements Serializable {
 		}
 	}
 
+	// HERE FOR PROFILE PICTURE
+	private ImageDto imageDtoProfilePicture = new ImageDto();
+
+	public void handleFileUploadProfilePicture(FileUploadEvent event) {
+
+		imageDtoProfilePicture = new ImageDto(event.getFile().getFileName(), event.getFile().getContent());
+
+		FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+
+	}
+
+	public void uploadToServerProfilePicture() {
+		try {
+
+			String url = uploadImagesMultiPart.uploadImageUserProfileJSF(imageDtoProfilePicture);
+
+			System.out.println(url);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public UploadedFiles getFiles() {
 		return files;
 	}

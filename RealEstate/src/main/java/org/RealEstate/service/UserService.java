@@ -115,7 +115,7 @@ public class UserService implements Serializable {
 		// find user
 		User user = userFacade.findWithExcption(userId);
 
-		String imageUrl = uploadImagesMultiPart.uploadImagePost(inputPart);
+		String imageUrl = uploadImagesMultiPart.uploadImageUserProfile(inputPart);
 		user.setShowProfilePicture(false);
 		user.setProfileImageUrl(imageUrl);
 			userFacade.save(user);

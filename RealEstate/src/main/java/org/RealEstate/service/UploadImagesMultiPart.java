@@ -57,13 +57,13 @@ public class UploadImagesMultiPart implements Serializable {
 		return fileNames;
 	}
 
-	public List<String> uploadImagePostFrontEnd(List<ImageDto> ImageDtos) throws IOException {
+	public List<String> uploadImagePostFrontEnd(List<ImageDto> imageDtos) throws IOException {
 
 		String fileName = null;
 
 		List<String> fileNames = new ArrayList<>();
 
-		for (ImageDto imageDto : ImageDtos) {
+		for (ImageDto imageDto : imageDtos) {
 
 			fileName = addRandomBeforeExtension(imageDto.getName());
 
@@ -85,7 +85,7 @@ public class UploadImagesMultiPart implements Serializable {
 		return fileNames;
 	}
 
-	public String uploadImagePost(InputPart inputPart) throws IOException {
+	public String uploadImageUserProfile(InputPart inputPart) throws IOException {
 
 		String fileName = null;
 		String fileNameOrgin = null;
@@ -103,6 +103,27 @@ public class UploadImagesMultiPart implements Serializable {
 
 		fileName = customDir.getAbsolutePath() + File.separator + fileName;
 		Files.write(Paths.get(fileName), bytes, StandardOpenOption.CREATE_NEW);
+
+		// files li nzlo li bdna nrdon 3al data base
+		return fileNameOrgin;
+	}
+	
+	
+	public String uploadImageUserProfileJSF(ImageDto imageDto) throws IOException {
+
+		String fileName = null;
+		String fileNameOrgin = null;
+		
+		fileName = addRandomBeforeExtension(imageDto.getName());
+		fileNameOrgin = fileName;
+	
+		File customDir = new File(Constants.UPLOAD_DIR + Constants.PROFILE_IMAGE_DIR_NAME);
+		if (!customDir.exists()) {
+			customDir.mkdirs();
+		}
+
+		fileName = customDir.getAbsolutePath() + File.separator + fileName;
+		Files.write(Paths.get(fileName), imageDto.getContent(), StandardOpenOption.CREATE_NEW);
 
 		// files li nzlo li bdna nrdon 3al data base
 		return fileNameOrgin;
