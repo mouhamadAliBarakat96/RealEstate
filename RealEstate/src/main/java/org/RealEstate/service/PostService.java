@@ -123,8 +123,6 @@ public class PostService implements Serializable {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.EMPTY_REQUEST_DONT_CONTAIN_DATA).build();
 			}
 
-			// waiting mojtaba
-			// todo zabeta ma tkhod el chalet bas lal b2yin
 			User user = checkUserConstraint(data.get(0).getBodyAsString());
 
 			// check village Exist
@@ -563,7 +561,7 @@ public class PostService implements Serializable {
 			land.setUser(user);
 
 			checkPostConstraintFields(land);
-			
+
 			return landFacade.mangmentSavePost(land, inputParts);
 		case "CHALET":
 
@@ -655,18 +653,21 @@ public class PostService implements Serializable {
 
 		User user = findUser(jsonString);
 
-		if (user == null) {
-			throw new Exception(Constants.USER_NOT_EXISTS);
-		} else {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(jsonString);
 
+		String postType = jsonNode.get("postType").asText();
+
+		if (!postType.equals("CHALET")) {
 			Long nbOfPost = restateFacade.findUserCountPost(user.getId());
 
 			if (nbOfPost >= appSinglton.getFreeNbOfPost()) {
 				throw new Exception("EXCEEDED_POST_LIMIT");
 			}
 
-			return user;
 		}
+
+		return user;
 
 	}
 
