@@ -9,6 +9,8 @@ import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
+import org.RealEstate.model.StoreHouseRent;
+import org.RealEstate.model.StoreHouseSell;
 import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
 
@@ -20,8 +22,11 @@ public enum PostType {
 	SHOP_RENT(Utility.getMessage("shop_rent", Utility.BUNDLE_FILE_NAME)),
 	SHOP_SELL(Utility.getMessage("shop_sell", Utility.BUNDLE_FILE_NAME)),
 	OFFICE_RENT(Utility.getMessage("office_rent", Utility.BUNDLE_FILE_NAME)),
-	OFFICE_SELL(Utility.getMessage("office_sell", Utility.BUNDLE_FILE_NAME));
+	OFFICE_SELL(Utility.getMessage("office_sell", Utility.BUNDLE_FILE_NAME)),
 
+	STORE_HOUSE_SELL(Utility.getMessage("store_house_sell", Utility.BUNDLE_FILE_NAME)),
+
+	STORE_HOUSE_RENT(Utility.getMessage("store_house_rent", Utility.BUNDLE_FILE_NAME));
 	private String name;
 
 	private PostType(String name) {
@@ -60,6 +65,14 @@ public enum PostType {
 		case "OFFICE_SELL":
 
 			return OfficeSell.class;
+
+		case "STORE_HOUSE_SELL":
+
+			return StoreHouseSell.class;
+		case "STORE_HOUSE_RENT":
+
+			return StoreHouseRent.class;
+
 		default:
 
 			return null;
@@ -90,6 +103,12 @@ public enum PostType {
 		case "OFFICE_SELL":
 
 			return OFFICE_SELL;
+		case "STORE_HOUSE_SELL":
+
+			return STORE_HOUSE_SELL;
+		case "STORE_HOUSE_RENT":
+
+			return STORE_HOUSE_RENT;
 		default:
 
 			return null;

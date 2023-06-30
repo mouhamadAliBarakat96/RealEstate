@@ -25,6 +25,8 @@ import org.RealEstate.facade.OfficeSellFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.ShopRentFacade;
 import org.RealEstate.facade.ShopSellFacade;
+import org.RealEstate.facade.StoreHouseRentFacade;
+import org.RealEstate.facade.StoreHouseSellFacade;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.model.AppratmentRent;
@@ -38,6 +40,8 @@ import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
+import org.RealEstate.model.StoreHouseRent;
+import org.RealEstate.model.StoreHouseSell;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.utils.Constants;
@@ -66,6 +70,10 @@ public class PostService implements Serializable {
 	private ChaletFacade chaletFacade;
 	@EJB
 	private ShopRentFacade shopRentFacade;
+	@EJB
+	private StoreHouseRentFacade storeHouseRentFacade;
+	@EJB
+	private StoreHouseSellFacade storeHouseSellFacade;
 	@EJB
 	private ShopSellFacade shopSellFacade;
 	@EJB
@@ -435,15 +443,38 @@ public class PostService implements Serializable {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
 
 			}
+		case "STORE_HOUSE_RENT":
 
-			if (shopSell.getSpace() * 100 < shopSell.getPrice()) {
+			StoreHouseRent storeHouseRent = Utils.getObjectFromString(jsonString, StoreHouseRent.class);
+			if (storeHouseRent.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+			if (storeHouseRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
+			fielddDontChangeOnUpdate(storeHouseRent);
+			addCommonsFieldWithoutPostDate(storeHouseRent);
+			checkPostConstraintFields(storeHouseRent);
+
+			return storeHouseRentFacade.save(storeHouseRent);
+		case "STORE_HOUSE_SELL":
+
+			StoreHouseSell storeHouseSell = Utils.getObjectFromString(jsonString, StoreHouseSell.class);
+
+			if (storeHouseSell.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+
+			if (storeHouseSell.getSpace() * 100 < storeHouseSell.getPrice()) {
 				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
 			}
-			fielddDontChangeOnUpdate(shopSell);
-			addCommonsFieldWithoutPostDate(shopSell);
-			checkPostConstraintFields(shopSell);
+			fielddDontChangeOnUpdate(storeHouseSell);
+			addCommonsFieldWithoutPostDate(storeHouseSell);
+			checkPostConstraintFields(storeHouseSell);
 
-			return shopSellFacade.save(shopSell);
+			return storeHouseSellFacade.save(storeHouseSell);
 		case "OFFICE_RENT":
 
 			OfficeRent officeRent = Utils.getObjectFromString(jsonString, OfficeRent.class);
@@ -601,6 +632,38 @@ public class PostService implements Serializable {
 			shopSell.setUser(user);
 
 			return shopSellFacade.mangmentSavePost(shopSell, inputParts);
+
+		case "STORE_HOUSE_RENT":
+
+			StoreHouseRent storeHouseRent = Utils.getObjectFromString(jsonString, StoreHouseRent.class);
+			if (storeHouseRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
+			if (storeHouseRent.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+			addCommonsField(storeHouseRent);
+			checkPostConstraintFields(storeHouseRent);
+			storeHouseRent.setUser(user);
+
+			return storeHouseRentFacade.mangmentSavePost(storeHouseRent, inputParts);
+		case "STORE_HOUSE_SELL":
+
+			StoreHouseSell storeHouseSell = Utils.getObjectFromString(jsonString, StoreHouseSell.class);
+			if (storeHouseSell.getSpace() * 100 < storeHouseSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			}
+			if (storeHouseSell.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+			addCommonsField(storeHouseSell);
+			checkPostConstraintFields(storeHouseSell);
+			storeHouseSell.setUser(user);
+
+			return storeHouseSellFacade.mangmentSavePost(storeHouseSell, inputParts);
+
 		case "OFFICE_RENT":
 
 			OfficeRent officeRent = Utils.getObjectFromString(jsonString, OfficeRent.class);
@@ -933,6 +996,30 @@ public class PostService implements Serializable {
 					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
 				}
 
+			case "STORE_HOUSE_RENT":
+
+				StoreHouseRent storeHouseRent = storeHouseRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (storeHouseRent != null) {
+					storeHouseRent.setNumberOfCall(storeHouseRent.getNumberOfCall() + 1);
+					storeHouseRentFacade.save(storeHouseRent);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "STORE_HOUSE_SELL":
+
+				StoreHouseSell storeHouseSell = storeHouseSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (storeHouseSell != null) {
+					storeHouseSell.setNumberOfCall(storeHouseSell.getNumberOfCall() + 1);
+					storeHouseSellFacade.save(storeHouseSell);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
 			case "OFFICE_RENT":
 
 				OfficeRent officeRent = officeRentFacade.findWithLockPessimisticWriteWithoutException(id);
@@ -1045,6 +1132,30 @@ public class PostService implements Serializable {
 				if (shopSell != null) {
 					shopSell.setLiked(shopSell.getLiked() + 1);
 					shopSellFacade.save(shopSell);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "STORE_HOUSE_RENT":
+
+				StoreHouseRent storeHouseRent = storeHouseRentFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (storeHouseRent != null) {
+					storeHouseRent.setLiked(storeHouseRent.getLiked() + 1);
+					storeHouseRentFacade.save(storeHouseRent);
+					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
+				} else {
+					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				}
+
+			case "STORE_HOUSE_SELL":
+
+				StoreHouseSell storeHouseSell = storeHouseSellFacade.findWithLockPessimisticWriteWithoutException(id);
+
+				if (storeHouseSell != null) {
+					storeHouseSell.setLiked(storeHouseSell.getLiked() + 1);
+					storeHouseSellFacade.save(storeHouseSell);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
 					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
