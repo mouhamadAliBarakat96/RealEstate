@@ -1,6 +1,7 @@
 package org.RealEstate.web.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +17,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import org.RealEstate.controller.AbstractController;
+import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.facade.ChaletFacade;
@@ -23,11 +25,14 @@ import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.interfaces.ICRUDOperations;
 import org.RealEstate.model.Chalet;
+import org.RealEstate.model.MainEntity;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.utils.Utility;
 import org.omnifaces.util.Faces;
+import org.primefaces.component.tabview.TabView;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.TabChangeEvent;
 
 @Named
@@ -41,7 +46,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private final String REQUEST_PARAM = "id";
 
 	private PostType postType;
-	private PropertyKindEnum kindEnum;
+	private PropertyKindEnum kindEnum = PropertyKindEnum.REALESTATE;
 
 	@Inject
 	private ChaletFacade chaletFacade;
@@ -53,37 +58,104 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private List<Village> villages = new ArrayList<Village>();
 
 	private RealEstate item;
-	private Chalet chalet;
+	private Chalet chalet = new Chalet();
 
 	private User user;
+
+	private TabView tabView;
+	private int activeIndex = 0;
+
+	private List<InputStream> images = new ArrayList<>();
 
 	@PostConstruct
 	public void init() {
 		villages = villageFacade.findAll();
+		
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		if (!facesContext.isPostback()) {
 			String id = externalContext.getRequestParameterMap().get(REQUEST_PARAM);
-			if (id != null && Long.parseLong(id) > 0) {
-				item = find(Long.parseLong(id));
-				if (item == null) {
-					try {
-						Faces.redirect("/error.xhtml");
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-
-				}
-				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-				if (flash.containsKey("new-card")) {
-					Utility.addSuccessMessage("save_success");
-				}
-			} else {
-				if (postType != null)
-					item = Utility.initializeRealEstate(postType);
-			}
+			readTheFlashValue(id);
 
 		}
+	}
+
+	public void readTheFlashValue(String id) {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+
+		// ADD EDIT RealEstate
+		if (flash.containsKey("new-realestate")) {
+			kindEnum = PropertyKindEnum.REALESTATE;
+			item = findRealWithId(id);
+			if (item == null) {
+				try {
+					Faces.redirect("exception");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			postType = item.getPostType();
+			Utility.addSuccessMessage("save_success");
+
+			setActiveIndex(0);
+		} else if (flash.containsKey("edit-realestate")) {
+			kindEnum = PropertyKindEnum.REALESTATE;
+			item = findRealWithId(id);
+			if (item == null) {
+				try {
+					Faces.redirect("exception");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			postType = item.getPostType();
+			setActiveIndex(0);
+			// ADD EDIT Chalet
+		} else if (flash.containsKey("new-chalet")) {
+			kindEnum = PropertyKindEnum.CHALET;
+			chalet = findChaletWithId(id);
+			if (chalet == null) {
+				try {
+					Faces.redirect("exception");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			setActiveIndex(1);
+			Utility.addSuccessMessage("save_success");
+
+		} else if (flash.containsKey("edit-chalet")) {
+			kindEnum = PropertyKindEnum.CHALET;
+			chalet = findChaletWithId(id);
+			if (chalet == null) {
+				try {
+					Faces.redirect("exception");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			setActiveIndex(1);
+		}
+
+	}
+
+	public RealEstate findRealWithId(String id) {
+		if (id != null && Long.parseLong(id) > 0) {
+			return estateFacade.find(Long.parseLong(id));
+		}
+		return null;
+	}
+
+	public Chalet findChaletWithId(String id) {
+		if (id != null && Long.parseLong(id) > 0) {
+			return chaletFacade.find(Long.parseLong(id));
+		}
+		return null;
+	}
+
+	public void handleFileUpload(FileUploadEvent event) throws IOException {
+		InputStream inputStreamImage = event.getFile().getInputStream();
+		images.add(inputStreamImage);
 	}
 
 	public void listenerSelectItemType() {
@@ -106,32 +178,109 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 
 	public void save() {
-		try {
+		if (kindEnum == PropertyKindEnum.REALESTATE) {
+			saveRealEstate();
+		} else if (kindEnum == PropertyKindEnum.CHALET) {
+			saveChalet();
+		} else {
+			Utility.addErrorMessage("no such tab found to save");
+		}
+	}
 
+	public void saveRealEstate() {
+		try {
 			if (getItem().getId() <= 0) {
 
 				item.setPostDate(new Date());
 				item.setUser(user);
-
+				item.setPostStatus(PostStatus.PENDING);
+				item.setPostType(postType);
 				super.save();
-				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-				flash.put("new-card", "true");
-				changeUrl();
 			} else {
+				item.setPostStatus(PostStatus.PENDING);
 				item = getAbstractFacade().save(item);
 			}
-			Utility.addSuccessMessage("save_success");
+
+			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+			flash.put("new-realestate", "true");
+			changeUrl(item);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void changeUrl() {
+	public void saveChalet() {
+		try {
+			if (chalet.getId() <= 0) {
+
+				chalet.setPostDate(new Date());
+				chalet.setUser(user);
+				chalet.setPostStatus(PostStatus.PENDING);
+				chalet = chaletFacade.save(chalet);
+			} else {
+				chalet.setPostStatus(PostStatus.PENDING);
+				chalet = chaletFacade.save(chalet);
+			}
+			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+			flash.put("new-chalet", "true");
+			changeUrl(chalet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean hasRoomsBathFloorElevator() {
+		return (postType.equals(PostType.APPRATMENT_RENT) || postType.equals(PostType.APPRATMENT_SELL)
+				|| postType.equals(PostType.OFFICE_RENT) || postType.equals(PostType.OFFICE_SELL));
+	}
+
+	public boolean hasPark() {
+		return (postType.equals(PostType.APPRATMENT_RENT) || postType.equals(PostType.APPRATMENT_SELL)
+				|| postType.equals(PostType.OFFICE_RENT) || postType.equals(PostType.OFFICE_SELL)
+				|| postType.equals(PostType.SHOP_RENT) || postType.equals(PostType.SHOP_SELL));
+	}
+
+	public boolean hasGarden() {
+		return (postType.equals(PostType.APPRATMENT_RENT) || postType.equals(PostType.APPRATMENT_SELL));
+	}
+
+	public boolean hasGreenBand() {
+		return (postType.equals(PostType.OFFICE_SELL) || postType.equals(PostType.APPRATMENT_SELL)
+				|| postType.equals(PostType.SHOP_SELL) || postType.equals(PostType.LAND));
+	}
+
+	public boolean hasBlockNo() {
+		return (postType.equals(PostType.OFFICE_RENT) || postType.equals(PostType.OFFICE_SELL)
+				|| postType.equals(PostType.APPRATMENT_SELL) || postType.equals(PostType.APPRATMENT_RENT)
+				|| postType.equals(PostType.SHOP_RENT) || postType.equals(PostType.SHOP_SELL)
+				|| postType.equals(PostType.LAND));
+	}
+
+	public boolean aShop() {
+		return (postType.equals(PostType.SHOP_SELL) || postType.equals(PostType.SHOP_RENT));
+	}
+
+	public boolean aLand() {
+		return (postType.equals(PostType.LAND));
+	}
+
+	private void changeUrl(Chalet chalet) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", getItem().getId() + "");
+			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", chalet.getId() + "");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void changeUrl(RealEstate estate) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		String url = request.getRequestURL().toString();
+		try {
+			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", estate.getId() + "");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -192,6 +341,27 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	public void setKindEnum(PropertyKindEnum kindEnum) {
 		this.kindEnum = kindEnum;
+	}
+
+	public TabView getTabView() {
+		return tabView;
+	}
+
+	public void setTabView(TabView tabView) {
+		this.tabView = tabView;
+	}
+
+	public int getActiveIndex() {
+		return activeIndex;
+	}
+
+	public void setActiveIndex(int activeIndex) {
+		this.activeIndex = activeIndex;
+	}
+
+	public void setActiveTab(int index) {
+		setActiveIndex(index);
+		tabView.setActiveIndex(index);
 	}
 
 }

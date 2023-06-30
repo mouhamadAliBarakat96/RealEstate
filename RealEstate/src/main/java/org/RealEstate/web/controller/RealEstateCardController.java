@@ -36,7 +36,7 @@ public class RealEstateCardController implements Serializable {
 
 	@Inject
 	private RealEstateFacade facade;
-	
+
 	private String fullUrl = "";
 	private String ipAddressWithPort;
 
@@ -126,14 +126,13 @@ public class RealEstateCardController implements Serializable {
 	}
 
 	public boolean hasRoomsAndBathRoomsAndFloor(PostType type) {
-			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
-					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
+		return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
+				|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
 
-	public boolean hasElevator(PostType type) {//why not shop sell ?
+	public boolean hasElevator(PostType type) {// why not shop sell ?
 		return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
-				|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL)
-				|| type.equals(PostType.SHOP_RENT));
+				|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
 
 	public boolean hasPark(PostType type) {
@@ -145,29 +144,30 @@ public class RealEstateCardController implements Serializable {
 	public boolean hasGarden(PostType type) {
 		return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL));
 	}
-	
+
 	public boolean hasGreenBand(PostType type) {
 		return (type.equals(PostType.OFFICE_SELL) || type.equals(PostType.APPRATMENT_SELL)
 				|| type.equals(PostType.SHOP_SELL) || type.equals(PostType.LAND));
 	}
-	
+
 	public boolean hasBlockNo(PostType type) {// why not appart Rent
 		return (type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL)
 				|| type.equals(PostType.APPRATMENT_SELL) || type.equals(PostType.SHOP_RENT)
 				|| type.equals(PostType.SHOP_SELL) || type.equals(PostType.LAND));
 	}
-	
+
 	public boolean aShop(PostType type) {
 		return (type.equals(PostType.SHOP_SELL) || type.equals(PostType.SHOP_RENT));
 	}
-	
+
 	public boolean aLand(PostType type) {
 		return (type.equals(PostType.LAND));
 	}
-	
+
 	public String getFullUrl() {
 		return fullUrl;
 	}
+
 	public void setFullUrl(String fullUrl) {
 		this.fullUrl = fullUrl;
 	}
