@@ -18,6 +18,7 @@ import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
+import org.RealEstate.dto.ImageDto;
 
 @Stateless
 public class UploadImagesMultiPart implements Serializable {
@@ -50,6 +51,34 @@ public class UploadImagesMultiPart implements Serializable {
 
 			fileName = customDir.getAbsolutePath() + File.separator + fileName;
 			Files.write(Paths.get(fileName), bytes, StandardOpenOption.CREATE_NEW);
+		}
+
+		// files li nzlo li bdna nrdon 3al data base
+		return fileNames;
+	}
+
+	public List<String> uploadImagePostFrontEnd(List<ImageDto> ImageDtos) throws IOException {
+
+		String fileName = null;
+
+		List<String> fileNames = new ArrayList<>();
+
+		for (ImageDto imageDto : ImageDtos) {
+
+			fileName = addRandomBeforeExtension(imageDto.getName());
+
+			fileNames.add(fileName);
+
+			;
+			//
+			File customDir = new File(Constants.UPLOAD_DIR + Constants.POST_IMAGE_DIR_NAME);
+			if (!customDir.exists()) {
+				customDir.mkdirs();
+
+			}
+
+			fileName = customDir.getAbsolutePath() + File.separator + fileName;
+			Files.write(Paths.get(fileName), imageDto.getContent(), StandardOpenOption.CREATE_NEW);
 		}
 
 		// files li nzlo li bdna nrdon 3al data base

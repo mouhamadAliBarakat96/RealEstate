@@ -1,25 +1,32 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head> 
-<body> 
+<h:head></h:head>
+<body>
+#{testController.xx}
+	<h:form>
+		<p:fileUpload id="uploadImageRequestinformation"
+			listener="#{testController.handleFileUploadRequestInformation}"
+			mode="advanced" dragDropSupport="false" multiple="true"
+			
+			sizeLimit="3000000" fileLimit="2"
+			allowTypes="/(\.|\/)(gif|jpe?g|png)$/" >
+			
+			
+			</p:fileUpload>
 
-<c:forEach items="${test.list}" var="realstate">
- 
 
+		<h:commandLink action="#{testController.uploadToServeer()}"
+			value="save">
+<f:ajax execute="uploadImageRequestinformation" ></f:ajax>
+		</h:commandLink>
 
-<c:if test="${realstate['class'] eq 'class org.RealEstate.model.AppratmentRent'}">
-       ${realstate.floor}
-</c:if>
-<c:if test="${realstate['class'] eq 'class org.RealEstate.model.Land'}">
-       ${realstate.electricity}
-</c:if>
+	</h:form>
 
-
-</c:forEach>
-</body> 
+</body>
 </html>
