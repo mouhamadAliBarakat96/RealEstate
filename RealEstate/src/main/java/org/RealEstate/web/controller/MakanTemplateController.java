@@ -46,7 +46,7 @@ public class MakanTemplateController implements Serializable {
 		m1 = new MenuItem("Contact us", "", "contact-us", true, "nav-item nav-link","contact-us");
 		menu.add(m1);
 		
-		m1 = new MenuItem("Login", "", "login-page", true, "nav-item nav-link","login");
+		m1 = new MenuItem("Login", "", "login-user", true, "nav-item nav-link","login");
 		menu.add(m1);
 
 	}

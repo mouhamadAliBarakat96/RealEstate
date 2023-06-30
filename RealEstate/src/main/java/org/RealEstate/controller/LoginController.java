@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utility;
 import org.omnifaces.util.Faces;
 
 @ViewScoped
@@ -41,35 +42,21 @@ public class LoginController implements Serializable {
 
 	public void login() {
 		try {
-			User user = userFacade.findUserByUserNameAndPassword(userName, passowrd);
+			String hashPass = Utility.hashPassword(passowrd);
+			User user = userFacade.findUserByUserNameAndPassword(userName, hashPass);
 
 			if (user == null) {
-				// user wrong
+				Utility.addErrorMessage("name_or_pass_wrong");
+				return;
 			}
-
-			// else true
 			HttpSession session = request.getSession(true);
 			session.setAttribute(Constants.USER_SESSION, user);
-			Faces.redirect("URL LAWEN BADO YROUH");
-
+			Faces.redirect("/index.xhtml");
 		} catch (Exception e) {
 
 		}
 
 	}
-
-	// CODE TO KASSSEM
-	// hayda btst3mlo b safhat el b2ye
-	public void getUser() {
-		HttpSession session = request.getSession(true);
-
-		User user = (User) session.getAttribute(Constants.USER_SESSION);
-
-		// bt3ml hon check iza user == null aw 3ade
-
-		// iza null yaane mano mswe login
-	}
-	
 
 	public void logout() {
 

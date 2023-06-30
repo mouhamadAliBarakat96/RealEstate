@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:component>
+	<div class="row p-3">
+		<p:dataView var="real" value="#{userPostListController.realEstates}"
+			rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
+			paginatorPosition="bottom" widgetVar="realEstatesDataView"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+			<p:dataViewGridItem>
+				<div class="card flex justify-content-center">
+					<div class="col-md-12 wow fadeInUp" data-wow-delay="0.1s">
+						<div class="property-item rounded overflow-hidden">
+							<div class="position-relative overflow-hidden">
+								<h:commandLink action="#{userPostListController.navigateToUserReal(real)}"
+									styleClass="d-block h5 mb-2" target="_blank">
+									<p:graphicImage alt="no photos" styleClass="img-fluid"
+										url="#{userPostListController.fullUrl}#{real.images[0]}">
+									</p:graphicImage>
+								</h:commandLink>
+								<div
+									class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">#{real.postType.name}</div>
+								<div
+									class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{real.tittle}</div>
+							</div>
+							<div class="p-4 pb-0">
+
+								<h5 class="text-primary mb-3">$ #{real.price}</h5>
+
+								<h:commandLink action="#{userPostListController.navigateToUserReal(real)}"
+									target="_blank" value="#{real.subTittle}"
+									styleClass="d-block h5 mb-2">
+								</h:commandLink>
+								<p>
+									<i class="fa fa-map-marker-alt text-primary me-2"></i>#{real.village.fullAddress()}
+								</p>
+							</div>
+							<div class="d-flex border-top">
+								<small class="flex-fill text-center border-end py-2"> <h:outputLabel
+										value="#{real.views}">
+										<f:convertNumber pattern="#,###" />
+										<i class=" fa fa-regular fa-eye text-primary" />
+									</h:outputLabel>
+								</small> <small class="flex-fill text-center border-end py-2"> <i
+									class="fa fa-ruler-combined text-primary me-2" />
+									#{real.space} #{bundle.real_state_distance}
+								</small>
+
+								<h:panelGroup
+									rendered="#{userPostListController.hasRoomsAndBathRooms(real.postType)}">
+									<small class="flex-fill text-center border-end py-2"> <i
+										class="fa fa-bed text-primary me-2" /> #{real.nbRoom}
+										#{bundle.real_estate_rooms}
+									</small>
+								</h:panelGroup>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</p:dataViewGridItem>
+
+			<p:dataViewListItem>
+				<h:panelGrid columns="3" style="width:100%" cellspacing="20">
+					<p:outputPanel>
+						<div class="row">
+							<div class="col-md-4 ">
+								<div class="position-relative overflow-hidden">
+									<h:commandLink action="#{userPostListController.navigateToUserReal(real)}"
+										styleClass="d-block h5 mb-2" target="_blank">
+										<p:graphicImage alt="no photos" styleClass="img-fluid"
+											url="#{userPostListController.fullUrl}#{real.images[0]}">
+										</p:graphicImage>
+									</h:commandLink>
+									<div
+										class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+										#{real.postType.name}</div>
+								</div>
+							</div>
+							<div class="col-md-8 ">
+								<div class="p-4 pb-0">
+									<h5 class="text-primary mb-3">$ #{real.price}</h5>
+
+									<h:commandLink action="#{userPostListController.navigateToUserReal(real)}"
+										target="_blank" value="#{real.subTittle}"
+										styleClass="d-block h5 mb-2">
+									</h:commandLink>
+
+									<p>
+										<i class="fa fa-map-marker-alt text-primary me-2"></i>#{real.village.fullAddress()}
+									</p>
+								</div>
+
+								<div class="d-flex border-top">
+
+									<small class="flex-fill text-center border-end py-2"> <h:outputLabel
+											value="#{real.views}">
+											<f:convertNumber pattern="#,###" />
+											<i class=" fa fa-regular fa-eye text-primary" />
+										</h:outputLabel>
+									</small> <small class="flex-fill text-center border-end py-2">
+										<i class="fa fa-ruler-combined text-primary me-2" />
+										#{real.space} #{bundle.real_state_distance}
+									</small>
+
+									<h:panelGroup
+										rendered="#{userPostListController.hasRoomsAndBathRooms(real.postType)}">
+										<small class="flex-fill text-center border-end py-2">
+											<i class="fa fa-bed text-primary me-2" /> #{real.nbRoom}
+											#{bundle.real_estate_rooms}
+										</small>
+
+										<small class="flex-fill text-center py-2"> <i
+											class="fa fa-bath text-primary me-2" /> #{real.nbBathRoom}
+											#{bundle.real_estate_bathrooms}
+										</small>
+									</h:panelGroup>
+									<h:panelGroup
+										rendered="#{!indexController.hasRoomsAndBathRooms(real.postType)}">
+										<small class="flex-fill text-center border-end py-2">
+											<i class="fa fa-solid fa-road text-primary me-2" />#{bundle.real_estate_road}:
+											<i
+											class="text-primary #{real.road ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
+										</small>
+
+										<small class="flex-fill text-center py-2 border-end">
+											<i class="fa fa-solid fa-water text-primary me-2" />#{bundle.real_estate_water}:
+											<i
+											class="text-primary #{real.water ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
+										</small>
+									</h:panelGroup>
+								</div>
+							</div>
+						</div>
+					</p:outputPanel>
+				</h:panelGrid>
+			</p:dataViewListItem>
+		</p:dataView>
+	</div>
+</ui:component>
+</html>

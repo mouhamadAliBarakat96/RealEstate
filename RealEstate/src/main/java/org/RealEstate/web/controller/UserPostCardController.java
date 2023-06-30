@@ -89,7 +89,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			item = findRealWithId(id);
 			if (item == null) {
 				try {
-					Faces.redirect("exception");
+					Faces.redirect("/error.xhtml");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -103,7 +103,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			item = findRealWithId(id);
 			if (item == null) {
 				try {
-					Faces.redirect("exception");
+					Faces.redirect("/error.xhtml");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -116,7 +116,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			chalet = findChaletWithId(id);
 			if (chalet == null) {
 				try {
-					Faces.redirect("exception");
+					Faces.redirect("/error.xhtml");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -129,7 +129,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			chalet = findChaletWithId(id);
 			if (chalet == null) {
 				try {
-					Faces.redirect("exception");
+					Faces.redirect("/error.xhtml");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

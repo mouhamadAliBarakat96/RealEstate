@@ -8,6 +8,11 @@
 
 <ui:composition template="/views/template/makaan-template.xhtml">
 
+	<ui:define name="header-start">
+		<o:importConstants type="org.RealEstate.enumerator.PostType" />
+		<o:importConstants type="org.RealEstate.enumerator.YesNoEnum" />
+	</ui:define>
+
 	<ui:define name="customOutputScript">
 		<!-- Use noConflict to release control of the $ variable -->
 		<script>
@@ -28,15 +33,21 @@
 		<div class="container-xxl py-5">
 			<div class="container">
 				<div class="tab-content">
-					<div id="tab-1" class="tab-pane fade show p-0 active">
-						<div class="card">
-						
-						
-						
-						
-						
-						</div>
-					</div>
+					<p:tabView id="tabView" style="border:1px solid #ddd !important">
+						<p:ajax event="tabChange"
+							listener="#{userPostCardController.onTabChange}" />
+
+						<p:tab id="realestate" title="Real Estate">
+							<ui:include
+								src="/views/makaan/userpost-snippet/userReal-list.xhtml" />
+						</p:tab>
+
+
+						<p:tab id="chalet" title="Chalet">
+							<ui:include
+								src="/views/makaan/userpost-snippet/userChalet-list.xhtml" />
+						</p:tab>
+					</p:tabView>
 				</div>
 			</div>
 		</div>

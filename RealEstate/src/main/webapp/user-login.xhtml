@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Real Estate</title>
+	<h:outputStylesheet name="front-end-template/bootstrap.min.css"
+		library="css" />
+	<h:outputStylesheet name="front-end-template/flex-slider.css"
+		library="css" />
+	<h:outputStylesheet name="front-end-template/font-awesome.css"
+		library="css" />
+	<h:outputStylesheet name="front-end-template/owl-carousel.css"
+		library="css" />
+	<h:outputStylesheet
+		name="front-end-template/templatemo-art-factory.css" library="css" />
+
+	<h:outputStylesheet name="admin-template/icons.css" library="css" />
+
+	<h:outputStylesheet name="admin-template/metisMenu.min.css"
+		library="css" />
+
+	<h:outputStylesheet name="admin-template/style.css" library="css" />
+
+	<h:outputStylesheet name="toggle/bootstrap-toggle.min.css"
+		library="plugins" />
+	<h:outputStylesheet name="pages/login-front-end.css" library="css" />
+
+</h:head>
+<h:body>
+	<o:onloadScript>
+($('.toogle')).bootstrapToggle();
+</o:onloadScript>
+	<h:form styleClass="account-body accountbg" prependId="false"
+		method="post">
+		<div class="row vh-100 " style="margin-top: 0%">
+			<div class="col-12 align-self-center">
+				<div class="auth-page">
+					<div class="card auth-card shadow-lg">
+						<div class="card-body">
+							<div class="px-3">
+								<div class="text-center auth-logo-text">
+									<h4 class="mt-0 mb-3 mt-5">Let's Get Started Real Estate</h4>
+									<p class="text-muted mb-0" style="font-size: 16px;">Sign in
+										to continue to Real Estate.</p>
+								</div>
+								<!--end auth-logo-text-->
+								<div class="form-horizontal auth-form my-4"
+									style="margin-top: 5% !important">
+									<h:panelGroup id="login-form">
+										<div class="form-group">
+											<label for="username">Username </label>
+											<div class="input-group mb-3">
+												<span class="auth-form-icon"> <em
+													class="dripicons-user"></em>
+												</span>
+												<h:inputText type="text"
+													styleClass=" form-control #{component.valid ? '' :'error' } "
+													id="username" required="true"
+													value="#{loginController.userName}"
+													h5:placeholder="Enter username"></h:inputText>
+											</div>
+											<h:message for="username" styleClass="error-message" />
+										</div>
+										<!--end form-group-->
+										<div class="form-group">
+											<label for="userpassword">Password</label>
+											<div class="input-group mb-3">
+												<span class="auth-form-icon"> <i
+													class="dripicons-lock"></i>
+												</span>
+
+												<p:inputText h5:type="password"
+													styleClass=" form-control #{component.valid ? '' :'error' } "
+													value="#{loginController.passowrd}" required="true"
+													id="userpassword" h5:placeholder="Enter password">
+												</p:inputText>
+											</div>
+											<h:message for="userpassword" styleClass="error-message" />
+										</div>
+										<!--end form-group-->
+										<div
+											style="text-align: center; color: #da4453; font-weight: 600">
+											<h:messages globalOnly="true" id="messages" layout="table"
+												style="margin: auto;" />
+										</div>
+										<!--end form-group-->
+									</h:panelGroup>
+									<div class="form-group mb-0 row" style="margin-top: 1%">
+										<div class="col-12 mt-2">
+											<h:commandLink action="#{loginController.login()}"
+												styleClass="btn btn-primary btn-round btn-block waves-effect waves-light">
+												Log In <i class="fas fa-sign-in-alt ml-1"></i>
+												<f:ajax execute="login-form " render="messages login-form"></f:ajax>
+											</h:commandLink>
+										</div>
+										<!--end col-->
+									</div>
+									<!--end form-group-->
+								</div>
+								<!--end form-->
+							</div>
+							<!--end /div-->
+
+
+						</div>
+						<!--end card-body-->
+					</div>
+					<!--end card-->
+					<!--end account-social-->
+				</div>
+				<!--end auth-page-->
+			</div>
+			<!--end col-->
+		</div>
+		<footer>
+		<div class="container">
+			<div style="text-align: center">
+				<div class="row">
+
+					<div class="col-lg-12 col-md-12 col-sm-12">
+						<p class="copyright">Copyright &copy; 2020 developed and
+							designed by Mouhamad Ali Barakat</p>
+
+						<p class="copyright">mouhamadalibarakat@hotmail.com</p>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		</footer>
+		<!--end row-->
+		<!-- End Log In page -->
+	</h:form>
+	<h:outputScript name="front-end-template/bootstrap.min.js" library="js" />
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<h:outputScript name="metisMenu.min.js" library="js" />
+	<h:outputScript name="waves.min.js" library="js" />
+	<h:outputScript name="jquery.slimscroll.min.js" library="js" />
+	<h:outputScript name="front-end-template/bootstrap.min.js" library="js" />
+	<h:outputScript name="front-end-template/imgfix.min.js" library="js" />
+	<h:outputScript name="front-end-template/jquery.counterup.min.js"
+		library="js" />
+	<h:outputScript name="front-end-template/owl-carousel.js" library="js" />
+	<h:outputScript name="front-end-template/popper.js" library="js" />
+	<h:outputScript name="front-end-template/scrollreveal.min.js"
+		library="js" />
+	<h:outputScript name="front-end-template/custom.js" library="js" />
+	<h:outputScript name="toggle/bootstrap-toggle.min.js" library="plugins" />
+</h:body>
+</html>
