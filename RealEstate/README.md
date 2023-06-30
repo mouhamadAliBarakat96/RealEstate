@@ -29,5 +29,117 @@ To Discusion:
 -contact us
 
  
+ 
+ post condition
+
+
+// hayde yaane 3adad el suwar
+
+	if (inputParts.size() > Constants.NB_IMAGE_IN_POST_ALLOWED) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.NB_OF_IMAGE_GREATER_NUMBER_OF_IMAGE_ALLOWED)
+						.build();
+
+			}
+
+// hayde 3adad el poset lal user
+// mana lal challet
+	private User checkUserConstraint(String jsonString) throws Exception {
+
+		User user = findUser(jsonString);
+
+		if (user == null) {
+			throw new Exception(Constants.USER_NOT_EXISTS);
+		} else {
+
+			Long nbOfPost = restateFacade.findUserCountPost(user.getId());
+
+			if (nbOfPost >= appSinglton.getFreeNbOfPost()) {
+				throw new Exception("EXCEEDED_POST_LIMIT");
+			}
+
+			return user;
+		}
+
+	}
+
+
+
+
+
+	if (appratmentRent.getSpace() < 50) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
+
+			}
+			if (appratmentRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
+
+
+	if (appratmentSell.getSpace() < 50) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
+
+			}
+			if (appratmentSell.getSpace() * 100 < appratmentSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			}
+
+
+
+
+
+if (land.getSpace() < 200) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_200");
+
+			}
+			if (land.getSpace() * 4 < land.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
+			}
+
+
+if (shopRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
+			if (shopRent.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+
+
+	if (shopSell.getSpace() * 100 < shopSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			}
+			if (shopSell.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+
+
+	if (officeRent.getPrice() < 60) {
+				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			}
+			if (officeRent.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+
+if (officeSell.getSpace() * 100 < officeSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			}
+			if (officeSell.getSpace() < 40) {
+				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+
+			}
+
+realEstate.setPostDate(new Date());
+
+realEstate.setPostStatus(PostStatus.PENDING);
+
+
+w lal chalet 
+
+chalet.setPostDate(new Date());
+
+chalet.setPostStatus(PostStatus.PENDING);
+
 
  

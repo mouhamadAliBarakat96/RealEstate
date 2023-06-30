@@ -124,6 +124,7 @@ public class PostService implements Serializable {
 			}
 
 			// waiting mojtaba
+			// todo zabeta ma tkhod el chalet bas lal b2yin
 			User user = checkUserConstraint(data.get(0).getBodyAsString());
 
 			// check village Exist
@@ -562,9 +563,7 @@ public class PostService implements Serializable {
 			land.setUser(user);
 
 			checkPostConstraintFields(land);
-			if (land.getSpace() * 4 < land.getPrice()) {
-				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
-			}
+			
 			return landFacade.mangmentSavePost(land, inputParts);
 		case "CHALET":
 
