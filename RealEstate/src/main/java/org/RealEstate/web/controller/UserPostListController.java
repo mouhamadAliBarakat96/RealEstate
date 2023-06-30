@@ -48,17 +48,9 @@ public class UserPostListController implements Serializable {
 
 	@PostConstruct
 	public void init() {
-
-		try {
-			user = userFacade.findWithExcption((long) 204);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
-		// user = getUser();
-
+		user = getUser();
+		// go to login page
 		if (user == null) {
-			// go to login page
 			try {
 				Faces.redirect("/user-login.xhtml");
 			} catch (IOException e) {

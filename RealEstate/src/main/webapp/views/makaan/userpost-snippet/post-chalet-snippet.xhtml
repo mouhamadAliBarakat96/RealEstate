@@ -7,6 +7,13 @@
 
 <ui:component>
 	<div class="row p-3">
+		<p:fileUpload id="uploadImageChalet"
+			listener="#{userPostCardController.uploadToChalet()}" mode="advanced"
+			dragDropSupport="false" multiple="true" sizeLimit="3000000"
+			fileLimit="2" allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+		</p:fileUpload>
+	</div>
+	<div class="row p-3">
 		<div class="col-md-3">
 			<div class="form-group">
 				<p:outputLabel class="control-label" for="nameId"
@@ -85,7 +92,8 @@
 				<h:commandLink value='#{bundle.save}' id="save_btn"
 					action='#{userPostCardController.save()}'
 					styleClass="btn btn-primary btn-save">
-					<f:ajax render=":messageScript myForm:tabView:chalet" execute="myForm:tabView:chalet" />
+					<f:ajax render=":messageScript myForm:tabView:chalet"
+						execute="myForm:tabView:chalet myForm:tabView:uploadImageChalet" />
 					<i class="fa fa-save" />
 				</h:commandLink>
 			</div>

@@ -19,12 +19,12 @@
 		<h:panelGroup id="inputPanel">
 			<h:panelGroup rendered="#{userPostCardController.postType != null}">
 				<div class="card">
-					<h:form>
-						<p:fileUpload listener="#{fileUploadView.handleFileUpload}"
+						<p:fileUpload id="uploadImageRealEstate"
+							listener="#{userPostCardController.uploadToReal()}"
 							mode="advanced" dragDropSupport="false" multiple="true"
-							sizeLimit="100000" fileLimit="3"
-							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-					</h:form>
+							sizeLimit="3000000" fileLimit="2"
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+						</p:fileUpload>
 				</div>
 				<div class="row">
 					<div class="col-md-3">
@@ -271,7 +271,7 @@
 								action='#{userPostCardController.save()}'
 								styleClass="btn btn-primary btn-save">
 								<f:ajax render=":messageScript myForm:tabView:realestate"
-									execute="myForm:tabView:realestate" />
+									execute="myForm:tabView:realestate myForm:tabView:uploadImageRealEstate" />
 								<i class="fa fa-save" />
 							</h:commandLink>
 						</div>

@@ -1,13 +1,14 @@
 package org.RealEstate.web.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
@@ -17,6 +18,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import org.RealEstate.controller.AbstractController;
+import org.RealEstate.dto.ImageDto;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
@@ -25,15 +27,16 @@ import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.interfaces.ICRUDOperations;
 import org.RealEstate.model.Chalet;
-import org.RealEstate.model.MainEntity;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
+import org.RealEstate.service.UploadImagesMultiPart;
 import org.RealEstate.utils.Utility;
 import org.omnifaces.util.Faces;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.TabChangeEvent;
+import org.primefaces.model.file.UploadedFiles;
 
 @Named
 @ViewScoped
@@ -65,18 +68,50 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private TabView tabView;
 	private int activeIndex = 0;
 
-	private List<InputStream> images = new ArrayList<>();
+	@EJB
+	private UploadImagesMultiPart uploadImagesMultiPart;
+	private List<ImageDto> list = new ArrayList<>();
+	private UploadedFiles files;
 
 	@PostConstruct
 	public void init() {
 		villages = villageFacade.findAll();
-		
+
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		if (!facesContext.isPostback()) {
 			String id = externalContext.getRequestParameterMap().get(REQUEST_PARAM);
 			readTheFlashValue(id);
 
+		}
+	}
+
+	public void handleFileUploadReal(FileUploadEvent event) {
+		list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
+		FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	public void handleFileUploadChalet(FileUploadEvent event) {
+		list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
+		FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+
+	public List<String> uploadToReal() {
+		try {
+			return uploadImagesMultiPart.uploadImagePostFrontEnd(list);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<String> uploadToChalet() {
+		try {
+			return uploadImagesMultiPart.uploadImagePostFrontEnd(list);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 
@@ -153,11 +188,6 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		return null;
 	}
 
-	public void handleFileUpload(FileUploadEvent event) throws IOException {
-		InputStream inputStreamImage = event.getFile().getInputStream();
-		images.add(inputStreamImage);
-	}
-
 	public void listenerSelectItemType() {
 		if (postType != null) {
 			item = Utility.initializeRealEstate(postType);
@@ -195,6 +225,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				item.setUser(user);
 				item.setPostStatus(PostStatus.PENDING);
 				item.setPostType(postType);
+				item.setImages(uploadToReal());
 				super.save();
 			} else {
 				item.setPostStatus(PostStatus.PENDING);
@@ -212,10 +243,10 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	public void saveChalet() {
 		try {
 			if (chalet.getId() <= 0) {
-
 				chalet.setPostDate(new Date());
 				chalet.setUser(user);
 				chalet.setPostStatus(PostStatus.PENDING);
+				chalet.setImages(uploadToChalet());
 				chalet = chaletFacade.save(chalet);
 			} else {
 				chalet.setPostStatus(PostStatus.PENDING);
