@@ -294,4 +294,7 @@ public class Chalet extends MainEntity implements Serializable {
 		return true;
 	}
 
+	public void addToImages(List<String> images) {
+		this.images.addAll(images);
+	}
 }

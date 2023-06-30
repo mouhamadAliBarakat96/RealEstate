@@ -43,9 +43,6 @@ public class UserPostListController implements Serializable {
 	private String fullUrl = "";
 	private String ipAddressWithPort;
 
-	@Inject
-	private UserFacade userFacade;
-
 	@PostConstruct
 	public void init() {
 		user = getUser();

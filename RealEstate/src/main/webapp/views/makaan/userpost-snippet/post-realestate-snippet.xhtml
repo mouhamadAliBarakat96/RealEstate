@@ -18,14 +18,6 @@
 	<div class="row p-3">
 		<h:panelGroup id="inputPanel">
 			<h:panelGroup rendered="#{userPostCardController.postType != null}">
-				<div class="card">
-						<p:fileUpload id="uploadImageRealEstate"
-							listener="#{userPostCardController.uploadToReal()}"
-							mode="advanced" dragDropSupport="false" multiple="true"
-							sizeLimit="3000000" fileLimit="2"
-							allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-						</p:fileUpload>
-				</div>
 				<div class="row">
 					<div class="col-md-3">
 						<div class="form-group">
@@ -265,6 +257,16 @@
 						</div>
 					</div>
 
+					<div class="col-md-12 mt-3">
+						<h:form>
+							<p:fileUpload id="uploadImageRealEstate"
+								listener="#{userPostCardController.handleFileUploadReal}"
+								mode="advanced" dragDropSupport="false" multiple="true"
+								sizeLimit="3000000" fileLimit="10"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+							</p:fileUpload>
+						</h:form>
+					</div>
 					<div class="col-md-3 mt-3">
 						<div class="form-group">
 							<h:commandLink value='#{bundle.save}' id="realSaveBtn"
@@ -276,7 +278,6 @@
 							</h:commandLink>
 						</div>
 					</div>
-
 				</div>
 			</h:panelGroup>
 		</h:panelGroup>

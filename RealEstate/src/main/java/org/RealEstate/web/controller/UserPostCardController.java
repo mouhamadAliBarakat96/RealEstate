@@ -16,6 +16,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.RealEstate.controller.AbstractController;
 import org.RealEstate.dto.ImageDto;
@@ -31,6 +32,7 @@ import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.service.UploadImagesMultiPart;
+import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.omnifaces.util.Faces;
 import org.primefaces.component.tabview.TabView;
@@ -68,6 +70,9 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private TabView tabView;
 	private int activeIndex = 0;
 
+	@Inject
+	private HttpServletRequest request;
+
 	@EJB
 	private UploadImagesMultiPart uploadImagesMultiPart;
 	private List<ImageDto> list = new ArrayList<>();
@@ -75,29 +80,49 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	@PostConstruct
 	public void init() {
-		villages = villageFacade.findAll();
 
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		if (!facesContext.isPostback()) {
-			String id = externalContext.getRequestParameterMap().get(REQUEST_PARAM);
-			readTheFlashValue(id);
+		user = getUser();
+		if (user == null) {
+			try {
+				Faces.redirect("/user-login.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			villages = villageFacade.findAll();
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			if (!facesContext.isPostback()) {
+				String id = externalContext.getRequestParameterMap().get(REQUEST_PARAM);
+				readTheFlashValue(id);
 
+			}
 		}
+	}
+
+	public User getUser() {
+		HttpSession session = request.getSession(true);
+		User user = (User) session.getAttribute(Constants.USER_SESSION);
+		return user;
 	}
 
 	public void handleFileUploadReal(FileUploadEvent event) {
 		list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
-		FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-	public void handleFileUploadChalet(FileUploadEvent event) {
-		list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
+		item.addToImages(uploadToReal(list));
+
 		FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
-	public List<String> uploadToReal() {
+	public void handleFileUploadChalet(FileUploadEvent event) {
+		list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
+		chalet.addToImages(uploadToChalet(list));
+
+		FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+
+	public List<String> uploadToReal(List<ImageDto> images) {
 		try {
 			return uploadImagesMultiPart.uploadImagePostFrontEnd(list);
 		} catch (IOException e) {
@@ -105,8 +130,8 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			return null;
 		}
 	}
-	
-	public List<String> uploadToChalet() {
+
+	public List<String> uploadToChalet(List<ImageDto> images) {
 		try {
 			return uploadImagesMultiPart.uploadImagePostFrontEnd(list);
 		} catch (IOException e) {
@@ -225,7 +250,6 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				item.setUser(user);
 				item.setPostStatus(PostStatus.PENDING);
 				item.setPostType(postType);
-				item.setImages(uploadToReal());
 				super.save();
 			} else {
 				item.setPostStatus(PostStatus.PENDING);
@@ -246,7 +270,6 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				chalet.setPostDate(new Date());
 				chalet.setUser(user);
 				chalet.setPostStatus(PostStatus.PENDING);
-				chalet.setImages(uploadToChalet());
 				chalet = chaletFacade.save(chalet);
 			} else {
 				chalet.setPostStatus(PostStatus.PENDING);
@@ -393,6 +416,22 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	public void setActiveTab(int index) {
 		setActiveIndex(index);
 		tabView.setActiveIndex(index);
+	}
+
+	public List<ImageDto> getList() {
+		return list;
+	}
+
+	public void setList(List<ImageDto> list) {
+		this.list = list;
+	}
+
+	public UploadedFiles getFiles() {
+		return files;
+	}
+
+	public void setFiles(UploadedFiles files) {
+		this.files = files;
 	}
 
 }

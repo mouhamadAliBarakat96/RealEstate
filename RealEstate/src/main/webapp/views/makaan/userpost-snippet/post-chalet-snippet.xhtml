@@ -7,13 +7,6 @@
 
 <ui:component>
 	<div class="row p-3">
-		<p:fileUpload id="uploadImageChalet"
-			listener="#{userPostCardController.uploadToChalet()}" mode="advanced"
-			dragDropSupport="false" multiple="true" sizeLimit="3000000"
-			fileLimit="2" allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-		</p:fileUpload>
-	</div>
-	<div class="row p-3">
 		<div class="col-md-3">
 			<div class="form-group">
 				<p:outputLabel class="control-label" for="nameId"
@@ -86,6 +79,16 @@
 					</h:selectBooleanCheckbox>
 				</div>
 			</div>
+		</div>
+		<div class="col-md-12 mt-3">
+			<h:form>
+				<p:fileUpload id="uploadImageChalet"
+					listener="#{userPostCardController.handleFileUploadChalet}"
+					mode="advanced" dragDropSupport="false" multiple="true"
+					sizeLimit="3000000" fileLimit="10"
+					allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+				</p:fileUpload>
+			</h:form>
 		</div>
 		<div class="col-md-3 mt-3">
 			<div class="form-group">

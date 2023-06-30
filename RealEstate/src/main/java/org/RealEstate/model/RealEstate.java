@@ -38,7 +38,7 @@ import com.google.gson.annotations.Expose;
 @NamedQueries({
 		// change to enum accepted
 		@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and realEstate.postStatus = org.RealEstate.enumerator.PostStatus.ACCEPTED "),
-		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_STATUS, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postStatus= :postStatus ") , 
+		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_STATUS, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postStatus= :postStatus "),
 		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_TYPE, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postType= :postType ")
 
 })
@@ -48,7 +48,7 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	public static final String FING_NB_POST_FOR_USER = "RealEstate.FING_NB_POST_FOR_USER";
 	public static final String FIND_COUNT_POST_BY_STATUS = "RealEstate.FIND_COUNT_POST_BY_STATUS";
-	public static final String FIND_COUNT_POST_BY_TYPE= "RealEstate.FIND_COUNT_POST_BY_TYPE";
+	public static final String FIND_COUNT_POST_BY_TYPE = "RealEstate.FIND_COUNT_POST_BY_TYPE";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -66,14 +66,10 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@Expose
 	private String subTittle;
 
-	
 	// hon leh nrafad
 	@Column(length = 1000)
 	@Expose
 	private String reffuseCause;
-
-	
-
 
 	@Expose
 	private boolean negotiable;
@@ -101,8 +97,6 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	@Expose
 	private int numberOfCall;
-
-
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Expose
@@ -232,8 +226,6 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		this.liked = liked;
 	}
 
-
-
 	public Date getPostDate() {
 		return postDate;
 	}
@@ -266,7 +258,9 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		this.reffuseCause = reffuseCause;
 	}
 
-
+	public void addToImages(List<String> images) {
+		this.images.addAll(images);
+	}
 
 	public boolean isPricePublic() {
 		return pricePublic;
