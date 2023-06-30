@@ -63,6 +63,24 @@ public class PostListController implements Serializable {
 	private Long numOfPostShopSell;
 	private Long numOfPostOfficeRent;
 	private Long numOfPostOfficeSell;
+	private Long numOfStoreHouseRent;
+	private Long numOfStoreHouseSell;
+
+	public Long getNumOfStoreHouseRent() {
+		return numOfStoreHouseRent;
+	}
+
+	public void setNumOfStoreHouseRent(Long numOfStoreHouseRent) {
+		this.numOfStoreHouseRent = numOfStoreHouseRent;
+	}
+
+	public Long getNumOfStoreHouseSell() {
+		return numOfStoreHouseSell;
+	}
+
+	public void setNumOfStoreHouseSell(Long numOfStoreHouseSell) {
+		this.numOfStoreHouseSell = numOfStoreHouseSell;
+	}
 
 	private Long numAllPost;
 
@@ -77,8 +95,8 @@ public class PostListController implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		lazyModel = new LazyPostModel(realEstateFacade, fromDate, toDate, governorate, district, village,
-				minPrice, maxPrice);
+		lazyModel = new LazyPostModel(realEstateFacade, fromDate, toDate, governorate, district, village, minPrice,
+				maxPrice);
 
 		fillData();
 	}
@@ -98,6 +116,8 @@ public class PostListController implements Serializable {
 		numOfPostShopSell = realEstateFacade.findUserCountPostByType(PostType.SHOP_SELL);
 		numOfPostOfficeRent = realEstateFacade.findUserCountPostByType(PostType.OFFICE_RENT);
 		numOfPostOfficeSell = realEstateFacade.findUserCountPostByType(PostType.OFFICE_SELL);
+		numOfStoreHouseRent = realEstateFacade.findUserCountPostByType(PostType.STORE_HOUSE_RENT);
+		numOfStoreHouseSell = realEstateFacade.findUserCountPostByType(PostType.STORE_HOUSE_SELL);
 		numAllPost = (long) realEstateFacade.count();
 		// List
 		governorates = governorateFacade.findAll();
@@ -113,15 +133,15 @@ public class PostListController implements Serializable {
 			CommonUtility.addMessageToFacesContext("minPrice greater than maxPrice ", "error");
 
 		} else {
-			lazyModel = new LazyPostModel(realEstateFacade, fromDate, toDate, governorate, district, village,
-					minPrice, maxPrice);
+			lazyModel = new LazyPostModel(realEstateFacade, fromDate, toDate, governorate, district, village, minPrice,
+					maxPrice);
 			Ajax.oncomplete("PF('pageItemsTableWgVar').filter(); ");
 		}
 
 	}
 
 	public void fillDistrict() {
-		district = null ;
+		district = null;
 		village = null;
 		if (governorate != null) {
 			districts = districtFacade.findByGovernorate(governorate.getId());
