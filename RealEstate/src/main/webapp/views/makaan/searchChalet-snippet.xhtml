@@ -11,31 +11,31 @@
 		<div class="row">
 			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu styleClass="form-select border-0 "
-					converter="omnifaces.SelectItemsConverter"
+					converter="omnifaces.SelectItemsConverter" id="chaletGovernate"
 					value="#{indexController.selecteGovernorate}">
 					<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
 					<f:selectItems value="#{indexController.governorates}" var="option"
 						itemLabel="#{option.name}" itemValue="#{option}" />
 					<f:ajax execute="@this"
-						render="myForm:districtSelectId myForm:villageSelectId"
+						render="myForm:chaletDistrict myForm:chaletVillage"
 						listener="#{indexController.listenerSelectGovernate()}" />
 				</h:selectOneMenu>
 			</div>
 
 			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu converter="omnifaces.SelectItemsConverter"
-					styleClass="form-select border-0  "
+					styleClass="form-select border-0  " id="chaletDistrict"
 					value="#{indexController.selecteDistrict}">
 					<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
 					<f:selectItems value="#{indexController.districts}" var="option"
 						itemLabel="#{option.name}" itemValue="#{option}" />
 					<f:ajax execute="@this"
 						listener="#{indexController.listenerSelectDistrict()}"
-						render="myForm:villageSelectId" />
+						render="myForm:chaletVillage" />
 				</h:selectOneMenu>
 			</div>
 			<div class="col-md-3 col-sm-12 mt-2 pe-5">
-				<h:selectOneMenu converter="omnifaces.SelectItemsConverter"
+				<h:selectOneMenu converter="omnifaces.SelectItemsConverter" id="chaletVillage"
 					styleClass="form-select border-0  "
 					value="#{indexController.selecteVillage}">
 					<f:selectItem itemLabel="#{bundle.village}" itemValue="" />

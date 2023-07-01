@@ -230,14 +230,16 @@ public class IndexController implements Serializable {
 	}
 
 	public void listenerSelectGovernate() {
+		villages = new ArrayList<>();
+		districts = new ArrayList<>();
 		if (selecteGovernorate != null) {
-			villages = new ArrayList<>();
 			districts = districtFacade.findByGovernorate(selecteGovernorate.getId());
 		}
 
 	}
 
 	public void listenerSelectDistrict() {
+		villages = new ArrayList<>();
 		if (selecteDistrict != null) {
 			villages = villageFacade.findByDisctrict(selecteDistrict.getId());
 		}

@@ -25,17 +25,18 @@
 								</h:commandLink>
 								<div
 									class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">#{real.postType.name}</div>
-								<div
-									class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{real.tittle}</div>
+								
+								<h:commandLink
+									action="#{userPostListController.navigateToUserReal(real)}"
+									target="_blank">
+									<div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{real.tittle}</div>
+								</h:commandLink>
+							
 							</div>
 							<div class="p-4 pb-0">
 
 								<h5 class="text-primary mb-3">$ #{real.price}</h5>
-
-								<h:commandLink action="#{userPostListController.navigateToUserReal(real)}"
-									target="_blank" value="#{real.subTittle}"
-									styleClass="d-block h5 mb-2">
-								</h:commandLink>
+								 
 								<p>
 									<i class="fa fa-map-marker-alt text-primary me-2"></i>#{real.village.fullAddress()}
 								</p>
@@ -87,7 +88,7 @@
 									<h5 class="text-primary mb-3">$ #{real.price}</h5>
 
 									<h:commandLink action="#{userPostListController.navigateToUserReal(real)}"
-										target="_blank" value="#{real.subTittle}"
+										target="_blank" value="#{real.tittle}"
 										styleClass="d-block h5 mb-2">
 									</h:commandLink>
 

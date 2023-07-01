@@ -76,7 +76,7 @@
 			<h:panelGroup id="realSatatebathBedRoomsId" layout="block"
 				styleClass="row col-md-6 mt-2 pe-4">
 				<h:panelGroup
-					rendered="#{indexController.hasRoomsAndBathRooms(indexController.postType)}">
+					rendered="#{indexController.hasRoomsAndBathRooms(indexController.selectPostType)}">
 					<div class="col-md-4 col-sm-12">
 						<h:inputText onkeypress="return isNumberKey(event)"
 							placeholder="max price" styleClass="form-control"
