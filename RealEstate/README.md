@@ -142,4 +142,5 @@ chalet.setPostDate(new Date());
 chalet.setPostStatus(PostStatus.PENDING);
 
 
+Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId());
  
