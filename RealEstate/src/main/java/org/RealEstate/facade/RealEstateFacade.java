@@ -253,5 +253,13 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		return (Long) getEntityManager().createNamedQuery(RealEstate.FIND_COUNT_POST_BY_TYPE)
 				.setParameter("postType", postType).getSingleResult();
 	}
+	
+	public List<RealEstate> findUserRealEstates(User user) {
+		TypedQuery<RealEstate> query = getEntityManager().createNamedQuery(RealEstate.FIND_POSTS_BY_USER_ID,
+				RealEstate.class);
+		query.setParameter("user", user).getResultList();
+		return query.getResultList();
+
+	}
 
 }

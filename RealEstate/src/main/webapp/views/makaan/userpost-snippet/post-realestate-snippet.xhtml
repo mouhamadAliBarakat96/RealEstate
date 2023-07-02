@@ -19,6 +19,19 @@
 		<h:panelGroup id="inputPanel">
 			<h:panelGroup rendered="#{userPostCardController.postType != null}">
 				<div class="row">
+					<div class="col-12 md:col-4">
+						<p:staticMessage severity="warn" summary="WARN"
+							rendered="#{userPostCardController.item.postStatus == 'REFFUSED'}"
+							detail="#{userPostCardController.item.reffuseCause}"
+							style="width: 100%" />
+						
+						<p:staticMessage severity="warn" summary="WARN"
+							rendered="#{userPostCardController.item.postStatus} == 'TO_REVIEUX_BY_USER'}"
+							detail="#{userPostCardController.item.reffuseCause}"
+							style="width: 100%" />
+					</div>
+
+
 					<div class="col-md-3">
 						<div class="form-group">
 							<p:outputLabel class="control-label" for="titleId"
@@ -245,7 +258,7 @@
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-						
+
 							<p:outputLabel class="control-label" for="subTitleId"
 								value="#{bundle.real_estate_subtitle}">
 							</p:outputLabel>
@@ -259,14 +272,14 @@
 					</div>
 
 					<div class="col-md-12 mt-3">
-						
-							<p:fileUpload id="uploadImageRealEstate"
-								listener="#{userPostCardController.handleFileUploadReal}"
-								mode="advanced" dragDropSupport="false" multiple="true"
-								sizeLimit="3000000" fileLimit="5"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-							</p:fileUpload>
-						
+
+						<p:fileUpload id="uploadImageRealEstate"
+							listener="#{userPostCardController.handleFileUploadReal}"
+							mode="advanced" dragDropSupport="false" multiple="true"
+							sizeLimit="3000000" fileLimit="5"
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+						</p:fileUpload>
+
 					</div>
 					<div class="col-md-3 mt-3">
 						<div class="form-group">

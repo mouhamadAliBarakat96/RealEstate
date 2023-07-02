@@ -159,5 +159,12 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 		return getEntityManager().createQuery(countQuery).getSingleResult();
 
 	}
+	
+	public List<Chalet> findUserChalets(User user) {
+		TypedQuery<Chalet> query = getEntityManager().createNamedQuery(Chalet.FIND_POSTS_BY_USER_ID, Chalet.class);
+		query.setParameter("user", user).getResultList();
+		return query.getResultList();
+
+	}
 
 }

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.RealEstate.enumerator.PostType;
+import org.RealEstate.facade.ChaletFacade;
+import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.Chalet;
 import org.RealEstate.model.RealEstate;
@@ -43,6 +45,11 @@ public class UserPostListController implements Serializable {
 	private String fullUrl = "";
 	private String ipAddressWithPort;
 
+	@Inject
+	private RealEstateFacade estateFacade;
+	@Inject
+	private ChaletFacade chaletFacade;
+
 	@PostConstruct
 	public void init() {
 		user = getUser();
@@ -56,9 +63,17 @@ public class UserPostListController implements Serializable {
 		} else {
 			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
-			realEstates = user.getReadStateList();
-			chalets = user.getChales();
+			realEstates = findUserRealEstates(user);
+			chalets = findUserChalets(user);
 		}
+	}
+
+	public List<RealEstate> findUserRealEstates(User user) {
+		return estateFacade.findUserRealEstates(user);
+	}
+
+	public List<Chalet> findUserChalets(User user) {
+		return chaletFacade.findUserChalets(user);
 	}
 
 	public User getUser() {

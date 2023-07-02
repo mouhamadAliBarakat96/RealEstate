@@ -250,7 +250,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				item.setUser(user);
 				item.setPostStatus(PostStatus.PENDING);
 				item.setPostType(postType);
-				super.save();
+				item = getAbstractFacade().save(item);
 			} else {
 				item.setPostStatus(PostStatus.PENDING);
 				item = getAbstractFacade().save(item);

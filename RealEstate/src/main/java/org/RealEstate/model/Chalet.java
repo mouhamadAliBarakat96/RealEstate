@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,15 +30,16 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "tbl_chalet")
-
 @DiscriminatorValue("chalet")
+@NamedQuery(name = Chalet.FIND_POSTS_BY_USER_ID, query = "SELECT chalet  FROM Chalet chalet WHERE  chalet.user= :user ") 
 public class Chalet extends MainEntity implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	public static final String FIND_POSTS_BY_USER_ID = "Chalet.FIND_POSTS_BY_USER_ID";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Expose

@@ -41,7 +41,8 @@ import com.google.gson.annotations.Expose;
 
 		@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and  (realEstate.postStatus = org.RealEstate.enumerator.PostStatus.ACCEPTED or realEstate.postStatus = org.RealEstate.enumerator.PostStatus.PENDING ) "),
 		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_STATUS, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postStatus= :postStatus "),
-		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_TYPE, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postType= :postType ")
+		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_TYPE, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postType= :postType "),
+		@NamedQuery(name = RealEstate.FIND_POSTS_BY_USER_ID, query = "SELECT realEstate  FROM RealEstate realEstate WHERE  realEstate.user= :user ")
 
 })
 
@@ -53,6 +54,7 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	public static final String FIND_COUNT_POST_BY_STATUS = "RealEstate.FIND_COUNT_POST_BY_STATUS";
 	public static final String FIND_COUNT_POST_BY_TYPE = "RealEstate.FIND_COUNT_POST_BY_TYPE";
+	public static final String FIND_POSTS_BY_USER_ID = "RealEstate.FIND_POSTS_BY_USER_ID";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

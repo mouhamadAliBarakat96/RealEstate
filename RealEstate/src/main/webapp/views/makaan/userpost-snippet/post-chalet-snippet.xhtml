@@ -7,6 +7,18 @@
 
 <ui:component>
 	<div class="row p-3">
+		<div class="col-12 md:col-4">
+			<p:staticMessage severity="warn" summary="WARN"
+				rendered="#{userPostCardController.chalet.postStatus == 'REFFUSED'}"
+				detail="#{userPostCardController.chalet.reffuseCause}"
+				style="width: 100%" />
+
+			<p:staticMessage severity="warn" summary="WARN"
+				rendered="#{userPostCardController.chalet.postStatus == 'TO_REVIEUX_BY_USER'}"
+				detail="#{userPostCardController.chalet.reffuseCause}"
+				style="width: 100%" />
+		</div>
+
 		<div class="col-md-3">
 			<div class="form-group">
 				<p:outputLabel class="control-label" for="nameId"
