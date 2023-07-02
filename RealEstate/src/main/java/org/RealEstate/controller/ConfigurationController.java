@@ -12,9 +12,7 @@ import javax.inject.Named;
 
 import org.RealEstate.enumerator.Configuration;
 import org.RealEstate.facade.ConfigurationFacade;
-import org.RealEstate.interfaces.ICRUDOperations;
 import org.RealEstate.model.GeneralConfiguration;
-import org.RealEstate.model.Governorate;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.CommonUtility;
 

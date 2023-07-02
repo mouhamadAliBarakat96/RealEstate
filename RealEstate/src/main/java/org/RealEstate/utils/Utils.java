@@ -49,7 +49,6 @@ public class Utils {
 				.create();
 		String json = gs.toJson(data);
 		return new String(json.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-	
 
 	}
 
@@ -146,29 +145,23 @@ public class Utils {
 		}
 
 	}
-	
+
 	public static <T> T getObjectFromString(String json, Class<T> Classtype) throws IOException {
 
-		
-		
-		
-			JsonParser jsonParser = new JsonParser();
-			Gson gson = new GsonBuilder().setDateFormat(Constants.DATE_FORMAT).excludeFieldsWithoutExposeAnnotation()
-					.create();
-			StringBuilder sb = new StringBuilder();
+		JsonParser jsonParser = new JsonParser();
+		Gson gson = new GsonBuilder().setDateFormat(Constants.DATE_FORMAT).excludeFieldsWithoutExposeAnnotation()
+				.create();
+		StringBuilder sb = new StringBuilder();
 
+		if (json.equals(Constants.JSON_EMPTY_ARRAY) || sb.toString().endsWith(Constants.JSON_EMPTY_OBJECT)) {
 
-			if (json.equals(Constants.JSON_EMPTY_ARRAY)
-					|| sb.toString().endsWith(Constants.JSON_EMPTY_OBJECT)) {
+			return null;
 
-				return null;
+		}
 
-			}
+		JsonObject obj = (JsonObject) jsonParser.parse(json);
 
-			JsonObject obj = (JsonObject) jsonParser.parse(json);
-
-			return gson.fromJson(obj, Classtype);
-		
+		return gson.fromJson(obj, Classtype);
 
 	}
 
@@ -201,7 +194,6 @@ public class Utils {
 				.create();
 		String json = gson2.toJson(data);
 		return new String(json.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-	
 
 	}
 //
@@ -268,15 +260,20 @@ public class Utils {
 		return c.getTime();
 	}
 
-	
 	public static int radnomIntBasedToDate() {
 		Date currentDate = new Date();
-        long timestamp = currentDate.getTime(); // Get the current timestamp in milliseconds
-        
-        Random random = new Random(timestamp); // Seed the Random object with the timestamp
-        int randomNumber = random.nextInt();
-        
-        return randomNumber ;
+		long timestamp = currentDate.getTime(); // Get the current timestamp in milliseconds
+
+		Random random = new Random(timestamp); // Seed the Random object with the timestamp
+		int randomNumber = random.nextInt();
+
+		return randomNumber;
+	}
+
+	public static Date getThresholdDate(int numberOfDays) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, -numberOfDays); // Subtract 10 days
+		return calendar.getTime();
 	}
 	// -------------------------- begin ------------------- //
 
@@ -303,7 +300,7 @@ public class Utils {
 		}
 
 	}
-	
+
 	public static String sha256(String base) {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -322,11 +319,12 @@ public class Utils {
 			throw new RuntimeException(ex);
 		}
 	}
+
 	public static boolean validatePhoneNumber(String input) {
-        String regex = "^(03|71|76|81)\\d{6}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
-        
-        return matcher.matches();
-    }
+		String regex = "^(03|71|76|81)\\d{6}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(input);
+
+		return matcher.matches();
+	}
 }

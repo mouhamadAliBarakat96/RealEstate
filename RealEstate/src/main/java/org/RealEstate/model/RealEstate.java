@@ -37,7 +37,9 @@ import com.google.gson.annotations.Expose;
 @DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 20)
 @NamedQueries({
 		// change to enum accepted
-	@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER_ACTIVE, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and  realEstate.postStatus = org.RealEstate.enumerator.PostStatus.ACCEPTED "),
+		@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER_ACTIVE, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and  realEstate.postStatus = org.RealEstate.enumerator.PostStatus.ACCEPTED "),
+
+		@NamedQuery(name = RealEstate.UPDATE_POST_TO_EXPIRY_DATE, query = "UPDATE RealEstate realEstate SET realEstate.postStatus = org.RealEstate.enumerator.PostStatus.EXPIRED WHERE realEstate.postDate < :thresholdDate"),
 
 		@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and  (realEstate.postStatus = org.RealEstate.enumerator.PostStatus.ACCEPTED or realEstate.postStatus = org.RealEstate.enumerator.PostStatus.PENDING ) "),
 		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_STATUS, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postStatus= :postStatus "),
@@ -54,7 +56,11 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	public static final String FIND_COUNT_POST_BY_STATUS = "RealEstate.FIND_COUNT_POST_BY_STATUS";
 	public static final String FIND_COUNT_POST_BY_TYPE = "RealEstate.FIND_COUNT_POST_BY_TYPE";
+
 	public static final String FIND_POSTS_BY_USER_ID = "RealEstate.FIND_POSTS_BY_USER_ID";
+
+	public static final String UPDATE_POST_TO_EXPIRY_DATE = "RealEstate.UPDATE_POST_TO_EXPIRY_DATE";
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

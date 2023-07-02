@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,7 +25,9 @@ import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utils;
 
 @Stateless
 public class RealEstateFacade extends AbstractFacade<RealEstate> implements Serializable {
@@ -41,12 +45,11 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		return (Long) getEntityManager().createNamedQuery(RealEstate.FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING)
 				.setParameter("userId", userId).getSingleResult();
 	}
-	
+
 	public Long findUserCountPostActive(Long userId) {
 		return (Long) getEntityManager().createNamedQuery(RealEstate.FING_NB_POST_FOR_USER_ACTIVE)
 				.setParameter("userId", userId).getSingleResult();
 	}
-
 
 	public Long findUserCountPostByStatus(PostStatus postStatus) {
 		return (Long) getEntityManager().createNamedQuery(RealEstate.FIND_COUNT_POST_BY_STATUS)
@@ -81,7 +84,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	public List<RealEstate> findAllRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice,
 			Village village, int page, int size, AtomicLong totalCount, int bedRoom, boolean bedRoomEq, int bathRoom,
 			boolean bathRoomEq, District district, Governorate governorate) throws Exception {
-	
+
 		List<? extends RealEstate> realEstates;
 
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
@@ -259,6 +262,22 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 				RealEstate.class);
 		query.setParameter("user", user).getResultList();
 		return query.getResultList();
+
+	}
+
+	/**
+	 * Set post expire date After certain time
+	 */
+
+	public void updatePostToExpiryDate(int nbOfDayExpireDate) {
+
+		Query updateQuery = getEntityManager().createNamedQuery(RealEstate.UPDATE_POST_TO_EXPIRY_DATE);
+		updateQuery.setParameter("thresholdDate", Utils.getThresholdDate(nbOfDayExpireDate)); // Replace
+																								// with
+		// the threshold
+		// date
+
+		updateQuery.executeUpdate();
 
 	}
 
