@@ -38,9 +38,15 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	}
 
 	public Long findUserCountPostPendingOrActive(Long userId) {
-		return (Long) getEntityManager().createNamedQuery(RealEstate.FING_NB_POST_FOR_USER)
+		return (Long) getEntityManager().createNamedQuery(RealEstate.FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING)
 				.setParameter("userId", userId).getSingleResult();
 	}
+	
+	public Long findUserCountPostActive(Long userId) {
+		return (Long) getEntityManager().createNamedQuery(RealEstate.FING_NB_POST_FOR_USER_ACTIVE)
+				.setParameter("userId", userId).getSingleResult();
+	}
+
 
 	public Long findUserCountPostByStatus(PostStatus postStatus) {
 		return (Long) getEntityManager().createNamedQuery(RealEstate.FIND_COUNT_POST_BY_STATUS)

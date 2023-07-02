@@ -143,4 +143,9 @@ chalet.setPostStatus(PostStatus.PENDING);
 
 
 Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId());
+
+			if (nbOfPost >= appSinglton.getFreeNbOfPost()) {
+				throw new Exception("EXCEEDED_POST_LIMIT");
+			}
+
  

@@ -721,7 +721,7 @@ public class PostService implements Serializable {
 
 		String postType = jsonNode.get("postType").asText();
 
-		if (!postType.equals("CHALET")) {
+ 		if (!postType.equals("CHALET")) {
 			Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId());
 
 			if (nbOfPost >= appSinglton.getFreeNbOfPost()) {

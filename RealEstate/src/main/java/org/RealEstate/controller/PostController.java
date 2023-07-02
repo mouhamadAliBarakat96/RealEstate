@@ -17,6 +17,7 @@ import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.WaterResources;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +41,11 @@ public class PostController implements Serializable {
 
 	private final String REQUEST_PARAM = "id";
 
+	private Long nbOfActivePostByThisUser;
+
+	@EJB
+	private AppSinglton appSinglton;
+
 	@PostConstruct
 	public void init() {
 
@@ -47,6 +53,7 @@ public class PostController implements Serializable {
 			CommonUtility.addMessageToFacesContext("Id should > 0  ", "error");
 		} else {
 			realEstate = realEstateFacade.find(id);
+			nbOfActivePostByThisUser = realEstateFacade.findUserCountPostActive(realEstate.getUser().getId());
 
 			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
@@ -61,7 +68,6 @@ public class PostController implements Serializable {
 		}
 
 	}
-	
 
 	public String waterResouces(List<WaterResources> list) {
 		list.size();
@@ -69,8 +75,8 @@ public class PostController implements Serializable {
 		for (WaterResources var : list) {
 			result = result.concat(var.toString().toLowerCase()) + ",";
 		}
-		if(!result.isEmpty()) {
-			result =	StringUtils.substring(result, 0, result.length() - 1);
+		if (!result.isEmpty()) {
+			result = StringUtils.substring(result, 0, result.length() - 1);
 		}
 		return result;
 	}
@@ -88,11 +94,17 @@ public class PostController implements Serializable {
 	public void save() {
 
 		try {
-			if ((realEstate.getPostStatus().equals(PostStatus.REFFUSED.toString())
-					|| realEstate.getPostStatus().equals(PostStatus.TO_REVIEUX_BY_USER.toString()))
+			if ((realEstate.getPostStatus().equals(PostStatus.REFFUSED)
+					|| realEstate.getPostStatus().equals(PostStatus.TO_REVIEUX_BY_USER))
 					&& realEstate.getReffuseCause().isEmpty()) {
 
 				CommonUtility.addMessageToFacesContext("refuse cause  should not be empty  ", "error");
+
+			} else if (realEstate.getPostStatus().equals(PostStatus.ACCEPTED)
+					&& nbOfActivePostByThisUser >= appSinglton.getFreeNbOfPost()) {
+				// naaml check lal active 3ndo
+
+				CommonUtility.addMessageToFacesContext("EXCEEDED_POST_LIMIT for this user  ", "error");
 
 			} else {
 				realEstateFacade.save(realEstate);
@@ -104,7 +116,8 @@ public class PostController implements Serializable {
 
 				changeUrl();
 			}
-		} catch (Exception e) {
+
+		} catch (	Exception e) {
 			e.printStackTrace();
 		}
 
