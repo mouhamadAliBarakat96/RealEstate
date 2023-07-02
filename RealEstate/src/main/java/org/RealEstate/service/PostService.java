@@ -722,7 +722,7 @@ public class PostService implements Serializable {
 		String postType = jsonNode.get("postType").asText();
 
 		if (!postType.equals("CHALET")) {
-			Long nbOfPost = restateFacade.findUserCountPost(user.getId());
+			Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId());
 
 			if (nbOfPost >= appSinglton.getFreeNbOfPost()) {
 				throw new Exception("EXCEEDED_POST_LIMIT");

@@ -37,7 +37,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		super(RealEstate.class);
 	}
 
-	public Long findUserCountPost(Long userId) {
+	public Long findUserCountPostPendingOrActive(Long userId) {
 		return (Long) getEntityManager().createNamedQuery(RealEstate.FING_NB_POST_FOR_USER)
 				.setParameter("userId", userId).getSingleResult();
 	}
