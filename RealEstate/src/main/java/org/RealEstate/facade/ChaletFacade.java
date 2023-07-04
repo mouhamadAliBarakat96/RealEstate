@@ -7,6 +7,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,6 +26,7 @@ import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.service.UploadImagesMultiPart;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 
 @Stateless
@@ -159,11 +163,24 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 		return getEntityManager().createQuery(countQuery).getSingleResult();
 
 	}
-	
+
 	public List<Chalet> findUserChalets(User user) {
 		TypedQuery<Chalet> query = getEntityManager().createNamedQuery(Chalet.FIND_POSTS_BY_USER_ID, Chalet.class);
 		query.setParameter("user", user).getResultList();
 		return query.getResultList();
+
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void updatePostToExpiryDate(int nbOfDayExpireDate) {
+
+		Query updateQuery = getEntityManager().createNamedQuery(Chalet.UPDATE_CHALET_TO_EXPIRY_DATE);
+		updateQuery.setParameter("thresholdDate", Utils.getThresholdDate(nbOfDayExpireDate)); // Replace
+																								// with
+		// the threshold
+		// date
+
+		updateQuery.executeUpdate();
 
 	}
 

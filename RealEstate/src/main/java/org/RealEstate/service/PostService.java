@@ -725,24 +725,27 @@ public class PostService implements Serializable {
 		if (!postType.equals("CHALET")) {
 			Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId());
 
-			// TODO return from mojtaba
-
-			// check if maktab 3ikare ..
-			if (user.isBroker() && nbOfPost >= appSinglton.getBrokerNbOfPost()) {
-				throw new Exception("EXCEEDED_POST_LIMIT");
-
+			// nb of post allowed ;
+			// krml is broker bytla3lo zyde
+			int nbOfPostAllowed = 0;
+			if (user.isBroker()) {
+				nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
 			}
 
-			// check 3adad el post hasab el user account
+			if (user.getUserCategory() == UserCategory.REGULAR) {
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
 
-			else if (user.getUserCategory() == UserCategory.REGULAR && nbOfPost >= appSinglton.getFreeNbOfPost()) {
+			} else if (user.getUserCategory() == UserCategory.MEDUIM) {
+
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
+
+			} else if (user.getUserCategory() == UserCategory.PREMIUM) {
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
+			}
+
+			if (nbOfPost >= nbOfPostAllowed) {
 				throw new Exception("EXCEEDED_POST_LIMIT");
-			} else if (user.getUserCategory() == UserCategory.MEDUIM
-					&& nbOfPost >= appSinglton.getMeduimAccountNbOfPost()) {
-				throw new Exception("EXCEEDED_POST_LIMIT");
-			} else if (user.getUserCategory() == UserCategory.PREMIUM
-					&& nbOfPost >= appSinglton.getPremuimAccountNbOfPost()) {
-				throw new Exception("EXCEEDED_POST_LIMIT");
+
 			}
 
 		}
@@ -829,7 +832,7 @@ public class PostService implements Serializable {
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 
 				}
 
@@ -843,7 +846,7 @@ public class PostService implements Serializable {
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 
 				}
 
@@ -856,7 +859,7 @@ public class PostService implements Serializable {
 					landFacade.save(land);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "CHALET":
@@ -868,7 +871,7 @@ public class PostService implements Serializable {
 					chaletFacade.save(chalet);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "SHOP_RENT":
@@ -880,7 +883,7 @@ public class PostService implements Serializable {
 					shopRentFacade.save(shopRent);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "SHOP_SELL":
@@ -892,7 +895,7 @@ public class PostService implements Serializable {
 					shopSellFacade.save(shopSell);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "OFFICE_RENT":
@@ -904,7 +907,7 @@ public class PostService implements Serializable {
 					officeRentFacade.save(officeRent);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "OFFICE_SELL":
@@ -916,7 +919,7 @@ public class PostService implements Serializable {
 					officeSellFacade.save(officeSell);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			default:
@@ -947,7 +950,7 @@ public class PostService implements Serializable {
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 
 				}
 
@@ -961,7 +964,7 @@ public class PostService implements Serializable {
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 
 				}
 
@@ -974,7 +977,7 @@ public class PostService implements Serializable {
 					landFacade.save(land);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "CHALET":
@@ -986,7 +989,7 @@ public class PostService implements Serializable {
 					chaletFacade.save(chalet);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "SHOP_RENT":
@@ -998,7 +1001,7 @@ public class PostService implements Serializable {
 					shopRentFacade.save(shopRent);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "SHOP_SELL":
@@ -1010,7 +1013,7 @@ public class PostService implements Serializable {
 					shopSellFacade.save(shopSell);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "STORE_HOUSE_RENT":
@@ -1022,7 +1025,7 @@ public class PostService implements Serializable {
 					storeHouseRentFacade.save(storeHouseRent);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "STORE_HOUSE_SELL":
@@ -1034,7 +1037,7 @@ public class PostService implements Serializable {
 					storeHouseSellFacade.save(storeHouseSell);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "OFFICE_RENT":
@@ -1046,7 +1049,7 @@ public class PostService implements Serializable {
 					officeRentFacade.save(officeRent);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "OFFICE_SELL":
@@ -1058,7 +1061,7 @@ public class PostService implements Serializable {
 					officeSellFacade.save(officeSell);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			default:
@@ -1088,7 +1091,7 @@ public class PostService implements Serializable {
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 
 				}
 
@@ -1102,7 +1105,7 @@ public class PostService implements Serializable {
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 
 				}
 
@@ -1115,7 +1118,7 @@ public class PostService implements Serializable {
 					landFacade.save(land);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "CHALET":
@@ -1127,7 +1130,7 @@ public class PostService implements Serializable {
 					chaletFacade.save(chalet);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "SHOP_RENT":
@@ -1139,7 +1142,7 @@ public class PostService implements Serializable {
 					shopRentFacade.save(shopRent);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "SHOP_SELL":
@@ -1151,7 +1154,7 @@ public class PostService implements Serializable {
 					shopSellFacade.save(shopSell);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "STORE_HOUSE_RENT":
@@ -1163,7 +1166,7 @@ public class PostService implements Serializable {
 					storeHouseRentFacade.save(storeHouseRent);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "STORE_HOUSE_SELL":
@@ -1175,7 +1178,7 @@ public class PostService implements Serializable {
 					storeHouseSellFacade.save(storeHouseSell);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "OFFICE_RENT":
@@ -1187,7 +1190,7 @@ public class PostService implements Serializable {
 					officeRentFacade.save(officeRent);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			case "OFFICE_SELL":
@@ -1199,7 +1202,7 @@ public class PostService implements Serializable {
 					officeSellFacade.save(officeSell);
 					return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 				} else {
-					return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+					return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 				}
 
 			default:
@@ -1327,7 +1330,7 @@ public class PostService implements Serializable {
 				chaletFacade.save(chalet);
 				return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 			} else {
-				return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1345,7 +1348,7 @@ public class PostService implements Serializable {
 				chaletFacade.save(chalet);
 				return Response.status(Status.ACCEPTED).entity("SUCCESS").build();
 			} else {
-				return Response.status(Status.NOT_FOUND).entity("ID_NOT_EXISTS").build();
+				return Response.status(Status.NO_CONTENT).entity("ID_NOT_EXISTS").build();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

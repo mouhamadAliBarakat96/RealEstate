@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -31,9 +32,22 @@ import com.google.gson.annotations.Expose;
 @Entity
 @Table(name = "tbl_chalet")
 @DiscriminatorValue("chalet")
-@NamedQuery(name = Chalet.FIND_POSTS_BY_USER_ID, query = "SELECT chalet  FROM Chalet chalet WHERE  chalet.user= :user ") 
+@NamedQueries({
+	@NamedQuery(name = Chalet.FIND_POSTS_BY_USER_ID, query = "SELECT chalet  FROM Chalet chalet WHERE  chalet.user= :user ") ,
+	@NamedQuery(name = Chalet.UPDATE_CHALET_TO_EXPIRY_DATE, query = "UPDATE Chalet chalet SET chalet.postStatus = org.RealEstate.enumerator.PostStatus.EXPIRED WHERE chalet.postDate < :thresholdDate"),
+
+
+	
+})
+
+
+
 public class Chalet extends MainEntity implements Serializable {
 
+	
+	public static final String UPDATE_CHALET_TO_EXPIRY_DATE = "Chalet.UPDATE_CHALET_TO_EXPIRY_DATE";
+
+	
 	/**
 	 * 
 	 */

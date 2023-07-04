@@ -104,47 +104,51 @@ public class PostController implements Serializable {
 					&& realEstate.getReffuseCause().isEmpty()) {
 
 				CommonUtility.addMessageToFacesContext("refuse cause  should not be empty  ", "error");
-
+				return;
 			} else if (realEstate.getPostStatus().equals(PostStatus.ACCEPTED)) {
-				// naaml check lal active 3ndo
 
-				// todo wait mojtaba
-				if (user.isBroker() && nbOfActivePostByThisUser >= appSinglton.getBrokerNbOfPost()) {
-					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_for_this_user, "error");
-
+				int nbOfPostAllowed = 0;
+				if (user.isBroker()) {
+					nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
 				}
 
-				// check 3adad el post hasab el user account
+				if (user.getUserCategory() == UserCategory.REGULAR) {
+					nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
 
-				else if (user.getUserCategory() == UserCategory.REGULAR
-						&& nbOfActivePostByThisUser >= appSinglton.getFreeNbOfPost()) {
-					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_for_this_user, "error");
+				} else if (user.getUserCategory() == UserCategory.MEDUIM) {
 
-				} else if (user.getUserCategory() == UserCategory.MEDUIM
-						&& nbOfActivePostByThisUser >= appSinglton.getMeduimAccountNbOfPost()) {
-					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_for_this_user, "error");
+					nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
 
-				} else if (user.getUserCategory() == UserCategory.PREMIUM
-						&& nbOfActivePostByThisUser >= appSinglton.getPremuimAccountNbOfPost()) {
-					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_for_this_user, "error");
-
+				} else if (user.getUserCategory() == UserCategory.PREMIUM) {
+					nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
 				}
+
+				if (nbOfActivePostByThisUser >= nbOfPostAllowed) {
+					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_for_this_user, "error");
+					return;
+				}
+
+				toSave();
 
 			} else {
-				realEstateFacade.save(realEstate);
-
-				CommonUtility.addMessageToFacesContext("Update successfully   ", "success");
-
-				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-				flash.put("update-card", "true");
-
-				changeUrl();
+				toSave();
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void toSave() throws Exception {
+		realEstateFacade.save(realEstate);
+
+		CommonUtility.addMessageToFacesContext("Update successfully   ", "success");
+
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.put("update-card", "true");
+
+		changeUrl();
 	}
 
 	private void changeUrl() {

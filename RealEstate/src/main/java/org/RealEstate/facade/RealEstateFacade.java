@@ -28,6 +28,8 @@ import org.RealEstate.model.Village;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 @Stateless
 public class RealEstateFacade extends AbstractFacade<RealEstate> implements Serializable {
@@ -256,7 +258,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		return (Long) getEntityManager().createNamedQuery(RealEstate.FIND_COUNT_POST_BY_TYPE)
 				.setParameter("postType", postType).getSingleResult();
 	}
-	
+
 	public List<RealEstate> findUserRealEstates(User user) {
 		TypedQuery<RealEstate> query = getEntityManager().createNamedQuery(RealEstate.FIND_POSTS_BY_USER_ID,
 				RealEstate.class);
@@ -269,6 +271,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	 * Set post expire date After certain time
 	 */
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void updatePostToExpiryDate(int nbOfDayExpireDate) {
 
 		Query updateQuery = getEntityManager().createNamedQuery(RealEstate.UPDATE_POST_TO_EXPIRY_DATE);

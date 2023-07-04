@@ -53,32 +53,29 @@ public class PostMangment {
 	@PUT
 	@Path("/v1/remove-picture-post")
 
-	public Response removePciture(@QueryParam("id") Long id , List<String> imagesToDelete) {
+	public Response removePciture(@QueryParam("id") Long id, List<String> imagesToDelete) {
 
 		return postService.removePostImage(id, imagesToDelete);
 	}
 
-	
-	
 	@PUT
 	@Path("/v1/update-image-post")
 
-	public Response updatePostImage(@QueryParam("id") Long id ,@MultipartForm MultipartFormDataInput input) {
+	public Response updatePostImage(@QueryParam("id") Long id, @MultipartForm MultipartFormDataInput input) {
 
-		return postService.updatePostImage(id , input);
+		return postService.updatePostImage(id, input);
 
 	}
+
 	@PUT
-	@Path("/v1/update-image-post")
+	@Path("/v1/update-image-chalet")
 
-	public Response updateChaletImage(@QueryParam("id") Long id ,@MultipartForm MultipartFormDataInput input) {
+	public Response updateChaletImage(@QueryParam("id") Long id, @MultipartForm MultipartFormDataInput input) {
 
-		return postService.updateChaletImage(id , input);
+		return postService.updateChaletImage(id, input);
 
 	}
 
-	
-	
 	@PUT
 	@Path("/v1/remove-picture-chalet")
 	public Response removePcitureChalet(@QueryParam("id") Long id, List<String> images) {
@@ -162,7 +159,7 @@ public class PostMangment {
 	}
 
 	@PUT
-	@Path("/v1/add-like/{id}/{postType}")
+	@Path("/v1/call-post/{id}/{postType}")
 	@Produces(MediaType.APPLICATION_JSON)
 
 	public Response updateCallPost(@PathParam("id") Long id, @PathParam("postType") String postType) {

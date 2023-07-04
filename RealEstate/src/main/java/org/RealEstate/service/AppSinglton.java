@@ -19,6 +19,7 @@ import javax.ejb.TimerService;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import org.RealEstate.enumerator.Configuration;
+import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.ConfigurationFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.GeneralConfiguration;
@@ -53,6 +54,8 @@ public class AppSinglton implements Serializable {
 	private TimerService timerService;
 	@EJB
 	private RealEstateFacade realEstateFacade;
+	@EJB
+	private ChaletFacade chaletFacade;
 
 	@PostConstruct
 	public void init() {
@@ -67,7 +70,7 @@ public class AppSinglton implements Serializable {
 			timer.setTime(DateUtils.parseDate(timerToCheck, "dd-MM-yyyy HH:mm"));
 			timerService
 					.createCalendarTimer(new ScheduleExpression().hour(String.valueOf(timer.get(Calendar.HOUR_OF_DAY)))
-							.minute(String.valueOf(timer.get(Calendar.MINUTE))), new TimerConfig("TEST", false));
+							.minute(String.valueOf(timer.get(Calendar.MINUTE))), new TimerConfig("POST_EXPIRE", false));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,8 +81,11 @@ public class AppSinglton implements Serializable {
 	@Timeout
 	public void timeOutByConfig(Timer timer) {
 		switch (timer.getInfo().toString()) {
-		case "TEST":
+		case "POST_EXPIRE":
 			realEstateFacade.updatePostToExpiryDate(postExpiryDate);
+			
+			chaletFacade.updatePostToExpiryDate(postExpiryDate);
+			
 			break;
 		}
 
