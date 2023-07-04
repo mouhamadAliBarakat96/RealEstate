@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
 	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:h="http://java.sun.com/jsf/html">
 
@@ -33,6 +34,14 @@
 		<h4 class="page-title">User profile Picture Mangment</h4>
 	</ui:define>
 	<ui:define name="customFormContent">
+
+		<o:onloadScript>
+	select2me();
+	</o:onloadScript>
+
+		<o:importConstants type="org.RealEstate.enumerator.UserCategory"
+			var="userCategory" />
+
 		<h:panelGroup id="crud-id">
 			<div class="panel-body">
 
@@ -40,39 +49,59 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="row">
-							<div class="col-md-6">
-								<h:outputText style=" font-size:20px; display:block;"
-									value="UserName : #{userProfilePicture.user.userName} " />
+							<div class="col-md-3">
+								<h:outputText style=" font-size:16px; "
+									value="UserName : #{userInformationController.user.userName} " />
 
 
 
-								<h:outputText id="text" style=" font-size:20px; display:block;"
-									value="current status for profile ' #{userProfilePicture.user.showProfilePicture} '" />
+
 							</div>
-							<div class="col-md-4">
-								<h:commandLink id="saveId"
-									style=" float:right ; margin-left:10px;margin-top:5%;"
-									action='#{userProfilePicture.changeProfilePictureStatus()}'
-									styleClass="btn btn-primary btn-save">
-									<f:ajax render=":messageScript text  saveId" execute="  name  " />
-									<i class="fa fa-save" />
+							<div class="col-md-3">
+								<h:outputText style=" font-size:16px; "
+									value="Phone Number : #{userInformationController.user.phoneNumber} " />
 
-									<span>change show profile to
-										#{!userProfilePicture.user.showProfilePicture} </span>
+
+
+
+							</div>
+
+							<div class="col-md-4">
+								<h:outputText style=" font-size:16px; " value="User Category : " />
+								<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+									styleClass="select2 select2me form-control   custom-select"
+									converter="omnifaces.SelectItemsConverter" id="userCategory"
+									label="userCategory"
+									value="#{userInformationController.user.userCategory}"
+									placeHolder="#set">
+
+									<f:selectItems value="#{userCategory.values()}" var="var"
+										itemLabel="#{var}" itemValue="#{var}" />
+
+									<f:ajax render=" test "></f:ajax>
+								</h:selectOneMenu>
+
+							</div>
+
+
+
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<h:commandLink id="saveId"
+									style=" float:right ; margin-left:10px;"
+									action='#{userInformationController.save()}'
+									styleClass="btn btn-primary btn-save">
+									<f:ajax render=":messageScript crud-id " execute="  crud-id  " />
+									<i class="fa fa-save" />
+									<span>Save</span>
 
 
 								</h:commandLink>
-							</div>
-							<div style="margin-top: 5%" class=" col-md-12">
-
-
-								<p:graphicImage url="#{userProfilePicture.fullUrl}"
-									style="width: 50%" alt="#{photo}" />
 
 							</div>
 						</div>
-
-					
 
 					</div>
 				</div>
@@ -80,7 +109,6 @@
 
 
 			</div>
-
 		</h:panelGroup>
 
 	</ui:define>

@@ -42,7 +42,7 @@ public class UserProfilePicture implements Serializable {
 		if (id > 0) {
 			user = userFacade.find(id);
 			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
-					.concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/").concat(user.getProfileImageUrl());
+					.concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/").concat(user.getProfileImageUrl() == null ? "" :  user.getProfileImageUrl());
 
 		}
 

@@ -17,7 +17,10 @@ public class RestApplication extends Application {
 
 		classes.add(WaterResourcesMangment.class);
 		classes.add(UserMangment.class);
+		classes.add(GeneralConfigurationMangment.class);
 
+		
+		
 		
 		return classes;
 	}

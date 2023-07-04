@@ -97,6 +97,14 @@ public class TemplateController implements Serializable {
 		
 		m2 = new MenuItem("User Profile Picture", "       dripicons-user-group     ", "user-profile-picture-list", true, "addButton");
 		m1.addChild(m2);
+	
+		
+		
+		
+		
+		m2 = new MenuItem("", "", "user-information", true, "display: none;");
+		m1.addChild(m2);
+		
 		
 		m2 = new MenuItem("", "", "user-profile-picture", true, "display: none;");
 		m1.addChild(m2);

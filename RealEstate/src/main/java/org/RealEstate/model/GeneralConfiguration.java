@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "tbl_general_configuration")
 public class GeneralConfiguration extends MainEntity implements Serializable {
@@ -23,10 +25,12 @@ public class GeneralConfiguration extends MainEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 
+	@Expose
 	@Size(min = 1)
 	@NotEmpty
 	private String key;
 
+	@Expose
 	@Size(min = 1)
 	@NotEmpty
 	private String value;

@@ -55,6 +55,18 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>user-information</from-outcome>
+			<to-view-id>/views/user/user-information.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	
 
 	<navigation-rule>
 		<navigation-case>
