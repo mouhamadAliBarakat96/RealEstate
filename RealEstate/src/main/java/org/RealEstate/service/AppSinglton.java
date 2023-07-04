@@ -36,6 +36,16 @@ public class AppSinglton implements Serializable {
 
 	private int freeNbOfPost;
 	private int postExpiryDate;
+	private int meduimAccountPay;
+	private int meduimAccountNbOfPost;
+	private int premuimAccountPay;
+	private int premuimAccountNbOfPost;
+	private String phoneNumber;
+	private int brokerNbOfPost;
+	private int boostDuration;
+	private int boostCash;
+	private int postBadgePay;
+
 	@EJB
 	private ConfigurationFacade configurationFacade;
 
@@ -108,6 +118,78 @@ public class AppSinglton implements Serializable {
 
 	public void setPostExpiryDate(int postExpiryDate) {
 		this.postExpiryDate = postExpiryDate;
+	}
+
+	public int getMeduimAccountPay() {
+		return meduimAccountPay;
+	}
+
+	public void setMeduimAccountPay(int meduimAccountPay) {
+		this.meduimAccountPay = meduimAccountPay;
+	}
+
+	public int getMeduimAccountNbOfPost() {
+		return meduimAccountNbOfPost;
+	}
+
+	public void setMeduimAccountNbOfPost(int meduimAccountNbOfPost) {
+		this.meduimAccountNbOfPost = meduimAccountNbOfPost;
+	}
+
+	public int getPremuimAccountPay() {
+		return premuimAccountPay;
+	}
+
+	public void setPremuimAccountPay(int premuimAccountPay) {
+		this.premuimAccountPay = premuimAccountPay;
+	}
+
+	public int getPremuimAccountNbOfPost() {
+		return premuimAccountNbOfPost;
+	}
+
+	public void setPremuimAccountNbOfPost(int premuimAccountNbOfPost) {
+		this.premuimAccountNbOfPost = premuimAccountNbOfPost;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public int getBrokerNbOfPost() {
+		return brokerNbOfPost;
+	}
+
+	public void setBrokerNbOfPost(int brokerNbOfPost) {
+		this.brokerNbOfPost = brokerNbOfPost;
+	}
+
+	public int getBoostDuration() {
+		return boostDuration;
+	}
+
+	public void setBoostDuration(int boostDuration) {
+		this.boostDuration = boostDuration;
+	}
+
+	public int getBoostCash() {
+		return boostCash;
+	}
+
+	public void setBoostCash(int boostCash) {
+		this.boostCash = boostCash;
+	}
+
+	public int getPostBadgePay() {
+		return postBadgePay;
+	}
+
+	public void setPostBadgePay(int postBadgePay) {
+		this.postBadgePay = postBadgePay;
 	}
 
 }

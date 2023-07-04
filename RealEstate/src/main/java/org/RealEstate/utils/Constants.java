@@ -47,5 +47,5 @@ public interface Constants {
 	public static final String DISTRICT_NOT_EXISTS = "DISTRICT_NOT_EXISTS";
 	public static final String GOVERNORTE_NOT_EXISTS = "GOVERNORTE_NOT_EXISTS";
 	public static final String USER_NAME_OR_PASSWORD_INVALID = "USER_NAME_OR_PASSWORD_INVALID";
-
+	public static final String EXCEEDED_POST_LIMIT_for_this_user = "EXCEEDED_POST_LIMIT_for_this_user" ;
 }

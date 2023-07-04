@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response.Status;
 import org.RealEstate.dto.PaginationResponse;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
+import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.facade.AppratmentRentFacade;
 import org.RealEstate.facade.AppratmentSellFacade;
 import org.RealEstate.facade.ChaletFacade;
@@ -721,10 +722,26 @@ public class PostService implements Serializable {
 
 		String postType = jsonNode.get("postType").asText();
 
- 		if (!postType.equals("CHALET")) {
+		if (!postType.equals("CHALET")) {
 			Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId());
 
-			if (nbOfPost >= appSinglton.getFreeNbOfPost()) {
+			// TODO return from mojtaba
+
+			// check if maktab 3ikare ..
+			if (user.isBroker() && nbOfPost >= appSinglton.getBrokerNbOfPost()) {
+				throw new Exception("EXCEEDED_POST_LIMIT");
+
+			}
+
+			// check 3adad el post hasab el user account
+
+			else if (user.getUserCategory() == UserCategory.REGULAR && nbOfPost >= appSinglton.getFreeNbOfPost()) {
+				throw new Exception("EXCEEDED_POST_LIMIT");
+			} else if (user.getUserCategory() == UserCategory.MEDUIM
+					&& nbOfPost >= appSinglton.getMeduimAccountNbOfPost()) {
+				throw new Exception("EXCEEDED_POST_LIMIT");
+			} else if (user.getUserCategory() == UserCategory.PREMIUM
+					&& nbOfPost >= appSinglton.getPremuimAccountNbOfPost()) {
 				throw new Exception("EXCEEDED_POST_LIMIT");
 			}
 

@@ -1,5 +1,6 @@
 package org.RealEstate.restService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -51,9 +52,10 @@ public class PostMangment {
 
 	@PUT
 	@Path("/v1/remove-picture-post")
-	public Response removePciture(@QueryParam("id") Long id, List<String> images) {
 
-		return postService.removePostImage(id, images);
+	public Response removePciture(@QueryParam("id") Long id , List<String> imagesToDelete) {
+
+		return postService.removePostImage(id, imagesToDelete);
 	}
 
 	

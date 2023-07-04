@@ -61,7 +61,6 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	public static final String UPDATE_POST_TO_EXPIRY_DATE = "RealEstate.UPDATE_POST_TO_EXPIRY_DATE";
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Expose
@@ -128,6 +127,9 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	@Expose
 	private boolean pricePublic;
+
+	@Expose
+	private boolean isVerfied;
 
 	public RealEstate() {
 		// TODO Auto-generated constructor stub
@@ -290,4 +292,15 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		this.numberOfCall = numberOfCall;
 	}
 
+	public boolean isVerfied() {
+		return isVerfied;
+	}
+
+	public void setVerfied(boolean isVerfied) {
+		this.isVerfied = isVerfied;
+	}
+
+	
+	
+	
 }

@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.dto.PaginationResponse;
+import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.facade.DistrictFacade;
 import org.RealEstate.facade.GovernorateFacade;
 import org.RealEstate.facade.RealEstateFacade;
@@ -56,6 +57,8 @@ public class UserService implements Serializable {
 
 			}
 
+			user.setUserCategory(UserCategory.REGULAR);
+			user.setBroker(true);
 			user = userFacade.save(user);
 
 			return Response.status(Status.CREATED).entity(Utils.objectToString(user)).build();
@@ -90,7 +93,7 @@ public class UserService implements Serializable {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.AT_LAST_ONE_IMAGE_REQUIRED).build();
 
 			}
-			
+
 			if (inputParts.size() > 1) {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.ONLY_ONE_IMAGE_ALLOWED_FOR_USER).build();
 
@@ -118,7 +121,7 @@ public class UserService implements Serializable {
 		String imageUrl = uploadImagesMultiPart.uploadImageUserProfile(inputPart);
 		user.setShowProfilePicture(false);
 		user.setProfileImageUrl(imageUrl);
-			userFacade.save(user);
+		userFacade.save(user);
 		return true;
 	}
 

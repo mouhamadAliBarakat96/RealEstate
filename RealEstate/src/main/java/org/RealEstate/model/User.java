@@ -1,9 +1,6 @@
 
 package org.RealEstate.model;
 
-
-
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +8,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +22,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+
+import org.RealEstate.enumerator.PostType;
+import org.RealEstate.enumerator.UserCategory;
 
 import com.google.gson.annotations.Expose;
 
@@ -91,6 +93,12 @@ public class User extends MainEntity implements Serializable {
 	)
 	@Expose
 	private List<RealEstate> readStateFavoriteList = new ArrayList<>();
+
+	@Enumerated(EnumType.STRING)
+	@Expose
+	private UserCategory userCategory;
+
+	private boolean isBroker;
 
 	public long getId() {
 		return id;
@@ -194,6 +202,22 @@ public class User extends MainEntity implements Serializable {
 
 	public void setShowProfilePicture(boolean showProfilePicture) {
 		this.showProfilePicture = showProfilePicture;
+	}
+
+	public UserCategory getUserCategory() {
+		return userCategory;
+	}
+
+	public void setUserCategory(UserCategory userCategory) {
+		this.userCategory = userCategory;
+	}
+
+	public boolean isBroker() {
+		return isBroker;
+	}
+
+	public void setBroker(boolean isBroker) {
+		this.isBroker = isBroker;
 	}
 
 }

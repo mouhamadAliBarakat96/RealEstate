@@ -14,9 +14,11 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import org.RealEstate.enumerator.PostStatus;
+import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.enumerator.WaterResources;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
@@ -46,6 +48,8 @@ public class PostController implements Serializable {
 	@EJB
 	private AppSinglton appSinglton;
 
+	private User user;
+
 	@PostConstruct
 	public void init() {
 
@@ -53,6 +57,7 @@ public class PostController implements Serializable {
 			CommonUtility.addMessageToFacesContext("Id should > 0  ", "error");
 		} else {
 			realEstate = realEstateFacade.find(id);
+			user = realEstate.getUser();
 			nbOfActivePostByThisUser = realEstateFacade.findUserCountPostActive(realEstate.getUser().getId());
 
 			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
@@ -100,11 +105,30 @@ public class PostController implements Serializable {
 
 				CommonUtility.addMessageToFacesContext("refuse cause  should not be empty  ", "error");
 
-			} else if (realEstate.getPostStatus().equals(PostStatus.ACCEPTED)
-					&& nbOfActivePostByThisUser >= appSinglton.getFreeNbOfPost()) {
+			} else if (realEstate.getPostStatus().equals(PostStatus.ACCEPTED)) {
 				// naaml check lal active 3ndo
 
-				CommonUtility.addMessageToFacesContext("EXCEEDED_POST_LIMIT for this user  ", "error");
+				// todo wait mojtaba
+				if (user.isBroker() && nbOfActivePostByThisUser >= appSinglton.getBrokerNbOfPost()) {
+					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_for_this_user, "error");
+
+				}
+
+				// check 3adad el post hasab el user account
+
+				else if (user.getUserCategory() == UserCategory.REGULAR
+						&& nbOfActivePostByThisUser >= appSinglton.getFreeNbOfPost()) {
+					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_for_this_user, "error");
+
+				} else if (user.getUserCategory() == UserCategory.MEDUIM
+						&& nbOfActivePostByThisUser >= appSinglton.getMeduimAccountNbOfPost()) {
+					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_for_this_user, "error");
+
+				} else if (user.getUserCategory() == UserCategory.PREMIUM
+						&& nbOfActivePostByThisUser >= appSinglton.getPremuimAccountNbOfPost()) {
+					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_for_this_user, "error");
+
+				}
 
 			} else {
 				realEstateFacade.save(realEstate);
@@ -117,7 +141,7 @@ public class PostController implements Serializable {
 				changeUrl();
 			}
 
-		} catch (	Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

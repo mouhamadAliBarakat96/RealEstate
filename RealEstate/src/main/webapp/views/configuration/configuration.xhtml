@@ -31,81 +31,238 @@
 		<h4 class="page-title">Mangment Configuration</h4>
 	</ui:define>
 	<ui:define name="customFormContent">
-	<h:panelGroup id="crud-id">
-		<div class="panel-body">
+		<h:panelGroup id="crud-id">
+			<div class="panel-body">
 
-			<div class="card">
-				<div class="card-body">
-					<div class="row">
-						<div class=" col-md-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class=" col-md-12">
 
 
-							<div class="col-md-5">
-								<div class="form-group">
-									<h:outputLabel class="control-label" for="freeNbOfPost"
-										style="padding-left:1.5%" value="free nb of post ">
-										<span class="required">*</span>
-									</h:outputLabel>
-									<h:inputText id="freeNbOfPost" required="true" f5:placeholder="free nb of post "
-										label="free nb of post " title="free nb of post "
-										onkeypress="return isNumberKey(event)"
-										value="#{configurationController.freeNbOfPost}"
-										styleClass="form-control">
-										<f:ajax render=":messageScript"></f:ajax>
-									</h:inputText>
-									<h:message for="freeNbOfPost" styleClass="error-message" />
+								<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="freeNbOfPost"
+											style="padding-left:1.5%" value="free nb of post ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="freeNbOfPost" required="true"
+											f5:placeholder="free nb of post " label="free nb of post "
+											title="free nb of post "
+											onkeypress="return isNumberKey(event)"
+											value="#{configurationController.freeNbOfPost}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="freeNbOfPost" styleClass="error-message" />
+									</div>
 								</div>
-							</div>
-							
-							
-							<div class="col-md-5">
-								<div class="form-group">
-									<h:outputLabel class="control-label" for="postExpiryDate"
-										style="padding-left:1.5%" value="post Expiry Date  ">
-										<span class="required">*</span>
-									</h:outputLabel>
-									<h:inputText id="postExpiryDate" required="true" f5:placeholder="name "
-										label="post Expiry Date  " title="post Expiry Date  "
-										onkeypress="return isNumberKey(event)"
-										value="#{configurationController.postExpiryDate}"
-										styleClass="form-control">
-										<f:ajax render=":messageScript"></f:ajax>
-									</h:inputText>
-									<h:message for="postExpiryDate" styleClass="error-message" />
+
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="postExpiryDate"
+											style="padding-left:1.5%" value="post Expiry Date  ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="postExpiryDate" required="true"
+											f5:placeholder="name " label="post Expiry Date  "
+											title="post Expiry Date  "
+											onkeypress="return isNumberKey(event)"
+											value="#{configurationController.postExpiryDate}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="postExpiryDate" styleClass="error-message" />
+									</div>
 								</div>
-							</div>
 
-						</div>
-					</div>
-
-					<div class="row">
-					<div class="col-md-12">
-							<h:commandLink id="saveId"
-								style=" float:right ; margin-left:10px;"
-								action='#{configurationController.save()}'
-								styleClass="btn btn-primary btn-save">
-								<f:ajax render=":messageScript :tableId"
-									execute="  name  " />
-								<i class="fa fa-save" />
-								<span>Save</span>
-
-
-							</h:commandLink>
-							
+								<div class="col-md-3">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="meduimAccountPay"
+											style="padding-left:1.5%" value="medium account Pay">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="meduimAccountPay" required="true"
+											f5:placeholder="name " label="post Expiry Date  "
+											title="medium account Pay"
+											onkeypress="return isNumberKey(event)"
+											value="#{configurationController.meduimAccountPay}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="meduimAccountPay" styleClass="error-message" />
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="meduimAccountNbOfPost"
+											style="padding-left:1.5%" value="meduim account nb of post">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="meduimAccountNbOfPost" required="true"
+											f5:placeholder="name " label="meduim account nb of post"
+											title="post Expiry Date  "
+											onkeypress="return isNumberKey(event)"
+											value="#{configurationController.meduimAccountNbOfPost}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="meduimAccountNbOfPost" styleClass="error-message" />
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="premiumAccountPay"
+											style="padding-left:1.5%" value="premium account pay  ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="premiumAccountPay" required="true"
+											f5:placeholder="name " label="premium account pay  "
+											title="premium account pay   "
+											onkeypress="return isNumberKey(event)"
+											value="#{configurationController.premuimAccountPay}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="premiumAccountPay" styleClass="error-message" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="premiumNbOfPost"
+											style="padding-left:1.5%" value="premuim acccount nb of post  ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="premiumNbOfPost" required="true"
+											f5:placeholder="name " label="premuim acccount nb of pos  "
+											title="premuim acccount nb of post  "
+											onkeypress="return isNumberKey(event)"
+											value="#{configurationController.premuimAccountNbOfPost}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="premiumNbOfPost" styleClass="error-message" />
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="phoneNumber"
+											style="padding-left:1.5%" value="phone number  ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="phoneNumber" required="true"
+											f5:placeholder="name " label="post Expiry Date  "
+											title="post Expiry Date  "
+											
+											value="#{configurationController.phoneNumber}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="phoneNumber" styleClass="error-message" />
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="brokerNbOfPost"
+											style="padding-left:1.5%" value="broker Nb of Post">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="brokerNbOfPost" required="true"
+											f5:placeholder="name " label="post Expiry Date  "
+											title="broker nb of post"
+											onkeypress="return isNumberKey(event)"
+											value="#{configurationController.brokerNbOfPost}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="brokerNbOfPost" styleClass="error-message" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="boostDuration"
+											style="padding-left:1.5%" value="boost duration">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="boostDuration" required="true"
+											f5:placeholder="name " label="boost duration"
+											title="boost duration"
+											onkeypress="return isNumberKey(event)"
+											value="#{configurationController.boostDuration}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="boostDuration" styleClass="error-message" />
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="bostCash"
+											style="padding-left:1.5%" value="boost cash ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="bostCash" required="true"
+											f5:placeholder="name " label="boost cash "
+											title="boost cash  "
+											onkeypress="return isNumberKey(event)"
+											value="#{configurationController.boostCash}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="bostCash" styleClass="error-message" />
+									</div>
+								</div>
+									<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="postBadgePay"
+											style="padding-left:1.5%" value="postBadgePay ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="postBadgePay" required="true"
+											f5:placeholder="name " label="boost cash "
+											title="postBadgePay"
+											onkeypress="return isNumberKey(event)"
+											value="#{configurationController.postBadgePay}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="postBadgePay" styleClass="error-message" />
+									</div>
+								</div>
 								
-							
+								
+
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<h:commandLink id="saveId"
+									style=" float:right ; margin-left:10px;"
+									action='#{configurationController.save()}'
+									styleClass="btn btn-primary btn-save">
+									<f:ajax render=":messageScript :tableId" execute="  name  " />
+									<i class="fa fa-save" />
+									<span>Save</span>
+
+
+								</h:commandLink>
+
+
+
+							</div>
+
 						</div>
 
 					</div>
-
 				</div>
+
+
+
 			</div>
 
-
-
-		</div>
-
-</h:panelGroup>
+		</h:panelGroup>
 
 	</ui:define>
 

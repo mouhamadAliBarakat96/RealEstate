@@ -53,10 +53,12 @@ public class Test {
 	public static void main(String[] args) throws IOException {
 		try {
 
+		
+			
 			List<String> xxx = new ArrayList<String>();
 
 			xxx.add("me_-824870707.jpg");
-			//xxx.add("me_-824870707.jpg");
+			xxx.add("me_-824870707.jpg");
 			System.out.println(Utils.listToString(xxx));
 
 			Boolean x = null;
