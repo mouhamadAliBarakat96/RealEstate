@@ -43,24 +43,6 @@ To Discusion:
 
 // hayde 3adad el poset lal user
 // mana lal challet
-	private User checkUserConstraint(String jsonString) throws Exception {
-
-		User user = findUser(jsonString);
-
-		if (user == null) {
-			throw new Exception(Constants.USER_NOT_EXISTS);
-		} else {
-
-			Long nbOfPost = restateFacade.findUserCountPost(user.getId());
-
-			if (nbOfPost >= appSinglton.getFreeNbOfPost()) {
-				throw new Exception("EXCEEDED_POST_LIMIT");
-			}
-
-			return user;
-		}
-
-	}
 
 
 
@@ -142,10 +124,61 @@ chalet.setPostDate(new Date());
 chalet.setPostStatus(PostStatus.PENDING);
 
 
-Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId());
+/*
+here in post */
 
-			if (nbOfPost >= appSinglton.getFreeNbOfPost()) {
-				throw new Exception("EXCEEDED_POST_LIMIT");
+
+private User checkUserConstraint(User user ) throws Exception {
+
+		
+
+		
+
+		
+
+		if (!postType.equals("CHALET")) {
+			Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId());
+
+			// nb of post allowed ;
+			// krml is broker bytla3lo zyde
+			int nbOfPostAllowed = 0;
+			if (user.isBroker()) {
+				nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
 			}
+
+			if (user.getUserCategory() == UserCategory.REGULAR) {
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
+
+			} else if (user.getUserCategory() == UserCategory.MEDUIM) {
+
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
+
+			} else if (user.getUserCategory() == UserCategory.PREMIUM) {
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
+			}
+
+			if (nbOfPost >= nbOfPostAllowed) {
+				throw new Exception("EXCEEDED_POST_LIMIT");
+
+			}
+
+		}
+
+		return user;
+
+	}
+	
+	
+	
+	if post verfied n7otolo badge 
+	
+	@Expose
+	private boolean isVerfied;
+	
+
+
+iza user maktab 3akre nhotolo shi
+bel classs User  
+	private boolean isBroker;
 
  
