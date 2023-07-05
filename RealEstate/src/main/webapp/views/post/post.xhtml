@@ -183,6 +183,20 @@ body .ui-panelgrid .ui-panelgrid-cell {
 									<h:outputText
 										value="#{postController.realEstate.user.phoneNumber}" />
 
+
+									<h:outputText value=" User Account Category   :" />
+									<h:outputText styleClass="value"
+										value="#{postController.realEstate.user.userCategory}" />
+
+
+
+									<h:outputText value=" User Broker   :" />
+									<h:outputText styleClass="value"
+										class=" #{postController.realEstate.user.broker  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
+
+
+
+
 									<h:outputText value="Location:" />
 									<h:outputText
 										value="#{postController.realEstate.village.district.governorate.name} / #{postController.realEstate.village.district.name} / #{postController.realEstate.village.name}" />
@@ -219,6 +233,9 @@ body .ui-panelgrid .ui-panelgrid-cell {
 										styleClass=" fa fa-regular fa-eye  ">
 
 									</h:outputText>
+
+
+
 
 									<h:outputText value="Nb Of Call :" />
 									<h:outputText
@@ -368,7 +385,28 @@ body .ui-panelgrid .ui-panelgrid-cell {
 							<div class="card">
 								<div class="card-body">
 									<div class="row">
+										<div class="col-md-4">
+
+											<h:outputText style=" font-size:16px; "
+												value="Post Verfied :" />
+
+
+
+											<p:selectBooleanButton onLabel="Post Verfied"
+												id="postVerfied" offLabel="Post Not Verfied "
+												value="#{postController.realEstate.verfied}"
+												onIcon="pi pi-check" offIcon="pi pi-times"
+												style="width:12rem ; display:block" />
+
+
+
+										</div>
+
+
 										<div class=" col-md-12">
+
+
+
 
 
 											<div class="col-md-10">
@@ -393,17 +431,20 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 
 
+
+
 											<h:panelGroup id="test">
 												<div class="col-md-10">
 
 													<div class="form-group">
 														<h:outputLabel class="control-label" for="reffuseCause"
+															rendered="#{ (postController.realEstate.postStatus.toString() eq 'REFFUSED' )  or ( postController.realEstate.postStatus.toString() eq 'TO_REVIEUX_BY_USER' )  }"
 															style="padding-left:1.5%" value="reffuseCause ">
 
 														</h:outputLabel>
 
 														<h:inputTextarea id="reffuseCause" rows="4"
-															rendered="#{postController.realEstate.postStatus.toString() eq 'REFFUSED' }"
+															rendered="#{ (postController.realEstate.postStatus.toString() eq 'REFFUSED' )  or ( postController.realEstate.postStatus.toString() eq 'TO_REVIEUX_BY_USER' )  }"
 															f5:placeholder="reffuseCause " label="reffuseCause "
 															title="reffuseCause "
 															value="#{postController.realEstate.reffuseCause}"
@@ -429,7 +470,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 													action='#{postController.save()}'
 													styleClass="btn btn-primary btn-save">
 													<f:ajax render=":messageScript "
-														execute="  postStatus reffuseCause  " />
+														execute="  postStatus reffuseCause  postVerfied " />
 													<i class="fa fa-save" />
 													<span>Save</span>
 

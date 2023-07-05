@@ -181,4 +181,8 @@ iza user maktab 3akre nhotolo shi
 bel classs User  
 	private boolean isBroker;
 
+
+enta w 3am tkhod profile picture aw suwar 3an l post t2kd enon 
+		String[] imageExtensions = { ".jpg", ".jpeg", ".png", ".gif" }; // Add more image extensions if needed
+ enta bthoton hol b compomnent l jsf 
  

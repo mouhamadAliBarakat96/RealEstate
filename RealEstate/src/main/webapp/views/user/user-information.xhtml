@@ -36,6 +36,7 @@
 	<ui:define name="customFormContent">
 
 		<o:onloadScript>
+	
 	select2me();
 	</o:onloadScript>
 
@@ -50,19 +51,22 @@
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-3">
-								<h:outputText style=" font-size:16px; "
-									value="UserName : #{userInformationController.user.userName} " />
+								<h:outputText style=" font-size:16px; " value="UserName :  " />
+								<h:outputText styleClass="form-control"
+									style=" font-size:16px; "
+									value=" #{userInformationController.user.userName} " />
 
 
 
 
 							</div>
 							<div class="col-md-3">
-								<h:outputText style=" font-size:16px; "
-									value="Phone Number : #{userInformationController.user.phoneNumber} " />
+								<h:outputText style=" font-size:16px; " value="Phone Number : " />
 
 
-
+								<h:outputText styleClass="form-control"
+									style=" font-size:16px; "
+									value=" #{userInformationController.user.phoneNumber} " />
 
 							</div>
 
@@ -83,7 +87,24 @@
 
 							</div>
 
+						</div>
 
+						<div class="row" style="margin-top: 2%">
+							<div class="col-md-4">
+
+								<h:outputText style=" font-size:16px; " value="Broker :" />
+
+
+
+								<p:selectBooleanButton onLabel="Broker Yes"
+									offLabel="Not Broker"
+									value="#{userInformationController.user.broker}"
+									onIcon="pi pi-check" offIcon="pi pi-times"
+									style="width:10rem ; display:block" />
+
+
+
+							</div>
 
 						</div>
 

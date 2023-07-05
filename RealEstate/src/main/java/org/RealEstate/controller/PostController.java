@@ -53,7 +53,7 @@ public class PostController implements Serializable {
 	@PostConstruct
 	public void init() {
 
-		if (id < 0) {
+		if (id <= 0) {
 			CommonUtility.addMessageToFacesContext("Id should > 0  ", "error");
 		} else {
 			realEstate = realEstateFacade.find(id);

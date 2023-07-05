@@ -28,7 +28,7 @@ public class UploadImagesMultiPart implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public List<String> uploadImagePost(List<InputPart> inputParts) throws IOException {
+	public List<String> uploadImagePost(List<InputPart> inputParts) throws Exception {
 
 		String fileName = null;
 
@@ -69,8 +69,8 @@ public class UploadImagesMultiPart implements Serializable {
 
 			fileNames.add(fileName);
 
-			;
-			//
+			
+			
 			File customDir = new File(Constants.UPLOAD_DIR + Constants.POST_IMAGE_DIR_NAME);
 			if (!customDir.exists()) {
 				customDir.mkdirs();
@@ -85,7 +85,7 @@ public class UploadImagesMultiPart implements Serializable {
 		return fileNames;
 	}
 
-	public String uploadImageUserProfile(InputPart inputPart) throws IOException {
+	public String uploadImageUserProfile(InputPart inputPart) throws Exception {
 
 		String fileName = null;
 		String fileNameOrgin = null;
@@ -107,16 +107,15 @@ public class UploadImagesMultiPart implements Serializable {
 		// files li nzlo li bdna nrdon 3al data base
 		return fileNameOrgin;
 	}
-	
-	
+
 	public String uploadImageUserProfileJSF(ImageDto imageDto) throws IOException {
 
 		String fileName = null;
 		String fileNameOrgin = null;
-		
+
 		fileName = addRandomBeforeExtension(imageDto.getName());
 		fileNameOrgin = fileName;
-	
+
 		File customDir = new File(Constants.UPLOAD_DIR + Constants.PROFILE_IMAGE_DIR_NAME);
 		if (!customDir.exists()) {
 			customDir.mkdirs();
@@ -129,13 +128,13 @@ public class UploadImagesMultiPart implements Serializable {
 		return fileNameOrgin;
 	}
 
-	private String getFileName(MultivaluedMap<String, String> header) {
+	private String getFileName(MultivaluedMap<String, String> header) throws Exception {
 		String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
 		for (String filename : contentDisposition) {
 			if ((filename.trim().startsWith("filename"))) {
 				String[] name = filename.split("=");
 				String finalFileName = name[1].trim().replaceAll("\"", "");
-
+				isImage(finalFileName);
 				return addRandomBeforeExtension(finalFileName);
 			}
 		}
@@ -188,7 +187,8 @@ public class UploadImagesMultiPart implements Serializable {
 
 	// TODO
 
-	public boolean isImage(String fileName) {
+	public boolean isImage(String fileName) throws Exception {
+
 		String[] imageExtensions = { ".jpg", ".jpeg", ".png", ".gif" }; // Add more image extensions if needed
 
 		for (String extension : imageExtensions) {
@@ -197,7 +197,7 @@ public class UploadImagesMultiPart implements Serializable {
 			}
 		}
 
-		return false;
+		throw new Exception("YOU_ARE_NOT_SEND_IMAGE_WITH_EXT_jpg_OR_jpeg_OR_png_OR_gif");
 	}
 
 }

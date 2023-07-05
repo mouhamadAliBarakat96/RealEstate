@@ -48,6 +48,7 @@ import org.RealEstate.model.Village;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.NumberPatternDetector;
 import org.RealEstate.utils.Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -786,8 +787,18 @@ public class PostService implements Serializable {
 
 	private void checkPostConstraintFields(RealEstate realEstate) throws Exception {
 
+		
+		// check tittle and sub tittle not null and empty
+		if(StringUtils.isBlank(realEstate.getTittle())  || StringUtils.isBlank(realEstate.getSubTittle()) ) {
+			throw new Exception("TITTLE_OR_SUBTTITLE_SHOULD_NOT_BE_EMPTY");
+
+			
+		}
 		// check tittle sub tittle dont have numbet
 
+		
+		
+		
 		if (NumberPatternDetector.checkTextContainNumber(realEstate.getTittle())
 				|| NumberPatternDetector.checkTextContainNumber(realEstate.getSubTittle())) {
 
