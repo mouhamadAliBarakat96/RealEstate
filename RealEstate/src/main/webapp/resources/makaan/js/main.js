@@ -127,3 +127,11 @@ function updateActiveMenu() {
         }
     }
 }
+
+function changeLang(lang) {
+	var page = document.documentElement;
+	// Switch the direction attribute based on the current value
+	page.setAttribute('dir', lang);
+
+}
+

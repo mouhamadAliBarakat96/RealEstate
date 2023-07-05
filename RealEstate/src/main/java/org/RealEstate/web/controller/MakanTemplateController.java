@@ -11,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.RealEstate.dto.MenuItem;
+import org.RealEstate.enumerator.LanguageEnum;
 import org.RealEstate.enumerator.PropertyKindEnum;
 
 @Named
@@ -22,31 +23,37 @@ public class MakanTemplateController implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<MenuItem> menu = new ArrayList<>();
+	private LanguageEnum languageEnum = LanguageEnum.LTR;
 
 	@PostConstruct
 	public void init() {
 		fillMenuItems(menu);
 	}
 
+	public void changeLanguage() {
+
+	}
+
 	public void fillMenuItems(List<MenuItem> menu) {
 		MenuItem m1 = null;
 
-		m1 = new MenuItem("Real Estate", "", "index-page", true, "nav-item nav-link active",PropertyKindEnum.REALESTATE.toString());
-		menu.add(m1);
-		
-		m1 = new MenuItem("Chalet", "", "index-page", true, "nav-item nav-link",PropertyKindEnum.CHALET.toString());
-		menu.add(m1);
-		
-		m1 = new MenuItem("Add New", "", "userpost-card", true, "nav-item nav-link","post-card");
-		menu.add(m1);
-		
-		m1 = new MenuItem("My Posts", "", "userpost-list", true, "nav-item nav-link","post-list");
+		m1 = new MenuItem("Real Estate", "", "index-page", true, "nav-item nav-link active",
+				PropertyKindEnum.REALESTATE.toString());
 		menu.add(m1);
 
-		m1 = new MenuItem("Contact us", "", "contact-us", true, "nav-item nav-link","contact-us");
+		m1 = new MenuItem("Chalet", "", "index-page", true, "nav-item nav-link", PropertyKindEnum.CHALET.toString());
 		menu.add(m1);
-		
-		m1 = new MenuItem("Login", "", "login-user", true, "nav-item nav-link","login");
+
+		m1 = new MenuItem("Add New", "", "userpost-card", true, "nav-item nav-link", "post-card");
+		menu.add(m1);
+
+		m1 = new MenuItem("My Posts", "", "userpost-list", true, "nav-item nav-link", "post-list");
+		menu.add(m1);
+
+		m1 = new MenuItem("Contact us", "", "contact-us", true, "nav-item nav-link", "contact-us");
+		menu.add(m1);
+
+		m1 = new MenuItem("Login", "", "login-user", true, "nav-item nav-link", "login");
 		menu.add(m1);
 
 	}
@@ -90,6 +97,18 @@ public class MakanTemplateController implements Serializable {
 
 	public void setMenu(List<MenuItem> menu) {
 		this.menu = menu;
+	}
+
+	public LanguageEnum getLanguageEnum() {
+		return languageEnum;
+	}
+
+	public void setLanguageEnum(LanguageEnum languageEnum) {
+		this.languageEnum = languageEnum;
+	}
+
+	public void changeLang(LanguageEnum lang) {
+		this.languageEnum = lang;
 	}
 
 }

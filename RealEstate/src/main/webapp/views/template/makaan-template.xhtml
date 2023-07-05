@@ -1,9 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html dir="#{languageController.languageEnum}"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 
 <h:head>
 
@@ -21,26 +22,35 @@
 
 	<!-- Google Web Fonts -->
 
-	 <link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />  
-	
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com"
+		crossorigin="anonymous" />
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
 	<link href="/resources/makaan/fonts/font.css" rel="stylesheet" />
 	<!-- Icon Font Stylesheet -->
 	<link href="/resources/makaan/fonts/all.min.css" rel="stylesheet" />
 	<!-- Libraries Stylesheet -->
-	<link href="/resources/makaan/lib/animate/animate.min.css" rel="stylesheet" />
-	<link href="/resources/makaan/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+	<link href="/resources/makaan/lib/animate/animate.min.css"
+		rel="stylesheet" />
+	<link
+		href="/resources/makaan/lib/owlcarousel/assets/owl.carousel.min.css"
+		rel="stylesheet" />
 	<!-- Customized Bootstrap Stylesheet -->
 	<link href="/resources/makaan/css/bootstrap.min.css" rel="stylesheet" />
 	<!-- Template Stylesheet -->
 	<link href="/resources/makaan/css/style.css" rel="stylesheet" />
-	<h:outputStylesheet name="admin-template/toastr-rtl.min.css" library="css" />
-	
-	<ui:insert name="customStylesheet"/> 
+	<h:outputStylesheet name="admin-template/toastr-rtl.min.css"
+		library="css" />
+
+	<ui:insert name="customStylesheet" />
 </h:head>
 <h:body class="bg-white">
 	<h:form id="myForm">
+
+		<o:importConstants type="org.RealEstate.enumerator.LanguageEnum" />
+
 		<div class="container-xxl bg-white p-0">
 
 			<!-- Spinner Start -->
@@ -57,7 +67,8 @@
 			<!-- Navbar Start -->
 			<div class="container-fluid nav-bar bg-transparent">
 				<nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-				<h:link outcome="index-page" class="navbar-brand d-flex align-items-center text-center">
+				<h:link outcome="index-page"
+					class="navbar-brand d-flex align-items-center text-center">
 					<div class="icon p-2 me-2">
 						<img class="img-fluid" src="/resources/makaan/img/icon-deal.png"
 							alt="Icon" style="width: 30px; height: 30px;" />
@@ -71,11 +82,28 @@
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<div class="navbar-nav ms-auto">
 						<ui:repeat var="item" value="#{makanTemplateController.menu}">
-							<h:link outcome="#{item.url}" value="#{item.itemLabel}" onclick="updateActiveMenu();"
-								styleClass="#{item.styleClass}" >
-								 <f:param name="property" value="#{item.kindEnum}" />
-						    </h:link>
+							<h:link outcome="#{item.url}" value="#{item.itemLabel}"
+								onclick="updateActiveMenu();" styleClass="#{item.styleClass}">
+								<f:param name="property" value="#{item.kindEnum}" />
+							</h:link>
 						</ui:repeat>
+
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle"
+								data-bs-toggle="dropdown">lANG</a>
+							<div class="dropdown-menu rounded-0 m-0">
+								<h:commandLink onclick="changeLang('RTL')"
+									action="#{languageController.changeLang(LanguageEnum.RTL)}"
+									styleClass="dropdown-item" value="#{LanguageEnum.RTL.lang}">
+									<f:ajax execute="@this" />
+								</h:commandLink>
+								<h:commandLink onclick="changeLang('LTR')"
+									action="#{languageController.changeLang(LanguageEnum.LTR)}"
+									styleClass="dropdown-item" value="#{LanguageEnum.LTR.lang}">
+									<f:ajax execute="@this" />
+								</h:commandLink>
+							</div>
+						</div>
 					</div>
 				</div>
 				</nav>
