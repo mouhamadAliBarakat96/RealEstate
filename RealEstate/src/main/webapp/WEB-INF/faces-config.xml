@@ -201,6 +201,16 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	
+		<navigation-rule>
+		<navigation-case>
+			<from-outcome>ads-list</from-outcome>
+			<to-view-id>/views/ads/ads-list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>userpost-list</from-outcome>

@@ -1,6 +1,5 @@
 package org.RealEstate.restService;
 
-import java.io.InputStream;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
@@ -23,10 +22,6 @@ import org.RealEstate.service.UserService;
 import org.RealEstate.utils.Constants;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
-
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/user")
 public class UserMangment implements Serializable {
@@ -60,12 +55,27 @@ public class UserMangment implements Serializable {
 	public Response changeProfilePicture(@PathParam("id") Long id, @MultipartForm MultipartFormDataInput in) {
 
 		return userService.changeProfilePictureApi(id, in);
- 
+
+	}
+
+	@GET
+	@Path("/v1/{id}")
+
+	@Produces(MediaType.APPLICATION_JSON)
+
+	public Response findAllUser(@PathParam("id") Long id) {
+		try {
+			return userService.find(id);
+		} catch (Exception e) {
+			return analyzeException(e);
+
+		}
+
 	}
 
 	@GET
 	@Path("/v1")
-	@Consumes(MediaType.APPLICATION_JSON)
+
 	@Produces(MediaType.APPLICATION_JSON)
 
 	public Response findAllUser(@QueryParam("page") int page, @QueryParam("size") int size) {

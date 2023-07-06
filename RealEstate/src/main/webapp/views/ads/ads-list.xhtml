@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:decorate template="/views/template/template.xhtml">
+
+
+
+
+	<ui:param name="title" value="#{bundle.main_page}" />
+	<ui:param name="subtitle" value="#{bundle.main_page}" />
+
+	<ui:define name="breadcrumb">
+
+		<div class="row">
+
+
+			<li class="breadcrumb-item active">#{bundle.card}</li>
+			<li class="breadcrumb-item active">Ads List</li>
+
+
+		</div>
+	</ui:define>
+	<ui:define name="pageTittle">
+
+		<h4 class="page-title">Ads List</h4>
+	</ui:define>
+	<ui:define name="customFormContent">
+
+		<h:panelGroup>
+
+
+			<div class="card">
+				<div class="card-body">
+
+					<div class="col-md-8 col-sm-12">
+						<span style="font-size: 20px;"> Add New Adds </span>
+					</div>
+
+					<div class="row">
+						<div class=" col-md-12">
+
+							<div class="col-md-5">
+								<p:fileUpload id="uploadImageRequestinformation"
+									listener="#{adsController.handleFileUploadRequestInformation}"
+									mode="advanced" dragDropSupport="false" multiple="true"
+									sizeLimit="3000000" fileLimit="1"
+									allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+								</p:fileUpload>
+							</div>
+
+							<div class="col-md-5">
+								<div class="form-group">
+									<h:outputLabel class="control-label" for="adsInformation"
+										style="padding-left:1.5%" value="name ">
+										<span class="required">*</span>
+									</h:outputLabel>
+									<h:inputText id="adsInformation" required="true"
+										f5:placeholder="ads Information " label="ads Information "
+										title="ads Information   "
+										value="#{adsController.adsToSave.information}"
+										styleClass="form-control">
+										<f:ajax render=":messageScript"></f:ajax>
+									</h:inputText>
+									<h:message for="adsInformation" styleClass="error-message" />
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h:commandLink id="saveId"
+								style=" float:right ; margin-left:10px;"
+								action='#{adsController.save()}'
+								styleClass="btn btn-primary btn-save">
+								<f:ajax render=":messageScript  adsInformation  "
+									execute="  adsInformation  " />
+								<i class="fa fa-save" />
+								<span>Save</span>
+
+
+							</h:commandLink>
+						</div>
+
+
+
+
+					</div>
+				</div>
+			</div>
+
+
+			<div class="card">
+				<div class="card-body">
+					<h:panelGroup id="header-panel" style="width:100%">
+						<div class="row">
+
+							<div class="col-md-8 col-sm-12">
+								<span style="font-size: 20px;"> Table Represent Ads </span> <span
+									style="font-size: 14px;" class="label label-warning countClass"
+									id="countId">#{adsController.pageItems.size()} </span>
+							</div>
+							<div class="col-md-4 col-sm-12"></div>
+
+						</div>
+					</h:panelGroup>
+					<div
+						style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
+
+
+
+						<p:dataTable var="entity" paginator="true" rows="10"
+							paginatorPosition="bottom" style="margin-top: 2%"
+							rowKey="#{entity.id}"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+							rowsPerPageTemplate="5,10,15" styleClass="border-none"
+							value="#{adsController.pageItems}" widgetVar="tableWidget"
+							emptyMessage="No Governorate was added"
+							filteredValue="#{adsController.filteredList}">
+
+
+							<p:column styleClass="no-header table-actions-column" width="200">
+								<span> <h:link outcome='governorate'
+										styleClass="btn btn-warning  waves-effect waves-light   btn-xs">
+										<f:param name="id" value="#{entity.id}" />
+										<span class=" dripicons-document-edit  " style="color: white;" />
+										<f:ajax></f:ajax>
+									</h:link> <p:commandLink
+										actionListener="#{adsController.selectForImageUrl(entity)}"
+										immediate="true" style="margin-left:5px;"
+										update=":messageScript header-panel"
+										styleClass="btn btn-primary waves-effect waves-light btn-xs ">
+										<i class="  fa fa-file-image   "
+											style="color: white; font-size: 11px;" />
+
+										<p:ajax >
+										</p:ajax>
+									</p:commandLink> <p:commandLink
+										actionListener="#{adsController.remove(entity)}"
+										immediate="true" style="margin-left:5px;"
+										update=":messageScript header-panel"
+										styleClass="btn btn-danger waves-effect waves-light btn-xs ">
+										<i class=" dripicons-trash  "
+											style="color: white; font-size: 11px;" />
+										<p:confirm header="Delete"
+											message="Are You Sure From Delete ?">
+										</p:confirm>
+										<p:ajax oncomplete="PF('tableWidget').filter()">
+										</p:ajax>
+									</p:commandLink>
+								</span>
+							</p:column>
+
+							<p:column filterBy="#{entity.id}" headerText="id"
+								style="vertical-align: middle; margin-left: .5rem"
+								sortBy="#{entity.id}" filterMatchMode="contains">
+								<h:outputText value="#{entity.id}" />
+							</p:column>
+							<p:column filterBy="#{entity.information}"
+								sortBy="#{entity.information}"
+								style="vertical-align: middle; margin-left: .5rem"
+								headerText="information" filterMatchMode="contains">
+								<h:outputText value="#{entity.information}" />
+							</p:column>
+
+
+
+
+
+
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+
+
+		</h:panelGroup>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<h:commandLink
+				style="color:white; margin-left:5px; margin-top:5px; margin-bottom:5px;"
+				styleClass="ui-confirmdialog-no btn btn-danger">
+				<em class="fa fa-times" />
+
+				<span> no</span>
+
+
+				<f:ajax></f:ajax>
+			</h:commandLink>
+
+			<h:commandLink
+				style="margin-left:10px  ; margin-top:5px;  margin-bottom:5px; color: white;"
+				styleClass="ui-confirmdialog-yes  btn btn-primary "
+				icon="ui-icon-check">
+				<f:ajax render=":messageScript"></f:ajax>
+				<em class="fa fa-check" />
+
+				<span> yes</span>
+
+
+			</h:commandLink>
+
+
+		</p:confirmDialog>
+
+
+		<div class="modal  fade bs-example-modal-center" f5:tabindex="-1"
+			f5:data-backdrop="static" f5:data-keyboard="false" id="imageModal"
+			f5:role="dialog" f5:aria-labelledby="mySmallModalLabel"
+			f5:aria-hidden="true">
+			<div class="modal-dialog modal-xl modal-dialog-centered">
+				<div class="modal-content">
+
+
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+
+
+						<label style="font-size: 21px; margin-top: 5px;"> Supplier
+							Repport </label> 
+							
+					
+
+					
+						<button type="button" class="close" data-dismiss="modal">×</button>
+					</div>
+		<span>#{adsController.fullUrl}</span>
+					<!-- Modal body -->
+	<p:graphicImage id="image" url="#{adsController.fullUrl}"
+							style="width: 50%" alt="#{photo}" />
+
+
+
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:decorate>
+</html>
+

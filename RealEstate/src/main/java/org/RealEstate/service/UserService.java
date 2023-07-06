@@ -81,6 +81,22 @@ public class UserService implements Serializable {
 		}
 	}
 
+	public Response find(Long userId) {
+
+		try {
+			User user = userFacade.find(userId);
+			userFacade.getEm().detach(user);
+			if (!user.isShowProfilePicture()) {
+				user.setProfileImageUrl("");
+			}
+			return Response.status(Status.OK).entity(Utils.objectToString(user)).build();
+
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+	}
+
 	public Response changeProfilePictureApi(Long userId, MultipartFormDataInput input) {
 
 		try {

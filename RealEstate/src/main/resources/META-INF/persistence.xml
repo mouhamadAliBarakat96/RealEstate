@@ -22,6 +22,7 @@
 		<class>org.RealEstate.model.ShopSell</class>
 		<class>org.RealEstate.model.User</class>
 		<class>org.RealEstate.model.Village</class>
+		<class>org.RealEstate.model.Ads</class>
 
   
 		<properties>

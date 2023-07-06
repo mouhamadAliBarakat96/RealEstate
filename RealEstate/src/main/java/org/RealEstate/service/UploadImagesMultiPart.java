@@ -57,6 +57,35 @@ public class UploadImagesMultiPart implements Serializable {
 		return fileNames;
 	}
 
+	
+	public String uploadImageAdsFrontEnd(ImageDto imageDto) throws IOException {
+
+		String fileName = null;
+
+
+		String fileNameOrgin = "" ;
+
+			fileName = addRandomBeforeExtension(imageDto.getName());
+
+			fileNameOrgin=  fileName ;
+
+			
+			
+			File customDir = new File(Constants.UPLOAD_DIR + Constants.ADS_IMAGE_DIR_NAME);
+			if (!customDir.exists()) {
+				customDir.mkdirs();
+
+			}
+
+			fileName = customDir.getAbsolutePath() + File.separator + fileName;
+			Files.write(Paths.get(fileName), imageDto.getContent(), StandardOpenOption.CREATE_NEW);
+		
+
+		// files li nzlo li bdna nrdon 3al data base
+		return fileNameOrgin;
+	}
+
+	
 	public List<String> uploadImagePostFrontEnd(List<ImageDto> imageDtos) throws IOException {
 
 		String fileName = null;

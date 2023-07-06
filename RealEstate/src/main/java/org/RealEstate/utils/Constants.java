@@ -28,7 +28,10 @@ public interface Constants {
 	final String IMAGES = "images";
 	final String POST_IMAGE_DIR_NAME = "POST";
 	final String PROFILE_IMAGE_DIR_NAME = "PROFILE";
+	final String ADS_IMAGE_DIR_NAME = "ADS";
 
+	
+	
 	public static final String EMPTY_REQUEST_DONT_CONTAIN_DATA = "EMPTY_REQUEST_DONT_CONTAIN_DATA";
 	public static final String POST_TYPE_NOT_SUPPORTED = "POST_TYPE_NOT_SUPPORTED";
 

@@ -97,7 +97,7 @@ public class User extends MainEntity implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Expose
 	private UserCategory userCategory;
-
+	@Expose
 	private boolean isBroker;
 
 	public long getId() {
