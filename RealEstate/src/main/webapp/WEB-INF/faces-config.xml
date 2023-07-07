@@ -227,14 +227,14 @@
 		</navigation-case>
 	</navigation-rule>
 	
-	
 	<application>
 		<locale-config>
 			<default-locale>en</default-locale>
+			<supported-locale>ar</supported-locale>
 		</locale-config>
 		<resource-bundle>
 			<base-name>resources.Bundle</base-name>
-			<var>bundle</var>
+			<var>bundles</var>
 		</resource-bundle>
 		<message-bundle>resources.Bundle</message-bundle>
 	</application>

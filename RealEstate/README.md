@@ -9,13 +9,12 @@ Done :
 4-error page
 5-Chalet list in homepage with filters
 6-Chalet-card
-
+7-page list of real estate and chalet.
+8-create new Post (chalet , post)
 To Do:
 *****
 -search in select menu
 -add WaterResources in card.
--page list of real estate and chalet.
--create new Post (chalet , post)
 -Sing In & Sign Up (front-end)
 
  

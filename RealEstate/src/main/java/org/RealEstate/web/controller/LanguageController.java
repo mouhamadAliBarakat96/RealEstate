@@ -18,8 +18,8 @@ public class LanguageController implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private LanguageEnum languageEnum = LanguageEnum.LTR;
-
 	private Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+	private String bundle_name = "resources.Bundle";
 
 	public Locale getLocale() {
 		return locale;
@@ -39,6 +39,20 @@ public class LanguageController implements Serializable {
 	}
 
 	public void changeLang(LanguageEnum lang) {
+		if (lang == LanguageEnum.RTL) {
+			setBundle_name("resources.Bundle-ar");
+		} else {
+			setBundle_name("resources.Bundle");
+		}
 		this.languageEnum = lang;
 	}
+
+	public String getBundle_name() {
+		return bundle_name;
+	}
+
+	public void setBundle_name(String bundle_name) {
+		this.bundle_name = bundle_name;
+	}
+
 }

@@ -97,6 +97,8 @@ public class IndexController implements Serializable {
 	// Search Bar Filters
 	private YesNoEnum poolYesNoEnum = null;
 	private YesNoEnum chimneyYesNoEnum = null;
+	private YesNoEnum bathsEqualsEnum = null;
+	private YesNoEnum roomsEqualsEnum = null;
 
 	private String fullUrl = "";
 	private String ipAddressWithPort;
@@ -256,13 +258,13 @@ public class IndexController implements Serializable {
 
 		realLazyModel.setBathRoom(bathRoom);
 		realLazyModel.setUser(user != null ? user : null);
-		realLazyModel.setBathRoomEq(bathRoomEq);
+		realLazyModel.setBathRoomEq(exactValueBaths());
 		realLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
 		realLazyModel.setGovernorate(
 				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
 		realLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
 		realLazyModel.setBedRoom(bedRoom);
-		realLazyModel.setBedRoomEq(false);
+		realLazyModel.setBedRoomEq(exactValueRooms());
 		realLazyModel.setMaxPrice(maxPrice);
 		realLazyModel.setMinPrice(minPrice);
 		realLazyModel.setPostType(selectPostType == null ? null : selectPostType.toString());
@@ -315,6 +317,20 @@ public class IndexController implements Serializable {
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
+	
+	private boolean exactValueBaths() {
+		if (bathsEqualsEnum == YesNoEnum.YES)
+			return true;
+		else
+			return false;
+	}
+	private boolean exactValueRooms() {
+		if (roomsEqualsEnum == YesNoEnum.YES)
+			return true;
+		else
+			return false;
+	}
+
 
 	public int random() {
 		Random random = new Random();
@@ -552,5 +568,20 @@ public class IndexController implements Serializable {
 	public int numberOfChalet() {
 		return chaletFacade.count();
 	}
-	
+
+	public YesNoEnum getBathsEqualsEnum() {
+		return bathsEqualsEnum;
+	}
+
+	public void setBathsEqualsEnum(YesNoEnum bedsEqualsEnum) {
+		this.bathsEqualsEnum = bedsEqualsEnum;
+	}
+
+	public YesNoEnum getRoomsEqualsEnum() {
+		return roomsEqualsEnum;
+	}
+
+	public void setRoomsEqualsEnum(YesNoEnum roomsEqualsEnum) {
+		this.roomsEqualsEnum = roomsEqualsEnum;
+	}
 }
