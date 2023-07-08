@@ -11,7 +11,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.RealEstate.enumerator.PostType;
-import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.model.AppratmentRent;
 import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.Land;
@@ -21,14 +20,23 @@ import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
 
+
+
 public class Utility {
 
-	public final static String BUNDLE_FILE_NAME_AR = "resources.Bundle-ar";
-	public final static String BUNDLE_FILE_NAME = "resources.Bundle";
+	public static String BUNDLE_FILE_NAME = "resources.bundle";
 	public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-	public static void addMessageToFacesContext(String key) {
-
+	
+	public static void changeBundleName(String bundleName) {
+		BUNDLE_FILE_NAME = bundleName;
+	}
+	
+	
+	public static String getMessage(String key, String bundle) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(bundle);
+		MessageFormat msgFormat = new MessageFormat(resourceBundle.getString(key));
+		return msgFormat.format(null);
 	}
 
 	public static void addSuccessMessage(String key) {
@@ -41,12 +49,6 @@ public class Utility {
 			FacesMessage msg = new FacesMessage(key, "success");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-	}
-
-	public static String getMessage(String key, String bundle) {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(bundle);
-		MessageFormat msgFormat = new MessageFormat(resourceBundle.getString(key));
-		return msgFormat.format(null);
 	}
 
 	public static String getMessage(String key) {

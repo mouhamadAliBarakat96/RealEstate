@@ -55,8 +55,8 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
+
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>user-information</from-outcome>
@@ -64,9 +64,9 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
-	
+
+
+
 
 	<navigation-rule>
 		<navigation-case>
@@ -84,7 +84,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>user-profile-picture</from-outcome>
@@ -92,7 +92,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 
 
 	<navigation-rule>
@@ -184,7 +184,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>chalet-card</from-outcome>
@@ -192,7 +192,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>userpost-card</from-outcome>
@@ -200,17 +200,17 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
-		<navigation-rule>
+
+
+	<navigation-rule>
 		<navigation-case>
 			<from-outcome>ads-list</from-outcome>
 			<to-view-id>/views/ads/ads-list.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
+
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>userpost-list</from-outcome>
@@ -218,7 +218,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>login-user</from-outcome>
@@ -226,16 +226,17 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<application>
 		<locale-config>
 			<default-locale>en</default-locale>
 			<supported-locale>ar</supported-locale>
 		</locale-config>
 		<resource-bundle>
-			<base-name>resources.Bundle</base-name>
-			<var>bundles</var>
-		</resource-bundle>
-		<message-bundle>resources.Bundle</message-bundle>
+            <base-name>resources.bundle</base-name>
+            <var>bundle</var>
+        </resource-bundle>
+		<message-bundle>resources.bundle</message-bundle>
+		<message-bundle>resources.bundle_ar</message-bundle>
 	</application>
 </faces-config>

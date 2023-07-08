@@ -64,10 +64,11 @@
 					rendered="#{indexController.hasRoomsAndBathRooms(indexController.selectPostType)}">
 					<div class="row mt-2">
 						<div class="col-md-3 mt-2 col-sm-12 pe-5">
-							<h:inputText onkeypress="return isNumberKey(event)"
-								placeholder="max price" styleClass="form-control"
+							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+								minValue="0" maxValue="9999999999" id="bedsId"
+								label="#{bundle.beds_count}" styleClass="form-control"
 								value="#{indexController.bedRoom}">
-							</h:inputText>
+							</p:inputNumber>
 							<h:outputLabel value="#{bundle.beds_count}" style="color:white" />
 						</div>
 
@@ -84,9 +85,11 @@
 
 
 						<div class="col-md-3 mt-2 col-sm-12 pe-5">
-							<h:inputText placeholder="max price" styleClass="form-control"
+							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+								minValue="0" maxValue="9999999999" id="bathsId"
+								label="#{bundle.baths_count}" styleClass="form-control"
 								value="#{indexController.bathRoom}">
-							</h:inputText>
+							</p:inputNumber>
 							<h:outputLabel value="#{bundle.baths_count}" style="color:white" />
 						</div>
 
@@ -100,22 +103,22 @@
 							</h:selectOneMenu>
 							<h:outputLabel value="#{bundle.exact_value}" style="color:white" />
 						</div>
-					</div>	
+					</div>
 				</h:panelGroup>
 			</h:panelGroup>
 
 			<div class="col-md-3 mt-2 col-sm-12 pe-5">
-				<h:inputText onkeypress="return isNumberKey(event)"
-					placeholder="min price" styleClass="form-control"
-					value="#{indexController.minPrice}">
-				</h:inputText>
+				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
+					maxValue="9999999999" id="minPriceId" label="#{bundle.min_price}"
+					styleClass="form-control" value="#{indexController.minPrice}">
+				</p:inputNumber>
 				<h:outputLabel value="#{bundle.min_price}" style="color:white" />
 			</div>
 			<div class="col-md-3 mt-2 col-sm-12 pe-5">
-				<h:inputText onkeypress="return isNumberKey(event)"
-					placeholder="max price" styleClass="form-control"
-					value="#{indexController.maxPrice}">
-				</h:inputText>
+				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
+					maxValue="9999999999" id="maxPriceId" label="#{bundle.max_price}"
+					styleClass="form-control" value="#{indexController.maxPrice}">
+				</p:inputNumber>
 				<h:outputLabel value="#{bundle.max_price}" style="color:white" />
 			</div>
 

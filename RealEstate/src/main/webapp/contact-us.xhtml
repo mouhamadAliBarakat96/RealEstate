@@ -4,10 +4,6 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
-<!-- 
-		Replace path to template, title, header and body
-		with actual data.
-	 -->
 <ui:composition template="/views/template/makaan-template.xhtml">
 	<ui:define name="property-content">
 		<!-- Contact Start -->
@@ -64,29 +60,26 @@
 									<div class="col-md-6">
 										<div class="form-floating">
 											<input type="text" class="form-control" id="name"
-												placeholder="Your Name"> <label for="name">Your
-													#{bundle.contact_us_name}</label></input>
+												placeholder="#{bundle.contact_us_name}"> </input>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-floating">
 											<input type="email" class="form-control" id="email"
-												placeholder="Your Email"> <label for="email">Your
-													#{bundle.contact_us_email}</label></input>
+												placeholder="#{bundle.contact_us_email}"> </input>
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-floating">
-											<input type="email" class="form-control" id="subject"
-												placeholder="Your Subject"> <label for="subject">Your
-													#{bundle.contact_us_subject}</label></input>
+											<input type="text" class="form-control" id="subject"
+												placeholder="#{bundle.contact_us_subject}"> </input>
 										</div>
 									</div>
 
 									<div class="col-md-12">
 										<div class="form-floating">
-											<textarea class="form-control" id="text" rows="10" style="height: 150px!important;">
-											 
+											<textarea class="form-control" id="text" rows="10"
+												style="height: 150px !important;">
 											 </textarea>
 										</div>
 									</div>

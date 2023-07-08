@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.RealEstate.dto.MenuItem;
-import org.RealEstate.enumerator.LanguageEnum;
 import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.utils.Utility;
 
@@ -24,41 +23,39 @@ public class MakanTemplateController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<MenuItem> menu = new ArrayList<>();
-	 
+
 	@Inject
 	private LanguageController languageController;
-	
+
 	@PostConstruct
 	public void init() {
-		fillMenuItems(menu);
+		FacesContext.getCurrentInstance().getViewRoot().setLocale(languageController.getLocale());
 	}
 
-	public void changeLanguage() {
-
-	}
-
-	public void fillMenuItems(List<MenuItem> menu) {
+	public List<MenuItem> fillMenuItems() {
+		List<MenuItem> menu=new ArrayList<>();
 		MenuItem m1 = null;
-
-		m1 = new MenuItem(Utility.getMessage("real_estates", languageController.getBundle_name()), "", "index-page", true, "nav-item nav-link active", PropertyKindEnum.REALESTATE.toString());
+		m1 = new MenuItem(Utility.getMessage("real_estates"), "", "index-page", true, "nav-item nav-link active",
+				PropertyKindEnum.REALESTATE.toString());
 		menu.add(m1);
 
-		m1 = new MenuItem(Utility.getMessage("chalets", languageController.getBundle_name()), "", "index-page", true, "nav-item nav-link", PropertyKindEnum.CHALET.toString());
+		m1 = new MenuItem(Utility.getMessage("chalets"), "", "index-page", true, "nav-item nav-link",
+				PropertyKindEnum.CHALET.toString());
 		menu.add(m1);
 
-		m1 = new MenuItem(Utility.getMessage("add_new", languageController.getBundle_name()), "", "userpost-card", true, "nav-item nav-link", "post-card");
+		m1 = new MenuItem(Utility.getMessage("add_new"), "", "userpost-card", true, "nav-item nav-link", "post-card");
 		menu.add(m1);
 
-		m1 = new MenuItem(Utility.getMessage("my_posts", languageController.getBundle_name()), "", "userpost-list", true, "nav-item nav-link", "post-list");
+		m1 = new MenuItem(Utility.getMessage("my_posts"), "", "userpost-list", true, "nav-item nav-link", "post-list");
 		menu.add(m1);
 
-		m1 = new MenuItem(Utility.getMessage("contact_us", languageController.getBundle_name()), "", "contact-us", true, "nav-item nav-link", "contact-us");
+		m1 = new MenuItem(Utility.getMessage("contact_us"), "", "contact-us", true, "nav-item nav-link", "contact-us");
 		menu.add(m1);
 
-		m1 = new MenuItem(Utility.getMessage("login", languageController.getBundle_name()), "", "login-user", true, "nav-item nav-link", "login");
+		m1 = new MenuItem(Utility.getMessage("login"), "", "login-user", true, "nav-item nav-link", "login");
 		menu.add(m1);
-
+		
+		return menu;
 	}
 
 	public List<FacesMessage> getMessages() {
@@ -94,11 +91,7 @@ public class MakanTemplateController implements Serializable {
 		return uniqueMessages;
 	}
 
-	public List<MenuItem> getMenu() {
-		return menu;
-	}
-
-	public void setMenu(List<MenuItem> menu) {
-		this.menu = menu;
+	public String showRealEstateTitle() {
+		return Utility.getMessage("house_and_land");
 	}
 }

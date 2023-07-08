@@ -37,13 +37,13 @@
 						<p:ajax event="tabChange"
 							listener="#{userPostCardController.onTabChange}" />
 
-						<p:tab id="realestate" title="Real Estate">
+						<p:tab id="realestate" title="#{bundle.real_estates}">
 							<ui:include
 								src="/views/makaan/userpost-snippet/userReal-list.xhtml" />
 						</p:tab>
 
 
-						<p:tab id="chalet" title="Chalet">
+						<p:tab id="chalet" title="#{bundle.chalets}">
 							<ui:include
 								src="/views/makaan/userpost-snippet/userChalet-list.xhtml" />
 						</p:tab>

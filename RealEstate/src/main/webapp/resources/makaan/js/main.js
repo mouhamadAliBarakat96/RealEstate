@@ -91,10 +91,11 @@ function isNumberKey(evt) {
 }
 
 function generate(text, detail) {
-	console.log('text :' +text + ' detail' + detail
-			);
+	console.log('text :' +text + ' detail' + detail);
+	
 	toastr.options.timeOut = 5000;
-	toastr.options.positionClass = "toast-top-right";
+	displyLocation = (document.documentElement.getAttribute("dir") == 'LTR' ? "toast-top-right" : "toast-top-left");
+	toastr.options.positionClass =displyLocation;
 	toastr.options.showDuration = 800;
 	toastr.options.hideDuration = 1000;
 	toastr.options.showMethod = 'slideDown';

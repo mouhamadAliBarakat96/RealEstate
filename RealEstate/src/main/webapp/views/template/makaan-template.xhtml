@@ -10,7 +10,7 @@
 
 	<!-- Favicon -->
 	<meta charset="utf-8" />
-	<title>Makaan - Real Estate</title>
+	<title>Real Estate</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
 
@@ -22,11 +22,11 @@
 
 	<!-- Google Web Fonts -->
 
-	<!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com"
 		crossorigin="anonymous" />
 	<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" /> -->
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
 	<link href="/resources/makaan/fonts/font.css" rel="stylesheet" />
 	<!-- Icon Font Stylesheet -->
@@ -48,8 +48,6 @@
 </h:head>
 <h:body class="bg-white">
 	<h:form id="myForm">
-		<f:loadBundle basename="#{languageController.bundle_name}"
-			var="bundle" />
 		<o:importConstants type="org.RealEstate.enumerator.LanguageEnum" />
 
 		<div class="container-xxl bg-white p-0">
@@ -68,21 +66,23 @@
 			<!-- Navbar Start -->
 			<div class="container-fluid nav-bar bg-transparent">
 				<nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-				<h:link outcome="index-page"
+				<h:link outcome="index-page" id="titleId"
 					class="navbar-brand d-flex align-items-center text-center">
 					<div class="icon p-2 me-2">
 						<img class="img-fluid" src="/resources/makaan/img/icon-deal.png"
 							alt="Icon" style="width: 30px; height: 30px;" />
 					</div>
-					<h1 class="m-0 text-primary">#{bundle.house_and_land}</h1>
+					<h2 class="m-0 text-primary">#{makanTemplateController.showRealEstateTitle()}</h2>
 				</h:link>
 				<button type="button" class="navbar-toggler"
-					data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+					data-bs-toggle="collapse" data-bs-target="#myForm:navbarCollapse">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<div class="collapse navbar-collapse" id="navbarCollapse">
+				<h:panelGroup layout="block" class="collapse navbar-collapse"
+					id="navbarCollapse">
 					<div class="navbar-nav ms-auto">
-						<ui:repeat var="item" value="#{makanTemplateController.menu}">
+						
+						<ui:repeat var="item" value="#{makanTemplateController.fillMenuItems()}">
 							<h:link outcome="#{item.url}" value="#{item.itemLabel}"
 								onclick="updateActiveMenu();" styleClass="#{item.styleClass}">
 								<f:param name="property" value="#{item.kindEnum}" />
@@ -91,23 +91,22 @@
 
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle"
-								data-bs-toggle="dropdown">lANG</a>
+								data-bs-toggle="dropdown">#{bundle.lang}</a>
 							<div class="dropdown-menu rounded-0 m-0">
 								<h:commandLink onclick="changeLang('RTL')"
-									action="#{languageController.changeLang(LanguageEnum.RTL)}"
+									action="#{languageController.switchLangauge(LanguageEnum.RTL)}"
 									styleClass="dropdown-item" value="#{LanguageEnum.RTL.lang}">
 									<f:ajax execute="@this" render="@all" />
 								</h:commandLink>
 								<h:commandLink onclick="changeLang('LTR')"
-									action="#{languageController.changeLang(LanguageEnum.LTR)}"
+									action="#{languageController.switchLangauge(LanguageEnum.LTR)}"
 									styleClass="dropdown-item" value="#{LanguageEnum.LTR.lang}">
-									<f:ajax execute="@this" render="@all"/>
+									<f:ajax execute="@this" render="@all" />
 								</h:commandLink>
 							</div>
 						</div>
 					</div>
-				</div>
-				</nav>
+				</h:panelGroup> </nav>
 			</div>
 			<!-- Navbar End -->
 
@@ -138,15 +137,26 @@
 					<div class="container">
 						<div class="copyright">
 							<div class="row">
-								<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-									<a class="border-bottom" href="#">Makaan</a>, @All Right
-									Reserved.
+								<div class="col-md-6  mb-3 mb-md-0">
+									<a class="border-bottom" href="#">#{bundle.house_and_land}</a>
+									#{bundle.all_right_reserved}
 								</div>
 								<div class="col-md-6 text-center text-md-end">
-									<div class="footer-menu">
-										<h:link value="Home" outcome="index.xhtml" />
-										<h:link value="Contact us" outcome="contact-us.xhtml" />
-										<h:link value="Login In" outcome="" />
+									<div class=" d-flex justify-content-end">
+										<div class="col-md-2 text-center ">
+											<h:link value="#{bundle.home}" outcome="index.xhtml"
+												styleClass="ps-1" />
+										</div>
+
+										<div class="col-md-2 text-center ">
+											<h:link value="#{bundle.contact_us}"
+												outcome="contact-us.xhtml" styleClass="ps-1" />
+										</div>
+
+										<div class="col-md-2 text-center ">
+											<h:link value="#{bundle.login}" outcome="user-login.xhtml"
+												styleClass="ps-1" />
+										</div>
 									</div>
 								</div>
 							</div>

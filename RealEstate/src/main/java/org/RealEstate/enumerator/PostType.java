@@ -2,7 +2,6 @@ package org.RealEstate.enumerator;
 
 import org.RealEstate.model.AppratmentRent;
 import org.RealEstate.model.AppratmentSell;
-import org.RealEstate.model.Chalet;
 import org.RealEstate.model.Land;
 import org.RealEstate.model.OfficeRent;
 import org.RealEstate.model.OfficeSell;
@@ -12,21 +11,19 @@ import org.RealEstate.model.ShopSell;
 import org.RealEstate.model.StoreHouseRent;
 import org.RealEstate.model.StoreHouseSell;
 import org.RealEstate.utils.Utility;
-import org.RealEstate.utils.Utils;
 
 public enum PostType {
 
-	APPRATMENT_RENT(Utility.getMessage("appartment_rent", Utility.BUNDLE_FILE_NAME)),
-	APPRATMENT_SELL(Utility.getMessage("appartment_sell", Utility.BUNDLE_FILE_NAME)),
-	LAND(Utility.getMessage("land", Utility.BUNDLE_FILE_NAME)),
-	SHOP_RENT(Utility.getMessage("shop_rent", Utility.BUNDLE_FILE_NAME)),
-	SHOP_SELL(Utility.getMessage("shop_sell", Utility.BUNDLE_FILE_NAME)),
-	OFFICE_RENT(Utility.getMessage("office_rent", Utility.BUNDLE_FILE_NAME)),
-	OFFICE_SELL(Utility.getMessage("office_sell", Utility.BUNDLE_FILE_NAME)),
-
-	STORE_HOUSE_SELL(Utility.getMessage("store_house_sell", Utility.BUNDLE_FILE_NAME)),
-
-	STORE_HOUSE_RENT(Utility.getMessage("store_house_rent", Utility.BUNDLE_FILE_NAME));
+	APPRATMENT_RENT(Utility.getMessage("appartment_rent")),
+	APPRATMENT_SELL(Utility.getMessage("appartment_sell")),
+	LAND(Utility.getMessage("land")),
+	SHOP_RENT(Utility.getMessage("shop_rent")),
+	SHOP_SELL(Utility.getMessage("shop_sell")),
+	OFFICE_RENT(Utility.getMessage("office_rent")),
+	OFFICE_SELL(Utility.getMessage("office_sell")),
+	STORE_HOUSE_SELL(Utility.getMessage("store_house_sell")),
+	STORE_HOUSE_RENT(Utility.getMessage("store_house_rent"));
+	
 	private String name;
 
 	private PostType(String name) {
