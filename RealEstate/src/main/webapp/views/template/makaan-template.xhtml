@@ -95,12 +95,12 @@
 							<div class="dropdown-menu rounded-0 m-0">
 								<h:commandLink onclick="changeLang('RTL')"
 									action="#{languageController.switchLangauge(LanguageEnum.RTL)}"
-									styleClass="dropdown-item" value="#{LanguageEnum.RTL.lang}">
+									styleClass="dropdown-item" value="#{bundle.lang_ar}">
 									<f:ajax execute="@this" render="@all" />
 								</h:commandLink>
 								<h:commandLink onclick="changeLang('LTR')"
 									action="#{languageController.switchLangauge(LanguageEnum.LTR)}"
-									styleClass="dropdown-item" value="#{LanguageEnum.LTR.lang}">
+									styleClass="dropdown-item" value="#{bundle.lang_en}">
 									<f:ajax execute="@this" render="@all" />
 								</h:commandLink>
 							</div>
