@@ -83,9 +83,9 @@ public class AppSinglton implements Serializable {
 		switch (timer.getInfo().toString()) {
 		case "POST_EXPIRE":
 			realEstateFacade.updatePostToExpiryDate(postExpiryDate);
-			
+
 			chaletFacade.updatePostToExpiryDate(postExpiryDate);
-			
+
 			break;
 		}
 
@@ -93,11 +93,23 @@ public class AppSinglton implements Serializable {
 
 	private void prepareData() {
 		List<GeneralConfiguration> listGeneralConfiguration = configurationFacade.findAll();
+		GeneralConfiguration generalConfigurationNbFreeNbOFPost;
+		GeneralConfiguration generalConfigurationPostExpiryDate;
 
+		GeneralConfiguration generalConfigurationMeduimAccountPay;
+		GeneralConfiguration generalConfigurationMeduimAccountNbOfPost;
+		GeneralConfiguration generalConfigurationPremuimAccountPay;
+		GeneralConfiguration generalConfigurationPremuimAccountNbOfPost;
+		GeneralConfiguration generalConfigurationPhoneNumber;
+		GeneralConfiguration generalConfigurationBrokerNbOfPost;
+		GeneralConfiguration generalConfigurationBoostDuration;
+		GeneralConfiguration generalConfigurationBoostCash;
+		GeneralConfiguration generalConfigurationPostBadgePay;
 		// find number of post
 		Optional<GeneralConfiguration> configurationNbOfPost = listGeneralConfiguration.stream()
 				.filter(x -> x.getKey().equals(Configuration.FREE_NB_OF_POST.toString())).findFirst();
 		if (configurationNbOfPost.isPresent()) {
+			generalConfigurationNbFreeNbOFPost = configurationNbOfPost.get();
 			freeNbOfPost = Integer.valueOf(configurationNbOfPost.get().getValue());
 		}
 
@@ -105,7 +117,78 @@ public class AppSinglton implements Serializable {
 		Optional<GeneralConfiguration> configurationPostExpiryDate = listGeneralConfiguration.stream()
 				.filter(x -> x.getKey().equals(Configuration.POST_EXPIRY_DATE.toString())).findFirst();
 		if (configurationPostExpiryDate.isPresent()) {
+			generalConfigurationPostExpiryDate = configurationPostExpiryDate.get();
 			postExpiryDate = Integer.valueOf(configurationPostExpiryDate.get().getValue());
+		}
+
+		/**
+		 * 
+		 * private int brokerNbOfPost; private int boostDuration; private int boostCash;
+		 * private int postBadgePay;
+		 */
+
+		// meduimAccountPay
+		Optional<GeneralConfiguration> configurationMeduimAccountPay = listGeneralConfiguration.stream()
+				.filter(x -> x.getKey().equals(Configuration.MEDUIM_ACCOUNT_PAY.toString())).findFirst();
+		if (configurationMeduimAccountPay.isPresent()) {
+			generalConfigurationMeduimAccountPay = configurationMeduimAccountPay.get();
+			meduimAccountPay = Integer.valueOf(configurationMeduimAccountPay.get().getValue());
+		}
+
+		Optional<GeneralConfiguration> configurationMeduimAccountNbOfPost = listGeneralConfiguration.stream()
+				.filter(x -> x.getKey().equals(Configuration.MEDUIM_ACCOUNT_NB_OF_POST.toString())).findFirst();
+		if (configurationMeduimAccountNbOfPost.isPresent()) {
+			generalConfigurationMeduimAccountNbOfPost = configurationMeduimAccountNbOfPost.get();
+			meduimAccountNbOfPost = Integer.valueOf(configurationMeduimAccountNbOfPost.get().getValue());
+		}
+
+		Optional<GeneralConfiguration> configurationPremuimAccountPay = listGeneralConfiguration.stream()
+				.filter(x -> x.getKey().equals(Configuration.PREMIUM_ACCOUNT_PAY.toString())).findFirst();
+		if (configurationPremuimAccountPay.isPresent()) {
+			generalConfigurationPremuimAccountPay = configurationPremuimAccountPay.get();
+			premuimAccountPay = Integer.valueOf(configurationPremuimAccountPay.get().getValue());
+		}
+
+		Optional<GeneralConfiguration> configurationPremuimAccountNbOfPost = listGeneralConfiguration.stream()
+				.filter(x -> x.getKey().equals(Configuration.PREMIUM_ACCOUNT_NB_OF_POST.toString())).findFirst();
+		if (configurationPremuimAccountNbOfPost.isPresent()) {
+			generalConfigurationPremuimAccountNbOfPost = configurationPremuimAccountNbOfPost.get();
+			premuimAccountNbOfPost = Integer.valueOf(configurationPremuimAccountNbOfPost.get().getValue());
+		}
+
+		Optional<GeneralConfiguration> configurationPhoneNumber = listGeneralConfiguration.stream()
+				.filter(x -> x.getKey().equals(Configuration.PHONE_NUMBER.toString())).findFirst();
+		if (configurationPhoneNumber.isPresent()) {
+			generalConfigurationPhoneNumber = configurationPhoneNumber.get();
+			phoneNumber = (configurationPhoneNumber.get().getValue());
+		}
+
+		Optional<GeneralConfiguration> configurationBrokerNbOfPost = listGeneralConfiguration.stream()
+				.filter(x -> x.getKey().equals(Configuration.BROKER_NB_OF_POST.toString())).findFirst();
+		if (configurationBrokerNbOfPost.isPresent()) {
+			generalConfigurationBrokerNbOfPost = configurationBrokerNbOfPost.get();
+			brokerNbOfPost = Integer.valueOf(configurationBrokerNbOfPost.get().getValue());
+		}
+
+		Optional<GeneralConfiguration> configurationBoostDuration = listGeneralConfiguration.stream()
+				.filter(x -> x.getKey().equals(Configuration.BOOST_DURATION.toString())).findFirst();
+		if (configurationBoostDuration.isPresent()) {
+			generalConfigurationBoostDuration = configurationBoostDuration.get();
+			boostDuration = Integer.valueOf(configurationBoostDuration.get().getValue());
+		}
+
+		Optional<GeneralConfiguration> configurationBostCash = listGeneralConfiguration.stream()
+				.filter(x -> x.getKey().equals(Configuration.BOST_CASH.toString())).findFirst();
+		if (configurationBostCash.isPresent()) {
+			generalConfigurationBoostCash = configurationBostCash.get();
+			boostCash = Integer.valueOf(configurationBostCash.get().getValue());
+		}
+
+		Optional<GeneralConfiguration> configurationBadgePay = listGeneralConfiguration.stream()
+				.filter(x -> x.getKey().equals(Configuration.POST_BADGE_PAY.toString())).findFirst();
+		if (configurationBadgePay.isPresent()) {
+			generalConfigurationPostBadgePay = configurationBadgePay.get();
+			postBadgePay = Integer.valueOf(configurationBadgePay.get().getValue());
 		}
 
 	}

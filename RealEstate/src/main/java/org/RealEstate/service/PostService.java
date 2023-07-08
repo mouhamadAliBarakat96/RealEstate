@@ -586,7 +586,7 @@ public class PostService implements Serializable {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_200");
 
 			}
-			if (land.getSpace() * 4 < land.getPrice()) {
+			if (land.getSpace() * 4 > land.getPrice()) {
 				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
 			}
 
@@ -653,7 +653,7 @@ public class PostService implements Serializable {
 		case "STORE_HOUSE_SELL":
 
 			StoreHouseSell storeHouseSell = Utils.getObjectFromString(jsonString, StoreHouseSell.class);
-			if (storeHouseSell.getSpace() * 100 < storeHouseSell.getPrice()) {
+			if (storeHouseSell.getSpace() * 100 > storeHouseSell.getPrice()) {
 				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
 			}
 			if (storeHouseSell.getSpace() < 40) {
@@ -705,6 +705,10 @@ public class PostService implements Serializable {
 	private User findUser(String jsonString) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jsonNode = mapper.readTree(jsonString);
+		JsonNode idNode = jsonNode.get("userId") ;
+		if(idNode == null) {
+			throw new Exception("userId  Should Not BE Null") ;
+		}
 		Long id = jsonNode.get("userId").asLong();
 		User user = userFacade.find(id);
 		if (user == null) {
@@ -720,8 +724,16 @@ public class PostService implements Serializable {
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jsonNode = mapper.readTree(jsonString);
+		JsonNode postTypeNode = jsonNode.get("postType");
+		if (postTypeNode == null) {
+			throw new Exception("POST_TYPE_SHOULD_NOT_BE_NULL");
 
+		}
 		String postType = jsonNode.get("postType").asText();
+
+		if (postType == null || StringUtils.isBlank(postType)) {
+			throw new Exception("POST_TYPE_SHOULD_NOT_BE_NULL");
+		}
 
 		if (!postType.equals("CHALET")) {
 			Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId());
@@ -787,18 +799,13 @@ public class PostService implements Serializable {
 
 	private void checkPostConstraintFields(RealEstate realEstate) throws Exception {
 
-		
 		// check tittle and sub tittle not null and empty
-		if(StringUtils.isBlank(realEstate.getTittle())  || StringUtils.isBlank(realEstate.getSubTittle()) ) {
+		if (StringUtils.isBlank(realEstate.getTittle()) || StringUtils.isBlank(realEstate.getSubTittle())) {
 			throw new Exception("TITTLE_OR_SUBTTITLE_SHOULD_NOT_BE_EMPTY");
 
-			
 		}
 		// check tittle sub tittle dont have numbet
 
-		
-		
-		
 		if (NumberPatternDetector.checkTextContainNumber(realEstate.getTittle())
 				|| NumberPatternDetector.checkTextContainNumber(realEstate.getSubTittle())) {
 

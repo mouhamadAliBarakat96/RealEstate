@@ -23,6 +23,8 @@
 		<class>org.RealEstate.model.User</class>
 		<class>org.RealEstate.model.Village</class>
 		<class>org.RealEstate.model.Ads</class>
+		<class>org.RealEstate.model.StoreHouseSell</class>
+		<class>org.RealEstate.model.StoreHouseRent</class>
 
   
 		<properties>
