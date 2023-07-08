@@ -13,9 +13,9 @@
 				<h:selectOneMenu styleClass="form-select border-0  "
 					converter="omnifaces.SelectItemsConverter"
 					value="#{indexController.selectPostType}">
-					<f:selectItem itemLabel="Property Type" itemValue="" />
+					<f:selectItem itemLabel="#{bundle.property_type}" itemValue="" />
 					<f:selectItems value="#{PostType.values()}" var="option"
-						itemLabel="#{option.name}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.name : option.name_ar}" itemValue="#{option}" />
 					<f:ajax execute="myForm:searchBarPanel"
 						render="myForm:realSatatebathBedRoomsId" />
 				</h:selectOneMenu>
@@ -28,7 +28,8 @@
 					value="#{indexController.selecteGovernorate}">
 					<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
 					<f:selectItems value="#{indexController.governorates}" var="option"
-						itemLabel="#{option.name}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
+						itemValue="#{option}" />
 					<f:ajax execute="@this"
 						render="myForm:districtSelectId myForm:villageSelectId"
 						listener="#{indexController.listenerSelectGovernate()}" />
@@ -42,7 +43,7 @@
 					value="#{indexController.selecteDistrict}">
 					<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
 					<f:selectItems value="#{indexController.districts}" var="option"
-						itemLabel="#{option.name}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this"
 						listener="#{indexController.listenerSelectDistrict()}"
 						render="myForm:villageSelectId" />
@@ -55,7 +56,7 @@
 					value="#{indexController.selecteVillage}">
 					<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
 					<f:selectItems value="#{indexController.villages}" var="option"
-						itemLabel="#{option.name}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this" />
 				</h:selectOneMenu>
 			</div>
@@ -78,7 +79,8 @@
 								value="#{indexController.roomsEqualsEnum}">
 								<f:selectItem itemLabel="#{bundle.exact_value}" itemValue="" />
 								<f:selectItems value="#{YesNoEnum.values()}" var="option"
-									itemLabel="#{option.answer}" itemValue="#{option}" />
+									 itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}"
+									 itemValue="#{option}" />
 							</h:selectOneMenu>
 							<h:outputLabel value="#{bundle.exact_value}" style="color:white" />
 						</div>
@@ -99,7 +101,8 @@
 								value="#{indexController.bathsEqualsEnum}">
 								<f:selectItem itemLabel="#{bundle.exact_value}" itemValue="" />
 								<f:selectItems value="#{YesNoEnum.values()}" var="option"
-									itemLabel="#{option.answer}" itemValue="#{option}" />
+									itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}"
+								    itemValue="#{option}" />
 							</h:selectOneMenu>
 							<h:outputLabel value="#{bundle.exact_value}" style="color:white" />
 						</div>

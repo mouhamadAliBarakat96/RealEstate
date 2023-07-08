@@ -24,6 +24,7 @@ import org.RealEstate.model.ShopSell;
 
 public class Utility {
 
+	public static String BUNDLE_FILE_NAME_AR = "resources.bundle_ar";
 	public static String BUNDLE_FILE_NAME = "resources.bundle";
 	public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 

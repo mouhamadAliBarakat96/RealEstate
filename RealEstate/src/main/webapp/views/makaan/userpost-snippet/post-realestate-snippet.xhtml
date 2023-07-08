@@ -10,7 +10,7 @@
 		<p:selectOneButton value="#{userPostCardController.postType}"
 			styleClass="white" converter="omnifaces.SelectItemsConverter">
 			<f:selectItems value="#{PostType.values()}" var="option"
-				itemLabel="#{option.name}" itemValue="#{option}" />
+				itemLabel="#{languageController.locale=='en'? option.name : option.name_ar}" itemValue="#{option}" />
 			<f:ajax execute="@this" render="myForm:tabView:inputPanel"
 				listener="#{userPostCardController.listenerSelectItemType()}" />
 		</p:selectOneButton>

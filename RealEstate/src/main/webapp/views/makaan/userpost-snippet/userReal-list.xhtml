@@ -26,7 +26,7 @@
 								</h:commandLink>
 								<h:outputLabel
 									styleClass="rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3 #{real.postStatus == 'ACCEPTED'? 'bg-primary' :'bg-danger'}"
-									value="#{real.postStatus.status} " />
+									value="#{languageController.locale=='en'?real.postStatus.status:real.postStatus.status_ar}" />
 								<h:commandLink
 									action="#{userPostListController.navigateToUserReal(real)}"
 									target="_blank">
@@ -84,7 +84,7 @@
 
 									<h:outputLabel
 										styleClass="rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3 #{real.postStatus == 'ACCEPTED'? 'bg-primary' :'bg-danger'}"
-										value="#{real.postStatus.status} " />
+										value="#{languageController.locale=='en'?real.postStatus.status:real.postStatus.status_ar}" />
 
 								</div>
 							</div>

@@ -15,7 +15,7 @@
 					value="#{indexController.selecteGovernorate}">
 					<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
 					<f:selectItems value="#{indexController.governorates}" var="option"
-						itemLabel="#{option.name}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this"
 						render="myForm:chaletDistrict myForm:chaletVillage"
 						listener="#{indexController.listenerSelectGovernate()}" />
@@ -28,7 +28,7 @@
 					value="#{indexController.selecteDistrict}">
 					<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
 					<f:selectItems value="#{indexController.districts}" var="option"
-						itemLabel="#{option.name}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this"
 						listener="#{indexController.listenerSelectDistrict()}"
 						render="myForm:chaletVillage" />
@@ -40,7 +40,7 @@
 					value="#{indexController.selecteVillage}">
 					<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
 					<f:selectItems value="#{indexController.villages}" var="option"
-						itemLabel="#{option.name}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this" />
 				</h:selectOneMenu>
 			</div>
@@ -69,7 +69,7 @@
 					value="#{indexController.chimneyYesNoEnum}">
 					<f:selectItem itemLabel="#{bundle.chalet_chimney}" itemValue="" />
 					<f:selectItems value="#{YesNoEnum.values()}" var="option"
-						itemLabel="#{option.answer}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}" itemValue="#{option}" />
 				</h:selectOneMenu>
 				<h:outputLabel value="#{bundle.chalet_chimney}" style="color:white" />
 			</div>
@@ -80,7 +80,7 @@
 					value="#{indexController.poolYesNoEnum}">
 					<f:selectItem itemLabel="#{bundle.chalet_pool}" itemValue="" />
 					<f:selectItems value="#{YesNoEnum.values()}" var="option"
-						itemLabel="#{option.answer}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}" itemValue="#{option}" />
 				</h:selectOneMenu>
 				<h:outputLabel value="#{bundle.chalet_pool}" style="color:white" />
 			</div>
