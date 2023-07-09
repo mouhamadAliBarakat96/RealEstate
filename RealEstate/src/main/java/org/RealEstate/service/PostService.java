@@ -705,9 +705,9 @@ public class PostService implements Serializable {
 	private User findUser(String jsonString) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jsonNode = mapper.readTree(jsonString);
-		JsonNode idNode = jsonNode.get("userId") ;
-		if(idNode == null) {
-			throw new Exception("userId  Should Not BE Null") ;
+		JsonNode idNode = jsonNode.get("userId");
+		if (idNode == null) {
+			throw new Exception("userId  Should Not BE Null");
 		}
 		Long id = jsonNode.get("userId").asLong();
 		User user = userFacade.find(id);
@@ -735,31 +735,30 @@ public class PostService implements Serializable {
 			throw new Exception("POST_TYPE_SHOULD_NOT_BE_NULL");
 		}
 
-		if (!postType.equals("CHALET")) {
-			Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId());
+		Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId())
+				+ chaletFacade.findUserCountPostPendingOrActive(user.getId());
+		
 
-			// nb of post allowed ;
-			// krml is broker bytla3lo zyde
-			int nbOfPostAllowed = 0;
-			if (user.isBroker()) {
-				nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
-			}
+		// nb of post allowed ;
+		// krml is broker bytla3lo zyde
+		int nbOfPostAllowed = 0;
+		if (user.isBroker()) {
+			nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
+		}
 
-			if (user.getUserCategory() == UserCategory.REGULAR) {
-				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
+		if (user.getUserCategory() == UserCategory.REGULAR) {
+			nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
 
-			} else if (user.getUserCategory() == UserCategory.MEDUIM) {
+		} else if (user.getUserCategory() == UserCategory.MEDUIM) {
 
-				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
+			nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
 
-			} else if (user.getUserCategory() == UserCategory.PREMIUM) {
-				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
-			}
+		} else if (user.getUserCategory() == UserCategory.PREMIUM) {
+			nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
+		}
 
-			if (nbOfPost >= nbOfPostAllowed) {
-				throw new Exception("EXCEEDED_POST_LIMIT");
-
-			}
+		if (nbOfPost >= nbOfPostAllowed) {
+			throw new Exception("EXCEEDED_POST_LIMIT");
 
 		}
 

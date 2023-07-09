@@ -50,6 +50,11 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 		obj.setImages(imagesUrl);
 		return this.save(obj);
 	}
+	
+	public Long findUserCountPostPendingOrActive(Long userId) {
+		return (Long) getEntityManager().createNamedQuery(Chalet.FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING)
+				.setParameter("userId", userId).getSingleResult();
+	}
 
 	public List<Chalet> findAllChaletWithFilter(User user, Village village, int page, int size, AtomicLong totalCount,
 			District district, Governorate governorate, int minPrice, int maxPrice, Boolean pool, Boolean chimney)

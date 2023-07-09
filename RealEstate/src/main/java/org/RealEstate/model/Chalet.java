@@ -37,11 +37,16 @@ import com.google.gson.annotations.Expose;
 @NamedQueries({
 		@NamedQuery(name = Chalet.FIND_POSTS_BY_USER_ID, query = "SELECT chalet  FROM Chalet chalet WHERE  chalet.user= :user "),
 		@NamedQuery(name = Chalet.UPDATE_CHALET_TO_EXPIRY_DATE, query = "UPDATE Chalet chalet SET chalet.postStatus = org.RealEstate.enumerator.PostStatus.EXPIRED WHERE chalet.postDate < :thresholdDate"),
+		@NamedQuery(name = Chalet.FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING, query = "SELECT COUNT(chalet.id) FROM Chalet chalet WHERE chalet.user.id =:userId and  (chalet.postStatus = org.RealEstate.enumerator.PostStatus.ACCEPTED or chalet.postStatus = org.RealEstate.enumerator.PostStatus.PENDING ) "),
+
 		@NamedQuery(name = Chalet.UPDATE_CHALET_TO_EXPIRY_DATE, query = "UPDATE Chalet chalet SET chalet.postStatus = org.RealEstate.enumerator.PostStatus.EXPIRED WHERE chalet.postDate < :thresholdDate"),
 		@NamedQuery(name = Chalet.UPDATE_POST_BOOST, query = "UPDATE Chalet chalet SET chalet.boostedUntil = null , chalet.isBoosted = true  WHERE chalet.boostedUntil < :todayDate"),
 })
 
 public class Chalet extends MainEntity implements Serializable {
+
+	
+	public static final String FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING = "Chalet.FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING";
 
 	public static final String UPDATE_CHALET_TO_EXPIRY_DATE = "Chalet.UPDATE_CHALET_TO_EXPIRY_DATE";
 	public static final String UPDATE_POST_BOOST = "Chalet.UPDATE_POST_BOOST";

@@ -13,8 +13,12 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import org.RealEstate.enumerator.PostStatus;
+import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.facade.ChaletFacade;
+import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.Chalet;
+import org.RealEstate.model.User;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
@@ -35,9 +39,18 @@ public class ChaletController implements Serializable {
 	private String ipAddressWithPort;
 	@EJB
 	private ChaletFacade chaletFacade;
+	@EJB
+	private RealEstateFacade realEstateFacade;
 	private String fullUrl = "";
 
 	private final String REQUEST_PARAM = "id";
+
+	private Long nbOfActivePostByThisUser;
+
+	@EJB
+	private AppSinglton appSinglton;
+
+	private User user;
 
 	@PostConstruct
 	public void init() {
@@ -46,10 +59,16 @@ public class ChaletController implements Serializable {
 			CommonUtility.addMessageToFacesContext("Id should > 0  ", "error");
 		} else {
 			chalet = chaletFacade.find(id);
-
+			user = chalet.getUser();
 			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
+			nbOfActivePostByThisUser = realEstateFacade.findUserCountPostPendingOrActive(user.getId())
+					+ chaletFacade.findUserCountPostPendingOrActive(user.getId());
+
+			if (chalet.getPostStatus() == PostStatus.ACCEPTED) {
+				nbOfActivePostByThisUser -= 1;
+			}
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			if (flash.containsKey("update-card")) {
 
@@ -71,27 +90,58 @@ public class ChaletController implements Serializable {
 		return ipAddressWithPort;
 	}
 
+	public void mangmentPoostStatus() throws Exception {
+
+		if ((chalet.getPostStatus().equals(PostStatus.REFFUSED)
+				|| chalet.getPostStatus().equals(PostStatus.TO_REVIEUX_BY_USER))
+				&& chalet.getReffuseCause().isEmpty()) {
+
+			CommonUtility.addMessageToFacesContext("refuse cause  should not be empty  ", "error");
+			throw new Exception("refuse cause  should not be empty");
+		} else if (chalet.getPostStatus().equals(PostStatus.ACCEPTED)) {
+
+			int nbOfPostAllowed = 0;
+			if (user.isBroker()) {
+				nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
+			}
+
+			if (user.getUserCategory() == UserCategory.REGULAR) {
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
+
+			} else if (user.getUserCategory() == UserCategory.MEDUIM) {
+
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
+
+			} else if (user.getUserCategory() == UserCategory.PREMIUM) {
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
+			}
+
+			if (nbOfActivePostByThisUser >= nbOfPostAllowed) {
+				// realEstateFacade.getEm().detach(realEstate);
+				CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER, "error");
+				throw new Exception(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER);
+
+			}
+
+		}
+
+	}
+
 	public void save() {
 
 		try {
-			if ((chalet.getPostStatus().equals(PostStatus.REFFUSED.toString())
-					|| chalet.getPostStatus().equals(PostStatus.TO_REVIEUX_BY_USER.toString()))
-					&& chalet.getReffuseCause().isEmpty()) {
 
-				CommonUtility.addMessageToFacesContext("refuse cause  should not be empty  ", "error");
+			mangmentPoostStatus();
+			mangmentBoost();
+			chaletFacade.save(chalet);
 
-			} else {
-				
-				mangmentBoost();
-				chaletFacade.save(chalet);
+			CommonUtility.addMessageToFacesContext("Update successfully   ", "success");
 
-				CommonUtility.addMessageToFacesContext("Update successfully   ", "success");
+			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+			flash.put("update-card", "true");
 
-				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-				flash.put("update-card", "true");
+			changeUrl();
 
-				changeUrl();
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

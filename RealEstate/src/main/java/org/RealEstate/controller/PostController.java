@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.enumerator.WaterResources;
+import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
@@ -40,6 +41,10 @@ public class PostController implements Serializable {
 	private String ipAddressWithPort;
 	@EJB
 	private RealEstateFacade realEstateFacade;
+	@EJB
+	private ChaletFacade chaletFacade;
+	
+	
 	private String fullUrl = "";
 
 	private final String REQUEST_PARAM = "id";
@@ -59,8 +64,8 @@ public class PostController implements Serializable {
 		} else {
 			realEstate = realEstateFacade.find(id);
 			user = realEstate.getUser();
-			nbOfActivePostByThisUser = realEstateFacade.findUserCountPostActive(realEstate.getUser().getId());
-
+			 nbOfActivePostByThisUser = realEstateFacade.findUserCountPostPendingOrActive(user.getId())
+					+ chaletFacade.findUserCountPostPendingOrActive(user.getId());
 			if (realEstate.getPostStatus() == PostStatus.ACCEPTED) {
 				nbOfActivePostByThisUser -= 1;
 			}
@@ -101,7 +106,7 @@ public class PostController implements Serializable {
 		return ipAddressWithPort;
 	}
 
-	public void mangmentBoostStatus() throws Exception {
+	public void mangmentPoostStatus() throws Exception {
 
 		if ((realEstate.getPostStatus().equals(PostStatus.REFFUSED)
 				|| realEstate.getPostStatus().equals(PostStatus.TO_REVIEUX_BY_USER))
@@ -164,7 +169,7 @@ public class PostController implements Serializable {
 
 	public void save() throws Exception {
 		try {
-			mangmentBoostStatus();
+			mangmentPoostStatus();
 			mangmentBoost();
 
 			realEstateFacade.save(realEstate);
