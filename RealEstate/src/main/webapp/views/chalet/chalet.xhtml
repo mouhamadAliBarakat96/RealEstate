@@ -68,7 +68,8 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 		<o:importConstants type="org.RealEstate.enumerator.PostStatus"
 			var="postStatus" />
-
+		<o:importConstants type="org.RealEstate.enumerator.BoostEnum"
+			var="boostEnum" />
 
 		<div class="panel-body">
 
@@ -147,7 +148,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 
 
-									
+
 									<h:outputText value=" Tittle:" />
 									<h:outputText value="#{chaletController.chalet.name}" />
 
@@ -183,7 +184,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 
 
-		
+
 
 									<h:outputText styleClass="key" value="chimney :" />
 									<h:outputText styleClass="value"
@@ -203,6 +204,21 @@ body .ui-panelgrid .ui-panelgrid-cell {
 									</h:outputText>
 
 
+									<h:outputText value="boosted Until:" />
+
+
+
+									<h:outputText
+										rendered="#{chaletController.chalet.boostedUntil == null}"
+										styleClass="text-ellipsis" class="fa fa-times our-red ">
+
+									</h:outputText>
+
+									<h:outputText styleClass="text-ellipsis"
+										rendered="#{chaletController.chalet.boostedUntil != null}"
+										value="#{chaletController.chalet.boostedUntil}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
 									<h:outputText value="weekdays :" />
 									<h:outputText
 										value="#{of:formatCurrency(chaletController.chalet.weekdays, '')}  &#36; " />
@@ -246,6 +262,22 @@ body .ui-panelgrid .ui-panelgrid-cell {
 							<div class="card">
 								<div class="card-body">
 									<div class="row">
+										<div class="col-md-4">
+
+											<h:outputText style=" font-size:16px; "
+												value="Post Verfied :" />
+
+
+
+											<p:selectBooleanButton onLabel="Post Verfied"
+												id="postVerfied" offLabel="Post Not Verfied "
+												value="#{chaletController.chalet.verfied}"
+												onIcon="pi pi-check" offIcon="pi pi-times"
+												style="width:12rem ; display:block" />
+
+
+
+										</div>
 										<div class=" col-md-12">
 
 
@@ -295,6 +327,24 @@ body .ui-panelgrid .ui-panelgrid-cell {
 												</div>
 											</h:panelGroup>
 
+											<div class="col-md-10">
+												<p:outputLabel class="control-label" for="boostType"
+													value="boost Type  ">
+												</p:outputLabel>
+												<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+													styleClass="select2 select2me form-control   custom-select"
+													converter="omnifaces.SelectItemsConverter" id="boostType"
+													label="boost Type"
+													value="#{chaletController.chalet.boostEnum}"
+													placeHolder="#set">
+													<f:selectItem itemLabel="postStatus" itemValue="" />
+													<f:selectItems value="#{boostEnum.values()}" var="var"
+														itemLabel="#{var}" itemValue="#{var}" />
+
+													<f:ajax></f:ajax>
+												</h:selectOneMenu>
+												<h:message for="boostType" styleClass="error-message" />
+											</div>
 
 
 
@@ -307,7 +357,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 													action='#{chaletController.save()}'
 													styleClass="btn btn-primary btn-save">
 													<f:ajax render=":messageScript "
-														execute="  postStatus reffuseCause  " />
+														execute="  postStatus reffuseCause  postVerfied boostType " />
 													<i class="fa fa-save" />
 													<span>Save</span>
 

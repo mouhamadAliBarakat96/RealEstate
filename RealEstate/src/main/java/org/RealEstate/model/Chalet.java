@@ -23,8 +23,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
+import org.RealEstate.enumerator.BoostEnum;
 import org.RealEstate.enumerator.PostStatus;
 
 import com.google.gson.annotations.Expose;
@@ -33,27 +35,23 @@ import com.google.gson.annotations.Expose;
 @Table(name = "tbl_chalet")
 @DiscriminatorValue("chalet")
 @NamedQueries({
-	@NamedQuery(name = Chalet.FIND_POSTS_BY_USER_ID, query = "SELECT chalet  FROM Chalet chalet WHERE  chalet.user= :user ") ,
-	@NamedQuery(name = Chalet.UPDATE_CHALET_TO_EXPIRY_DATE, query = "UPDATE Chalet chalet SET chalet.postStatus = org.RealEstate.enumerator.PostStatus.EXPIRED WHERE chalet.postDate < :thresholdDate"),
-
-
-	
+		@NamedQuery(name = Chalet.FIND_POSTS_BY_USER_ID, query = "SELECT chalet  FROM Chalet chalet WHERE  chalet.user= :user "),
+		@NamedQuery(name = Chalet.UPDATE_CHALET_TO_EXPIRY_DATE, query = "UPDATE Chalet chalet SET chalet.postStatus = org.RealEstate.enumerator.PostStatus.EXPIRED WHERE chalet.postDate < :thresholdDate"),
+		@NamedQuery(name = Chalet.UPDATE_CHALET_TO_EXPIRY_DATE, query = "UPDATE Chalet chalet SET chalet.postStatus = org.RealEstate.enumerator.PostStatus.EXPIRED WHERE chalet.postDate < :thresholdDate"),
+		@NamedQuery(name = Chalet.UPDATE_POST_BOOST, query = "UPDATE Chalet chalet SET chalet.boostedUntil = null , chalet.isBoosted = true  WHERE chalet.boostedUntil < :todayDate"),
 })
-
-
 
 public class Chalet extends MainEntity implements Serializable {
 
-	
 	public static final String UPDATE_CHALET_TO_EXPIRY_DATE = "Chalet.UPDATE_CHALET_TO_EXPIRY_DATE";
+	public static final String UPDATE_POST_BOOST = "Chalet.UPDATE_POST_BOOST";
 
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	public static final String FIND_POSTS_BY_USER_ID = "Chalet.FIND_POSTS_BY_USER_ID";
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Expose
@@ -119,6 +117,19 @@ public class Chalet extends MainEntity implements Serializable {
 	@ElementCollection(targetClass = String.class)
 	@Expose
 	private List<String> images = new ArrayList<>();
+
+	@Expose
+	private boolean isVerfied;
+
+	@Expose
+	private boolean isBoosted;
+
+	@Expose
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date boostedUntil;
+
+	@Transient
+	private BoostEnum boostEnum;
 
 	public Chalet() {
 		// TODO Auto-generated constructor stub
@@ -286,6 +297,38 @@ public class Chalet extends MainEntity implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public boolean isVerfied() {
+		return isVerfied;
+	}
+
+	public void setVerfied(boolean isVerfied) {
+		this.isVerfied = isVerfied;
+	}
+
+	public boolean isBoosted() {
+		return isBoosted;
+	}
+
+	public void setBoosted(boolean isBoosted) {
+		this.isBoosted = isBoosted;
+	}
+
+	public Date getBoostedUntil() {
+		return boostedUntil;
+	}
+
+	public void setBoostedUntil(Date boostedUntil) {
+		this.boostedUntil = boostedUntil;
+	}
+
+	public BoostEnum getBoostEnum() {
+		return boostEnum;
+	}
+
+	public void setBoostEnum(BoostEnum boostEnum) {
+		this.boostEnum = boostEnum;
 	}
 
 	@Override

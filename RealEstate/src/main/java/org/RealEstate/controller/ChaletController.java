@@ -17,6 +17,7 @@ import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.model.Chalet;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utils;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 
@@ -38,7 +39,6 @@ public class ChaletController implements Serializable {
 
 	private final String REQUEST_PARAM = "id";
 
-	
 	@PostConstruct
 	public void init() {
 
@@ -49,15 +49,14 @@ public class ChaletController implements Serializable {
 
 			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
-			
+
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			if (flash.containsKey("update-card")) {
 
 				flash.setKeepMessages(true);
 				CommonUtility.addMessageToFacesContext("Update successfully   ", "success");
 			}
-			
-			
+
 		}
 
 	}
@@ -82,19 +81,45 @@ public class ChaletController implements Serializable {
 				CommonUtility.addMessageToFacesContext("refuse cause  should not be empty  ", "error");
 
 			} else {
+				
+				mangmentBoost();
 				chaletFacade.save(chalet);
 
 				CommonUtility.addMessageToFacesContext("Update successfully   ", "success");
 
 				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 				flash.put("update-card", "true");
-				
+
 				changeUrl();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void mangmentBoost() {
+		if (chalet.getBoostEnum() != null) {
+			switch (chalet.getBoostEnum()) {
+			case BOOST_FOR_3_DAYS:
+				chalet.setBoostedUntil(Utils.addDaysToCurrentDate(3));
+				chalet.setBoosted(true);
+				break;
+			case BOOST_FOR_1_WEEK:
+				chalet.setBoostedUntil(Utils.addDaysToCurrentDate(7));
+				chalet.setBoosted(true);
+				break;
+			case BOOST_FOR_2_WEEKS:
+				chalet.setBoostedUntil(Utils.addDaysToCurrentDate(14));
+				chalet.setBoosted(true);
+				break;
+			case BOOST_FOR_1_MONTH:
+				chalet.setBoostedUntil(Utils.addDaysToCurrentDate(30));
+				chalet.setBoosted(true);
+				break;
+
+			}
+		}
 	}
 
 	private void changeUrl() {
@@ -109,8 +134,6 @@ public class ChaletController implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
-	
 
 	public Chalet getChalet() {
 		return chalet;

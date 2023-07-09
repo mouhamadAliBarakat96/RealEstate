@@ -2,6 +2,7 @@ package org.RealEstate.facade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -179,6 +180,17 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 																								// with
 		// the threshold
 		// date
+
+		updateQuery.executeUpdate();
+
+	}
+	
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void updatePostBoost() {
+
+		Query updateQuery = getEntityManager().createNamedQuery(Chalet.UPDATE_POST_BOOST);
+		updateQuery.setParameter("todayDate", new Date());
 
 		updateQuery.executeUpdate();
 

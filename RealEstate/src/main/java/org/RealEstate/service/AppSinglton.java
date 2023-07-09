@@ -83,6 +83,8 @@ public class AppSinglton implements Serializable {
 									.minute(String.valueOf(postBoost.get(Calendar.MINUTE))),
 							new TimerConfig("POST_BOOST", false));
 
+			
+			chaletFacade.updatePostBoost();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,6 +103,7 @@ public class AppSinglton implements Serializable {
 		case "POST_BOOST":
 			realEstateFacade.updatePostBoost();
 
+			chaletFacade.updatePostBoost();
 
 			break;
 
