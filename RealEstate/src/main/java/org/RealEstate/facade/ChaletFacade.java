@@ -50,7 +50,7 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 		obj.setImages(imagesUrl);
 		return this.save(obj);
 	}
-	
+
 	public Long findUserCountPostPendingOrActive(Long userId) {
 		return (Long) getEntityManager().createNamedQuery(Chalet.FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING)
 				.setParameter("userId", userId).getSingleResult();
@@ -61,12 +61,20 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 			throws Exception {
 
 		List<Chalet> lists;
+		List<Chalet> chaletsWithAddvertise;
 
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaBuilder criteriaBuilderWithAdd = getEntityManager().getCriteriaBuilder();
+
 		CriteriaQuery<Chalet> criteriaQuery;
+		CriteriaQuery<Chalet> criteriaQueryWithAdd;
+
 		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+		CriteriaQuery<Long> countQueryWithAdd = criteriaBuilderWithAdd.createQuery(Long.class);
 
 		criteriaQuery = criteriaBuilder.createQuery(Chalet.class);
+		criteriaQueryWithAdd = criteriaBuilderWithAdd.createQuery(Chalet.class);
+
 		Root root = countQuery.from(Chalet.class);
 
 		// Create a list of predicates based on your runtime conditions
@@ -74,13 +82,29 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, user, village, district, governorate, minPrice,
 				maxPrice, pool, chimney);
 
-		criteriaQuery.where(finalPredicate);
+		Predicate predicateBoostFalse = criteriaBuilder.equal(root.get("isBoosted"), false);
+		Predicate finalPredicateWithoutAdd = criteriaBuilderWithAdd.and(finalPredicate, predicateBoostFalse);
+		criteriaQuery.where(finalPredicateWithoutAdd);
+		countQuery.select(criteriaBuilder.count(root)).where(finalPredicateWithoutAdd);
 
-		countQuery.select(criteriaBuilder.count(root)).where(finalPredicate);
+		Predicate predicateBoostTrue = criteriaBuilder.equal(root.get("isBoosted"), true);
 
-		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult());
+		// jib li ma3 d3yt
+		Predicate finalPredicateWithAdd = criteriaBuilderWithAdd.and(finalPredicate, predicateBoostTrue);
+		countQueryWithAdd.select(criteriaBuilderWithAdd.count(root)).where(finalPredicateWithAdd);
 
-		criteriaQuery.multiselect(root).where(finalPredicate);
+		criteriaQueryWithAdd.where(finalPredicateWithAdd);
+		criteriaQueryWithAdd.orderBy(criteriaBuilderWithAdd.asc(criteriaBuilderWithAdd.function("random", null)));
+
+		criteriaQuery.where(finalPredicateWithoutAdd);
+
+		countQuery.select(criteriaBuilder.count(root)).where(finalPredicateWithoutAdd);
+
+		long totalCountWithadd = getEntityManager().createQuery(countQueryWithAdd).getSingleResult();
+
+		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult() + totalCountWithadd );
+
+		criteriaQuery.multiselect(root).where(finalPredicateWithoutAdd);
 
 		TypedQuery<Chalet> typedQuery = getEntityManager().createQuery(criteriaQuery);
 		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
@@ -88,11 +112,37 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
 				.setHint("eclipselink.join-fetch", "RealEstate.user");
 
-		typedQuery.setFirstResult((page - 1) * size);
-		typedQuery.setMaxResults(size);
+		// hon bel size mnkhod 40/ma3mlon d3yat wel b2e bala d3ayet
+		int withoutAdCount = (int) (size * 0.6);
+		int withAdCount = size - withoutAdCount;
+
+		if (withAdCount > totalCountWithadd) {
+			withoutAdCount = (int) (withoutAdCount + (withAdCount - totalCountWithadd));
+
+		}
+
+		typedQuery.setFirstResult((page - 1) * withoutAdCount);
+		typedQuery.setMaxResults(withoutAdCount);
 
 		// Add predicates based on your conditions
-		return typedQuery.getResultList();
+		lists = typedQuery.getResultList();
+
+		criteriaQueryWithAdd.multiselect(root).where(finalPredicateWithAdd);
+		TypedQuery<Chalet> typedQueryWithBoost = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
+				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
+				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
+				.setHint("eclipselink.join-fetch", "RealEstate.user");
+
+		countQuery.select(criteriaBuilderWithAdd.count(root)).where(finalPredicateWithAdd);
+
+		// hon ana jbton kelon li bala d3yet hala2 bade jib lali ma3 di3ayet
+		typedQueryWithBoost.setMaxResults(withAdCount);
+
+		chaletsWithAddvertise = typedQueryWithBoost.getResultList();
+
+		lists.addAll(chaletsWithAddvertise);
+		return lists;
 
 	}
 
@@ -189,8 +239,7 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 		updateQuery.executeUpdate();
 
 	}
-	
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void updatePostBoost() {
 

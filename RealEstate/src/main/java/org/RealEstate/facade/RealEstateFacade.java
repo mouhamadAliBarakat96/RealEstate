@@ -97,7 +97,6 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		CriteriaBuilder criteriaBuilderWithAdd = getEntityManager().getCriteriaBuilder();
 
 		CriteriaQuery<? extends RealEstate> criteriaQuery;
-
 		CriteriaQuery<? extends RealEstate> criteriaQueryWithAdd;
 
 		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
@@ -144,7 +143,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		// used
 		long totalCountWithadd = getEntityManager().createQuery(countQueryWithAdd).getSingleResult();
 
-		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult());
+		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult()+ totalCountWithadd);
 
 		criteriaQuery.multiselect(root).where(finalPredicateWithoutAdd);
 
