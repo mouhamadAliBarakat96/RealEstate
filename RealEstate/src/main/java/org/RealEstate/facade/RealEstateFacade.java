@@ -94,8 +94,14 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		List<? extends RealEstate> realEstatesWithAddvertise;
 
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaBuilder criteriaBuilderWithAdd = getEntityManager().getCriteriaBuilder();
+
 		CriteriaQuery<? extends RealEstate> criteriaQuery;
+
+		CriteriaQuery<? extends RealEstate> criteriaQueryWithAdd;
+
 		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+		CriteriaQuery<Long> countQueryWithAdd = criteriaBuilderWithAdd.createQuery(Long.class);
 
 		Root<? extends RealEstate> root;
 		Class classType;
@@ -112,6 +118,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		}
 
 		criteriaQuery = criteriaBuilder.createQuery(classType);
+		criteriaQueryWithAdd = criteriaBuilderWithAdd.createQuery(classType);
+
 		root = countQuery.from(classType);
 
 		// Create a list of predicates based on your runtime conditions
@@ -119,13 +127,26 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, postType, minPrice, maxPrice,
 				village, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
 
-		criteriaQuery.where(finalPredicate);
+		Predicate predicateBoostFalse = criteriaBuilder.equal(root.get("isBoosted"), false);
+		Predicate finalPredicateWithoutAdd = criteriaBuilderWithAdd.and(finalPredicate, predicateBoostFalse);
+		criteriaQuery.where(finalPredicateWithoutAdd);
+		countQuery.select(criteriaBuilder.count(root)).where(finalPredicateWithoutAdd);
+		countQueryWithAdd.select(criteriaBuilderWithAdd.count(root)).where(finalPredicateWithoutAdd);
 
-		countQuery.select(criteriaBuilder.count(root)).where(finalPredicate);
+		Predicate predicateBoostTrue = criteriaBuilder.equal(root.get("isBoosted"), true);
+
+		// jib li ma3 d3yt
+		Predicate finalPredicateWithAdd = criteriaBuilderWithAdd.and(finalPredicate, predicateBoostTrue);
+		criteriaQueryWithAdd.where(finalPredicateWithAdd);
+		criteriaQueryWithAdd.orderBy(criteriaBuilderWithAdd.asc(criteriaBuilderWithAdd.function("random", null))); // MySql
+																													// RAND()
+																													// function
+		// used
+		long totalCountWithadd = getEntityManager().createQuery(countQueryWithAdd).getSingleResult();
 
 		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult());
 
-		criteriaQuery.multiselect(root).where(finalPredicate);
+		criteriaQuery.multiselect(root).where(finalPredicateWithoutAdd);
 
 		TypedQuery<? extends RealEstate> typedQuery = getEntityManager().createQuery(criteriaQuery);
 		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
@@ -136,40 +157,26 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		// hon bel size mnkhod 40/ma3mlon d3yat wel b2e bala d3ayet
 		int withoutAdCount = (int) (size * 0.6);
 		int withAdCount = size - withoutAdCount;
-// hon ana jbton kelon li bala d3yet hala2 bade jib lali ma3 di3ayet
+
+		if (withAdCount > totalCountWithadd) {
+			withoutAdCount = (int) (withoutAdCount + (withAdCount - totalCountWithadd));
+
+		}
+
+		// hon ana jbton kelon li bala d3yet hala2 bade jib lali ma3 di3ayet
 		typedQuery.setFirstResult((page - 1) * withoutAdCount);
 		typedQuery.setMaxResults(withoutAdCount);
 
-		// CriteriaQuery<?> query = ...
-		// CriteriaBuilder builder = ...
-
-		// put inside toPredicate function following line:
-		//
-
-		
-		// Add predicates based on your conditions
 		realEstatesWithoutAddvertise = typedQuery.getResultList();
-		Predicate predicateBoostTrue = criteriaBuilder.equal(root.get("isBoosted"), true);
 
-		// jib li ma3 d3yt
-		finalPredicate = criteriaBuilder.and(finalPredicate, predicateBoostTrue);
-		criteriaQuery.where(finalPredicate);
-		criteriaQuery.orderBy(criteriaBuilder.asc(criteriaBuilder.function("random", null))); // MySql RAND() function used
-
-		
-		criteriaQuery.multiselect(root).where(finalPredicate);
+		criteriaQueryWithAdd.multiselect(root).where(finalPredicateWithAdd);
 		TypedQuery<? extends RealEstate> typedQueryWithBoost = getEntityManager().createQuery(criteriaQuery);
 		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
 				.setHint("eclipselink.join-fetch", "RealEstate.user");
 
-		countQuery.select(criteriaBuilder.count(root)).where(finalPredicate);
-
-		
-		
-
-	
+		countQuery.select(criteriaBuilderWithAdd.count(root)).where(finalPredicateWithAdd);
 
 		// hon ana jbton kelon li bala d3yet hala2 bade jib lali ma3 di3ayet
 		typedQueryWithBoost.setMaxResults(withAdCount);
