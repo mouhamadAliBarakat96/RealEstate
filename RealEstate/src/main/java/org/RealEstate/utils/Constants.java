@@ -8,6 +8,7 @@ public interface Constants {
 	public final String DATE_FORMAT_TO_USER = "dd-MM-yyyy";
 	public final String DATE_FORMAT_CARD = "yy-M-dd HH:mm:ss";
 	public final String USER_SESSION = "USER_SESSION";
+	public final String CURRENT_URL = "current_url";
 	public final String JSON_EMPTY_ARRAY = "[]";
 	public final String JSON_EMPTY_OBJECT = "{}";
 

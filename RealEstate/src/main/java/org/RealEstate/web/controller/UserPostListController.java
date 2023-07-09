@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.RealEstateFacade;
-import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.Chalet;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
@@ -36,8 +36,6 @@ public class UserPostListController implements Serializable {
 	@Inject
 	private HttpServletRequest request;
 
-	private User user;
-
 	private List<RealEstate> realEstates = new ArrayList<RealEstate>();
 
 	private List<Chalet> chalets = new ArrayList<>();
@@ -52,14 +50,23 @@ public class UserPostListController implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		user = getUser();
-		// go to login page
+		try {
+			checkAuthentication();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void checkAuthentication() throws IOException {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		HttpSession session = request.getSession(true);
+		User user = (User) session.getAttribute(Constants.USER_SESSION);
+
 		if (user == null) {
-			try {
-				Faces.redirect("/user-login.xhtml");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			String currentUrl = externalContext.getRequestServletPath();
+			Flash flash = externalContext.getFlash();
+			flash.put(Constants.CURRENT_URL, currentUrl);
+			Faces.redirect("/user-login.xhtml");
 		} else {
 			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");

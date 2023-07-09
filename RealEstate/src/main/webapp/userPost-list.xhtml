@@ -34,9 +34,6 @@
 			<div class="container">
 				<div class="tab-content">
 					<p:tabView id="tabView" style="border:1px solid #ddd !important">
-						<p:ajax event="tabChange"
-							listener="#{userPostCardController.onTabChange}" />
-
 						<p:tab id="realestate" title="#{bundle.real_estates}">
 							<ui:include
 								src="/views/makaan/userpost-snippet/userReal-list.xhtml" />

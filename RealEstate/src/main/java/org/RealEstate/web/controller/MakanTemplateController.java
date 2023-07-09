@@ -10,9 +10,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.RealEstate.dto.MenuItem;
 import org.RealEstate.enumerator.PropertyKindEnum;
+import org.RealEstate.model.User;
+import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 
 @Named
@@ -26,7 +30,9 @@ public class MakanTemplateController implements Serializable {
 
 	@Inject
 	private LanguageController languageController;
-
+	@Inject
+	private HttpServletRequest request;
+	
 	@PostConstruct
 	public void init() {
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(languageController.getLocale());
@@ -35,6 +41,10 @@ public class MakanTemplateController implements Serializable {
 	public List<MenuItem> fillMenuItems() {
 		List<MenuItem> menu=new ArrayList<>();
 		MenuItem m1 = null;
+		HttpSession session = request.getSession(true);
+		User user = (User) session.getAttribute(Constants.USER_SESSION);
+		
+		
 		m1 = new MenuItem(Utility.getMessage("real_estates"), "", "index-page", true, "nav-item nav-link active",
 				PropertyKindEnum.REALESTATE.toString());
 		menu.add(m1);
@@ -52,9 +62,14 @@ public class MakanTemplateController implements Serializable {
 		m1 = new MenuItem(Utility.getMessage("contact_us"), "", "contact-us", true, "nav-item nav-link", "contact-us");
 		menu.add(m1);
 
-		m1 = new MenuItem(Utility.getMessage("login"), "", "login-user", true, "nav-item nav-link", "login");
-		menu.add(m1);
 		
+		if(user==null)
+		  m1 = new MenuItem(Utility.getMessage("login"), "", "login-user", true, "nav-item nav-link", "login");
+		else  
+		  m1 = new MenuItem(Utility.getMessage("logout"), "", "logout-user", true, "nav-item nav-link", "logout");
+		
+		menu.add(m1);
+
 		return menu;
 	}
 
