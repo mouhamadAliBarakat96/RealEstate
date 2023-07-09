@@ -22,6 +22,7 @@ import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
@@ -60,6 +61,10 @@ public class PostController implements Serializable {
 			user = realEstate.getUser();
 			nbOfActivePostByThisUser = realEstateFacade.findUserCountPostActive(realEstate.getUser().getId());
 
+			if (realEstate.getPostStatus() == PostStatus.ACCEPTED) {
+				nbOfActivePostByThisUser -= 1;
+			}
+
 			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
@@ -96,59 +101,85 @@ public class PostController implements Serializable {
 		return ipAddressWithPort;
 	}
 
-	public void save() {
+	public void mangmentBoostStatus() throws Exception {
 
-		try {
-			if ((realEstate.getPostStatus().equals(PostStatus.REFFUSED)
-					|| realEstate.getPostStatus().equals(PostStatus.TO_REVIEUX_BY_USER))
-					&& realEstate.getReffuseCause().isEmpty()) {
+		if ((realEstate.getPostStatus().equals(PostStatus.REFFUSED)
+				|| realEstate.getPostStatus().equals(PostStatus.TO_REVIEUX_BY_USER))
+				&& realEstate.getReffuseCause().isEmpty()) {
 
-				CommonUtility.addMessageToFacesContext("refuse cause  should not be empty  ", "error");
-				return;
-			} else if (realEstate.getPostStatus().equals(PostStatus.ACCEPTED)) {
+			CommonUtility.addMessageToFacesContext("refuse cause  should not be empty  ", "error");
+			throw new Exception("refuse cause  should not be empty");
+		} else if (realEstate.getPostStatus().equals(PostStatus.ACCEPTED)) {
 
-				int nbOfPostAllowed = 0;
-				if (user.isBroker()) {
-					nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
-				}
-
-				if (user.getUserCategory() == UserCategory.REGULAR) {
-					nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
-
-				} else if (user.getUserCategory() == UserCategory.MEDUIM) {
-
-					nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
-
-				} else if (user.getUserCategory() == UserCategory.PREMIUM) {
-					nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
-				}
-
-				if (nbOfActivePostByThisUser >= nbOfPostAllowed) {
-					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_for_this_user, "error");
-					return;
-				}
-
-				toSave();
-
-			} else {
-				toSave();
+			int nbOfPostAllowed = 0;
+			if (user.isBroker()) {
+				nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			if (user.getUserCategory() == UserCategory.REGULAR) {
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
+
+			} else if (user.getUserCategory() == UserCategory.MEDUIM) {
+
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
+
+			} else if (user.getUserCategory() == UserCategory.PREMIUM) {
+				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
+			}
+
+			if (nbOfActivePostByThisUser >= nbOfPostAllowed) {
+			//	realEstateFacade.getEm().detach(realEstate);
+				CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER, "error");
+				throw new Exception(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER);
+
+			}
+
 		}
 
 	}
 
-	private void toSave() throws Exception {
-		realEstateFacade.save(realEstate);
+	private void mangmentBoost() {
+		if (realEstate.getBoostEnum() != null) {
+			switch (realEstate.getBoostEnum()) {
+			case BOOST_FOR_3_DAYS:
+				realEstate.setBoostedUntil(Utils.addDaysToCurrentDate(3));
+				realEstate.setBoosted(true);
+				break;
+			case BOOST_FOR_1_WEEK:
+				realEstate.setBoostedUntil(Utils.addDaysToCurrentDate(7));
+				realEstate.setBoosted(true);
+				break;
+			case BOOST_FOR_2_WEEKS:
+				realEstate.setBoostedUntil(Utils.addDaysToCurrentDate(14));
+				realEstate.setBoosted(true);
+				break;
+			case BOOST_FOR_1_MONTH:
+				realEstate.setBoostedUntil(Utils.addDaysToCurrentDate(30));
+				realEstate.setBoosted(true);
+				break;
 
-		CommonUtility.addMessageToFacesContext("Update successfully   ", "success");
+			}
+		}
+	}
 
-		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-		flash.put("update-card", "true");
+	public void save() throws Exception {
+		try {
+			mangmentBoostStatus();
+			mangmentBoost();
 
-		changeUrl();
+			realEstateFacade.save(realEstate);
+
+			CommonUtility.addMessageToFacesContext("Update successfully   ", "success");
+
+			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+			flash.put("update-card", "true");
+
+			changeUrl();
+		}
+		catch(Exception e ) {
+			e.printStackTrace();
+		}
+	
 	}
 
 	private void changeUrl() {

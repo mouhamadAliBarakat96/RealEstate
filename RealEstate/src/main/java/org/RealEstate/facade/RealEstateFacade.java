@@ -2,7 +2,9 @@ package org.RealEstate.facade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.ejb.EJB;
@@ -12,6 +14,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -87,7 +90,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 			Village village, int page, int size, AtomicLong totalCount, int bedRoom, boolean bedRoomEq, int bathRoom,
 			boolean bathRoomEq, District district, Governorate governorate) throws Exception {
 
-		List<? extends RealEstate> realEstates;
+		List<? extends RealEstate> realEstatesWithoutAddvertise;
+		List<? extends RealEstate> realEstatesWithAddvertise;
 
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<? extends RealEstate> criteriaQuery;
@@ -129,13 +133,52 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
 				.setHint("eclipselink.join-fetch", "RealEstate.user");
 
-		typedQuery.setFirstResult((page - 1) * size);
-		typedQuery.setMaxResults(size);
+		// hon bel size mnkhod 40/ma3mlon d3yat wel b2e bala d3ayet
+		int withoutAdCount = (int) (size * 0.6);
+		int withAdCount = size - withoutAdCount;
+// hon ana jbton kelon li bala d3yet hala2 bade jib lali ma3 di3ayet
+		typedQuery.setFirstResult((page - 1) * withoutAdCount);
+		typedQuery.setMaxResults(withoutAdCount);
 
+		// CriteriaQuery<?> query = ...
+		// CriteriaBuilder builder = ...
+
+		// put inside toPredicate function following line:
+		//
+
+		
 		// Add predicates based on your conditions
-		realEstates = typedQuery.getResultList();
-		return (List<RealEstate>) realEstates;
+		realEstatesWithoutAddvertise = typedQuery.getResultList();
+		Predicate predicateBoostTrue = criteriaBuilder.equal(root.get("isBoosted"), true);
 
+		// jib li ma3 d3yt
+		finalPredicate = criteriaBuilder.and(finalPredicate, predicateBoostTrue);
+		criteriaQuery.where(finalPredicate);
+		criteriaQuery.orderBy(criteriaBuilder.asc(criteriaBuilder.function("random", null))); // MySql RAND() function used
+
+		
+		criteriaQuery.multiselect(root).where(finalPredicate);
+		TypedQuery<? extends RealEstate> typedQueryWithBoost = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
+				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
+				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
+				.setHint("eclipselink.join-fetch", "RealEstate.user");
+
+		countQuery.select(criteriaBuilder.count(root)).where(finalPredicate);
+
+		
+		
+
+	
+
+		// hon ana jbton kelon li bala d3yet hala2 bade jib lali ma3 di3ayet
+		typedQueryWithBoost.setMaxResults(withAdCount);
+
+		realEstatesWithAddvertise = typedQueryWithBoost.getResultList();
+
+		((List<RealEstate>) realEstatesWithoutAddvertise).addAll((List<RealEstate>) realEstatesWithAddvertise);
+
+		return (List<RealEstate>) realEstatesWithoutAddvertise;
 	}
 
 	private Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<? extends RealEstate> root, Class classType,
@@ -275,10 +318,17 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	public void updatePostToExpiryDate(int nbOfDayExpireDate) {
 
 		Query updateQuery = getEntityManager().createNamedQuery(RealEstate.UPDATE_POST_TO_EXPIRY_DATE);
-		updateQuery.setParameter("thresholdDate", Utils.getThresholdDate(nbOfDayExpireDate)); // Replace
-																								// with
-		// the threshold
-		// date
+		updateQuery.setParameter("thresholdDate", Utils.getThresholdDate(nbOfDayExpireDate));
+
+		updateQuery.executeUpdate();
+
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void updatePostBoost() {
+
+		Query updateQuery = getEntityManager().createNamedQuery(RealEstate.UPDATE_POST_BOOST);
+		updateQuery.setParameter("todayDate", new Date());
 
 		updateQuery.executeUpdate();
 

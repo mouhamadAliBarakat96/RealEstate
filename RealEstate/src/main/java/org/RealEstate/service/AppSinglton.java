@@ -2,7 +2,6 @@ package org.RealEstate.service;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +13,11 @@ import javax.ejb.LockType;
 import javax.ejb.ScheduleExpression;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.ejb.TimerConfig;
-import javax.ejb.TimerService;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
+import javax.ejb.TimerService;
+
 import org.RealEstate.enumerator.Configuration;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.ConfigurationFacade;
@@ -61,16 +61,27 @@ public class AppSinglton implements Serializable {
 	public void init() {
 		prepareData();
 
-		// test
-
 		try {
 
-			String timerToCheck = "11-11-2001 23:18";
-			Calendar timer = Calendar.getInstance();
-			timer.setTime(DateUtils.parseDate(timerToCheck, "dd-MM-yyyy HH:mm"));
+			String timerPostExpireDate = "11-11-2001 23:00";
+			Calendar postExpire = Calendar.getInstance();
+			postExpire.setTime(DateUtils.parseDate(timerPostExpireDate, "dd-MM-yyyy HH:mm"));
+
 			timerService
-					.createCalendarTimer(new ScheduleExpression().hour(String.valueOf(timer.get(Calendar.HOUR_OF_DAY)))
-							.minute(String.valueOf(timer.get(Calendar.MINUTE))), new TimerConfig("POST_EXPIRE", false));
+					.createCalendarTimer(
+							new ScheduleExpression().hour(String.valueOf(postExpire.get(Calendar.HOUR_OF_DAY)))
+									.minute(String.valueOf(postExpire.get(Calendar.MINUTE))),
+							new TimerConfig("POST_EXPIRE", false));
+
+			String timerPostBoost = "11-11-2001 00:27";
+			Calendar postBoost = Calendar.getInstance();
+			postBoost.setTime(DateUtils.parseDate(timerPostBoost, "dd-MM-yyyy HH:mm"));
+
+			timerService
+					.createCalendarTimer(
+							new ScheduleExpression().hour(String.valueOf(postBoost.get(Calendar.HOUR_OF_DAY)))
+									.minute(String.valueOf(postBoost.get(Calendar.MINUTE))),
+							new TimerConfig("POST_BOOST", false));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,6 +98,15 @@ public class AppSinglton implements Serializable {
 			chaletFacade.updatePostToExpiryDate(postExpiryDate);
 
 			break;
+		case "POST_BOOST":
+			realEstateFacade.updatePostBoost();
+
+
+			break;
+
+			
+			
+			
 		}
 
 	}

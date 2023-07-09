@@ -56,7 +56,7 @@ public class Test {
 		try {
 
 		
-			
+		System.out.println(Utils.addDaysToCurrentDate(7));	
 		
 
 			List<WaterResources> waterResources = new ArrayList<>();

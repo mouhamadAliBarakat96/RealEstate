@@ -26,7 +26,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import org.RealEstate.enumerator.BoostEnum;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 
@@ -40,7 +42,10 @@ import com.google.gson.annotations.Expose;
 		@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER_ACTIVE, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and  realEstate.postStatus = org.RealEstate.enumerator.PostStatus.ACCEPTED "),
 
 		@NamedQuery(name = RealEstate.UPDATE_POST_TO_EXPIRY_DATE, query = "UPDATE RealEstate realEstate SET realEstate.postStatus = org.RealEstate.enumerator.PostStatus.EXPIRED WHERE realEstate.postDate < :thresholdDate"),
+		@NamedQuery(name = RealEstate.UPDATE_POST_BOOST, query = "UPDATE RealEstate realEstate SET realEstate.boostedUntil = null , realEstate.isBoosted = true  WHERE realEstate.boostedUntil < :todayDate"),
 
+		
+		
 		@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and  (realEstate.postStatus = org.RealEstate.enumerator.PostStatus.ACCEPTED or realEstate.postStatus = org.RealEstate.enumerator.PostStatus.PENDING ) "),
 		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_STATUS, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postStatus= :postStatus "),
 		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_TYPE, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postType= :postType "),
@@ -61,6 +66,8 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	public static final String UPDATE_POST_TO_EXPIRY_DATE = "RealEstate.UPDATE_POST_TO_EXPIRY_DATE";
 
+	public static final String UPDATE_POST_BOOST = "RealEstate.UPDATE_POST_BOOST" ;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Expose
@@ -130,6 +137,16 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	@Expose
 	private boolean isVerfied;
+
+	@Expose
+	private boolean isBoosted;
+
+	@Expose
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date boostedUntil;
+
+	@Transient
+	private BoostEnum boostEnum;
 
 	public RealEstate() {
 		// TODO Auto-generated constructor stub
@@ -264,6 +281,14 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		this.id = id;
 	}
 
+	public BoostEnum getBoostEnum() {
+		return boostEnum;
+	}
+
+	public void setBoostEnum(BoostEnum boostEnum) {
+		this.boostEnum = boostEnum;
+	}
+
 	public String getReffuseCause() {
 		return reffuseCause;
 	}
@@ -296,11 +321,24 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		return isVerfied;
 	}
 
+	public boolean isBoosted() {
+		return isBoosted;
+	}
+
+	public void setBoosted(boolean isBoosted) {
+		this.isBoosted = isBoosted;
+	}
+
+	public Date getBoostedUntil() {
+		return boostedUntil;
+	}
+
+	public void setBoostedUntil(Date boostedUntil) {
+		this.boostedUntil = boostedUntil;
+	}
+
 	public void setVerfied(boolean isVerfied) {
 		this.isVerfied = isVerfied;
 	}
 
-	
-	
-	
 }

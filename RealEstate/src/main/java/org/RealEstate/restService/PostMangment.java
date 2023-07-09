@@ -122,7 +122,7 @@ public class PostMangment {
 			@QueryParam("districtId") Long districtId, @QueryParam("governorateId") Long governorateId
 
 	) {
-
+		
 		return postService.findPosts(userId, postType, minPrice, maxPrice, villageId, page, size, bedRoom, bedRoomEq,
 				bathRoom, bathRoomEq, districtId, governorateId);
 

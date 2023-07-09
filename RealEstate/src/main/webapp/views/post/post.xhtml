@@ -69,7 +69,8 @@ body .ui-panelgrid .ui-panelgrid-cell {
 		<o:importConstants type="org.RealEstate.enumerator.PostStatus"
 			var="postStatus" />
 
-
+		<o:importConstants type="org.RealEstate.enumerator.BoostEnum"
+			var="boostEnum" />
 		<div class="panel-body">
 
 			<div class="card">
@@ -218,8 +219,26 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 									<h:outputText value="Post Date :" />
 									<h:outputText id="postDate" styleClass="text-ellipsis"
-										title="#{postController.realEstate.postDate}"
 										value="#{postController.realEstate.postDate}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+
+
+
+									<h:outputText value="boosted Until:" />
+
+
+
+									<h:outputText
+										rendered="#{postController.realEstate.boostedUntil == null}"
+										styleClass="text-ellipsis" class="fa fa-times our-red ">
+
+									</h:outputText>
+
+
+									<h:outputText styleClass="text-ellipsis"
+										rendered="#{postController.realEstate.boostedUntil != null}"
+										value="#{postController.realEstate.boostedUntil}">
 										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</h:outputText>
 
@@ -419,7 +438,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 													label="disctrict"
 													value="#{postController.realEstate.postStatus}"
 													placeHolder="#set">
-													<f:selectItem itemLabel="disctrict" itemValue="" />
+													<f:selectItem itemLabel="postStatus" itemValue="" />
 													<f:selectItems value="#{postStatus.values()}" var="var"
 														itemLabel="#{var}" itemValue="#{var}" />
 
@@ -430,6 +449,25 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 
 
+
+											<div class="col-md-10">
+												<p:outputLabel class="control-label" for="boostType"
+													value="boost Type  ">
+												</p:outputLabel>
+												<h:selectOneMenu style="width: 100% ;  margin-top:5px"
+													styleClass="select2 select2me form-control   custom-select"
+													converter="omnifaces.SelectItemsConverter" id="boostType"
+													label="boost Type"
+													value="#{postController.realEstate.boostEnum}"
+													placeHolder="#set">
+													<f:selectItem itemLabel="postStatus" itemValue="" />
+													<f:selectItems value="#{boostEnum.values()}" var="var"
+														itemLabel="#{var}" itemValue="#{var}" />
+
+													<f:ajax></f:ajax>
+												</h:selectOneMenu>
+												<h:message for="boostType" styleClass="error-message" />
+											</div>
 
 
 
@@ -470,7 +508,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 													action='#{postController.save()}'
 													styleClass="btn btn-primary btn-save">
 													<f:ajax render=":messageScript "
-														execute="  postStatus reffuseCause  postVerfied " />
+														execute="  postStatus reffuseCause  postVerfied boostType " />
 													<i class="fa fa-save" />
 													<span>Save</span>
 

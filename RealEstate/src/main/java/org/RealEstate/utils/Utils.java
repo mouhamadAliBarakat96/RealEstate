@@ -270,6 +270,13 @@ public class Utils {
 		return randomNumber;
 	}
 
+	// add days
+	public static Date addDaysToCurrentDate(int numberOfDays) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, numberOfDays); //
+		return calendar.getTime();
+	}
+
 	public static Date getThresholdDate(int numberOfDays) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_MONTH, -numberOfDays); // Subtract 10 days
