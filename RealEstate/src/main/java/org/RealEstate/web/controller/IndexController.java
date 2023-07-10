@@ -102,6 +102,8 @@ public class IndexController implements Serializable {
 
 	private String fullUrl = "";
 	private String ipAddressWithPort;
+	
+	
 
 	@PostConstruct
 	public void init() {

@@ -6,29 +6,48 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:component>
- <div class="container-xxl">
-			<div class="container">
-				<div class="tab-content">
-					<div id="tab-1" class="tab-pane fade show p-0 active">
-						<div class="row g-4">
-							<div class="row g-0 gx-5 align-items-end">
-								<div class="col-lg-6">
-									<div class="  mx-auto mb-5 wow " data-wow-delay="0.1s">
-										<h1 class="mb-3">#{bundle.properties_title}</h1>
-										<p>#{bundle.properties_description}</p>
-									</div>
+	<div class="container-xxl">
+		<div class="container">
+			<div class="tab-content">
+				<div id="tab-1" class="tab-pane fade show p-0 active">
+					<div class="row g-4">
+						<div class="row g-0 gx-5 align-items-end">
+							<div class="col-lg-6">
+								<div class="  mx-auto mb-5 wow " data-wow-delay="0.1s">
+									<h1 class="mb-3">#{bundle.properties_title}</h1>
+									<p>#{bundle.properties_description}</p>
 								</div>
+							</div>
+							<div class="col-lg-6 text-start text-lg-end wow "
+								style="visibility: visible;">
+								<ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
+									<li class="nav-item me-2">
+									   <h:commandLink
+											styleClass="btn btn-outline-primary"  
+											data-bs-toggle="pill" value="For Sell"  >
+											<f:ajax></f:ajax>
+									   </h:commandLink>
+									</li>
+									<li class="nav-item me-0">
+										<h:commandLink 
+										        styleClass="btn btn-outline-primary"  
+												data-bs-toggle="pill" value="For Sell"  >
+												<f:ajax></f:ajax>
+									   </h:commandLink>
+									</li>
+								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-	 </div>
+		</div>
+	</div>
 	<div class="tab-content">
 		<div id="tab-1" class="tab-pane fade show p-0 active">
 			<div class="row g-4">
-				<p:dataView var="real" value="#{indexController.realLazyModel}" rows="6"
-					lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
+				<p:dataView var="real" value="#{indexController.realLazyModel}"
+					rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
 					paginatorPosition="bottom" widgetVar="realEstatesDataView"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					gridIcon="pi pi-th-large" listIcon="pi pi-bars">
@@ -40,7 +59,8 @@
 
 										<h:commandLink action="#{indexController.navigate(real)}"
 											styleClass="d-block h5 mb-2" target="_blank">
-											<p:graphicImage alt="no photos" styleClass="img-fluid" style="min-height: 281px;"
+											<p:graphicImage alt="no photos" styleClass="img-fluid"
+												style="min-height: 281px;"
 												url="#{indexController.fullUrl}#{real.images[0]}">
 											</p:graphicImage>
 											<f:actionListener
@@ -53,7 +73,8 @@
 
 										<h:commandLink action="#{indexController.navigate(real)}"
 											target="_blank">
-											<div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{real.tittle}</div>
+											<div
+												class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{real.tittle}</div>
 											<f:actionListener
 												binding="#{indexController.addViewsAfterClick(real)}" />
 										</h:commandLink>
@@ -62,7 +83,7 @@
 
 										<h5 class="text-primary mb-3">$ #{real.price}</h5>
 
-										 
+
 										<p>
 											<i class="fa fa-map-marker-alt text-primary me-2"></i>#{real.village.fullAddress()}
 										</p>
@@ -113,8 +134,8 @@
 											<h:commandLink action="#{indexController.navigate(real)}"
 												styleClass="d-block h5 mb-2" target="_blank">
 												<p:graphicImage alt="no photos" styleClass="img-fluid"
-												  url="#{indexController.fullUrl}#{real.images[0]}">
-											    </p:graphicImage>
+													url="#{indexController.fullUrl}#{real.images[0]}">
+												</p:graphicImage>
 												<f:actionListener
 													binding="#{indexController.addViewsAfterClick(real)}" />
 											</h:commandLink>
