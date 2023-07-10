@@ -106,6 +106,7 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@Expose
 	private double price;
 	@Embedded
+	@Expose
 	private GoogleMapAttribute addressEmbeddable = new GoogleMapAttribute();
 
 	@Expose
