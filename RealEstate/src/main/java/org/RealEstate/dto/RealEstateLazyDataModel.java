@@ -47,8 +47,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 	private boolean bathRoomEq;
 	private District district;
 	private Governorate governorate;
-	 
-	private 	ExchangeRealEstateType exchangeRealEstateType  ;
+	private ExchangeRealEstateType exchangeRealEstateType;
 
 	public RealEstateLazyDataModel(RealEstateFacade facade) {
 		// this.pageItems = pageItems;
@@ -204,6 +203,14 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 					.collect(Collectors.toList());
 
 		}
+	}
+
+	public ExchangeRealEstateType getExchangeRealEstateType() {
+		return exchangeRealEstateType;
+	}
+
+	public void setExchangeRealEstateType(ExchangeRealEstateType exchangeRealEstateType) {
+		this.exchangeRealEstateType = exchangeRealEstateType;
 	}
 
 }

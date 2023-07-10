@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 
 import org.RealEstate.dto.ChaletLazyDataModel;
 import org.RealEstate.dto.RealEstateLazyDataModel;
+import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.enumerator.RealEstateTypeEnum;
@@ -102,8 +103,7 @@ public class IndexController implements Serializable {
 
 	private String fullUrl = "";
 	private String ipAddressWithPort;
-	
-	
+	private ExchangeRealEstateType estateTypeEnum = null;
 
 	@PostConstruct
 	public void init() {
@@ -270,6 +270,7 @@ public class IndexController implements Serializable {
 		realLazyModel.setMaxPrice(maxPrice);
 		realLazyModel.setMinPrice(minPrice);
 		realLazyModel.setPostType(selectPostType == null ? null : selectPostType.toString());
+		realLazyModel.setExchangeRealEstateType(estateTypeEnum);
 		// RealLazyModel.setTotalCount(totalCount);
 
 		Utility.addSuccessMessage("search_complete");
@@ -319,20 +320,20 @@ public class IndexController implements Serializable {
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
-	
+
 	private boolean exactValueBaths() {
 		if (bathsEqualsEnum == YesNoEnum.YES)
 			return true;
 		else
 			return false;
 	}
+
 	private boolean exactValueRooms() {
 		if (roomsEqualsEnum == YesNoEnum.YES)
 			return true;
 		else
 			return false;
 	}
-
 
 	public int random() {
 		Random random = new Random();
@@ -547,7 +548,7 @@ public class IndexController implements Serializable {
 	public void setChimneyYesNoEnum(YesNoEnum chimneyYesNoEnum) {
 		this.chimneyYesNoEnum = chimneyYesNoEnum;
 	}
-	
+
 	public long numberOfSellAppartments() {
 		return realEstateFacade.findCountWithType(PostType.APPRATMENT_SELL);
 	}
@@ -567,6 +568,7 @@ public class IndexController implements Serializable {
 	public long numberOfRentOffices() {
 		return realEstateFacade.findCountWithType(PostType.OFFICE_RENT);
 	}
+
 	public int numberOfChalet() {
 		return chaletFacade.count();
 	}
@@ -586,4 +588,17 @@ public class IndexController implements Serializable {
 	public void setRoomsEqualsEnum(YesNoEnum roomsEqualsEnum) {
 		this.roomsEqualsEnum = roomsEqualsEnum;
 	}
+
+	public ExchangeRealEstateType getEstateTypeEnum() {
+		return estateTypeEnum;
+	}
+
+	public void setEstateTypeEnum(ExchangeRealEstateType estateTypeEnum) {
+		this.estateTypeEnum = estateTypeEnum;
+	}
+
+	public void changeTypeRealEstateSearch(ExchangeRealEstateType type) {
+		this.estateTypeEnum = type;
+	}
+
 }
