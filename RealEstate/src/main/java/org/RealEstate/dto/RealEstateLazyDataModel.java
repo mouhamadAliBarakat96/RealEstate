@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
+import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.facade.RealEstateFacade;
@@ -46,6 +47,8 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 	private boolean bathRoomEq;
 	private District district;
 	private Governorate governorate;
+	 
+	private 	ExchangeRealEstateType exchangeRealEstateType  ;
 
 	public RealEstateLazyDataModel(RealEstateFacade facade) {
 		// this.pageItems = pageItems;
@@ -57,7 +60,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 
 		try {
 			return Math.toIntExact(facade.countRealSatateWithFilter(user, postType, minPrice, maxPrice, village,
-					totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate));
+					totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate , exchangeRealEstateType));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -70,7 +73,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 		try {
 			pageItems = facade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice, village,
 					(first / pageSize) + 1, pageSize, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district,
-					governorate);
+					governorate , exchangeRealEstateType);
 			setRowCount(Math.toIntExact(totalCount.get()));
 		} catch (Exception e) {
 			e.printStackTrace();

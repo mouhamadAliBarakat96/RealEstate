@@ -16,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.service.PostService;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
@@ -119,12 +120,12 @@ public class PostMangment {
 			@QueryParam("villageId") Long villageId, @QueryParam("page") int page, @QueryParam("size") int size,
 			@QueryParam("bedRoom") int bedRoom, @QueryParam("bedRoomEq") boolean bedRoomEq,
 			@QueryParam("bathRoom") int bathRoom, @QueryParam("bathRoomEq") boolean bathRoomEq,
-			@QueryParam("districtId") Long districtId, @QueryParam("governorateId") Long governorateId
+			@QueryParam("districtId") Long districtId, @QueryParam("governorateId") Long governorateId , @QueryParam("exchangeRealEstateType")  String exchangeRealEstateType
 
 	) {
 		
 		return postService.findPosts(userId, postType, minPrice, maxPrice, villageId, page, size, bedRoom, bedRoomEq,
-				bathRoom, bathRoomEq, districtId, governorateId);
+				bathRoom, bathRoomEq, districtId, governorateId , exchangeRealEstateType);
 
 	}
 

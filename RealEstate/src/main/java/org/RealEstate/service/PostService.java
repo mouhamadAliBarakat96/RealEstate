@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.dto.PaginationResponse;
+import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.UserCategory;
@@ -1238,15 +1239,25 @@ public class PostService implements Serializable {
 
 	public Response findPosts(Long userId, String postType, int minPrice, int maxPrice, Long villageId, int page,
 			int size, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, Long districtId,
-			Long governorateId) {
+			Long governorateId , String exchangeRealEstateTypeString ) {
 
 		try {
 			Village village = null;
 			User user = null;
 			District district = null;
 			Governorate governorate = null;
+			ExchangeRealEstateType exchangeRealEstateType = null ;
 			if (userId != null && userId > 0) {
 				user = userFacade.findWithExcption(userId);
+			}
+			
+			if(exchangeRealEstateTypeString!=null) {
+				if(exchangeRealEstateTypeString.equals(ExchangeRealEstateType.BUY.toString())) {
+					exchangeRealEstateType = ExchangeRealEstateType.BUY;
+				}else {
+					if(exchangeRealEstateTypeString.equals(ExchangeRealEstateType.RENT.toString())) {
+						exchangeRealEstateType = ExchangeRealEstateType.RENT;
+				}
 			}
 
 			// check priority
@@ -1263,10 +1274,11 @@ public class PostService implements Serializable {
 				governorate = governorateFacade.findWithExcption(governorateId);
 
 			}
+			}
 
 			AtomicLong totalResults = new AtomicLong();
 			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice,
-					village, page, size, totalResults, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
+					village, page, size, totalResults, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate , exchangeRealEstateType);
 
 			PaginationResponse<RealEstate> response = new PaginationResponse<>();
 			response.setPage(page);

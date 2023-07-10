@@ -18,6 +18,7 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.model.District;
@@ -88,7 +89,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 	public List<RealEstate> findAllRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice,
 			Village village, int page, int size, AtomicLong totalCount, int bedRoom, boolean bedRoomEq, int bathRoom,
-			boolean bathRoomEq, District district, Governorate governorate) throws Exception {
+			boolean bathRoomEq, District district, Governorate governorate,
+			ExchangeRealEstateType exchangeRealEstateType) throws Exception {
 
 		List<? extends RealEstate> realEstatesWithoutAddvertise;
 		List<? extends RealEstate> realEstatesWithAddvertise;
@@ -124,7 +126,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		// Create a list of predicates based on your runtime conditions
 
 		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, postType, minPrice, maxPrice,
-				village, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
+				village, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate,
+				exchangeRealEstateType);
 
 		Predicate predicateBoostFalse = criteriaBuilder.equal(root.get("isBoosted"), false);
 		Predicate finalPredicateWithoutAdd = criteriaBuilderWithAdd.and(finalPredicate, predicateBoostFalse);
@@ -143,7 +146,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		// used
 		long totalCountWithadd = getEntityManager().createQuery(countQueryWithAdd).getSingleResult();
 
-		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult()+ totalCountWithadd);
+		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult() + totalCountWithadd);
 
 		criteriaQuery.multiselect(root).where(finalPredicateWithoutAdd);
 
@@ -189,8 +192,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 	private Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<? extends RealEstate> root, Class classType,
 			User user, String postType, int minPrice, int maxPrice, Village village, AtomicLong totalCount, int bedRoom,
-			boolean bedRoomEq, int bathRoom, boolean bathRoomEq, District district, Governorate governorate)
-			throws Exception {
+			boolean bedRoomEq, int bathRoom, boolean bathRoomEq, District district, Governorate governorate,
+			ExchangeRealEstateType exchangeRealEstateType) throws Exception {
 
 		List<Predicate> predicates = new ArrayList<>();
 
@@ -198,6 +201,29 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 			predicates.add(criteriaBuilder.equal(root.get("user"), user));
 
 		}
+
+		if (exchangeRealEstateType != null && postType == null) {
+
+			if (exchangeRealEstateType == ExchangeRealEstateType.BUY) {
+
+				Predicate orPredicate = criteriaBuilder.or(criteriaBuilder.equal(root.get("postType"), PostType.LAND),
+						criteriaBuilder.equal(root.get("postType"), PostType.APPRATMENT_SELL),
+						criteriaBuilder.equal(root.get("postType"), PostType.SHOP_SELL),
+						criteriaBuilder.equal(root.get("postType"), PostType.OFFICE_SELL),
+						criteriaBuilder.equal(root.get("postType"), PostType.STORE_HOUSE_SELL));
+				predicates.add(orPredicate);
+			} else if (exchangeRealEstateType == ExchangeRealEstateType.RENT) {
+				Predicate orPredicate = criteriaBuilder.or(
+						criteriaBuilder.equal(root.get("postType"), PostType.APPRATMENT_RENT),
+						criteriaBuilder.equal(root.get("postType"), PostType.SHOP_RENT),
+						criteriaBuilder.equal(root.get("postType"), PostType.OFFICE_RENT),
+						criteriaBuilder.equal(root.get("postType"), PostType.STORE_HOUSE_RENT));
+
+				predicates.add(orPredicate);
+			}
+
+		}
+
 		if (postType != null) {
 			PostType postTypeEnum = PostType.findEnum(postType);
 			if (postTypeEnum == null) {
@@ -269,7 +295,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	// to use by kasssem
 	public Long countRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice, Village village,
 			AtomicLong totalCount, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, District district,
-			Governorate governorate) throws Exception {
+			Governorate governorate , ExchangeRealEstateType exchangeRealEstateType) throws Exception {
 
 		CriteriaQuery<? extends RealEstate> criteriaQuery;
 
@@ -293,7 +319,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		root = countQuery.from(classType);
 
 		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, postType, minPrice, maxPrice,
-				village, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate);
+				village, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate , exchangeRealEstateType);
 
 		criteriaQuery.where(finalPredicate);
 
