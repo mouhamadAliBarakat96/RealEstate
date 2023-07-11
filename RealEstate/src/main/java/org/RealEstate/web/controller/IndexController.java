@@ -320,6 +320,9 @@ public class IndexController implements Serializable {
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
+	public boolean aLand(PostType type) {
+		return (type.equals(PostType.LAND));
+	}
 
 	private boolean exactValueBaths() {
 		if (bathsEqualsEnum == YesNoEnum.YES)

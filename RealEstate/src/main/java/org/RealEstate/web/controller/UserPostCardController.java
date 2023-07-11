@@ -34,6 +34,7 @@ import org.RealEstate.model.Village;
 import org.RealEstate.service.UploadImagesMultiPart;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
+import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Faces;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.FileUploadEvent;
@@ -48,7 +49,8 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final String REQUEST_PARAM = "id";
+	private final String REQUEST_PARAM_ID = "id";
+	private final String REQUEST_PARAM_KIND = "kind";
 
 	private PostType postType;
 	private PropertyKindEnum kindEnum = PropertyKindEnum.REALESTATE;
@@ -77,7 +79,9 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private UploadImagesMultiPart uploadImagesMultiPart;
 	private List<ImageDto> list = new ArrayList<>();
 	private UploadedFiles files;
-
+	private String id=null;
+	private String kind=null;
+	
 	@PostConstruct
 	public void init() {
 
@@ -93,8 +97,15 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			if (!facesContext.isPostback()) {
-				String id = externalContext.getRequestParameterMap().get(REQUEST_PARAM);
-				readTheFlashValue(id);
+				  id = externalContext.getRequestParameterMap().get(REQUEST_PARAM_ID);
+				  kind = externalContext.getRequestParameterMap().get(REQUEST_PARAM_KIND);
+				if (!StringUtils.isBlank(id) && !StringUtils.isBlank(kind))
+					readTheParamshValue(id, kind);
+				else {
+					//add new post
+					chalet=new Chalet();
+					item=null;
+				}
 
 			}
 		}
@@ -140,63 +151,45 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		}
 	}
 
-	public void readTheFlashValue(String id) {
-		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+	public void readTheParamshValue(String id, String kind) {
+		if (kind.equals(PropertyKindEnum.REALESTATE.toString())) {// ADD EDIT RealEstate
+			if (StringUtils.isBlank(id) || Long.parseLong(id) <= 0) {
+				kindEnum = PropertyKindEnum.REALESTATE;
+				item = null;
+				setActiveIndex(0);
+			} else {
+				kindEnum = PropertyKindEnum.REALESTATE;
+				item = findRealWithId(id);
+				if (item == null) {
+					try {
+						Faces.redirect("/error.xhtml");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				postType = item.getPostType();
+				setActiveIndex(0);
+			}
+		} else if (kind.equals(PropertyKindEnum.CHALET.toString())) {// ADD EDIT Chalet
+			if (StringUtils.isBlank(id) || Long.parseLong(id) <= 0) {
+				kindEnum = PropertyKindEnum.CHALET;
+				chalet = new Chalet();
+				setActiveIndex(1);
+				Utility.addSuccessMessage("save_success");
 
-		// ADD EDIT RealEstate
-		if (flash.containsKey("new-realestate")) {
-			kindEnum = PropertyKindEnum.REALESTATE;
-			item = findRealWithId(id);
-			if (item == null) {
-				try {
-					Faces.redirect("/error.xhtml");
-				} catch (IOException e) {
-					e.printStackTrace();
+			} else {
+				kindEnum = PropertyKindEnum.CHALET;
+				chalet = findChaletWithId(id);
+				if (chalet == null) {
+					try {
+						Faces.redirect("/error.xhtml");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
+				setActiveIndex(1);
 			}
-			postType = item.getPostType();
-			Utility.addSuccessMessage("save_success");
-
-			setActiveIndex(0);
-		} else if (flash.containsKey("edit-realestate")) {
-			kindEnum = PropertyKindEnum.REALESTATE;
-			item = findRealWithId(id);
-			if (item == null) {
-				try {
-					Faces.redirect("/error.xhtml");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			postType = item.getPostType();
-			setActiveIndex(0);
-			// ADD EDIT Chalet
-		} else if (flash.containsKey("new-chalet")) {
-			kindEnum = PropertyKindEnum.CHALET;
-			chalet = findChaletWithId(id);
-			if (chalet == null) {
-				try {
-					Faces.redirect("/error.xhtml");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			setActiveIndex(1);
-			Utility.addSuccessMessage("save_success");
-
-		} else if (flash.containsKey("edit-chalet")) {
-			kindEnum = PropertyKindEnum.CHALET;
-			chalet = findChaletWithId(id);
-			if (chalet == null) {
-				try {
-					Faces.redirect("/error.xhtml");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			setActiveIndex(1);
 		}
-
 	}
 
 	public RealEstate findRealWithId(String id) {
@@ -245,7 +238,6 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	public void saveRealEstate() {
 		try {
 			if (getItem().getId() <= 0) {
-
 				item.setPostDate(new Date());
 				item.setUser(user);
 				item.setPostStatus(PostStatus.PENDING);
@@ -255,9 +247,6 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				item.setPostStatus(PostStatus.PENDING);
 				item = getAbstractFacade().save(item);
 			}
-
-			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-			flash.put("new-realestate", "true");
 			changeUrl(item);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -275,8 +264,6 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				chalet.setPostStatus(PostStatus.PENDING);
 				chalet = chaletFacade.save(chalet);
 			}
-			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-			flash.put("new-chalet", "true");
 			changeUrl(chalet);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -323,7 +310,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", chalet.getId() + "");
+			Faces.redirect("userPost-card.xhtml?id=" + chalet.getId() + "&kind=" + PropertyKindEnum.CHALET);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -334,7 +321,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", estate.getId() + "");
+			Faces.redirect("userPost-card.xhtml?id=" + estate.getId() + "&kind=" + PropertyKindEnum.REALESTATE);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -356,7 +343,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	@Override
 	public long getId() {
 		// TODO Auto-generated method stub
-		return item.getId();
+		return item!=null ? item.getId() : -1;
 	}
 
 	@Override
@@ -432,6 +419,22 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	public void setFiles(UploadedFiles files) {
 		this.files = files;
+	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public boolean disableSelectOneButton() {
+		return !StringUtils.isBlank(this.id) || !StringUtils.isBlank(this.kind);
 	}
 
 }

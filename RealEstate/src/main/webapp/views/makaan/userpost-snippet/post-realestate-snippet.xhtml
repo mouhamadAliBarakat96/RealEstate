@@ -8,9 +8,11 @@
 <ui:component>
 	<div class="row">
 		<p:selectOneButton value="#{userPostCardController.postType}"
+			disabled="#{userPostCardController.disableSelectOneButton()}"
 			styleClass="white" converter="omnifaces.SelectItemsConverter">
 			<f:selectItems value="#{PostType.values()}" var="option"
-				itemLabel="#{languageController.locale=='en'? option.name : option.name_ar}" itemValue="#{option}" />
+				itemLabel="#{languageController.locale=='en'? option.name : option.name_ar}"
+				itemValue="#{option}" />
 			<f:ajax execute="@this" render="myForm:tabView:inputPanel"
 				listener="#{userPostCardController.listenerSelectItemType()}" />
 		</p:selectOneButton>
@@ -24,7 +26,7 @@
 							rendered="#{userPostCardController.item.postStatus == 'REFFUSED'}"
 							detail="#{userPostCardController.item.reffuseCause}"
 							style="width: 100%" />
-						
+
 						<p:staticMessage severity="warn" summary="WARN"
 							rendered="#{userPostCardController.item.postStatus} == 'TO_REVIEUX_BY_USER'}"
 							detail="#{userPostCardController.item.reffuseCause}"

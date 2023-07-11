@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.RealEstate.enumerator.PostType;
+import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.Chalet;
@@ -106,12 +107,15 @@ public class UserPostListController implements Serializable {
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
+	public boolean aLand(PostType type) {
+		return (type.equals(PostType.LAND));
+	}
 
 	public void navigateToUserReal(RealEstate item) {
 		try {
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			flash.put("edit-realestate", "true");
-			String url = "userPost-card.xhtml?id=" + item.getId();
+			String url = "userPost-card.xhtml?id=" + item.getId()+"&kind=" + PropertyKindEnum.REALESTATE;
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -122,7 +126,7 @@ public class UserPostListController implements Serializable {
 		try {
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			flash.put("edit-chalet", "true");
-			String url = "userPost-card.xhtml?id=" + item.getId();
+			String url = "userPost-card.xhtml?id=" + item.getId()+"&kind=" + PropertyKindEnum.CHALET;
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
 		} catch (IOException e) {
 			e.printStackTrace();
