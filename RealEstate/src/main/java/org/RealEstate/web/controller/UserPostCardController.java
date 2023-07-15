@@ -79,9 +79,9 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private UploadImagesMultiPart uploadImagesMultiPart;
 	private List<ImageDto> list = new ArrayList<>();
 	private UploadedFiles files;
-	private String id=null;
-	private String kind=null;
-	
+	private String id = null;
+	private String kind = null;
+
 	@PostConstruct
 	public void init() {
 
@@ -97,14 +97,14 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			if (!facesContext.isPostback()) {
-				  id = externalContext.getRequestParameterMap().get(REQUEST_PARAM_ID);
-				  kind = externalContext.getRequestParameterMap().get(REQUEST_PARAM_KIND);
+				id = externalContext.getRequestParameterMap().get(REQUEST_PARAM_ID);
+				kind = externalContext.getRequestParameterMap().get(REQUEST_PARAM_KIND);
 				if (!StringUtils.isBlank(id) && !StringUtils.isBlank(kind))
 					readTheParamshValue(id, kind);
 				else {
-					//add new post
-					chalet=new Chalet();
-					item=null;
+					// add new post
+					chalet = new Chalet();
+					item = null;
 				}
 
 			}
@@ -237,6 +237,15 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	public void saveRealEstate() {
 		try {
+
+			if (realEstatesHasEmptyFields()) {
+				return;
+			}
+			
+			if (realEstateValidationFields()) {
+				return;
+			}
+
 			if (getItem().getId() <= 0) {
 				item.setPostDate(new Date());
 				item.setUser(user);
@@ -253,8 +262,130 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		}
 	}
 
+	public boolean realEstateValidationFields() {
+		boolean hasErrorEntries = false;
+		
+		if (item.getImages().size() > Constants.NB_IMAGE_IN_POST_ALLOWED) {
+			Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50");
+			hasErrorEntries = true;
+		}
+		
+		if (item.getPostType() == PostType.APPRATMENT_RENT) {
+			if (item.getSpace() < 50) {
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50");
+				hasErrorEntries = true;
+
+			}
+			if (item.getPrice() < 60) {
+				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+				hasErrorEntries = true;
+			}
+
+		} else if (item.getPostType() == PostType.APPRATMENT_SELL) {
+
+			if (item.getSpace() < 50) {
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50");
+				hasErrorEntries = true;
+			}
+
+			if (item.getSpace() * 100 < item.getPrice()) {
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+				hasErrorEntries = true;
+			}
+
+		} else if (item.getPostType() == PostType.LAND) {
+
+			if (item.getSpace() < 200) {
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_200");
+				hasErrorEntries = true;
+			}
+			if (item.getSpace() * 4 < item.getPrice()) {
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
+				hasErrorEntries = true;
+			}
+		} else if (item.getPostType() == PostType.SHOP_RENT) {
+			if (item.getPrice() < 60) {
+				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+				hasErrorEntries = true;
+			}
+			if (item.getSpace() < 40) {
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40");
+				hasErrorEntries = true;
+			}
+		} else if (item.getPostType() == PostType.SHOP_SELL) {
+
+			if (item.getSpace() * 100 < item.getPrice()) {
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+				hasErrorEntries = true;
+			}
+			if (item.getSpace() < 40) {
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40");
+				hasErrorEntries = true;
+			}
+		} else if (item.getPostType() == PostType.OFFICE_RENT) {
+
+			if (item.getPrice() < 60) {
+				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+				hasErrorEntries = true;
+			}
+			if (item.getSpace() < 40) {
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40");
+				hasErrorEntries = true;
+			}
+
+		} else if (item.getPostType() == PostType.OFFICE_SELL) {
+
+			if (item.getSpace() * 100 < item.getPrice()) {
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+				hasErrorEntries = true;
+			}
+			if (item.getSpace() < 40) {
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40");
+				hasErrorEntries = true;
+			}
+		}
+
+		return hasErrorEntries;
+	}
+
+	public boolean realEstatesHasEmptyFields() {
+		boolean hasEmptyField = false;
+
+		if (StringUtils.isBlank(item.getTittle())) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("title_is_required");
+		}
+
+		if (StringUtils.isBlank(item.getSubTittle())) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("subtitle_is_required");
+		}
+
+		if (item.getVillage() == null) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("village_is_required");
+		}
+
+		if (item.getImages().size() == 0) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("please_add_at_least_one_photo");
+		}
+
+		return hasEmptyField;
+	}
+
 	public void saveChalet() {
 		try {
+			
+			if (chaletHasEmptyFields()) {
+				return;
+			}
+			
+			if (chaletValidationFields()) {
+				return;
+			}
+			
+			
 			if (chalet.getId() <= 0) {
 				chalet.setPostDate(new Date());
 				chalet.setUser(user);
@@ -268,6 +399,16 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private boolean chaletValidationFields() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private boolean chaletHasEmptyFields() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	public boolean hasRoomsBathFloorElevator() {
@@ -343,7 +484,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	@Override
 	public long getId() {
 		// TODO Auto-generated method stub
-		return item!=null ? item.getId() : -1;
+		return item != null ? item.getId() : -1;
 	}
 
 	@Override
@@ -432,7 +573,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public boolean disableSelectOneButton() {
 		return !StringUtils.isBlank(this.id) || !StringUtils.isBlank(this.kind);
 	}

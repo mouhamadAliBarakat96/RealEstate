@@ -3,7 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
 
 <ui:component>
 	<div class="row">
@@ -41,9 +42,9 @@
 							</p:outputLabel>
 							<h:inputText id="titleId" label="#{bundle.real_estate_title}"
 								required="true" styleClass="form-control"
+								h5:placeHolder="#{bundle.real_estate_title}"
 								value="#{userPostCardController.item.tittle}">
 							</h:inputText>
-							<h:message for="titleId" styleClass="error-message" />
 						</div>
 					</div>
 					<div class="col-md-3">
@@ -53,11 +54,9 @@
 							</p:outputLabel>
 							<p:inputNumber decimalPlaces="0" thousandSeparator=","
 								minValue="0" maxValue="9999999999" id="priceId"
-								label="#{bundle.real_estate_price}" required="true"
-								styleClass="form-control"
+								label="#{bundle.real_estate_price}" styleClass="form-control"
 								value="#{userPostCardController.item.price}">
 							</p:inputNumber>
-							<h:message for="priceId" styleClass="error-message" />
 						</div>
 					</div>
 					<div class="col-md-3 ">
@@ -81,11 +80,10 @@
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
 									minValue="0" maxValue="10" id="parkId"
-									label="#{bundle.real_estate_nb_of_car_park}" required="true"
+									label="#{bundle.real_estate_nb_of_car_park}"
 									styleClass="form-control"
 									value="#{userPostCardController.item.nbOfCarPark}">
 								</p:inputNumber>
-								<h:message for="parkId" styleClass="error-message" />
 							</div>
 						</div>
 					</h:panelGroup>
@@ -98,11 +96,9 @@
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
 									minValue="0" maxValue="20" id="roomId"
-									label="#{bundle.real_estate_rooms}" required="true"
-									styleClass="form-control"
+									label="#{bundle.real_estate_rooms}" styleClass="form-control"
 									value="#{userPostCardController.item.nbRoom}">
 								</p:inputNumber>
-								<h:message for="roomId" styleClass="error-message" />
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -112,11 +108,10 @@
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
 									minValue="0" maxValue="10" id="bathId"
-									label="#{bundle.real_estate_bathrooms}" required="true"
+									label="#{bundle.real_estate_bathrooms}"
 									styleClass="form-control"
 									value="#{userPostCardController.item.nbBathRoom}">
 								</p:inputNumber>
-								<h:message for="bathId" styleClass="error-message" />
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -126,11 +121,9 @@
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
 									minValue="0" maxValue="10" id="floorId"
-									label="#{bundle.real_estate_floor}" required="true"
-									styleClass="form-control"
+									label="#{bundle.real_estate_floor}" styleClass="form-control"
 									value="#{userPostCardController.item.floor}">
 								</p:inputNumber>
-								<h:message for="roomId" styleClass="error-message" />
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -171,11 +164,10 @@
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
 									minValue="0" maxValue="100" id="nbOfSharesId"
-									label="#{bundle.real_estate_nb_of_shares}" required="true"
+									label="#{bundle.real_estate_nb_of_shares}"
 									styleClass="form-control"
 									value="#{userPostCardController.item.nbOfShares}">
 								</p:inputNumber>
-								<h:message for="nbOfSharesId" styleClass="error-message" />
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -223,11 +215,10 @@
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
 									minValue="0" maxValue="10" id="storefrontsId"
-									label="#{bundle.real_estate_store_fronts}" required="true"
+									label="#{bundle.real_estate_store_fronts}"
 									styleClass="form-control"
 									value="#{userPostCardController.item.storefronts}">
 								</p:inputNumber>
-								<h:message for="storefrontsId" styleClass="error-message" />
 							</div>
 						</div>
 					</h:panelGroup>
@@ -265,11 +256,10 @@
 								value="#{bundle.real_estate_subtitle}">
 							</p:outputLabel>
 							<h:inputTextarea id="subTitleId" rows="10"
-								label="#{bundle.real_estate_subtitle}" required="true"
-								styleClass="form-control"
+								label="#{bundle.real_estate_subtitle}" styleClass="form-control"
+								h5:placeHolder="#{bundle.real_estate_subtitle}"
 								value="#{userPostCardController.item.subTittle}">
 							</h:inputTextarea>
-							<h:message for="subTitleId" styleClass="error-message" />
 						</div>
 					</div>
 
@@ -288,7 +278,7 @@
 							<h:commandLink value='#{bundle.save}' id="realSaveBtn"
 								action='#{userPostCardController.save()}'
 								styleClass="btn btn-primary btn-save">
-								<f:ajax render=":messageScript myForm:tabView:realestate"
+								<f:ajax render=":messageScript "
 									execute="myForm:tabView:realestate myForm:tabView:uploadImageRealEstate" />
 								<i class="fa fa-save" />
 							</h:commandLink>

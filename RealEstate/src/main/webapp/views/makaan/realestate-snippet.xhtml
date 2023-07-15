@@ -138,8 +138,8 @@
 								<div class="row">
 									<div class="col-md-4 ">
 										<div class="position-relative overflow-hidden">
-											<h:commandLink action="#{indexController.navigate(real)}"
-												styleClass="d-block h5 mb-2" target="_blank">
+											<h:commandLink action="#{indexController.navigate(real)}" 
+												styleClass="d-block h5 mb-2" target="_blank" style="min-height: 15rem;">
 												<p:graphicImage alt="no photos" styleClass="img-fluid"
 													url="#{indexController.fullUrl}#{real.images[0]}">
 												</p:graphicImage>
@@ -192,7 +192,7 @@
 												</small>
 											</h:panelGroup>
 											<h:panelGroup
-												rendered="#{!indexController.hasRoomsAndBathRooms(real.postType)}">
+												rendered="#{indexController.aLand(real.postType)}">
 												<small class="flex-fill text-center border-end py-2">
 													<i class="fa fa-solid fa-road text-primary me-2" />#{bundle.real_estate_road}:
 													<i
