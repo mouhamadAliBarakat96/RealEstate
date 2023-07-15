@@ -18,27 +18,27 @@
 									<p>#{bundle.properties_description}</p>
 								</div>
 							</div>
-							<div class="col-lg-6 text-start text-lg-end wow "
+							<div class="col-lg-6 d-flex flex-row-reverse "
 								style="visibility: visible;">
 								<ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
 									<li class="nav-item me-2">
 									   <h:commandLink action="#{indexController.search()}"
 											styleClass="btn btn-outline-primary"  
-											data-bs-toggle="pill" value="All"  >
+											data-bs-toggle="pill" value="#{bundle.all}"  >
 											<f:ajax render="myForm:RealEstatePanelId" execute="@this" listener="#{indexController.changeTypeRealEstateSearch(null)}"/>
 									   </h:commandLink>
 									</li>
 									<li class="nav-item me-2">
 									   <h:commandLink action="#{indexController.search()}"
 											styleClass="btn btn-outline-primary"  
-											data-bs-toggle="pill" value="For Sell"  >
+											data-bs-toggle="pill" value="#{bundle.for_sale}"  >
 											<f:ajax render="myForm:RealEstatePanelId" execute="@this"  listener="#{indexController.changeTypeRealEstateSearch('BUY')}"/>
 									   </h:commandLink>
 									</li>
-									<li class="nav-item me-0">
+									<li class="nav-item me-2">
 										<h:commandLink action="#{indexController.search()}"
 										        styleClass="btn btn-outline-primary"  
-												data-bs-toggle="pill" value="For Rent"  >
+												data-bs-toggle="pill" value="#{bundle.for_rent}"  >
 												<f:ajax render="myForm:RealEstatePanelId" execute="@this"  listener="#{indexController.changeTypeRealEstateSearch('RENT')}"/>
 									   </h:commandLink>
 									</li>
