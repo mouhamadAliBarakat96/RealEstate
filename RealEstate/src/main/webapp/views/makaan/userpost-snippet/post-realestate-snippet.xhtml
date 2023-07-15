@@ -41,7 +41,7 @@
 								value="#{bundle.real_estate_title}">
 							</p:outputLabel>
 							<h:inputText id="titleId" label="#{bundle.real_estate_title}"
-								required="true" styleClass="form-control"
+								styleClass="form-control"
 								h5:placeHolder="#{bundle.real_estate_title}"
 								value="#{userPostCardController.item.tittle}">
 							</h:inputText>
@@ -53,7 +53,7 @@
 								value="#{bundle.real_estate_price}">
 							</p:outputLabel>
 							<p:inputNumber decimalPlaces="0" thousandSeparator=","
-								minValue="0" maxValue="9999999999" id="priceId"
+								minValue="0" maxValue="9999999999" id="priceId" emptyValue="0"
 								label="#{bundle.real_estate_price}" styleClass="form-control"
 								value="#{userPostCardController.item.price}">
 							</p:inputNumber>
@@ -79,7 +79,7 @@
 									value="#{bundle.real_estate_nb_of_car_park}">
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="10" id="parkId"
+									minValue="0" maxValue="99" id="parkId" emptyValue="0"
 									label="#{bundle.real_estate_nb_of_car_park}"
 									styleClass="form-control"
 									value="#{userPostCardController.item.nbOfCarPark}">
@@ -95,7 +95,7 @@
 									value="#{bundle.real_estate_rooms}">
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="20" id="roomId"
+									emptyValue="0" minValue="0" maxValue="99" id="roomId"
 									label="#{bundle.real_estate_rooms}" styleClass="form-control"
 									value="#{userPostCardController.item.nbRoom}">
 								</p:inputNumber>
@@ -107,7 +107,7 @@
 									value="#{bundle.real_estate_bathrooms}">
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="10" id="bathId"
+									minValue="0" maxValue="99" id="bathId" emptyValue="0"
 									label="#{bundle.real_estate_bathrooms}"
 									styleClass="form-control"
 									value="#{userPostCardController.item.nbBathRoom}">
@@ -120,7 +120,7 @@
 									value="#{bundle.real_estate_floor}">
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="10" id="floorId"
+									emptyValue="0" minValue="0" maxValue="99" id="floorId"
 									label="#{bundle.real_estate_floor}" styleClass="form-control"
 									value="#{userPostCardController.item.floor}">
 								</p:inputNumber>
@@ -163,7 +163,7 @@
 									value="#{bundle.real_estate_nb_of_shares}">
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="100" id="nbOfSharesId"
+									minValue="0" maxValue="99" id="nbOfSharesId" emptyValue="0"
 									label="#{bundle.real_estate_nb_of_shares}"
 									styleClass="form-control"
 									value="#{userPostCardController.item.nbOfShares}">
@@ -214,7 +214,7 @@
 									value="#{bundle.real_estate_store_fronts}">
 								</p:outputLabel>
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="10" id="storefrontsId"
+									minValue="0" maxValue="99" id="storefrontsId" emptyValue="0"
 									label="#{bundle.real_estate_store_fronts}"
 									styleClass="form-control"
 									value="#{userPostCardController.item.storefronts}">

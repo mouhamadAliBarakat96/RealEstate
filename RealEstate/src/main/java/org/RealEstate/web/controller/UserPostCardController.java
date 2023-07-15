@@ -266,7 +266,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		boolean hasErrorEntries = false;
 		
 		if (item.getImages().size() > Constants.NB_IMAGE_IN_POST_ALLOWED) {
-			Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50");
+			Utility.addErrorMessage("YOU_EXCEED_THE_LIMIT_SIZE_OF_PHOTOS");
 			hasErrorEntries = true;
 		}
 		

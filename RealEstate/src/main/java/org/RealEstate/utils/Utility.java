@@ -19,6 +19,7 @@ import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
+import org.RealEstate.model.StoreHouseSell;
 
 
 
@@ -126,6 +127,10 @@ public class Utility {
 			return new ShopSell();
 		case LAND:
 			return new Land();
+		case STORE_HOUSE_SELL :
+			return new StoreHouseSell();
+		case STORE_HOUSE_RENT:
+			return new StoreHouseSell();
 		default:
 			return null;
 		}

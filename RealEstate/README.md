@@ -27,7 +27,29 @@ To Discusion:
 *************
 -contact us
 
+
+New Stories
+***********
+1-badges (isVerified, isBroker)
+2-boosted(medium low ...)
+3-conditions nb of posts can add by users badges
+4-problem in redirect after login to current url
+5-problem in pagination in index page
+6-probleme bundle not show more than one message if we have more
+7-login page design 
+8-sign up page to create
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Added By Mohamd Ali 
+ **************
  
  post condition
 
@@ -192,12 +214,12 @@ enta w 3am tkhod profile picture aw suwar 3an l post t2kd enon
  
  // newew
  
- fix l suwar li 3al wejha 
-lzm ykon ma2ston ad baad 
+ fix l suwar li 3al wejha --done
+lzm ykon ma2ston ad baad --done
 
 
-bel  search el asasye li bel home bath rom w bed roums ma ybyno ila iza khtar l fieldet li lkhason b he kshi
+bel  search el asasye li bel home bath rom w bed roums ma ybyno ila iza khtar l fieldet li lkhason b he kshi  --done
 --
-lh manak 3mil padding lal safha lzm ykon el jawenib white
+lh manak 3mil padding lal safha lzm ykon el jawenib white  --to discusion with you
 
  
