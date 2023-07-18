@@ -61,6 +61,10 @@ public class User extends MainEntity implements Serializable {
 	private String profileImageUrl;
 
 	@Expose
+	@Column(unique = true)
+	private String fbId;
+
+	@Expose
 	// because on every change image we need to agree by admin
 	private boolean showProfilePicture;
 
@@ -218,6 +222,14 @@ public class User extends MainEntity implements Serializable {
 
 	public void setBroker(boolean isBroker) {
 		this.isBroker = isBroker;
+	}
+
+	public String getFbId() {
+		return fbId;
+	}
+
+	public void setFbId(String fbId) {
+		this.fbId = fbId;
 	}
 
 }

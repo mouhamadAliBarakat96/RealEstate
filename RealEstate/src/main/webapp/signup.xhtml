@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:composition template="/views/template/makaan-template.xhtml">
+
+	<ui:define name="property-content">
+		<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1504756280267313',
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+
+    // Additional initialization code here
+
+    
+    
+    showMe = function(response) {
+      if (response.status !== 'connected') {
+        div.innerHTML = '<em>Not Connected</em>';
+      } else {
+        FB.api('/me', function(response) {
+          var i=0;
+          for (var key in response) {
+
+            i++;
+console.log(key);
+
+console.log(response[key]);
+
+
+          }
+          remoteCommandAction();
+
+        });
+      }
+    };
+
+
+
+    
+    FB.getLoginStatus(function(response) {
+    
+    FB.Event.subscribe('auth.authResponseChange', showMe);
+    FB.Event.subscribe('auth.authResponseChange', console.log('change'));
+    
+  });
+
+
+    
+  };
+
+ 
+ 
+  
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+
+
+     
+   }(document));
+</script>
+		<!-- Contact Start -->
+		<div class="container-xxl py-5">
+			<div class="container">
+
+
+
+
+				<div class="card">
+					<div class="card-body">
+						<div class="text-center mx-auto mb-5 wow fadeInUp"
+							data-wow-delay="0.1s" style="max-width: 600px;">
+							<span style="font-size: 20px; font-weight: 700" class="mb-3">#{bundle.new_user}</span>
+							<br></br> <span> Sign up with your Facebook account is
+								required After Fill All information </span>
+						</div>
+						<h:panelGroup id="test">
+							<div class="row">
+
+
+
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="firstName"
+											style="padding-left:1.5%" value="#{bundle.firstName} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="firstName" required="true"
+											f5:placeholder="#{bundle.firstName}  "
+											label="#{bundle.firstName}  "
+											value="#{signUpController.user.firstName}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="firstName" styleClass="error-message" />
+									</div>
+								</div>
+
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="lastName"
+											style="padding-left:1.5%" value="#{bundle.lastName} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="lastName" required="true"
+											f5:placeholder="#{bundle.lastName} "
+											label="#{bundle.lastName} " title="name "
+											value="#{signUpController.user.lastName}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="lastName" styleClass="error-message" />
+									</div>
+								</div>
+
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="middleName"
+											style="padding-left:1.5%" value="#{bundle.middleName} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="middleName" required="true"
+											f5:placeholder="#{bundle.middleName} "
+											label="#{bundle.middleName} " title="#{bundle.middleName} "
+											value="#{signUpController.user.middleName}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="middleName" styleClass="error-message" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row" style="margin-top: 2%">
+
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="userName"
+											style="padding-left:1.5%" value="#{bundle.userName} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="userName" required="true"
+											f5:placeholder="#{bundle.userName} "
+											label="#{bundle.userName} " title="#{bundle.userName} "
+											value="#{signUpController.user.userName}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="userName" styleClass="error-message" />
+									</div>
+								</div>
+
+
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="phoneNumber"
+											style="padding-left:1.5%" value="#{bundle.phoneNumber} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="phoneNumber" required="true"
+											f5:placeholder="#{bundle.phoneNumber} "
+											label="#{bundle.phoneNumber} " title="#{bundle.phoneNumber} "
+											value="#{signUpController.user.phoneNumber}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="phoneNumber" styleClass="error-message" />
+									</div>
+								</div>
+
+
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="password"
+											style="padding-left:1.5%" value="#{bundle.password} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="password" required="true"
+											f5:placeholder="#{bundle.password} "
+											label="#{bundle.password} " title="#{bundle.password} "
+											h5:type="password" value="#{signUpController.user.passowrd}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="password" styleClass="error-message" />
+									</div>
+								</div>
+
+
+							</div>
+
+
+							<div class="row"
+								style="margin-top: 1.5%; display: flex; justify-content: center; align-items: center;">
+
+
+								<p:commandLink>
+
+									<p:ajax process="test"></p:ajax>
+								</p:commandLink>
+
+								<div class="fb-login-button" data-width="" data-size=""
+									style="width: 25%" data-button-type="" data-layout=""
+									data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+								<p:remoteCommand process="@this" name="remoteCommandAction"
+								update=":messageScript"
+									actionListener="#{signUpController.save()}">
+
+								</p:remoteCommand>
+
+
+
+
+							</div>
+						</h:panelGroup>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Contact End -->
+	</ui:define>
+</ui:composition>
+
+</html>

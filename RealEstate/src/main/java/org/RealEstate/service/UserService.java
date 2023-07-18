@@ -1,6 +1,5 @@
 package org.RealEstate.service;
 
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +11,8 @@ import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.dto.PaginationResponse;
 import org.RealEstate.enumerator.UserCategory;
-import org.RealEstate.facade.DistrictFacade;
-import org.RealEstate.facade.GovernorateFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.UserFacade;
-import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.model.User;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
@@ -44,12 +40,14 @@ public class UserService implements Serializable {
 		try {
 			// validite phone number
 
-			if (!Utils.validatePhoneNumber(user.getPhoneNumber())) {
+			
+			
+			if (  StringUtils.isBlank(user.getPhoneNumber()) ||  !Utils.validatePhoneNumber(user.getPhoneNumber())) {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.PHONE_NUMBER_NOT_CORRECT).build();
 
 			}
 
-			if (StringUtils.isBlank(user.getLastName()) || StringUtils.isBlank(user.getFirstName())
+			if  ( StringUtils.isBlank(user.getPassowrd()) ||  StringUtils.isBlank(user.getLastName()) || StringUtils.isBlank(user.getFirstName())
 					|| StringUtils.isBlank(user.getMiddleName()) || StringUtils.isBlank(user.getUserName())) {
 
 				return Response.status(Status.BAD_REQUEST)

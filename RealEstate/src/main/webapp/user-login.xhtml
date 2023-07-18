@@ -95,10 +95,19 @@
 									<div class="form-group mb-0 row" style="margin-top: 1%">
 										<div class="col-12 mt-2">
 											<h:commandLink action="#{loginController.login()}"
-												styleClass="btn btn-primary btn-round btn-block waves-effect waves-light">
+												styleClass="btn btn-primary  btn-block waves-effect waves-light">
 												Log In <i class="fas fa-sign-in-alt ml-1"></i>
 												<f:ajax execute="login-form " render="messages login-form"></f:ajax>
 											</h:commandLink>
+
+											<div
+												style="margin-top: 3%; display: flex; justify-content: center; align-items: center">
+												<span style="font-size:14px ; font-weight:400 ;margin-right: 10px;">Not registered yet?   </span>
+												<h:link  outcome="signup" style=" text-decoration:underline !important;font-size:14px;color:rgb(0, 126, 168)">  Create account</h:link>
+										
+											</div>
+
+
 										</div>
 										<!--end col-->
 									</div>

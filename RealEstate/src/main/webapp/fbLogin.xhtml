@@ -6,12 +6,6 @@
 	xmlns:fb="http://www.facebook.com/2008/fbml">
 <h:head>
 	<title>FB Login</title>
-	<link rel="stylesheet" type="text/css"
-		href="./xmlhttp/css/rime/rime.css" />
-</h:head>
-<h:body styleClass="ice-skin-rime">
-
-	<fb:login-button scope="email"></fb:login-button>
 	<script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -23,6 +17,8 @@
 
     // Additional initialization code here
 
+    
+    
     showMe = function(response) {
       if (response.status !== 'connected') {
         div.innerHTML = '<em>Not Connected</em>';
@@ -32,10 +28,14 @@
           for (var key in response) {
 
             i++;
+console.log(key);
 
+console.log(response[key]);
             switch(i){
             case 1: document.getElementById("formId:id").value=response[key]; break;
             case 2: document.getElementById("formId:name").value=response[key]; break;
+
+            
             case 5: document.getElementById("formId:link").value=response[key]; break;
             case 6: document.getElementById("formId:userName").value=response[key]; break;
             case 19: document.getElementById("formId:email").value=response[key]; break;
@@ -46,12 +46,24 @@
         });
       }
     };
-  FB.getLoginStatus(function(response) {
-    showMe(response);
+
+
+
+    
+    FB.getLoginStatus(function(response) {
+    
     FB.Event.subscribe('auth.authResponseChange', showMe);
+    FB.Event.subscribe('auth.authResponseChange', console.log('change'));
+    
   });
+
+
+    
   };
 
+ 
+ 
+  
   // Load the SDK Asynchronously
   (function(d){
      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
@@ -59,10 +71,24 @@
      js = d.createElement('script'); js.id = id; js.async = true;
      js.src = "//connect.facebook.net/en_US/all.js";
      ref.parentNode.insertBefore(js, ref);
+
+
+     
    }(document));
 </script>
+</h:head>
 
+<h:body>
 	<h:form id="formId">
+		<h:commandLink class="fb-login-button" data-width="" data-size=""
+			data-button-type="" data-layout="" data-auto-logout-link="false"
+			data-use-continue-as="false">
+
+			<f:ajax onevent="console.log('123')"></f:ajax>
+		</h:commandLink>
+
+
+
 		<table>
 			<tr>
 				<td><a>ID : <h:inputText id="id" value="#{fbLogin.id}" />

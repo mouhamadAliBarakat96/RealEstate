@@ -5,14 +5,14 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-	<script>
+<script>
 window.fbAsyncInit = function() {
     // FB JavaScript SDK configuration and setup
     FB.init({
       appId      : '1504756280267313', // FB App ID
       cookie     : true,  // enable cookies to allow the server to access the session
       xfbml      : true,  // parse social plugins on this page
-      version    : 'v3.2' // use graph api version 2.8
+      version    : 'v17.0' // use graph api version 2.8
     });
     
     // Check whether the user already logged in
@@ -68,11 +68,10 @@ function fbLogout() {
 </script>
 </h:head>
 <body>
-<!-- Display login status -->
-<div id="status"></div>
+	<div id="status"></div>
 
 <!-- Facebook login or logout button -->
-<a href="javascript:void(0);" onclick="fbLogin();" id="fbLink"> click</a>
+<a href="javascript:void(0);" onclick="fbLogin();" id="fbLink"><img src="images/fb-login-btn.png"/></a>
 
 <!-- Display user's profile info -->
 <div class="ac-data" id="userData"></div>
