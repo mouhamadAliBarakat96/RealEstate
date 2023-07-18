@@ -91,6 +91,19 @@
 								<f:param name="property" value="#{item.kindEnum}" />
 							</h:link>
 						</ui:repeat>
+						
+						
+							
+							<h:panelGroup rendered="#{makanTemplateController.user != null}">
+							
+								<h:commandLink 
+								actionListener="#{makanTemplateController.logout()}"
+									 class=" nav-item nav-link"
+									 value="#{bundle.logout}">
+									<f:ajax  />
+								</h:commandLink>
+							</h:panelGroup> 
+						
 
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle"

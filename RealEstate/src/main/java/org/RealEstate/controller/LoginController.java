@@ -75,16 +75,6 @@ public class LoginController implements Serializable {
 		}
 	}
 
-	public void logout() {
-
-		try {
-			HttpSession session = request.getSession(true);
-			session.removeAttribute(Constants.USER_SESSION);
-			Faces.redirect("login.xhtml");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public String getUserName() {
 		return userName;

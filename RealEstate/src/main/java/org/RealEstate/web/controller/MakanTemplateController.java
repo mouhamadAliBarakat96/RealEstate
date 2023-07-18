@@ -1,5 +1,6 @@
 package org.RealEstate.web.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.model.User;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
+import org.omnifaces.util.Faces;
 
 @Named
 @ViewScoped
@@ -32,19 +34,20 @@ public class MakanTemplateController implements Serializable {
 	private LanguageController languageController;
 	@Inject
 	private HttpServletRequest request;
-	
+
+	private User user;
+
 	@PostConstruct
 	public void init() {
+		HttpSession session = request.getSession(true);
+		user = (User) session.getAttribute(Constants.USER_SESSION);
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(languageController.getLocale());
 	}
 
 	public List<MenuItem> fillMenuItems() {
-		List<MenuItem> menu=new ArrayList<>();
+		List<MenuItem> menu = new ArrayList<>();
 		MenuItem m1 = null;
-		HttpSession session = request.getSession(true);
-		User user = (User) session.getAttribute(Constants.USER_SESSION);
-		
-		
+
 		m1 = new MenuItem(Utility.getMessage("real_estates"), "", "index-page", true, "nav-item nav-link active",
 				PropertyKindEnum.REALESTATE.toString());
 		menu.add(m1);
@@ -62,13 +65,14 @@ public class MakanTemplateController implements Serializable {
 		m1 = new MenuItem(Utility.getMessage("contact_us"), "", "contact-us", true, "nav-item nav-link", "contact-us");
 		menu.add(m1);
 
-		
-		if(user==null)
-		  m1 = new MenuItem(Utility.getMessage("login"), "", "login-user", true, "nav-item nav-link", "login");
-		else  
-		  m1 = new MenuItem(Utility.getMessage("logout"), "", "logout-user", true, "nav-item nav-link", "logout");
-		
+		if (user == null)
+			m1 = new MenuItem(Utility.getMessage("login"), "", "login-user", true, "nav-item nav-link", "login");
 		menu.add(m1);
+		// else
+		// m1 = new MenuItem(Utility.getMessage("logout"), "", "logout-user", true,
+		// "nav-item nav-link", "logout");
+
+		// menu.add(m1);
 
 		return menu;
 	}
@@ -109,4 +113,25 @@ public class MakanTemplateController implements Serializable {
 	public String showRealEstateTitle() {
 		return Utility.getMessage("house_and_land");
 	}
+	
+	public void logout() {
+
+		try {
+			HttpSession session = request.getSession(true);
+			session.removeAttribute(Constants.USER_SESSION);
+			Faces.redirect("index.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }
