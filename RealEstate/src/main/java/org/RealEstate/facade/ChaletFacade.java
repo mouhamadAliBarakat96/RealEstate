@@ -101,8 +101,9 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 		countQuery.select(criteriaBuilder.count(root)).where(finalPredicateWithoutAdd);
 
 		long totalCountWithadd = getEntityManager().createQuery(countQueryWithAdd).getSingleResult();
+		long totalCountWithoutadd = getEntityManager().createQuery(countQuery).getSingleResult();
 
-		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult() + totalCountWithadd );
+		totalCount.set(totalCountWithoutadd + totalCountWithadd);
 
 		criteriaQuery.multiselect(root).where(finalPredicateWithoutAdd);
 
@@ -121,6 +122,18 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 
 		}
 
+		if (withAdCount > totalCountWithadd) {
+
+			int lifinZidon = (int) (withAdCount - totalCountWithadd);
+			if (totalCountWithoutadd < (withoutAdCount + (withAdCount - totalCountWithadd))) {
+				// check if total sho wad3o iza bikafo
+				lifinZidon = (int) (totalCountWithoutadd - (withAdCount - totalCountWithadd));
+			}
+
+			withoutAdCount = (int) (withoutAdCount + lifinZidon);
+
+		}
+
 		typedQuery.setFirstResult((page - 1) * withoutAdCount);
 		typedQuery.setMaxResults(withoutAdCount);
 
@@ -128,7 +141,7 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 		lists = typedQuery.getResultList();
 
 		criteriaQueryWithAdd.multiselect(root).where(finalPredicateWithAdd);
-		TypedQuery<Chalet> typedQueryWithBoost = getEntityManager().createQuery(criteriaQuery);
+		TypedQuery<Chalet> typedQueryWithBoost = getEntityManager().createQuery(criteriaQueryWithAdd);
 		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
