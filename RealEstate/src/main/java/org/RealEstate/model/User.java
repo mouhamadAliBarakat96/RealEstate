@@ -33,6 +33,10 @@ import com.google.gson.annotations.Expose;
 @NamedQueries({
 		// change to enum accepted
 		@NamedQuery(name = User.LOGIN_USER, query = "SELECT user FROM User user WHERE  user.userName= :userName and user.passowrd = :password "),
+		@NamedQuery(name = User.FIND_USER_BY_USER_NAME, query = "SELECT user FROM User user WHERE  user.userName= :userName  "),
+		@NamedQuery(name = User.FIND_USER_BY_FB_ID, query = "SELECT user FROM User user WHERE  user.fbId= :fbId "),
+		
+		
 		@NamedQuery(name = User.USER_PROFILE_PICTURE_FALSE, query = "SELECT user FROM User user WHERE  user.showProfilePicture =  :param"),
 
 })
@@ -45,6 +49,13 @@ public class User extends MainEntity implements Serializable {
 
 	public static final String LOGIN_USER = "USER.LOGIN";
 
+	
+	public static final String FIND_USER_BY_USER_NAME = "USER.FIND_USER_BY_USER_NAME";
+
+	
+	public static final String FIND_USER_BY_FB_ID = "USER.FIND_USER_BY_FB_ID";
+
+	
 	public static final String USER_PROFILE_PICTURE_FALSE = "USER.USER_PROFILE_PICTURE_FALSE";
 
 	@Id

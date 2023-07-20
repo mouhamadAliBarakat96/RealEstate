@@ -41,11 +41,36 @@ public class UserFacade extends AbstractFacade<User> implements Serializable {
 
 	}
 
-	public List<User> findUserProfilePicture(boolean param)   {
+	public User findUserByUserName(String userName) throws Exception {
+
+		List<User> users = getEntityManager().createNamedQuery(User.FIND_USER_BY_USER_NAME, User.class)
+				.setParameter("userName", userName).getResultList();
+
+		if (users.isEmpty()) {
+			return null;
+		} else {
+			return users.get(0);
+		}
+
+	}
+	
+	public User findUserByFbId(String fbId) throws Exception {
+
+		List<User> users = getEntityManager().createNamedQuery(User.FIND_USER_BY_FB_ID, User.class)
+				.setParameter("fbId", fbId).getResultList();
+
+		if (users.isEmpty()) {
+			return null;
+		} else {
+			return users.get(0);
+		}
+
+	}
+
+	public List<User> findUserProfilePicture(boolean param) {
 
 		return getEntityManager().createNamedQuery(User.USER_PROFILE_PICTURE_FALSE, User.class)
-				.setParameter("param", param)
-				.getResultList();
+				.setParameter("param", param).getResultList();
 
 	}
 

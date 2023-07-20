@@ -54,6 +54,22 @@ public class UserService implements Serializable {
 						.entity(Constants.USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_SHOULD_NOT_BE_EMPTY).build();
 
 			}
+			
+			// check if username is unique
+			
+			User userFinded = userFacade.findUserByUserName(user.getUserName());
+			
+			if(userFinded!=null) {
+				return Response.status(Status.BAD_REQUEST)
+						.entity(Constants.USER_NAME_SHOULD_BE_UNIQUE).build();
+			}
+			//check if fbId is unique
+			 userFinded = userFacade.findUserByFbId(user.getFbId());
+
+			if(userFinded!=null) {
+				return Response.status(Status.BAD_REQUEST)
+						.entity(Constants.FACEBOOK_USER_HAVE_ACCOUNT).build();
+			}
 
 			user.setUserCategory(UserCategory.REGULAR);
 			user.setBroker(false);
