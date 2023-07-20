@@ -30,14 +30,21 @@ To Discusion:
 
 New Stories
 ***********
-1-badges (isVerified, isBroker)
-2-boosted(medium low ...)
-3-conditions nb of posts can add by users badges
+1-badges (isVerified, isBroker , boosted)
+
+
 4-problem in redirect after login to current url
 5-problem in pagination in index page
 6-probleme bundle not show more than one message if we have more
-7-login page design 
-8-sign up page to create
+
+- suwar widthh 
+-google map
+
+
+
+7-login page design (barakat) 
+8-sign up page to create (barakat)
+9-ads 
  
  
  
