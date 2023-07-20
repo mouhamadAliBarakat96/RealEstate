@@ -56,7 +56,7 @@ public class UserService implements Serializable {
 			}
 
 			user.setUserCategory(UserCategory.REGULAR);
-			user.setBroker(true);
+			user.setBroker(false);
 			user = userFacade.save(user);
 
 			return Response.status(Status.CREATED).entity(Utils.objectToString(user)).build();

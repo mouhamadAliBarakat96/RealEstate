@@ -30,17 +30,23 @@
       } else {
         FB.api('/me', function(response) {
           var i=0;
+          var id =  '' ;
           for (var key in response) {
 
+        	  
             i++;
-console.log(key);
+     ///console.log(key);
+     if(key === 'id'){
+    	 id =response[key] ; 
+    	 console.log(response[key]);
+         }
 
-console.log(response[key]);
+    //console.log(response[key]);
 
 
           }
-          remoteCommandAction();
-
+     
+          remoteCommandAction([{name:'fbId',value:id}]);
         });
       }
     };
@@ -177,7 +183,7 @@ console.log(response[key]);
 											label="#{bundle.phoneNumber} " title="#{bundle.phoneNumber} "
 											value="#{signUpController.user.phoneNumber}"
 											styleClass="form-control">
-											<f:ajax render=":messageScript"></f:ajax>
+											
 										</h:inputText>
 										<h:message for="phoneNumber" styleClass="error-message" />
 									</div>
@@ -218,8 +224,8 @@ console.log(response[key]);
 									style="width: 25%" data-button-type="" data-layout=""
 									data-auto-logout-link="false" data-use-continue-as="false"></div>
 
-								<p:remoteCommand process="@this" name="remoteCommandAction"
-								update=":messageScript"
+								<p:remoteCommand process="@this phoneNumber " name="remoteCommandAction"
+									update=":messageScript"
 									actionListener="#{signUpController.save()}">
 
 								</p:remoteCommand>

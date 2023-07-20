@@ -1,15 +1,17 @@
 package org.RealEstate.controller;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
 import org.RealEstate.service.UserService;
 import org.RealEstate.utils.CommonUtility;
@@ -34,6 +36,19 @@ public class SignUpController implements Serializable {
 
 	public void save() {
 		try {
+
+			String fbId = null;
+			Map<String, String> requestParamMap = FacesContext.getCurrentInstance().getExternalContext()
+					.getRequestParameterMap();
+			if (requestParamMap.containsKey("fbId")) {
+				fbId = requestParamMap.get("fbId");
+
+			} else {
+				CommonUtility.addMessageToFacesContext("authntication errror refresh page and try again", "error");
+
+				return;
+			}
+			user.setFbId(fbId);
 			Response r = userService.createUser(user);
 
 			if (r.getStatus() == Status.CREATED.getStatusCode()) {
