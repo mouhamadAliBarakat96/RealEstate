@@ -133,12 +133,13 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		Predicate finalPredicateWithoutAdd = criteriaBuilderWithAdd.and(finalPredicate, predicateBoostFalse);
 		criteriaQuery.where(finalPredicateWithoutAdd);
 		countQuery.select(criteriaBuilder.count(root)).where(finalPredicateWithoutAdd);
-		countQueryWithAdd.select(criteriaBuilderWithAdd.count(root)).where(finalPredicateWithoutAdd);
+	
 
 		Predicate predicateBoostTrue = criteriaBuilder.equal(root.get("isBoosted"), true);
 
 		// jib li ma3 d3yt
 		Predicate finalPredicateWithAdd = criteriaBuilderWithAdd.and(finalPredicate, predicateBoostTrue);
+		countQueryWithAdd.select(criteriaBuilderWithAdd.count(root)).where(finalPredicateWithAdd);
 		criteriaQueryWithAdd.where(finalPredicateWithAdd);
 		criteriaQueryWithAdd.orderBy(criteriaBuilderWithAdd.asc(criteriaBuilderWithAdd.function("random", null))); // MySql
 																													// RAND()
@@ -146,7 +147,9 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		// used
 		long totalCountWithadd = getEntityManager().createQuery(countQueryWithAdd).getSingleResult();
 
-		totalCount.set(getEntityManager().createQuery(countQuery).getSingleResult() + totalCountWithadd);
+		long totalCountWithoutadd  =getEntityManager().createQuery(countQuery).getSingleResult() ;
+		
+		totalCount.set(totalCountWithoutadd + totalCountWithadd);
 
 		criteriaQuery.multiselect(root).where(finalPredicateWithoutAdd);
 
@@ -160,8 +163,16 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		int withoutAdCount = (int) (size * 0.6);
 		int withAdCount = size - withoutAdCount;
 
-		if (withAdCount > totalCountWithadd) {
-			withoutAdCount = (int) (withoutAdCount + (withAdCount - totalCountWithadd));
+		if (withAdCount > totalCountWithadd   ) {
+			
+			int lifinZidon = (int) (withAdCount - totalCountWithadd) ;
+			if(totalCountWithoutadd < (withoutAdCount + (withAdCount - totalCountWithadd) ))  {
+				// check if total sho wad3o iza bikafo 
+				 lifinZidon = (int) (totalCountWithoutadd  - (withAdCount - totalCountWithadd));	
+			}
+			
+			
+			withoutAdCount = (int) (withoutAdCount + lifinZidon);
 
 		}
 
@@ -172,7 +183,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		realEstatesWithoutAddvertise = typedQuery.getResultList();
 
 		criteriaQueryWithAdd.multiselect(root).where(finalPredicateWithAdd);
-		TypedQuery<? extends RealEstate> typedQueryWithBoost = getEntityManager().createQuery(criteriaQuery);
+		TypedQuery<? extends RealEstate> typedQueryWithBoost = getEntityManager().createQuery(criteriaQueryWithAdd);
 		typedQuery.setHint("eclipselink.join-fetch", "RealEstate.village")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district")
 				.setHint("eclipselink.join-fetch", "RealEstate.village.district.governorate")
@@ -295,7 +306,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	// to use by kasssem
 	public Long countRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice, Village village,
 			AtomicLong totalCount, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, District district,
-			Governorate governorate , ExchangeRealEstateType exchangeRealEstateType) throws Exception {
+			Governorate governorate, ExchangeRealEstateType exchangeRealEstateType) throws Exception {
 
 		CriteriaQuery<? extends RealEstate> criteriaQuery;
 
@@ -319,7 +330,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		root = countQuery.from(classType);
 
 		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, postType, minPrice, maxPrice,
-				village, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate , exchangeRealEstateType);
+				village, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate,
+				exchangeRealEstateType);
 
 		criteriaQuery.where(finalPredicate);
 
