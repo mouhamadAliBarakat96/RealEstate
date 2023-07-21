@@ -91,9 +91,8 @@
 					<div class="card-body">
 						<div class="text-center mx-auto mb-5 wow fadeInUp"
 							data-wow-delay="0.1s" style="max-width: 600px;">
-							<span style="font-size: 20px; font-weight: 700" class="mb-3">#{bundle.new_user}</span>
-							<br></br> <span> Sign up with your Facebook account is
-								required After Fill All information </span>
+							<span style="font-size: 20px; font-weight: 700" class="mb-3">#{bundle.update_user_information}</span>
+
 						</div>
 						<h:panelGroup id="test">
 							<div class="row">
@@ -109,7 +108,7 @@
 										<h:inputText id="firstName" required="true"
 											f5:placeholder="#{bundle.firstName}  "
 											label="#{bundle.firstName}  "
-											value="#{signUpController.user.firstName}"
+											value="#{updateUserInformationController.user.firstName}"
 											styleClass="form-control">
 											<f:ajax render=":messageScript"></f:ajax>
 										</h:inputText>
@@ -126,7 +125,7 @@
 										<h:inputText id="lastName" required="true"
 											f5:placeholder="#{bundle.lastName} "
 											label="#{bundle.lastName} " title="name "
-											value="#{signUpController.user.lastName}"
+											value="#{updateUserInformationController.user.lastName}"
 											styleClass="form-control">
 											<f:ajax render=":messageScript"></f:ajax>
 										</h:inputText>
@@ -143,7 +142,7 @@
 										<h:inputText id="middleName" required="true"
 											f5:placeholder="#{bundle.middleName} "
 											label="#{bundle.middleName} " title="#{bundle.middleName} "
-											value="#{signUpController.user.middleName}"
+											value="#{updateUserInformationController.user.middleName}"
 											styleClass="form-control">
 											<f:ajax render=":messageScript"></f:ajax>
 										</h:inputText>
@@ -163,7 +162,7 @@
 										<h:inputText id="userName" required="true"
 											f5:placeholder="#{bundle.userName} "
 											label="#{bundle.userName} " title="#{bundle.userName} "
-											value="#{signUpController.user.userName}"
+											value="#{updateUserInformationController.user.userName}"
 											styleClass="form-control">
 											<f:ajax render=":messageScript"></f:ajax>
 										</h:inputText>
@@ -181,37 +180,23 @@
 										<h:inputText id="phoneNumber" required="true"
 											f5:placeholder="#{bundle.phoneNumber} "
 											label="#{bundle.phoneNumber} " title="#{bundle.phoneNumber} "
-											value="#{signUpController.user.phoneNumber}"
+											value="#{updateUserInformationController.user.phoneNumber}"
 											styleClass="form-control">
-											
+
 										</h:inputText>
-											<h:outputLabel class="control-label"  
-											style="padding-left:1.5%;font-size:12px;" value="#{bundle.phoneNumberFormat} ">
-											
+										<h:outputLabel class="control-label"
+											style="padding-left:1.5%;font-size:12px;"
+											value="#{bundle.phoneNumberFormat} ">
+
 										</h:outputLabel>
-										
-										
+
+
 										<h:message for="phoneNumber" styleClass="error-message" />
 									</div>
 								</div>
 
 
-								<div style="display: inline-block" class="col-md-4">
-									<div class="form-group">
-										<h:outputLabel class="control-label" for="password"
-											style="padding-left:1.5%" value="#{bundle.password} ">
-											<span class="required">*</span>
-										</h:outputLabel>
-										<h:inputText id="password" required="true"
-											f5:placeholder="#{bundle.password} "
-											label="#{bundle.password} " title="#{bundle.password} "
-											h5:type="password" value="#{signUpController.user.passowrd}"
-											styleClass="form-control">
-											<f:ajax render=":messageScript"></f:ajax>
-										</h:inputText>
-										<h:message for="password" styleClass="error-message" />
-									</div>
-								</div>
+
 
 
 							</div>
@@ -221,23 +206,12 @@
 								style="margin-top: 1.5%; display: flex; justify-content: center; align-items: center;">
 
 
-								<p:commandLink>
+								<h:commandLink style="width:50%" styleClass="btn btn-success"
+									action="#{updateUserInformationController.updateUserInformation()}"
+									value="EDIT">
 
-									<p:ajax process="test"></p:ajax>
-								</p:commandLink>
-
-								<div class="fb-login-button" data-width="" data-size=""
-									style="width: 25%" data-button-type="" data-layout=""
-									data-auto-logout-link="false" data-use-continue-as="false"></div>
-
-								<p:remoteCommand process="@this phoneNumber " name="remoteCommandAction"
-									update=":messageScript"
-									actionListener="#{signUpController.save()}">
-
-								</p:remoteCommand>
-
-
-
+									<f:ajax execute="test" render=" :messageScript test"></f:ajax>
+								</h:commandLink>
 
 							</div>
 						</h:panelGroup>

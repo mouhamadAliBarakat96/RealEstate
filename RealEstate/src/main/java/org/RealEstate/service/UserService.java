@@ -35,40 +35,87 @@ public class UserService implements Serializable {
 	@EJB
 	private UploadImagesMultiPart uploadImagesMultiPart;
 
-	public Response createUser(User user) {
+	public Response updateUserInforamtion(User user) {
 
 		try {
 			// validite phone number
 
-			
-			
-			if (  StringUtils.isBlank(user.getPhoneNumber()) ||  !Utils.validatePhoneNumber(user.getPhoneNumber())) {
+			if (user.getId() <= 0) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.USER_ID_SHOULD_BE_GREATER_THAN_ZERO)
+						.build();
+
+			}
+
+			if (StringUtils.isBlank(user.getPhoneNumber()) || !Utils.validatePhoneNumber(user.getPhoneNumber())) {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.PHONE_NUMBER_NOT_CORRECT).build();
 
 			}
 
-			if  ( StringUtils.isBlank(user.getPassowrd()) ||  StringUtils.isBlank(user.getLastName()) || StringUtils.isBlank(user.getFirstName())
-					|| StringUtils.isBlank(user.getMiddleName()) || StringUtils.isBlank(user.getUserName())) {
+			if (StringUtils.isBlank(user.getPassowrd()) || StringUtils.isBlank(user.getLastName())
+					|| StringUtils.isBlank(user.getFirstName()) || StringUtils.isBlank(user.getMiddleName())
+					|| StringUtils.isBlank(user.getUserName())) {
 
 				return Response.status(Status.BAD_REQUEST)
 						.entity(Constants.USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_SHOULD_NOT_BE_EMPTY).build();
 
 			}
 			
-			// check if username is unique
+			User orginUser = userFacade.find(user.getId());
 			
-			User userFinded = userFacade.findUserByUserName(user.getUserName());
-			
-			if(userFinded!=null) {
-				return Response.status(Status.BAD_REQUEST)
-						.entity(Constants.USER_NAME_SHOULD_BE_UNIQUE).build();
-			}
-			//check if fbId is unique
-			 userFinded = userFacade.findUserByFbId(user.getFbId());
+			if(!orginUser.getUserName().equals(user.getUserName())) {
 
-			if(userFinded!=null) {
+				User userFinded = userFacade.findUserByUserName(user.getUserName());
+
+				if (userFinded != null) {
+					return Response.status(Status.BAD_REQUEST).entity(Constants.USER_NAME_SHOULD_BE_UNIQUE).build();
+				}
+			}
+			
+			
+			
+			userFacade.save(user);
+			return Response.status(Status.ACCEPTED).entity(Utils.objectToString(user)).build();
+
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+
+	}
+
+	public Response createUser(User user) {
+
+		try {
+			// validite phone number
+
+			if (StringUtils.isBlank(user.getPhoneNumber()) || !Utils.validatePhoneNumber(user.getPhoneNumber())) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.PHONE_NUMBER_NOT_CORRECT).build();
+
+			}
+
+			if (StringUtils.isBlank(user.getPassowrd()) || StringUtils.isBlank(user.getLastName())
+					|| StringUtils.isBlank(user.getFirstName()) || StringUtils.isBlank(user.getMiddleName())
+					|| StringUtils.isBlank(user.getUserName())) {
+
 				return Response.status(Status.BAD_REQUEST)
-						.entity(Constants.FACEBOOK_USER_HAVE_ACCOUNT).build();
+						.entity(Constants.USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_SHOULD_NOT_BE_EMPTY).build();
+
+			}
+
+			// check if username is unique
+
+			User userFinded = userFacade.findUserByUserName(user.getUserName());
+
+			if (userFinded != null) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.USER_NAME_SHOULD_BE_UNIQUE).build();
+			}
+			// check if fbId is unique
+			userFinded = userFacade.findUserByFbId(user.getFbId());
+
+			if (userFinded != null) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.FACEBOOK_USER_HAVE_ACCOUNT).build();
 			}
 
 			user.setUserCategory(UserCategory.REGULAR);

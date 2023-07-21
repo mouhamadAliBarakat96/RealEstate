@@ -7,17 +7,22 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.model.User;
 import org.RealEstate.service.UserService;
 import org.RealEstate.utils.CommonUtility;
+import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utils;
 import org.omnifaces.util.Faces;
 
 @ViewScoped
@@ -29,10 +34,13 @@ public class SignUpController implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private User user = new User();;
+	private User user = new User();
 	@EJB
 	private UserService userService;
 
+	@Inject
+	private HttpServletRequest request;
+	
 	@PostConstruct
 	public void init() {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
@@ -65,8 +73,17 @@ public class SignUpController implements Serializable {
 			Response r = userService.createUser(user);
 
 			if (r.getStatus() == Status.CREATED.getStatusCode()) {
-				CommonUtility.addMessageToFacesContext("save_success", "success");
+//				CommonUtility.addMessageToFacesContext("save_success", "success");
 
+				
+				
+				User user = Utils.getObjectFromString(r.getEntity().toString(), User.class) ;
+				
+				HttpSession session = request.getSession(true);
+				session.setAttribute(Constants.USER_SESSION, user);
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+				ExternalContext externalContext = facesContext.getExternalContext();
+				externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
 			} else {
 				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 				flash.put("type", "error");

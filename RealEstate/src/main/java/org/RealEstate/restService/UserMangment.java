@@ -75,9 +75,7 @@ public class UserMangment implements Serializable {
 
 	@GET
 	@Path("/v1")
-
 	@Produces(MediaType.APPLICATION_JSON)
-
 	public Response findAllUser(@QueryParam("page") int page, @QueryParam("size") int size) {
 		try {
 			return userService.findAllPagination(page, size);
@@ -88,6 +86,8 @@ public class UserMangment implements Serializable {
 
 	}
 
+	// add update function 
+	
 	@GET
 	@Path("/v1/login")
 

@@ -88,7 +88,7 @@ public class User extends MainEntity implements Serializable {
 	private boolean freezed;
 
 	@Expose
-	@Pattern(regexp = "^(03|71|76|81)\\d{6}$", message = "Invalid format Phone Number")
+	//@Pattern(regexp = "^(03|71|76|81)\\d{6}$", message = "Invalid format Phone Number")
 	private String phoneNumber;
 
 	// el post li howe mnzlon
