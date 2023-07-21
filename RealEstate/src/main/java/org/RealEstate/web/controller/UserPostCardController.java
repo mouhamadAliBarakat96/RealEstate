@@ -28,6 +28,7 @@ import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.interfaces.ICRUDOperations;
 import org.RealEstate.model.Chalet;
+import org.RealEstate.model.GoogleMapAttribute;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
@@ -35,11 +36,18 @@ import org.RealEstate.service.UploadImagesMultiPart;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.apache.commons.lang3.StringUtils;
+import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.TabChangeEvent;
+import org.primefaces.event.map.MarkerDragEvent;
+import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.file.UploadedFiles;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 @Named
 @ViewScoped
@@ -81,6 +89,12 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private UploadedFiles files;
 	private String id = null;
 	private String kind = null;
+	
+	
+	private MapModel mapModel = new DefaultMapModel();
+	private String title;
+	private double lat;
+	private double lng;
 
 	@PostConstruct
 	public void init() {
@@ -169,13 +183,14 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				}
 				postType = item.getPostType();
 				setActiveIndex(0);
+				setCoordinates(item.getTittle(), item.getAddressEmbeddable().getLatitude(), item.getAddressEmbeddable().getLongitude());
 			}
 		} else if (kind.equals(PropertyKindEnum.CHALET.toString())) {// ADD EDIT Chalet
 			if (StringUtils.isBlank(id) || Long.parseLong(id) <= 0) {
 				kindEnum = PropertyKindEnum.CHALET;
 				chalet = new Chalet();
 				setActiveIndex(1);
-				Utility.addSuccessMessage("save_success");
+ 
 
 			} else {
 				kindEnum = PropertyKindEnum.CHALET;
@@ -187,9 +202,16 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 						e.printStackTrace();
 					}
 				}
-				setActiveIndex(1);
+				setActiveIndex(0);
+				setCoordinates(chalet.getName(), chalet.getAddressEmbeddable().getLatitude(), chalet.getAddressEmbeddable().getLongitude());
 			}
 		}
+	}
+	
+	public void setCoordinates(String title , double  lat, double lng) {
+		this.title=title;
+		this.lat=lat;
+		this.lng=lng;
 	}
 
 	public RealEstate findRealWithId(String id) {
@@ -245,14 +267,17 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			if (realEstateValidationFields()) {
 				return;
 			}
+			
 
 			if (getItem().getId() <= 0) {
 				item.setPostDate(new Date());
 				item.setUser(user);
 				item.setPostStatus(PostStatus.PENDING);
 				item.setPostType(postType);
+				item.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
 				item = getAbstractFacade().save(item);
 			} else {
+				item.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
 				item.setPostStatus(PostStatus.PENDING);
 				item = getAbstractFacade().save(item);
 			}
@@ -577,5 +602,56 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	public boolean disableSelectOneButton() {
 		return !StringUtils.isBlank(this.id) || !StringUtils.isBlank(this.kind);
 	}
+	
+	public boolean hideChaletTab() {
+		if(!StringUtils.isBlank(this.id) && !StringUtils.isBlank(this.kind) &&  this.kind.equals(PropertyKindEnum.REALESTATE.toString())) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean hideRealEsateTab() {
+		if(!StringUtils.isBlank(this.id) && !StringUtils.isBlank(this.kind) &&  this.kind.equals(PropertyKindEnum.CHALET.toString())) {
+			return true;
+		}
+		return false;
+	}
 
+	public MapModel getMapModel() {
+		return mapModel;
+	}
+
+	public void setMapModel(MapModel emptyModel) {
+		this.mapModel = emptyModel;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public void addMarker() {
+		mapModel.getMarkers().clear();
+		Ajax.oncomplete("loadPointOnMap();");
+		Utility.addMessage("Marker Added, Lat:" + item.getAddressEmbeddable().getLatitude() + ", Lng:" + item.getAddressEmbeddable().getLongitude());
+	}
 }
