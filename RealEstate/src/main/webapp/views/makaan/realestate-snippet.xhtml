@@ -21,27 +21,27 @@
 							<div class="col-lg-6 d-flex flex-row-reverse "
 								style="visibility: visible;">
 								<ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-									<li class="nav-item me-2">
-									   <h:commandLink action="#{indexController.search()}"
-											styleClass="btn btn-outline-primary"  
-											data-bs-toggle="pill" value="#{bundle.all}"  >
-											<f:ajax render="myForm:RealEstatePanelId" execute="@this" listener="#{indexController.changeTypeRealEstateSearch(null)}"/>
-									   </h:commandLink>
-									</li>
-									<li class="nav-item me-2">
-									   <h:commandLink action="#{indexController.search()}"
-											styleClass="btn btn-outline-primary"  
-											data-bs-toggle="pill" value="#{bundle.for_sale}"  >
-											<f:ajax render="myForm:RealEstatePanelId" execute="@this"  listener="#{indexController.changeTypeRealEstateSearch('BUY')}"/>
-									   </h:commandLink>
-									</li>
-									<li class="nav-item me-2">
-										<h:commandLink action="#{indexController.search()}"
-										        styleClass="btn btn-outline-primary"  
-												data-bs-toggle="pill" value="#{bundle.for_rent}"  >
-												<f:ajax render="myForm:RealEstatePanelId" execute="@this"  listener="#{indexController.changeTypeRealEstateSearch('RENT')}"/>
-									   </h:commandLink>
-									</li>
+									<li class="nav-item me-2"><h:commandLink
+											action="#{indexController.search()}"
+											styleClass="btn btn-outline-primary" data-bs-toggle="pill"
+											value="#{bundle.all}">
+											<f:ajax render="myForm:RealEstatePanelId" execute="@this"
+												listener="#{indexController.changeTypeRealEstateSearch(null)}" />
+										</h:commandLink></li>
+									<li class="nav-item me-2"><h:commandLink
+											action="#{indexController.search()}"
+											styleClass="btn btn-outline-primary" data-bs-toggle="pill"
+											value="#{bundle.for_sale}">
+											<f:ajax render="myForm:RealEstatePanelId" execute="@this"
+												listener="#{indexController.changeTypeRealEstateSearch('BUY')}" />
+										</h:commandLink></li>
+									<li class="nav-item me-2"><h:commandLink
+											action="#{indexController.search()}"
+											styleClass="btn btn-outline-primary" data-bs-toggle="pill"
+											value="#{bundle.for_rent}">
+											<f:ajax render="myForm:RealEstatePanelId" execute="@this"
+												listener="#{indexController.changeTypeRealEstateSearch('RENT')}" />
+										</h:commandLink></li>
 								</ul>
 							</div>
 						</div>
@@ -73,10 +73,24 @@
 											<f:actionListener
 												binding="#{indexController.addViewsAfterClick(real)}" />
 										</h:commandLink>
+										
+										<div class="col-md-12 top-0 start-0 position-absolute">
+											<div class="d-flex justify-content-between">
+												<div class="bg-primary rounded text-white py-1 px-3">#{real.postType.name}</div>
 
+												<h:panelGroup layout="block" rendered="#{real.boosted}"
+													styleClass="bg-primary rounded text-white py-1 px-3">
+															#{bundle.post_boosted}
+															<i class="fa fa-certificate"></i>
+												</h:panelGroup>
 
-										<div
-											class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">#{real.postType.name}</div>
+												<h:panelGroup rendered="#{real.verfied}" layout="block"
+													styleClass="bg-primary rounded text-white py-1 px-3">
+															#{bundle.post_verified}
+															<i class="fa fa-check"></i>
+												</h:panelGroup>
+											</div>
+										</div>
 
 										<h:commandLink action="#{indexController.navigate(real)}"
 											target="_blank">
@@ -138,18 +152,35 @@
 								<div class="row">
 									<div class="col-md-4 ">
 										<div class="position-relative overflow-hidden">
-											<h:commandLink action="#{indexController.navigate(real)}" 
-												styleClass="d-block h5 mb-2" target="_blank" style="min-height: 15rem;">
+											<h:commandLink action="#{indexController.navigate(real)}"
+												styleClass="d-block   mb-2" target="_blank"
+												style="min-height: 15rem;">
 												<p:graphicImage alt="no photos" styleClass="img-fluid"
 													url="#{indexController.fullUrl}#{real.images[0]}">
 												</p:graphicImage>
 												<f:actionListener
 													binding="#{indexController.addViewsAfterClick(real)}" />
 											</h:commandLink>
-											<div
-												class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
-												#{real.postType.name}</div>
+
+											<div class="col-md-12 top-0 start-0 position-absolute">
+												<div class="d-flex justify-content-between">
+													<div class="bg-primary rounded text-white py-1 px-3">#{real.postType.name}</div>
+
+													<h:panelGroup layout="block" rendered="#{real.boosted}"
+														styleClass="bg-primary rounded text-white py-1 px-3">
+															#{bundle.post_boosted}
+															<i class="fa fa-certificate"></i>
+													</h:panelGroup>
+
+													<h:panelGroup rendered="#{real.verfied}" layout="block"
+														styleClass="bg-primary rounded text-white py-1 px-3">
+															#{bundle.post_verified}
+															<i class="fa fa-check"></i>
+													</h:panelGroup>
+												</div>
+											</div>
 										</div>
+
 									</div>
 									<div class="col-md-8 ">
 										<div class="p-4 pb-0">

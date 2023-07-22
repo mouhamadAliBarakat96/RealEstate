@@ -26,7 +26,23 @@
 										style="max-width: 100% ; display:inline-block">
 										<p:graphicImage
 											url="#{chaletCardController.fullUrl}#{photo}"
-											alt="the photos" style="width: 100%" />
+											alt="the photos" style="width: 100%">
+											<div class="col-md-12 top-0 start-0 position-absolute">
+												<div class="d-flex justify-content-between">
+													<h:panelGroup layout="block" rendered="#{chaletCardController.item.boosted}"
+														styleClass="bg-primary rounded text-white px-3 py-1">
+												#{bundle.post_boosted}
+												<i class="fa fa-certificate"></i>
+													</h:panelGroup>
+													<h:panelGroup
+														rendered="#{chaletCardController.item.verfied}"
+														styleClass="bg-primary rounded text-white px-3 py-1 ">
+												#{bundle.post_verified}
+												<i class="fa fa-check"></i>
+													</h:panelGroup>
+												</div>
+											</div>
+										</p:graphicImage>
 										<f:facet name="thumbnail">
 											<p:graphicImage
 												url="#{chaletCardController.fullUrl}#{photo}"
