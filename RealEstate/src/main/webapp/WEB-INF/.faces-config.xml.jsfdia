@@ -250,4 +250,15 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#signup.xhtml" PATH="/signup.xhtml"
   SHAPE="240,2721,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::26" SHAPE="32,2817,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::26" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="user-information-front-end::#user-information.xhtml"
+    NAME="output" PATH="/user-information.xhtml"
+    TARGET="rules:#user-information.xhtml"
+    TITLE="user-information-front-end" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#user-information.xhtml"
+  PATH="/user-information.xhtml" SHAPE="240,2833,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

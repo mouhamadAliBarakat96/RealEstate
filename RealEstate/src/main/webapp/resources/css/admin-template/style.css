@@ -64,15 +64,14 @@ body {
 	color: #50649c;
 }
 
-
-.breadcrumb-item + .breadcrumb-item::before{
+.breadcrumb-item+.breadcrumb-item::before {
 	content: "\f105" !important;
 	font-family: 'Font Awesome 5 Free' !important;
 	font-weight: 600;
 	padding: 0 5px;
 	color: #8997bd !important;
-	
 }
+
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
 	margin: 10px 0;
 }
@@ -1640,7 +1639,7 @@ code {
 	.btn-info:active, .btn-info:focus, .btn-info:hover, .open>.dropdown-toggle.btn-info,
 	.btn-outline-info.active, .btn-outline-info:active, .btn-info.disabled,
 	.btn-info:disabled, .btn-outline-info:not (:disabled ):not (.disabled 
-	).active, .btn-outline-info:not (:disabled ):not (.disabled ):active,
+	 ).active, .btn-outline-info:not (:disabled ):not (.disabled ):active,
 	.show>.btn-outline-info.dropdown-toggle, .show>.btn-outline-info.dropdown-toggle,
 	.btn-outline-info:hover, .btn-info.active, .btn-info:active, .show>.btn-info.dropdown-toggle,
 	.btn-info:not (:disabled ):not (.disabled ).active, .btn-info:not (:disabled
@@ -1922,7 +1921,7 @@ code {
 	 ):not (.disabled ).active, .btn-outline-white:not (:disabled ):not (.disabled
 	 ):active, .show>.btn-outline-white.dropdown-toggle, .btn-white:not (:disabled
 	 ):not (.disabled ).active, .btn-white:not (:disabled ):not (.disabled 
-	):active, .show>.btn-white.dropdown-toggle, a.bg-white:focus, a.bg-white:hover,
+	 ):active, .show>.btn-white.dropdown-toggle, a.bg-white:focus, a.bg-white:hover,
 	button.bg-white:focus, button.bg-white:hover {
 	background-color: #f2f2f2 !important;
 	border: 1px solid #f2f2f2;
@@ -4708,7 +4707,7 @@ dt {
 }
 
 .custom-switch.switch-danger .custom-control-input:focus:not (:checked 
-	) ~ .custom-control-label::before {
+	 ) ~ .custom-control-label::before {
 	border-color: rgba(137, 151, 189, 0.7);
 }
 
@@ -4744,7 +4743,7 @@ dt {
 }
 
 .custom-switch.switch-purple .custom-control-input:focus:not (:checked 
-	) ~ .custom-control-label::before {
+	 ) ~ .custom-control-label::before {
 	border-color: rgba(137, 151, 189, 0.7);
 }
 
@@ -8212,8 +8211,6 @@ hr.thick {
 	margin-right: 5px;
 }
 
-
-
 .pro-order-box {
 	padding: 20px;
 	border: 1px solid #eff2f9;
@@ -8531,4 +8528,6 @@ hr.thick {
 		margin-top: 34px;
 	}
 }
+
+
 /*# sourceMappingURL=style.css.map */

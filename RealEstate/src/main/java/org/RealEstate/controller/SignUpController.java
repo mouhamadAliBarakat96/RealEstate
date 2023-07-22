@@ -40,7 +40,7 @@ public class SignUpController implements Serializable {
 
 	@Inject
 	private HttpServletRequest request;
-	
+
 	@PostConstruct
 	public void init() {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
@@ -64,21 +64,20 @@ public class SignUpController implements Serializable {
 			} else {
 				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 				flash.put("type", "error");
-				flash.put("message","authntication errror refresh page and try again");
-				
+				flash.put("message", "authntication errror refresh page and try again");
+
 				changeUrl();
 				return;
 			}
 			user.setFbId(fbId);
+			user.setPassowrd(Utils.sha256(user.getPassowrd()));
+
 			Response r = userService.createUser(user);
 
 			if (r.getStatus() == Status.CREATED.getStatusCode()) {
-//				CommonUtility.addMessageToFacesContext("save_success", "success");
 
-				
-				
-				User user = Utils.getObjectFromString(r.getEntity().toString(), User.class) ;
-				
+				User user = Utils.getObjectFromString(r.getEntity().toString(), User.class);
+
 				HttpSession session = request.getSession(true);
 				session.setAttribute(Constants.USER_SESSION, user);
 				FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -89,7 +88,6 @@ public class SignUpController implements Serializable {
 				flash.put("type", "error");
 				flash.put("message", r.getEntity().toString());
 
-			
 				changeUrl();
 			}
 
@@ -97,21 +95,21 @@ public class SignUpController implements Serializable {
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			flash.put("type", "error");
 			flash.put("message", e);
-			
+
 			e.printStackTrace();
-			
+
 			changeUrl();
 		}
 
 	}
-	
+
 	private void changeUrl() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
 
-			Faces.redirect(url );
+			Faces.redirect(url);
 
 		} catch (IOException e) {
 			e.printStackTrace();

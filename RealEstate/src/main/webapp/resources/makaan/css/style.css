@@ -521,4 +521,18 @@
     text-align: center;
     border-radius: 50%;
 }
+.px-4 {
+	padding-right: 0 !important;
+	padding-left: 0 !important;
+}
 
+.container-xxl.bg-white.p-0 {
+	padding: 0 10% !important;
+}
+
+@media ( min-width : 1400px) {
+	.container, .container-sm, .container-md, .container-lg, .container-xl,
+		.container-xxl {
+		max-width: 100% !important;
+	}
+}

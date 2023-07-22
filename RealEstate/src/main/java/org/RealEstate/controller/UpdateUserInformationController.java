@@ -1,9 +1,12 @@
 package org.RealEstate.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,15 +42,42 @@ public class UpdateUserInformationController implements Serializable {
 
 	private User user;
 
+	private String fullUrl = "";
+	private String ipAddressWithPort;
+
 	@PostConstruct
 	public void init() {
 		HttpSession session = request.getSession(true);
 
 		user = (User) session.getAttribute(Constants.USER_SESSION);
-
 		if (user == null) {
 
+			try {
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+				ExternalContext externalContext = facesContext.getExternalContext();
+				externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
+					.concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
+			if (user.getProfileImageUrl() != null) {
+				fullUrl = fullUrl.concat(user.getProfileImageUrl());
+			}
 		}
+
+	}
+
+	public String getIpAddressWithPort() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		String ipAddress = request.getRemoteAddr();
+		int port = request.getLocalPort();
+		ipAddressWithPort = ipAddress + ":" + port;
+
+		return ipAddressWithPort;
 	}
 
 	public void updateUserInformation() {
@@ -67,6 +97,14 @@ public class UpdateUserInformationController implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getFullUrl() {
+		return fullUrl;
+	}
+
+	public void setFullUrl(String fullUrl) {
+		this.fullUrl = fullUrl;
 	}
 
 }

@@ -31,6 +31,8 @@
 		</navigation-case>
 	</navigation-rule>
 
+
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>post-list</from-outcome>
@@ -234,6 +236,15 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>user-information-front-end</from-outcome>
+			<to-view-id>/user-information.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
 	
 	
 	
