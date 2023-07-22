@@ -9,19 +9,8 @@
 <ui:composition template="/views/template/makaan-template.xhtml">
 
 	<ui:define name="customOutputScript">
-		<!-- Use noConflict to release control of the $ variable -->
-		<script>
- 			 jQuery.noConflict();
-		</script>
-
-		<!-- Use jQuery with the "jQuery" variable instead of "$" -->
-		<script>
-			  jQuery(document).ready(function() {
-			    jQuery('p').click(function() {
-			      jQuery(this).hide();
-			    });
-			  });
-			</script>
+		<script src="https://maps.google.com/maps/api/js?sensor=false"/>
+		<script type="text/javascript" src="/resources/makaan/js/realestate-card.js"/>
 	</ui:define>
 
 	<ui:define name="property-content">
@@ -207,6 +196,17 @@
 									</div>
 								</div>
 							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<p:gmap id="gmap" center="33.8938,35.5018" zoom="13"
+									type="HYBRID" style="width:100%;height:400px"
+									widgetVar="map">
+								</p:gmap>
+							</div>
+							<h:inputHidden id="lat" value="#{realEstateCardController.item.addressEmbeddable.latitude}" />
+							<h:inputHidden id="lng" value="#{realEstateCardController.item.addressEmbeddable.longitude}" />
+							<h:inputHidden id="title" value="#{realEstateCardController.item.tittle}" />
 						</div>
 					</div>
 				</div>
