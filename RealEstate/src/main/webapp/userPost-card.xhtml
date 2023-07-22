@@ -37,6 +37,15 @@
 								src="/views/makaan/userpost-snippet/post-chalet-snippet.xhtml" />
 						</p:tab>
 					</p:tabView>
+					<div class="row">
+						<div class="col-md-12">
+							<p:gmap id="gmap" center="33.8938,35.5018" zoom="13"
+								type="HYBRID" style="width:100%;height:400px"
+								model="#{userPostCardController.mapModel}"
+								onPointClick="handlePointClick(event);" widgetVar="map">
+							</p:gmap>
+						</div>
+					</div>
 				</div>
 			</div>
 			<h:panelGroup id="panelCoordinates">
@@ -45,7 +54,7 @@
 				<h:inputHidden id="title" value="#{userPostCardController.title}" />
 				<p:commandButton id="markerBtn"
 					action="#{userPostCardController.addMarker()}"
-					style="display:none;" update=":messageScript myForm:tabView:gmap"
+					style="display:none;" update=":messageScript myForm:gmap"
 					process="myForm:panelCoordinates" />
 			</h:panelGroup>
 		</div>

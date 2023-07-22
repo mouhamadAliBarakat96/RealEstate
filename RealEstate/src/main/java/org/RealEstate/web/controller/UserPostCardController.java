@@ -415,9 +415,11 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				chalet.setPostDate(new Date());
 				chalet.setUser(user);
 				chalet.setPostStatus(PostStatus.PENDING);
+				chalet.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
 				chalet = chaletFacade.save(chalet);
 			} else {
 				chalet.setPostStatus(PostStatus.PENDING);
+				chalet.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
 				chalet = chaletFacade.save(chalet);
 			}
 			changeUrl(chalet);
@@ -652,6 +654,5 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	public void addMarker() {
 		mapModel.getMarkers().clear();
 		Ajax.oncomplete("loadPointOnMap();");
-		Utility.addMessage("Marker Added, Lat:" + item.getAddressEmbeddable().getLatitude() + ", Lng:" + item.getAddressEmbeddable().getLongitude());
 	}
 }

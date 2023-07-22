@@ -22,7 +22,7 @@ function loadPointOnMap(){
 }
 
 $(document).ready(function() {
-    // Call your function or initialize your script here
+  
 	loadPointOnMap();
   });
 
