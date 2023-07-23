@@ -34,7 +34,7 @@ public class UserFacade extends AbstractFacade<User> implements Serializable {
 				.setParameter("userName", userName).setParameter("password", password).getResultList();
 
 		if (users.isEmpty()) {
-			throw new Exception(Constants.USER_NAME_OR_PASSWORD_INVALID);
+			return null;
 		} else {
 			return users.get(0);
 		}

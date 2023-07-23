@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
+import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.apache.commons.lang3.StringUtils;
@@ -40,9 +41,16 @@ public class LoginController implements Serializable {
 	@Inject
 	private HttpServletRequest request;
 
+	private boolean showErrorMessage;
+	private String errorMessage;
+
 	@PostConstruct
 	public void init() {
-
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		if (flash.containsKey("message")) {
+			showErrorMessage = true;
+			errorMessage = (String) flash.get("message");
+		}
 	}
 
 	public void loginFb() {
@@ -59,8 +67,9 @@ public class LoginController implements Serializable {
 
 				if (user == null) {
 					Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-					flash.put("type", "error");
-					flash.put("message", "Facebook dosent have Account here ");
+
+					flash.put("message", Utility.getMessage("facebook_dosent_have_account_here"));
+					changeUrl();
 				} else {
 					HttpSession session = request.getSession(true);
 					session.setAttribute(Constants.USER_SESSION, user);
@@ -81,7 +90,7 @@ public class LoginController implements Serializable {
 
 			} else {
 				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-				flash.put("type", "error");
+
 				flash.put("message", "authntication errror refresh page and try again");
 
 				changeUrl();
@@ -92,6 +101,7 @@ public class LoginController implements Serializable {
 
 		catch (Exception e) {
 
+			e.printStackTrace();
 		}
 
 	}
@@ -115,7 +125,10 @@ public class LoginController implements Serializable {
 			User user = userFacade.findUserByUserNameAndPassword(userName, hashPass);
 
 			if (user == null) {
-				Utility.addErrorMessage("name_or_pass_wrong");
+				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+
+				flash.put("message", Utility.getMessage("wrong_user_name_or_password"));
+				changeUrl();
 			} else {
 				HttpSession session = request.getSession(true);
 				session.setAttribute(Constants.USER_SESSION, user);
@@ -135,7 +148,7 @@ public class LoginController implements Serializable {
 			}
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 	}
 
@@ -153,6 +166,22 @@ public class LoginController implements Serializable {
 
 	public void setPassowrd(String passowrd) {
 		this.passowrd = passowrd;
+	}
+
+	public boolean isShowErrorMessage() {
+		return showErrorMessage;
+	}
+
+	public void setShowErrorMessage(boolean showErrorMessage) {
+		this.showErrorMessage = showErrorMessage;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 
 }

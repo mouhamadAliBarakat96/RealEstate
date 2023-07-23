@@ -165,27 +165,43 @@
 									</h:panelGroup>
 									<div class="form-group mb-0 row" style="margin-top: 1%">
 										<div class="col-12 mt-2">
-											<h:commandLink action="#{loginController.login()}"
+											<h:commandLink actionListener="#{loginController.login()}"
 												styleClass="btn btn-primary  btn-block waves-effect waves-light">
 												Log In <i class="fas fa-sign-in-alt ml-1"></i>
 												<f:ajax execute="login-form " render="messages login-form"></f:ajax>
 											</h:commandLink>
 
+											<div class="row"
+												style="margin-top: 2.5%; display: flex; justify-content: center; align-items: center;">
 
-											<div class="row" style="margin-top: 2%">
-												<div class="fb-login-button" data-width="" data-size=""
-													style="width: 25%" data-button-type="" data-layout=""
+
+
+												<div class="fb-login-button" data-width=""
+													data-size="Medium" data-button-type="" data-layout=""
 													data-auto-logout-link="false" data-use-continue-as="false"></div>
 
-<p:remoteCommand process="@this  " name="remoteCommandAction"
-									update=""
-									actionListener="#{loginController.loginFb()}">
+												<p:remoteCommand process="@this  "
+													name="remoteCommandAction" update=""
+													actionListener="#{loginController.loginFb()}">
 
-								</p:remoteCommand>
-								
-												
+												</p:remoteCommand>
+
+
+
 											</div>
 
+											<h:panelGroup id="error-message"
+												rendered="#{loginController.showErrorMessage}">
+												<div
+													style="margin-top: 3%; display: flex; justify-content: center; align-items: center">
+													<span
+														style="font-size: 14px; font-weight: 400; margin-right: 10px; color: #af0a0a">
+														#{loginController.errorMessage} </span>
+
+												</div>
+
+
+											</h:panelGroup>
 
 											<div
 												style="margin-top: 3%; display: flex; justify-content: center; align-items: center">

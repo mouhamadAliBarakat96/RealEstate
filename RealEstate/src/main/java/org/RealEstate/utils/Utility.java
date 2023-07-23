@@ -21,20 +21,16 @@ import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
 import org.RealEstate.model.StoreHouseSell;
 
-
-
 public class Utility {
 
 	public static String BUNDLE_FILE_NAME_AR = "resources.bundle_ar";
 	public static String BUNDLE_FILE_NAME = "resources.bundle";
 	public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-	
 	public static void changeBundleName(String bundleName) {
 		BUNDLE_FILE_NAME = bundleName;
 	}
-	
-	
+
 	public static String getMessage(String key, String bundle) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(bundle);
 		MessageFormat msgFormat = new MessageFormat(resourceBundle.getString(key));
@@ -69,6 +65,8 @@ public class Utility {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
+
+	
 
 	public static void addWarningMessage(String key) {
 		try {
@@ -127,7 +125,7 @@ public class Utility {
 			return new ShopSell();
 		case LAND:
 			return new Land();
-		case STORE_HOUSE_SELL :
+		case STORE_HOUSE_SELL:
 			return new StoreHouseSell();
 		case STORE_HOUSE_RENT:
 			return new StoreHouseSell();
