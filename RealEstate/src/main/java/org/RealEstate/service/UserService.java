@@ -59,10 +59,10 @@ public class UserService implements Serializable {
 						.entity(Constants.USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_SHOULD_NOT_BE_EMPTY).build();
 
 			}
-			
+
 			User orginUser = userFacade.find(user.getId());
-			
-			if(!orginUser.getUserName().equals(user.getUserName())) {
+
+			if (!orginUser.getUserName().equals(user.getUserName())) {
 
 				User userFinded = userFacade.findUserByUserName(user.getUserName());
 
@@ -70,9 +70,7 @@ public class UserService implements Serializable {
 					return Response.status(Status.BAD_REQUEST).entity(Constants.USER_NAME_SHOULD_BE_UNIQUE).build();
 				}
 			}
-			
-			
-			
+
 			userFacade.save(user);
 			return Response.status(Status.ACCEPTED).entity(Utils.objectToString(user)).build();
 
@@ -88,6 +86,14 @@ public class UserService implements Serializable {
 	public Response createUser(User user) {
 
 		try {
+
+			// check fb id nt null
+
+			if (user.getFbId() == null || StringUtils.isBlank(user.getFbId())) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.FACEBOOK_ID_SHOUD_NOT_BE_NULL).build();
+
+			}
+
 			// validite phone number
 
 			if (StringUtils.isBlank(user.getPhoneNumber()) || !Utils.validatePhoneNumber(user.getPhoneNumber())) {
@@ -133,6 +139,27 @@ public class UserService implements Serializable {
 
 		try {
 			User user = userFacade.findUserByUserNameAndPassword(userName, password);
+			if (user == null) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.USER_NAME_OR_PASSWORD_INVALID).build();
+
+			}
+			return Response.status(Status.OK).entity(Utils.objectToString(user)).build();
+
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+	}
+
+	public Response loginFb(String fbId) {
+
+		try {
+			User user = userFacade.findUserByFbId(fbId);
+
+			if (user == null) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.FACEBOOK_ID_INVALID).build();
+
+			}
 
 			return Response.status(Status.OK).entity(Utils.objectToString(user)).build();
 

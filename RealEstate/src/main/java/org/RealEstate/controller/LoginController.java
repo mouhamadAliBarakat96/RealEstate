@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,6 +45,70 @@ public class LoginController implements Serializable {
 
 	}
 
+	public void loginFb() {
+
+		try {
+			String fbId = null;
+			Map<String, String> requestParamMap = FacesContext.getCurrentInstance().getExternalContext()
+					.getRequestParameterMap();
+			User user;
+			if (requestParamMap.containsKey("fbId")) {
+				fbId = requestParamMap.get("fbId");
+
+				user = userFacade.findUserByFbId(fbId);
+
+				if (user == null) {
+					Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+					flash.put("type", "error");
+					flash.put("message", "Facebook dosent have Account here ");
+				} else {
+					HttpSession session = request.getSession(true);
+					session.setAttribute(Constants.USER_SESSION, user);
+
+					FacesContext facesContext = FacesContext.getCurrentInstance();
+					ExternalContext externalContext = facesContext.getExternalContext();
+
+					Map<String, Object> flash = externalContext.getFlash();
+					String currentUrl = (String) flash.get(Constants.CURRENT_URL);
+
+					if (StringUtils.isBlank(currentUrl)) {
+						// Redirect to default page after successful login
+						externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
+					} else {
+						externalContext.redirect(currentUrl);
+					}
+				}
+
+			} else {
+				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+				flash.put("type", "error");
+				flash.put("message", "authntication errror refresh page and try again");
+
+				changeUrl();
+				return;
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	private void changeUrl() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		String url = request.getRequestURL().toString();
+		try {
+
+			Faces.redirect(url);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void login() {
 		try {
 			String hashPass = Utility.hashPassword(passowrd);
@@ -54,8 +119,7 @@ public class LoginController implements Serializable {
 			} else {
 				HttpSession session = request.getSession(true);
 				session.setAttribute(Constants.USER_SESSION, user);
-				
-				
+
 				FacesContext facesContext = FacesContext.getCurrentInstance();
 				ExternalContext externalContext = facesContext.getExternalContext();
 
@@ -69,12 +133,11 @@ public class LoginController implements Serializable {
 					externalContext.redirect(currentUrl);
 				}
 			}
-		 
+
 		} catch (Exception e) {
 
 		}
 	}
-
 
 	public String getUserName() {
 		return userName;

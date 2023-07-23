@@ -73,23 +73,25 @@ public class UserMangment implements Serializable {
 
 	}
 
-	@GET
-	@Path("/v1")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response findAllUser(@QueryParam("page") int page, @QueryParam("size") int size) {
-		try {
-			return userService.findAllPagination(page, size);
-		} catch (Exception e) {
-			return analyzeException(e);
-
-		}
-
-	}
+	/*
+	 * @GET
+	 * 
+	 * @Path("/v1")
+	 * 
+	 * @Produces(MediaType.APPLICATION_JSON) public Response
+	 * findAllUser(@QueryParam("page") int page, @QueryParam("size") int size) { try
+	 * { return userService.findAllPagination(page, size); } catch (Exception e) {
+	 * return analyzeException(e);
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 
 	// add update function 
 	
 	@GET
-	@Path("/v1/login")
+	@Path("/login/v1")
 
 	public Response login(@QueryParam("userName") String userName, @QueryParam("password") String password) {
 		try {
@@ -101,6 +103,20 @@ public class UserMangment implements Serializable {
 
 	}
 
+	@GET
+	@Path("/login-fb/v1")
+
+	public Response loginFb(@QueryParam("fbId") String fbId ) {
+		try {
+			return userService.loginFb(fbId );
+		} catch (Exception e) {
+			return analyzeException(e);
+
+		}
+
+	}
+	
+	
 	private Response analyzeException(Exception e) {
 		e.printStackTrace();
 		if (e instanceof EJBException)
