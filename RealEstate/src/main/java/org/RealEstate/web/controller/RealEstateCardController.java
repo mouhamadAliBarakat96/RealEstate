@@ -40,6 +40,8 @@ public class RealEstateCardController implements Serializable {
 	private String fullUrl = "";
 	private String ipAddressWithPort;
 
+	private String fullUrlProfilePicture ="";
+
 	@PostConstruct
 	public void init() {
 
@@ -63,6 +65,14 @@ public class RealEstateCardController implements Serializable {
 				} else {
 					fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/")
 							.concat(Constants.IMAGES).concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
+
+					fullUrlProfilePicture = fullUrlProfilePicture.concat("http://").concat(getIpAddressWithPort())
+							.concat("/").concat(Constants.IMAGES).concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME)
+							.concat("/");
+					if (item.getUser().getProfileImageUrl() != null) {
+						fullUrlProfilePicture = fullUrlProfilePicture.concat(item.getUser().getProfileImageUrl());
+					}
+
 				}
 			} else {
 				try {
@@ -171,4 +181,13 @@ public class RealEstateCardController implements Serializable {
 	public void setFullUrl(String fullUrl) {
 		this.fullUrl = fullUrl;
 	}
+
+	public String getFullUrlProfilePicture() {
+		return fullUrlProfilePicture;
+	}
+
+	public void setFullUrlProfilePicture(String fullUrlProfilePicture) {
+		this.fullUrlProfilePicture = fullUrlProfilePicture;
+	}
+
 }

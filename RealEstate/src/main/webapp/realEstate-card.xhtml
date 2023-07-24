@@ -21,17 +21,18 @@
 					<div id="tab-1" class="tab-pane fade show p-0 active">
 						<div class="card">
 							<div class="row">
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<p:galleria value="#{realEstateCardController.item.images}"
 										var="photo" numVisible="3"
 										responsiveOptions="#{realEstateCardController.responsiveOptions1}"
 										style="max-width: 100% ; display:inline-block">
 										<p:graphicImage
 											url="#{realEstateCardController.fullUrl}#{photo}"
-											alt="the photos" style="width: 100%">
+											alt="the photos" width="300px" height="300px">
 											<div class="col-md-12 top-0 start-0 position-absolute">
 												<div class="d-flex justify-content-between">
-													<h:panelGroup layout="block" rendered="#{realEstateCardController.item.boosted}"
+													<h:panelGroup layout="block"
+														rendered="#{realEstateCardController.item.boosted}"
 														styleClass="bg-primary rounded text-white px-3 py-1">
 												#{bundle.post_boosted}
 												<i class="fa fa-certificate"></i>
@@ -55,17 +56,92 @@
 
 								<div class="col-md-8 ">
 									<div class="p-4 pb-0">
-										<h5 class="text-primary mb-3">
-											#{realEstateCardController.item.tittle}</h5>
-										<h:outputLabel styleClass="d-block h5 mb-2"
-											style="height: 150px;width: 100%;"
-											value="#{realEstateCardController.item.subTittle}" />
-										<p>
-											<i class="fa fa-map-marker-alt text-primary me-2"></i>#{realEstateCardController.item.village.fullAddress()}
-										</p>
+										<span
+											style="color: #00B98E; font-size: 22px; font-weight: 700">
+											#{realEstateCardController.item.tittle}</span> <span
+											style="margin-top: 0.5%; display: block; color: #2d383f; font-size: 18px; font-weight: 600">
+											#{realEstateCardController.item.subTittle}</span>
+
+
+
+										<hr class="line-border"></hr>
+
+
+
+
+										<div class="row">
+
+											<div class="col-md-6">
+
+												<span
+													style="color: #2d383f; font-size: 20px; font-weight: 700">Location</span>
+												<span style="display: block; margin-top: 1%">
+													#{realEstateCardController.item.village.fullAddress()} </span>
+
+											</div>
+
+											<div class="col-md-6">
+
+												<span
+													style="margin-left: 45px; display: block;; color: #2d383f; font-size: 20px; font-weight: 700">Agent</span>
+												<div style="display: flex;">
+													<div style="width: 30%; display: inline-block;">
+														<h:panelGroup
+															rendered="#{realEstateCardController.item.user.showProfilePicture}">
+
+
+															<p:graphicImage style="margin-top:4%;border-radius:50%"
+																url="#{realEstateCardController.fullUrlProfilePicture}"
+																width="150px" height="150px" />
+														</h:panelGroup>
+														<h:panelGroup
+															rendered="#{!realEstateCardController.item.user.showProfilePicture}">
+
+
+
+															<!-- TODO IMAGE NOT -->
+														</h:panelGroup>
+
+													</div>
+													<div
+														style="margin-left: 50px; width: 60%; display: inline-block">
+
+														<span style="font-size: 15px; font-weight: 600">
+															#{realEstateCardController.item.user.firstName}
+															#{realEstateCardController.item.user.lastName} </span>
+															
+															
+															
+															 <small
+															class="flex-fill   "> 
+															
+															<h:commandLink
+																style=" display:block ; font-weight: bold;"
+																action="#{indexController.navigateToWhatsApp(real)}"
+																target="_blank" value="#{bundle.whatsapp} #{realEstateCardController.item.user.phoneNumber}">
+																
+																<i class="fab fa-whatsapp text-primary me-2"></i>
+																<f:actionListener
+																	binding="#{indexController.addCallNumber(real)}" />
+															</h:commandLink>
+														</small>
+
+														<h:panelGroup
+															rendered="#{realEstateCardController.item.user.broker}">
+															<span
+																style="display: block; margin-top: 0.9%; width: 60px; background-color: #00B98E; color: #FFFFFF; padding: 5px; border-radius: 5px;">broker</span>
+														</h:panelGroup>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+
 									</div>
 
-									<div class="row col-md-12 border-top border-end">
+									<div style="margin-top: 4%"
+										class="row col-md-12 border-top border-end">
 										<small
 											class="col-md-3 text-center border-end py-2 border-bottom">
 
@@ -231,7 +307,12 @@
 								</div>
 							</div>
 						</div>
-						<div class="row">
+
+
+
+
+
+						<div class="row" style="margin-top: 2%">
 							<div class="col-md-12">
 								<p:gmap id="gmap" center="33.8938,35.5018" zoom="13"
 									type="HYBRID" style="width:100%;height:400px" widgetVar="map">
