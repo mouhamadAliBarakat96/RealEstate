@@ -65,15 +65,14 @@
 									<div class="position-relative overflow-hidden">
 
 										<h:commandLink action="#{indexController.navigate(real)}"
-											styleClass="d-block h5 mb-2" target="_blank">
+											styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 											<p:graphicImage alt="no photos" styleClass="img-fluid"
-												style="min-height: 281px;"
 												url="#{indexController.fullUrl}#{real.images[0]}">
 											</p:graphicImage>
 											<f:actionListener
 												binding="#{indexController.addViewsAfterClick(real)}" />
 										</h:commandLink>
-										
+
 										<div class="col-md-12 top-0 start-0 position-absolute">
 											<div class="d-flex justify-content-between">
 												<div class="bg-primary rounded text-white py-1 px-3">#{real.postType.name}</div>
@@ -153,8 +152,7 @@
 									<div class="col-md-4 ">
 										<div class="position-relative overflow-hidden">
 											<h:commandLink action="#{indexController.navigate(real)}"
-												styleClass="d-block   mb-2" target="_blank"
-												style="min-height: 15rem;">
+												styleClass="d-block img-fluid  mb-2" target="_blank">
 												<p:graphicImage alt="no photos" styleClass="img-fluid"
 													url="#{indexController.fullUrl}#{real.images[0]}">
 												</p:graphicImage>

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
@@ -22,21 +21,15 @@ import org.RealEstate.dto.RealEstateLazyDataModel;
 import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
-import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.enumerator.YesNoEnum;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.DistrictFacade;
 import org.RealEstate.facade.GovernorateFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
-import org.RealEstate.model.AppratmentRent;
-import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.Chalet;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
-import org.RealEstate.model.Land;
-import org.RealEstate.model.OfficeRent;
-import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
@@ -156,7 +149,7 @@ public class IndexController implements Serializable {
 		}
 	}
 
-	public void addViewsAfterClick(Chalet item) {
+	public void addViewsAfterClick_chalet(Chalet item) {
 		try {
 			Response response = postService.updateChaletViews(item.getId());
 			System.out.println(response.getStatus());
@@ -174,7 +167,7 @@ public class IndexController implements Serializable {
 		}
 	}
 
-	public void addCallNumber(Chalet item) {
+	public void addCallNumber_chalet(Chalet item) {
 		try {
 			Response response = postService.updateChaletCall(item.getId());
 			System.out.println(response.getStatus());
@@ -183,7 +176,7 @@ public class IndexController implements Serializable {
 		}
 	}
 
-	public void navigateToWhatsApp(Chalet item) throws IOException {
+	public void navigateToWhatsApp_chalet(Chalet item) throws IOException {
 		// Get the phone number parameter from the request
 		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -222,7 +215,7 @@ public class IndexController implements Serializable {
 	}
 
 	// navigate to real chalet Card
-	public void navigate(Chalet item) {
+	public void navigate_chalet(Chalet item) {
 		// Build the URL with the parameter values
 		String url = "chalet-card.xhtml?id=" + item.getId();
 		// Use the ExternalContext object to redirect to the new page
