@@ -63,6 +63,8 @@ public class UserService implements Serializable {
 			user.setPassowrd(orginUser.getPassowrd());
 			user.setFreezed(orginUser.isFreezed());
 			user.setFbId(orginUser.getFbId());
+			user.setBroker(orginUser.isBroker());
+			user.setUserCategory(orginUser.getUserCategory());
 			if (!orginUser.getUserName().equals(user.getUserName())) {
 
 				User userFinded = userFacade.findUserByUserName(user.getUserName());
