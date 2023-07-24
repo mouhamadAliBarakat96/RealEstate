@@ -31,6 +31,8 @@ public class TestController implements Serializable {
 
 	private UploadedFiles files;
 
+	private String lat="";
+	private String lang="";
 	@PostConstruct
 	public void init() {
 		System.out.println("123");
@@ -95,6 +97,22 @@ public class TestController implements Serializable {
 
 	public void setXx(String xx) {
 		this.xx = xx;
+	}
+
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
 	}
 
 }

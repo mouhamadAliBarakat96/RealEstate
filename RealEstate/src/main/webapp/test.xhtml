@@ -6,40 +6,81 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head>
+ <h:head>
+	<h:outputScript library="openlayers" name="ol.js" />
+	<h:outputStylesheet library="openlayers" name="ol.css" />
+</h:head>
 <body>
-	#{testController.xx}
-	<h:form>
-		<p:fileUpload id="uploadImageRequestinformation"
-			listener="#{testController.handleFileUploadRequestInformation}"
-			mode="advanced" dragDropSupport="false" multiple="true"
-			sizeLimit="3000000" fileLimit="2"
-			allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-		</p:fileUpload>
-
-
-		<h:commandLink action="#{testController.uploadToServeer()}"
-			value="save">
-			<f:ajax execute="uploadImageRequestinformation"></f:ajax>
-		</h:commandLink>
-
-
-		<p:fileUpload id="uploadImageRequestinformation123"
-			listener="#{testController.handleFileUploadProfilePicture}"
-			mode="advanced" dragDropSupport="false" multiple="true"
-			sizeLimit="3000000" fileLimit="2"
-			allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-		</p:fileUpload>
-
-
-		<h:commandLink
-			action="#{testController.uploadToServerProfilePicture()}"
-			value="profilePicture TESt">
-			<f:ajax></f:ajax>
-		</h:commandLink>
-
-
+	<h:form id="mapForm">
+		<div id="marker" style="display: none;">
+			<h:graphicImage value="/resources/images/marker.png"  
+				  alt="marker" style="height: 3rem;  width: 1.5rem;" />
+		</div>
+		<h:outputText value="Select a location on the map:" />
+		<div id="map" style="width: 100%; height: 500px;"></div>
+		<h:inputHidden id="longitude" value="#{testController.lang}" />
+		<h:inputHidden id="latitude" value="#{testController.lat}" />
+		<h:commandButton value="Save Location">
+			<f:ajax execute="@form" />
+		</h:commandButton>
 	</h:form>
 
+	<script>
+  // Create the map
+  var map = new ol.Map({
+    target: 'map',
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      })
+    ],
+    view: new ol.View({
+      center: ol.proj.fromLonLat([35.5097, 33.8938]), // Beirut coordinates
+      zoom: 12
+    })
+  });
+
+  var marker = new ol.Overlay({
+	    element: document.getElementById('marker'),
+	    positioning: 'bottom-center'
+	  });
+
+  map.addOverlay(marker);
+  
+  // Add a click event listener to the map
+  map.on('click', function(event) {
+    // Get the clicked coordinates in the map projection
+    var clickedCoords = event.coordinate;
+
+    // Set the hidden input values to the clicked coordinates
+    document.getElementById('mapForm:longitude').value = clickedCoords[0];
+    document.getElementById('mapForm:latitude').value = clickedCoords[1];
+
+    // Set the marker overlay position to the clicked coordinates
+    marker.setPosition(clickedCoords);
+    // Show the marker overlay
+    marker.getElement().style.display = 'block';
+    
+  });
+
+
+function loadCoordinates(){
+	 var marker = new ol.Overlay({
+		    element: document.getElementById('marker'),
+		    positioning: 'bottom-center'
+		  });
+
+	  map.addOverlay(marker);
+
+	  var clickedCoords = new Array(2);
+	  // Set the hidden input values to the clicked coordinates
+	  clickedCoords[0]= document.getElementById('mapForm:longitude').value;
+	  clickedCoords[1]=  document.getElementById('mapForm:latitude').value ;
+	  // Set the marker overlay position to the clicked coordinates
+	  marker.setPosition(clickedCoords);
+	  // Show the marker overlay
+	  marker.getElement().style.display = 'block';
+}
+</script>
 </body>
 </html>
