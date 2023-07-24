@@ -58,6 +58,18 @@ public class UserMangment implements Serializable {
 
 	}
 
+	
+	@PUT
+	@Path("/v1")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response changeProfilePicture(User user) {
+
+		return userService.updateUserInforamtion(user);
+
+	}
+
+	
 	@GET
 	@Path("/v1/{id}")
 

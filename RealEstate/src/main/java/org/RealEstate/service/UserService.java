@@ -51,9 +51,8 @@ public class UserService implements Serializable {
 
 			}
 
-			if (StringUtils.isBlank(user.getPassowrd()) || StringUtils.isBlank(user.getLastName())
-					|| StringUtils.isBlank(user.getFirstName()) || StringUtils.isBlank(user.getMiddleName())
-					|| StringUtils.isBlank(user.getUserName())) {
+			if (StringUtils.isBlank(user.getLastName()) || StringUtils.isBlank(user.getFirstName())
+					|| StringUtils.isBlank(user.getMiddleName()) || StringUtils.isBlank(user.getUserName())) {
 
 				return Response.status(Status.BAD_REQUEST)
 						.entity(Constants.USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_SHOULD_NOT_BE_EMPTY).build();
@@ -61,7 +60,9 @@ public class UserService implements Serializable {
 			}
 
 			User orginUser = userFacade.find(user.getId());
-
+			user.setPassowrd(orginUser.getPassowrd());
+			user.setFreezed(orginUser.isFreezed());
+			user.setFbId(orginUser.getFbId());
 			if (!orginUser.getUserName().equals(user.getUserName())) {
 
 				User userFinded = userFacade.findUserByUserName(user.getUserName());
