@@ -74,9 +74,34 @@
 											<div class="col-md-6">
 
 												<span
-													style="color: #2d383f; font-size: 20px; font-weight: 700">Location</span>
-												<span style="display: block; margin-top: 1%">
-													#{realEstateCardController.item.village.fullAddress()} </span>
+													style="font-weight: 600; margin-left: 20px; color: #2d383f; font-size: 20px; font-weight: 700">Location</span>
+
+												<div style="display: flex;">
+													<div style="width: 30%; display: inline-block;">
+
+
+														<img class="img-fluid" width="150px" height="150px"
+															style="margin-top: 4%; border-radius: 50%"
+															src="/resources/makaan/img/mapImage.png" alt="Icon" />
+
+
+
+
+													</div>
+													<div
+														style="font-weight: 600;; margin-left: 50px; width: 60%; display: inline-block">
+														<span style="display: block; margin-top: 1%">
+															#{realEstateCardController.item.village.fullAddress()} </span>
+
+													</div>
+												</div>
+
+
+
+
+
+
+
 
 											</div>
 
@@ -97,29 +122,32 @@
 														<h:panelGroup
 															rendered="#{!realEstateCardController.item.user.showProfilePicture}">
 
+															<img class="img-fluid" width="150px" height="150px"
+																style="margin-top: 4%; border-radius: 50%"
+																src="/resources/makaan/img/profile.png" alt="Icon" />
 
-
-															<!-- TODO IMAGE NOT -->
 														</h:panelGroup>
 
 													</div>
 													<div
 														style="margin-left: 50px; width: 60%; display: inline-block">
 
-														<span style="font-size: 15px; font-weight: 600">
-															#{realEstateCardController.item.user.firstName}
-															#{realEstateCardController.item.user.lastName} </span>
-															
-															
-															
-															 <small
-															class="flex-fill   "> 
-															
-															<h:commandLink
+														<h:link outcome="userpost-search"
+															value="#{realEstateCardController.item.user.firstName}
+															#{realEstateCardController.item.user.lastName} "
+															style=" color:#666565 ; font-size: 15px; font-weight: 600">
+
+
+
+															<f:param name="id"
+																value="#{realEstateCardController.item.user.id}" />
+														</h:link>
+														<small class="flex-fill   "> <h:commandLink
 																style=" display:block ; font-weight: bold;"
 																action="#{indexController.navigateToWhatsApp(real)}"
-																target="_blank" value="#{bundle.whatsapp} #{realEstateCardController.item.user.phoneNumber}">
-																
+																target="_blank"
+																value="#{bundle.whatsapp} #{realEstateCardController.item.user.phoneNumber}">
+
 																<i class="fab fa-whatsapp text-primary me-2"></i>
 																<f:actionListener
 																	binding="#{indexController.addCallNumber(real)}" />

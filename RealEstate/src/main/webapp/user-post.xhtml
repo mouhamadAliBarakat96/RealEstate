@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/views/template/makaan-template.xhtml">
+	<ui:define name="customStylesheet">
+		<link href="/resources/makaan/css/index.css" rel="stylesheet" />
+	</ui:define>
+
+	<ui:define name="header-start">
+		<o:importConstants type="org.RealEstate.enumerator.PostType" />
+		<o:importConstants type="org.RealEstate.enumerator.YesNoEnum" />
+
+		<div class="header-container container-fluid header bg-white p-0">
+			<div class="row" style="height: 300px"></div>
+		</div>
+	</ui:define>
+
+	<ui:define name="searchBar">
+		<h:panelGroup id="searchBarPanel">
+			<h:panelGroup  
+				rendered="#{indexController.propertyKind == 'REALESTATE'}">
+				<ui:include src="/views/makaan/searchRealestate-snippet.xhtml" />
+			</h:panelGroup>
+			<h:panelGroup rendered="#{indexController.propertyKind == 'CHALET'}">
+				<ui:include src="/views/makaan/searchChalet-snippet.xhtml" />
+			</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+
+	<ui:define name="property-content">
+		<h:panelGroup id="RealEstatePanelId"
+			rendered="#{indexController.propertyKind == 'REALESTATE'}">
+			<ui:include src="/views/makaan/realestate-snippet.xhtml" />
+		</h:panelGroup>
+
+		<h:panelGroup id="ChaletPanelId"
+			rendered="#{indexController.propertyKind == 'CHALET'}">
+			<ui:include src="/views/makaan/chalet-snippet.xhtml" />
+		</h:panelGroup>
+	</ui:define>
+
+
+	<ui:define name="statistic-content">
+		<div class="container-xxl py-5">
+			<div class="container">
+				<div class="text-center mx-auto mb-5 wow fadeInUp"
+					data-wow-delay="0.1s" style="max-width: 600px;">
+					<h1 class="mb-3">#{bundle.property_type}</h1>
+					<p>#{bundle.property_type_description}</p>  
+				</div>
+				<div class="row g-4">
+					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
+							<div class="rounded p-4">
+								<div class="icon mb-3">
+									<img class="img-fluid"
+										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+								</div>
+								<h6>#{bundle.appartment_sell}</h6>
+
+								<h:outputText
+									value="#{indexController.numberOfSellAppartments()}">
+									<f:convertNumber pattern="#,###.##" />
+								</h:outputText>
+
+							</div>
+						</span>
+					</div>
+					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
+							<div class="rounded p-4">
+								<div class="icon mb-3">
+									<img class="img-fluid"
+										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+								</div>
+								<h6>#{bundle.appartment_rent}</h6>
+
+								<h:outputText
+									value="#{indexController.numberOfRentAppartments()}">
+									<f:convertNumber pattern="#,###.##" />
+								</h:outputText>
+
+							</div>
+						</span>
+					</div>
+					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
+							<div class="rounded p-4">
+								<div class="icon mb-3">
+									<img class="img-fluid"
+										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+								</div>
+								<h6>#{bundle.land}</h6>
+
+								<h:outputText value="#{indexController.numberOfLands()}">
+									<f:convertNumber pattern="#,###.##" />
+								</h:outputText>
+
+							</div>
+						</span>
+					</div>
+
+					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
+							<div class="rounded p-4">
+								<div class="icon mb-3">
+									<img class="img-fluid"
+										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+								</div>
+								<h6>#{bundle.office_sell}</h6>
+
+								<h:outputText value="#{indexController.numberOfSellOffices()}">
+									<f:convertNumber pattern="#,###.##" />
+								</h:outputText>
+
+							</div>
+						</span>
+					</div>
+					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
+							<div class="rounded p-4">
+								<div class="icon mb-3">
+									<img class="img-fluid"
+										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+								</div>
+								<h6>#{bundle.office_rent}</h6>
+
+								<h:outputText value="#{indexController.numberOfRentOffices()}">
+									<f:convertNumber pattern="#,###.##" />
+								</h:outputText>
+
+							</div>
+						</span>
+					</div>
+
+					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+						<span class="cat-item d-block bg-light text-center rounded p-3">
+							<div class="rounded p-4">
+								<div class="icon mb-3">
+									<img class="img-fluid"
+										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
+								</div>
+								<h6>#{bundle.chalet}</h6>
+
+								<h:outputText value="#{indexController.numberOfChalet()}">
+									<f:convertNumber pattern="#,###.##" />
+								</h:outputText>
+
+							</div>
+						</span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

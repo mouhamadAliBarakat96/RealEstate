@@ -220,6 +220,16 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	
+		<navigation-rule>
+		<navigation-case>
+			<from-outcome>userpost-search</from-outcome>
+			<to-view-id>/user-post.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
 
 	<navigation-rule>
 		<navigation-case>
