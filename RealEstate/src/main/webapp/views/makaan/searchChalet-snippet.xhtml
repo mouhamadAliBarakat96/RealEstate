@@ -12,34 +12,34 @@
 			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu styleClass="form-select border-0 "
 					converter="omnifaces.SelectItemsConverter" id="chaletGovernate"
-					value="#{indexController.selecteGovernorate}">
+					value="#{actionBean.selecteGovernorate}">
 					<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
-					<f:selectItems value="#{indexController.governorates}" var="option"
+					<f:selectItems value="#{actionBean.governorates}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this"
 						render="myForm:chaletDistrict myForm:chaletVillage"
-						listener="#{indexController.listenerSelectGovernate()}" />
+						listener="#{actionBean.listenerSelectGovernate()}" />
 				</h:selectOneMenu>
 			</div>
 
 			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu converter="omnifaces.SelectItemsConverter"
 					styleClass="form-select border-0  " id="chaletDistrict"
-					value="#{indexController.selecteDistrict}">
+					value="#{actionBean.selecteDistrict}">
 					<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
-					<f:selectItems value="#{indexController.districts}" var="option"
+					<f:selectItems value="#{actionBean.districts}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this"
-						listener="#{indexController.listenerSelectDistrict()}"
+						listener="#{actionBean.listenerSelectDistrict()}"
 						render="myForm:chaletVillage" />
 				</h:selectOneMenu>
 			</div>
 			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu converter="omnifaces.SelectItemsConverter" id="chaletVillage"
 					styleClass="form-select border-0  "
-					value="#{indexController.selecteVillage}">
+					value="#{actionBean.selecteVillage}">
 					<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
-					<f:selectItems value="#{indexController.villages}" var="option"
+					<f:selectItems value="#{actionBean.villages}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this" />
 				</h:selectOneMenu>
@@ -50,7 +50,7 @@
 					maxValue="9999999999" id="chaletMinPriceId" emptyValue="0"
 					label="#{bundle.min_price}" required="true"
 					styleClass="form-control"
-					value="#{indexController.minPrice}">
+					value="#{actionBean.minPrice}">
 					<f:ajax/>
 				</p:inputNumber>
 				<h:outputLabel value="#{bundle.min_price}" style="color:white" />
@@ -59,7 +59,7 @@
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
 					maxValue="9999999999" id="chaletMaxPriceId" label="#{bundle.max_price}"
 					required="true" styleClass="form-control" emptyValue="0"
-					value="#{indexController.maxPrice}">
+					value="#{actionBean.maxPrice}">
 					<f:ajax/>
 				</p:inputNumber>
 				<h:outputLabel value="#{bundle.max_price}" style="color:white" />
@@ -68,7 +68,7 @@
 			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu styleClass="form-select border-0  "
 					converter="omnifaces.SelectItemsConverter"
-					value="#{indexController.chimneyYesNoEnum}">
+					value="#{actionBean.chimneyYesNoEnum}">
 					<f:selectItem itemLabel="#{bundle.chalet_chimney}" itemValue="" />
 					<f:selectItems value="#{YesNoEnum.values()}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}" itemValue="#{option}" />
@@ -79,7 +79,7 @@
 			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu styleClass="form-select border-0  "
 					converter="omnifaces.SelectItemsConverter"
-					value="#{indexController.poolYesNoEnum}">
+					value="#{actionBean.poolYesNoEnum}">
 					<f:selectItem itemLabel="#{bundle.chalet_pool}" itemValue="" />
 					<f:selectItems value="#{YesNoEnum.values()}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}" itemValue="#{option}" />
@@ -88,7 +88,7 @@
 			</div>
 			
 			<div class="col-md-3 col-sm-12 pe-5 mt-2" style="text-align: center;">
-				<h:commandButton action="#{indexController.chaletSearch()}"
+				<h:commandButton action="#{actionBean.chaletSearch()}"
 					value="#{bundle.search}"
 					style=" background-color: #007ad9;color:white"
 					styleClass="btn btn-primary ">

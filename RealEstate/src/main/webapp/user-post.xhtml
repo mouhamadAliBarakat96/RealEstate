@@ -23,142 +23,91 @@
 
 	<ui:define name="searchBar">
 		<h:panelGroup id="searchBarPanel">
-			<h:panelGroup  
-				rendered="#{indexController.propertyKind == 'REALESTATE'}">
-				<ui:include src="/views/makaan/searchRealestate-snippet.xhtml" />
+			<h:panelGroup
+				rendered="#{userPostVieuxController.propertyKind == 'REALESTATE'}">
+				<ui:include src="/views/makaan/searchRealestate-snippet.xhtml">
+					<ui:param name="actionBean" value="#{userPostVieuxController}" />
+				</ui:include>
+
 			</h:panelGroup>
-			<h:panelGroup rendered="#{indexController.propertyKind == 'CHALET'}">
-				<ui:include src="/views/makaan/searchChalet-snippet.xhtml" />
-			</h:panelGroup>
+
 		</h:panelGroup>
 	</ui:define>
 
 	<ui:define name="property-content">
-		<h:panelGroup id="RealEstatePanelId"
-			rendered="#{indexController.propertyKind == 'REALESTATE'}">
-			<ui:include src="/views/makaan/realestate-snippet.xhtml" />
-		</h:panelGroup>
 
-		<h:panelGroup id="ChaletPanelId"
-			rendered="#{indexController.propertyKind == 'CHALET'}">
-			<ui:include src="/views/makaan/chalet-snippet.xhtml" />
-		</h:panelGroup>
-	</ui:define>
+		<!-- User infomarmation -->
 
 
-	<ui:define name="statistic-content">
-		<div class="container-xxl py-5">
-			<div class="container">
-				<div class="text-center mx-auto mb-5 wow fadeInUp"
-					data-wow-delay="0.1s" style="max-width: 600px;">
-					<h1 class="mb-3">#{bundle.property_type}</h1>
-					<p>#{bundle.property_type_description}</p>  
+		<div class="col-md-6">
+
+			<span
+				style="margin-left: 45px; display: block;; color: #2d383f; font-size: 20px; font-weight: 700">Agent</span>
+			<div style="display: flex;">
+				<div style="width: 30%; display: inline-block;">
+					<h:panelGroup
+						rendered="#{userPostVieuxController.user.showProfilePicture}">
+
+
+						<p:graphicImage style="margin-top:4%;border-radius:50%"
+							url="#{realEstateCardController.fullUrlProfilePicture}"
+							width="150px" height="150px" />
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{!userPostVieuxController.user.showProfilePicture}">
+
+						<img class="img-fluid" width="150px" height="150px"
+							style="margin-top: 4%; border-radius: 50%"
+							src="/resources/makaan/img/profile.png" alt="Icon" />
+
+					</h:panelGroup>
+
 				</div>
-				<div class="row g-4">
-					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<span class="cat-item d-block bg-light text-center rounded p-3">
-							<div class="rounded p-4">
-								<div class="icon mb-3">
-									<img class="img-fluid"
-										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
-								</div>
-								<h6>#{bundle.appartment_sell}</h6>
+				<div style="margin-left: 50px; width: 60%; display: inline-block">
 
-								<h:outputText
-									value="#{indexController.numberOfSellAppartments()}">
-									<f:convertNumber pattern="#,###.##" />
-								</h:outputText>
+					<h:link outcome="userpost-search"
+						value="#{userPostVieuxController.user.firstName}
+															#{userPostVieuxController.user.lastName} "
+						style=" color:#666565 ; font-size: 15px; font-weight: 600">
 
-							</div>
-						</span>
-					</div>
-					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<span class="cat-item d-block bg-light text-center rounded p-3">
-							<div class="rounded p-4">
-								<div class="icon mb-3">
-									<img class="img-fluid"
-										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
-								</div>
-								<h6>#{bundle.appartment_rent}</h6>
 
-								<h:outputText
-									value="#{indexController.numberOfRentAppartments()}">
-									<f:convertNumber pattern="#,###.##" />
-								</h:outputText>
 
-							</div>
-						</span>
-					</div>
-					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<span class="cat-item d-block bg-light text-center rounded p-3">
-							<div class="rounded p-4">
-								<div class="icon mb-3">
-									<img class="img-fluid"
-										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
-								</div>
-								<h6>#{bundle.land}</h6>
+						<f:param name="id"
+							value="#{userPostVieuxController.user.id}" />
+					</h:link>
+					<small class="flex-fill   "> <h:commandLink
+							style=" display:block ; font-weight: bold;"
+							action="#{indexController.navigateToWhatsApp(real)}"
+							target="_blank"
+							value="#{bundle.whatsapp} #{userPostVieuxController.user.phoneNumber}">
 
-								<h:outputText value="#{indexController.numberOfLands()}">
-									<f:convertNumber pattern="#,###.##" />
-								</h:outputText>
+							<i class="fab fa-whatsapp text-primary me-2"></i>
+						
+						</h:commandLink>
+					</small>
 
-							</div>
-						</span>
-					</div>
-
-					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<span class="cat-item d-block bg-light text-center rounded p-3">
-							<div class="rounded p-4">
-								<div class="icon mb-3">
-									<img class="img-fluid"
-										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
-								</div>
-								<h6>#{bundle.office_sell}</h6>
-
-								<h:outputText value="#{indexController.numberOfSellOffices()}">
-									<f:convertNumber pattern="#,###.##" />
-								</h:outputText>
-
-							</div>
-						</span>
-					</div>
-					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<span class="cat-item d-block bg-light text-center rounded p-3">
-							<div class="rounded p-4">
-								<div class="icon mb-3">
-									<img class="img-fluid"
-										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
-								</div>
-								<h6>#{bundle.office_rent}</h6>
-
-								<h:outputText value="#{indexController.numberOfRentOffices()}">
-									<f:convertNumber pattern="#,###.##" />
-								</h:outputText>
-
-							</div>
-						</span>
-					</div>
-
-					<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-						<span class="cat-item d-block bg-light text-center rounded p-3">
-							<div class="rounded p-4">
-								<div class="icon mb-3">
-									<img class="img-fluid"
-										src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
-								</div>
-								<h6>#{bundle.chalet}</h6>
-
-								<h:outputText value="#{indexController.numberOfChalet()}">
-									<f:convertNumber pattern="#,###.##" />
-								</h:outputText>
-
-							</div>
-						</span>
-					</div>
-
+					<h:panelGroup
+						rendered="#{userPostVieuxController.user.broker}">
+						<span
+							style="display: block; margin-top: 0.9%; width: 60px; background-color: #00B98E; color: #FFFFFF; padding: 5px; border-radius: 5px;">broker</span>
+					</h:panelGroup>
 				</div>
 			</div>
 		</div>
+
+		<div style="margin-top: 5%"></div>
+
+		<h:panelGroup id="RealEstatePanelId"
+			rendered="#{userPostVieuxController.propertyKind == 'REALESTATE'}">
+			<ui:include src="/views/makaan/realestate-snippet.xhtml">
+				<ui:param name="actionBean" value="#{userPostVieuxController}" />
+
+			</ui:include>
+		</h:panelGroup>
+
+
 	</ui:define>
+
+
 </ui:composition>
 </html>

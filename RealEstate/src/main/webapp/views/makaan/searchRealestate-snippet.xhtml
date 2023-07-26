@@ -12,7 +12,7 @@
 			<div class="col-md-3 col-sm-12 mt-2 pe-5">
 				<h:selectOneMenu styleClass="form-select border-0  "
 					converter="omnifaces.SelectItemsConverter"
-					value="#{indexController.selectPostType}">
+					value="#{actionBean.selectPostType}">
 					<f:selectItem itemLabel="#{bundle.property_type}" itemValue="" />
 					<f:selectItems value="#{PostType.values()}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.name_ar}"
@@ -26,14 +26,14 @@
 				<h:selectOneMenu id="governateSelectId"
 					styleClass="form-select border-0 "
 					converter="omnifaces.SelectItemsConverter"
-					value="#{indexController.selecteGovernorate}">
+					value="#{actionBean.selecteGovernorate}">
 					<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
-					<f:selectItems value="#{indexController.governorates}" var="option"
+					<f:selectItems value="#{actionBean.governorates}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
 						itemValue="#{option}" />
 					<f:ajax execute="@this"
 						render="myForm:districtSelectId myForm:villageSelectId"
-						listener="#{indexController.listenerSelectGovernate()}" />
+						listener="#{actionBean.listenerSelectGovernate()}" />
 				</h:selectOneMenu>
 			</div>
 
@@ -41,13 +41,13 @@
 				<h:selectOneMenu id="districtSelectId"
 					converter="omnifaces.SelectItemsConverter"
 					styleClass="form-select border-0  "
-					value="#{indexController.selecteDistrict}">
+					value="#{actionBean.selecteDistrict}">
 					<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
-					<f:selectItems value="#{indexController.districts}" var="option"
+					<f:selectItems value="#{actionBean.districts}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
 						itemValue="#{option}" />
 					<f:ajax execute="@this"
-						listener="#{indexController.listenerSelectDistrict()}"
+						listener="#{actionBean.listenerSelectDistrict()}"
 						render="myForm:villageSelectId" />
 				</h:selectOneMenu>
 			</div>
@@ -55,9 +55,9 @@
 				<h:selectOneMenu id="villageSelectId"
 					converter="omnifaces.SelectItemsConverter"
 					styleClass="form-select border-0  "
-					value="#{indexController.selecteVillage}">
+					value="#{actionBean.selecteVillage}">
 					<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
-					<f:selectItems value="#{indexController.villages}" var="option"
+					<f:selectItems value="#{actionBean.villages}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
 						itemValue="#{option}" />
 					<f:ajax execute="@this" />
@@ -65,13 +65,13 @@
 			</div>
 			<h:panelGroup id="realSatatebathBedRoomsId">
 				<h:panelGroup
-					rendered="#{indexController.hasRoomsAndBathRooms(indexController.selectPostType)}">
+					rendered="#{actionBean.hasRoomsAndBathRooms(actionBean.selectPostType)}">
 					<div class="row mt-2">
 						<div class="col-md-3 mt-2 col-sm-12 pe-5">
 							<p:inputNumber decimalPlaces="0" thousandSeparator=","
 								minValue="0" maxValue="99" id="bedsId" emptyValue="0"
 								label="#{bundle.beds_count}" styleClass="form-control"
-								value="#{indexController.bedRoom}">
+								value="#{actionBean.bedRoom}">
 								<f:ajax/>
 							</p:inputNumber>
 							<h:outputLabel value="#{bundle.beds_count}" style="color:white" />
@@ -80,7 +80,7 @@
 						<div class="col-md-3 mt-2 col-sm-12 pe-5">
 							<h:selectOneMenu styleClass="form-select border-0  "
 								converter="omnifaces.SelectItemsConverter"
-								value="#{indexController.roomsEqualsEnum}">
+								value="#{actionBean.roomsEqualsEnum}">
 								<f:selectItem itemLabel="#{bundle.exact_value}" itemValue="" />
 								<f:selectItems value="#{YesNoEnum.values()}" var="option"
 									itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}"
@@ -94,7 +94,7 @@
 							<p:inputNumber decimalPlaces="0" thousandSeparator="," emptyValue="0"
 								minValue="0" maxValue="99" id="bathsId"
 								label="#{bundle.baths_count}" styleClass="form-control"
-								value="#{indexController.bathRoom}">
+								value="#{actionBean.bathRoom}">
 								<f:ajax/>
 							</p:inputNumber>
 							<h:outputLabel value="#{bundle.baths_count}" style="color:white" />
@@ -103,7 +103,7 @@
 						<div class="col-md-3 mt-2 col-sm-12 pe-5">
 							<h:selectOneMenu styleClass="form-select border-0  "
 								converter="omnifaces.SelectItemsConverter"
-								value="#{indexController.bathsEqualsEnum}">
+								value="#{actionBean.bathsEqualsEnum}">
 								<f:selectItem itemLabel="#{bundle.exact_value}" itemValue="" />
 								<f:selectItems value="#{YesNoEnum.values()}" var="option"
 									itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}"
@@ -119,7 +119,7 @@
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
 					emptyValue="0" maxValue="9999999999" id="minPriceId"
 					label="#{bundle.min_price}" styleClass="form-control"
-					value="#{indexController.minPrice}">
+					value="#{actionBean.minPrice}">
 					<f:ajax />
 				</p:inputNumber>
 				<h:outputLabel value="#{bundle.min_price}" style="color:white" />
@@ -128,14 +128,14 @@
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
 					emptyValue="0" maxValue="9999999999" id="maxPriceId"
 					label="#{bundle.max_price}" styleClass="form-control"
-					value="#{indexController.maxPrice}">
+					value="#{actionBean.maxPrice}">
 					<f:ajax />
 				</p:inputNumber>
 				<h:outputLabel value="#{bundle.max_price}" style="color:white" />
 			</div>
 
 			<div class="col-md-1 col-sm-12">
-				<h:commandButton action="#{indexController.search()}"
+				<h:commandButton action="#{actionBean.search()}"
 					value="#{bundle.search}"
 					style=" background-color: #007ad9;color:white"
 					styleClass="btn mt-3">

@@ -22,25 +22,25 @@
 								style="visibility: visible;">
 								<ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
 									<li class="nav-item me-2"><h:commandLink
-											action="#{indexController.search()}"
+											action="#{actionBean.search()}"
 											styleClass="btn btn-outline-primary" data-bs-toggle="pill"
 											value="#{bundle.all}">
 											<f:ajax render="myForm:RealEstatePanelId" execute="@this"
-												listener="#{indexController.changeTypeRealEstateSearch(null)}" />
+												listener="#{actionBean.changeTypeRealEstateSearch(null)}" />
 										</h:commandLink></li>
 									<li class="nav-item me-2"><h:commandLink
-											action="#{indexController.search()}"
+											action="#{actionBean.search()}"
 											styleClass="btn btn-outline-primary" data-bs-toggle="pill"
 											value="#{bundle.for_sale}">
 											<f:ajax render="myForm:RealEstatePanelId" execute="@this"
-												listener="#{indexController.changeTypeRealEstateSearch('BUY')}" />
+												listener="#{actionBean.changeTypeRealEstateSearch('BUY')}" />
 										</h:commandLink></li>
 									<li class="nav-item me-2"><h:commandLink
-											action="#{indexController.search()}"
+											action="#{actionBean.search()}"
 											styleClass="btn btn-outline-primary" data-bs-toggle="pill"
 											value="#{bundle.for_rent}">
 											<f:ajax render="myForm:RealEstatePanelId" execute="@this"
-												listener="#{indexController.changeTypeRealEstateSearch('RENT')}" />
+												listener="#{actionBean.changeTypeRealEstateSearch('RENT')}" />
 										</h:commandLink></li>
 								</ul>
 							</div>
@@ -53,7 +53,7 @@
 	<div class="tab-content">
 		<div id="tab-1" class="tab-pane fade show p-0 active">
 			<div class="row g-4">
-				<p:dataView var="real" value="#{indexController.realLazyModel}"
+				<p:dataView var="real" value="#{actionBean.realLazyModel}"
 					rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
 					paginatorPosition="bottom" widgetVar="realEstatesDataView"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -64,13 +64,13 @@
 								<div class="property-item rounded overflow-hidden">
 									<div class="position-relative overflow-hidden">
 
-										<h:commandLink action="#{indexController.navigate(real)}"
+										<h:commandLink action="#{actionBean.navigate(real)}"
 											styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 											<p:graphicImage alt="no photos" styleClass="img-fluid"
-												url="#{indexController.fullUrl}#{real.images[0]}">
+												url="#{actionBean.fullUrl}#{real.images[0]}">
 											</p:graphicImage>
 											<f:actionListener
-												binding="#{indexController.addViewsAfterClick(real)}" />
+												binding="#{actionBean.addViewsAfterClick(real)}" />
 										</h:commandLink>
 
 										<div class="col-md-12 top-0 start-0 position-absolute">
@@ -91,12 +91,12 @@
 											</div>
 										</div>
 
-										<h:commandLink action="#{indexController.navigate(real)}"
+										<h:commandLink action="#{actionBean.navigate(real)}"
 											target="_blank">
 											<div
 												class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{real.tittle}</div>
 											<f:actionListener
-												binding="#{indexController.addViewsAfterClick(real)}" />
+												binding="#{actionBean.addViewsAfterClick(real)}" />
 										</h:commandLink>
 									</div>
 									<div class="p-4 pb-0">
@@ -120,7 +120,7 @@
 										</small>
 
 										<h:panelGroup
-											rendered="#{indexController.hasRoomsAndBathRooms(real.postType)}">
+											rendered="#{actionBean.hasRoomsAndBathRooms(real.postType)}">
 											<small class="flex-fill text-center border-end py-2">
 												<i class="fa fa-bed text-primary me-2" /> #{real.nbRoom}
 												#{bundle.real_estate_rooms}
@@ -130,11 +130,11 @@
 
 										<small class="flex-fill text-center border-end py-2">
 											<h:commandLink style="font-weight: bold;"
-												action="#{indexController.navigateToWhatsApp(real)}"
+												action="#{actionBean.navigateToWhatsApp(real)}"
 												target="_blank" value="#{bundle.whatsapp}">
 												<i class="fab fa-whatsapp text-primary me-2"></i>
 												<f:actionListener
-													binding="#{indexController.addCallNumber(real)}" />
+													binding="#{actionBean.addCallNumber(real)}" />
 											</h:commandLink>
 										</small>
 
@@ -151,13 +151,13 @@
 								<div class="row">
 									<div class="col-md-4 ">
 										<div class="position-relative overflow-hidden">
-											<h:commandLink action="#{indexController.navigate(real)}"
+											<h:commandLink action="#{actionBean.navigate(real)}"
 												styleClass="d-block img-fluid  mb-2" target="_blank">
 												<p:graphicImage alt="no photos" styleClass="img-fluid"
-													url="#{indexController.fullUrl}#{real.images[0]}">
+													url="#{actionBean.fullUrl}#{real.images[0]}">
 												</p:graphicImage>
 												<f:actionListener
-													binding="#{indexController.addViewsAfterClick(real)}" />
+													binding="#{actionBean.addViewsAfterClick(real)}" />
 											</h:commandLink>
 
 											<div class="col-md-12 top-0 start-0 position-absolute">
@@ -184,11 +184,11 @@
 										<div class="p-4 pb-0">
 											<h5 class="text-primary mb-3">$ #{real.price}</h5>
 
-											<h:commandLink action="#{indexController.navigate(real)}"
+											<h:commandLink action="#{actionBean.navigate(real)}"
 												target="_blank" value="#{real.tittle}"
 												styleClass="d-block h5 mb-2">
 												<f:actionListener
-													binding="#{indexController.addViewsAfterClick(real)}" />
+													binding="#{actionBean.addViewsAfterClick(real)}" />
 											</h:commandLink>
 
 											<p>
@@ -209,7 +209,7 @@
 											</small>
 
 											<h:panelGroup
-												rendered="#{indexController.hasRoomsAndBathRooms(real.postType)}">
+												rendered="#{actionBean.hasRoomsAndBathRooms(real.postType)}">
 												<small class="flex-fill text-center border-end py-2">
 													<i class="fa fa-bed text-primary me-2" /> #{real.nbRoom}
 													#{bundle.real_estate_rooms}
@@ -221,7 +221,7 @@
 												</small>
 											</h:panelGroup>
 											<h:panelGroup
-												rendered="#{indexController.aLand(real.postType)}">
+												rendered="#{actionBean.aLand(real.postType)}">
 												<small class="flex-fill text-center border-end py-2">
 													<i class="fa fa-solid fa-road text-primary me-2" />#{bundle.real_estate_road}:
 													<i
@@ -237,11 +237,11 @@
 
 											<small class="flex-fill text-center border-end py-2">
 												<h:commandLink style="font-weight: bold;"
-													action="#{indexController.navigateToWhatsApp(real)}"
+													action="#{actionBean.navigateToWhatsApp(real)}"
 													target="_blank" value="#{bundle.whatsapp}">
 													<i class="fab fa-whatsapp text-primary me-2"></i>
 													<f:actionListener
-														binding="#{indexController.addCallNumber(real)}" />
+														binding="#{actionBean.addCallNumber(real)}" />
 												</h:commandLink>
 											</small>
 										</div>
