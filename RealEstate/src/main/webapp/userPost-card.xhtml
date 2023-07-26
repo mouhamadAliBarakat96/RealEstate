@@ -2,17 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"  
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <ui:composition template="/views/template/makaan-template.xhtml">
 	<ui:define name="customStylesheet">
 		<link href="/resources/makaan/css/user-post.css" rel="stylesheet" type="text/css" />
+		<script src="https://cdn.jsdelivr.net/npm/ol@v7.4.0/dist/ol.js" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" />
 	</ui:define>
 	<ui:define name="customOutputScript">
-		<script src="resources/makaan/js/post-card.js"/>
-		<script src="https://maps.google.com/maps/api/js?sensor=false"/>
+		<script src="resources/makaan/js/post-card.js" />
 	</ui:define>
 
 	<ui:define name="property-content">
@@ -27,35 +28,38 @@
 						<p:ajax event="tabChange"
 							listener="#{userPostCardController.onTabChange}" />
 
-						<p:tab id="realestate" title="#{bundle.real_estates}" rendered="#{!userPostCardController.hideRealEsateTab()}"> 
+						<p:tab id="realestate" title="#{bundle.real_estates}"
+							rendered="#{!userPostCardController.hideRealEsateTab()}">
 							<ui:include
 								src="/views/makaan/userpost-snippet/post-realestate-snippet.xhtml" />
 						</p:tab>
 
-						<p:tab id="chalet" title="#{bundle.chalets}" rendered="#{!userPostCardController.hideChaletTab()}">
+						<p:tab id="chalet" title="#{bundle.chalets}"
+							rendered="#{!userPostCardController.hideChaletTab()}">
 							<ui:include
 								src="/views/makaan/userpost-snippet/post-chalet-snippet.xhtml" />
 						</p:tab>
 					</p:tabView>
+					
 					<div class="row">
 						<div class="col-md-12">
-							<p:gmap id="gmap" center="33.8938,35.5018" zoom="13"
-								type="HYBRID" style="width:100%;height:400px"
-								model="#{userPostCardController.mapModel}"
-								onPointClick="handlePointClick(event);" widgetVar="map">
-							</p:gmap>
+							<div id="map" style="width: 100%; height: 500px;" />
 						</div>
 					</div>
+
 				</div>
 			</div>
-			<h:panelGroup id="panelCoordinates">
+			
+			<div id="marker" style="display: none;">
+				<h:graphicImage value="/resources/images/marker.png" alt="marker"
+					style="height: 3rem;  width: 1.5rem;" />
+			</div>
+			<p:commandButton id="markerBtn" style="display:none;"
+				process="myForm:panelCoordinates @this" oncomplete="loadCoordinates();" />
+			<h:panelGroup id="panelCoordinates" layout="block">
 				<h:inputHidden id="lat" value="#{userPostCardController.lat}" />
 				<h:inputHidden id="lng" value="#{userPostCardController.lng}" />
 				<h:inputHidden id="title" value="#{userPostCardController.title}" />
-				<p:commandButton id="markerBtn"
-					action="#{userPostCardController.addMarker()}"
-					style="display:none;" update=":messageScript myForm:gmap"
-					process="myForm:panelCoordinates" />
 			</h:panelGroup>
 		</div>
 	</ui:define>
