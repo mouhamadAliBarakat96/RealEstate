@@ -77,6 +77,7 @@ public class ChaletLazyDataModel extends LazyDataModel<Chalet> implements Serial
 	public List<Chalet> load(int first, int pageSize, Map<String, SortMeta> sortMap,
 			Map<String, FilterMeta> filterMap) {
 		try {
+			
 			pageItems = facade.findAllChaletWithFilter(user, village, (first / pageSize) + 1, pageSize, totalCount,
 					district, governorate, minPrice, maxPrice, pool, chimney);
 

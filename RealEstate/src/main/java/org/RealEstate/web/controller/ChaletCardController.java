@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -13,8 +14,11 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import org.RealEstate.facade.ChaletFacade;
+import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.Chalet;
+import org.RealEstate.model.User;
 import org.RealEstate.utils.Constants;
+import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 
 @Named
@@ -33,6 +37,12 @@ public class ChaletCardController implements Serializable {
 	private String ipAddressWithPort;
 	private int activeIndex = 0;
 
+	private String fullUrlProfilePicture = "";
+
+
+
+	
+	
 	@PostConstruct
 	public void init() {
 
@@ -56,6 +66,14 @@ public class ChaletCardController implements Serializable {
 				} else {
 					fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/")
 							.concat(Constants.IMAGES).concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
+
+					fullUrlProfilePicture = fullUrlProfilePicture.concat("http://").concat(getIpAddressWithPort())
+							.concat("/").concat(Constants.IMAGES).concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME)
+							.concat("/");
+					if (item.getUser().getProfileImageUrl() != null) {
+						fullUrlProfilePicture = fullUrlProfilePicture.concat(item.getUser().getProfileImageUrl());
+					}
+
 				}
 			} else {
 				try {
@@ -110,5 +128,17 @@ public class ChaletCardController implements Serializable {
 	public void setIpAddressWithPort(String ipAddressWithPort) {
 		this.ipAddressWithPort = ipAddressWithPort;
 	}
+
+	public String getFullUrlProfilePicture() {
+		return fullUrlProfilePicture;
+	}
+
+	public void setFullUrlProfilePicture(String fullUrlProfilePicture) {
+		this.fullUrlProfilePicture = fullUrlProfilePicture;
+	}
+	
+	
+	
+	
 
 }

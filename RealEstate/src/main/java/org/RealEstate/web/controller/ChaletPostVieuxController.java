@@ -1,6 +1,7 @@
 package org.RealEstate.web.controller;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
 import org.RealEstate.dto.ChaletLazyDataModel;
-import org.RealEstate.dto.RealEstateLazyDataModel;
 import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
@@ -25,7 +25,6 @@ import org.RealEstate.enumerator.YesNoEnum;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.DistrictFacade;
 import org.RealEstate.facade.GovernorateFacade;
-import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.model.Chalet;
@@ -42,7 +41,8 @@ import org.omnifaces.cdi.Param;
 
 @Named
 @ViewScoped
-public class UserPostVieuxController {
+public class ChaletPostVieuxController implements Serializable {
+
 	/**
 	 * 
 	 */
@@ -54,10 +54,11 @@ public class UserPostVieuxController {
 	private DistrictFacade districtFacade;
 	@Inject
 	private VillageFacade villageFacade;
-	@Inject
-	private RealEstateFacade realEstateFacade;
+
 	@Inject
 	private PostService postService;
+	@Inject
+	private ChaletFacade chaletFacade;
 
 	private PostType selectPostType;
 
@@ -68,9 +69,6 @@ public class UserPostVieuxController {
 	private List<Village> villages = new ArrayList<>();
 
 	private List<District> districts = new ArrayList<>();
-
-	// lazy model
-	private RealEstateLazyDataModel realLazyModel;
 
 	private String postType;
 	private int minPrice;
@@ -84,6 +82,8 @@ public class UserPostVieuxController {
 	private District selecteDistrict = new District();
 	private Village selecteVillage = new Village();
 
+	// chalet lazyModel
+	private ChaletLazyDataModel chaletLazyModel;
 	// Search Bar Filters
 	private YesNoEnum poolYesNoEnum = null;
 	private YesNoEnum chimneyYesNoEnum = null;
@@ -93,7 +93,6 @@ public class UserPostVieuxController {
 	private String fullUrl = "";
 	private String ipAddressWithPort;
 	private ExchangeRealEstateType estateTypeEnum = null;
-	private String fullUrlProfilePicture = "";
 
 	@Inject
 	@Param(name = "id")
@@ -103,22 +102,19 @@ public class UserPostVieuxController {
 	private UserFacade userFacade;
 
 	private User user;
+	private String fullUrlProfilePicture = "";
 
 	@PostConstruct
 	public void init() {
 		governorates = governorateFacade.findAll();
 
-		// realEstates = realEstateFacade.findAll();// GET RECOMMEND PROPERTIES LATER
-		// totalCount.set(realEstates.size());
-
-		realLazyModel = new RealEstateLazyDataModel(realEstateFacade);
+		chaletLazyModel = new ChaletLazyDataModel(chaletFacade);
 
 		fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 				.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
-	
-		fullUrlProfilePicture = fullUrlProfilePicture.concat("http://").concat(getIpAddressWithPort()).concat("/")
-				.concat(Constants.IMAGES).concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
+		propertyKind = parameterPropertyKind();
+
 		if (id > 0) {
 			user = userFacade.find(id);
 
@@ -127,13 +123,12 @@ public class UserPostVieuxController {
 			fullUrlProfilePicture = fullUrlProfilePicture.concat(user.getProfileImageUrl());
 		}
 
-		propertyKind = parameterPropertyKind();
 	}
 
 	private PropertyKindEnum parameterPropertyKind() {
-	
+		
 
-		return PropertyKindEnum.REALESTATE;
+		return PropertyKindEnum.CHALET;
 	}
 
 	public String getIpAddressWithPort() {
@@ -142,7 +137,7 @@ public class UserPostVieuxController {
 		String ipAddress = request.getRemoteAddr();
 		int port = request.getLocalPort();
 		ipAddressWithPort = ipAddress + ":" + port;
-		System.out.println(ipAddressWithPort);
+		
 		return ipAddressWithPort;
 	}
 
@@ -155,12 +150,43 @@ public class UserPostVieuxController {
 		}
 	}
 
+	public void addViewsAfterClick_chalet(Chalet item) {
+		try {
+			Response response = postService.updateChaletViews(item.getId());
+			System.out.println(response.getStatus());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void addCallNumber(RealEstate item) {
 		try {
 			Response response = postService.updateCallPost(item.getId(), item.getPostType().toString());
 			System.out.println(response.getStatus());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void addCallNumber_chalet(Chalet item) {
+		try {
+			Response response = postService.updateChaletCall(item.getId());
+			System.out.println(response.getStatus());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void navigateToWhatsApp_chalet(Chalet item) throws IOException {
+		// Get the phone number parameter from the request
+		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			String phoneNumber = item.getUser().getPhoneNumber();
+			// Construct the WhatsApp URL
+			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
+			// Navigate to the URL
+			externalContext.redirect(url);
 		}
 	}
 
@@ -189,6 +215,18 @@ public class UserPostVieuxController {
 		}
 	}
 
+	// navigate to real chalet Card
+	public void navigate_chalet(Chalet item) {
+		// Build the URL with the parameter values
+		String url = "chalet-card.xhtml?id=" + item.getId();
+		// Use the ExternalContext object to redirect to the new page
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+		} catch (IOException e) {
+			// Handle the exception appropriately
+		}
+	}
+
 	public void listenerSelectGovernate() {
 		villages = new ArrayList<>();
 		districts = new ArrayList<>();
@@ -205,31 +243,41 @@ public class UserPostVieuxController {
 		}
 	}
 
-	public void search() {
-
-		// boolean searchFeildsError=false;
-
+	public void chaletSearch() {
 		if (maxPrice != 0 && minPrice > maxPrice) {
 			Utility.addErrorMessage("min_price_mut_be _less_than_max");
 			return;
 		}
-
-		realLazyModel.setBathRoom(bathRoom);
-		realLazyModel.setUser(user != null ? user : null);
-		realLazyModel.setBathRoomEq(exactValueBaths());
-		realLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
-		realLazyModel.setGovernorate(
+		chaletLazyModel.setUser(user != null ? user : null);
+		chaletLazyModel.setChimney(chimneyValue());
+		chaletLazyModel.setPool(poolValue());
+		chaletLazyModel.setMaxPrice(maxPrice);
+		chaletLazyModel.setMinPrice(minPrice);
+		chaletLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
+		chaletLazyModel.setGovernorate(
 				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
-		realLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
-		realLazyModel.setBedRoom(bedRoom);
-		realLazyModel.setBedRoomEq(exactValueRooms());
-		realLazyModel.setMaxPrice(maxPrice);
-		realLazyModel.setMinPrice(minPrice);
-		realLazyModel.setPostType(selectPostType == null ? null : selectPostType.toString());
-		realLazyModel.setExchangeRealEstateType(estateTypeEnum);
-		// RealLazyModel.setTotalCount(totalCount);
+		chaletLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
 
 		Utility.addSuccessMessage("search_complete");
+
+	}
+
+	private Boolean poolValue() {
+		if (poolYesNoEnum == null)
+			return null;
+		else if (poolYesNoEnum == YesNoEnum.YES)
+			return true;
+		else
+			return false;
+	}
+
+	private Boolean chimneyValue() {
+		if (chimneyYesNoEnum == null)
+			return null;
+		else if (chimneyYesNoEnum == YesNoEnum.YES)
+			return true;
+		else
+			return false;
 	}
 
 	public boolean hasRoomsAndBathRooms(PostType type) {
@@ -320,12 +368,12 @@ public class UserPostVieuxController {
 		this.selecteDistrict = selecteDistrict;
 	}
 
-	public RealEstateLazyDataModel getRealLazyModel() {
-		return realLazyModel;
+	public ChaletLazyDataModel getChaletLazyModel() {
+		return chaletLazyModel;
 	}
 
-	public void setRealLazyModel(RealEstateLazyDataModel realLazyModel) {
-		this.realLazyModel = realLazyModel;
+	public void setChaletLazyModel(ChaletLazyDataModel chaletLazyModel) {
+		this.chaletLazyModel = chaletLazyModel;
 	}
 
 	public GovernorateFacade getGovernorateFacade() {
@@ -350,14 +398,6 @@ public class UserPostVieuxController {
 
 	public void setVillageFacade(VillageFacade villageFacade) {
 		this.villageFacade = villageFacade;
-	}
-
-	public RealEstateFacade getRealEstateFacade() {
-		return realEstateFacade;
-	}
-
-	public void setRealEstateFacade(RealEstateFacade realEstateFacade) {
-		this.realEstateFacade = realEstateFacade;
 	}
 
 	public User getUser() {
@@ -464,24 +504,8 @@ public class UserPostVieuxController {
 		this.chimneyYesNoEnum = chimneyYesNoEnum;
 	}
 
-	public long numberOfSellAppartments() {
-		return realEstateFacade.findCountWithType(PostType.APPRATMENT_SELL);
-	}
-
-	public long numberOfRentAppartments() {
-		return realEstateFacade.findCountWithType(PostType.APPRATMENT_SELL);
-	}
-
-	public long numberOfLands() {
-		return realEstateFacade.findCountWithType(PostType.LAND);
-	}
-
-	public long numberOfSellOffices() {
-		return realEstateFacade.findCountWithType(PostType.OFFICE_SELL);
-	}
-
-	public long numberOfRentOffices() {
-		return realEstateFacade.findCountWithType(PostType.OFFICE_RENT);
+	public int numberOfChalet() {
+		return chaletFacade.count();
 	}
 
 	public YesNoEnum getBathsEqualsEnum() {
