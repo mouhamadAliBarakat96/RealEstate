@@ -244,23 +244,32 @@
   PATH="/views/chalet/chalet.xhtml" SHAPE="240,1713,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules::25" SHAPE="32,2705,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules::25" NAME="item" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="login-user::#user-login.xhtml" NAME="output"
-    PATH="/user-login.xhtml" TARGET="rules:#user-login.xhtml"
-    TITLE="login-user" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="userchalet-search::#user-chalet.xhtml"
+    NAME="output" PATH="/user-chalet.xhtml"
+    TARGET="rules:#user-chalet.xhtml" TITLE="userchalet-search" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#signup.xhtml" PATH="/signup.xhtml"
   SHAPE="240,2721,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules::26" SHAPE="32,2817,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules::26" NAME="item" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="signup::#signup.xhtml" NAME="output"
-    PATH="/signup.xhtml" TARGET="rules:#signup.xhtml" TITLE="signup" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="login-user::#user-login.xhtml" NAME="output"
+    PATH="/user-login.xhtml" TARGET="rules:#user-login.xhtml"
+    TITLE="login-user" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#user-information.xhtml"
   PATH="/user-information.xhtml" SHAPE="240,2833,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules::27" SHAPE="32,2929,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules::27" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="signup::#signup.xhtml" NAME="output"
+    PATH="/signup.xhtml" TARGET="rules:#signup.xhtml" TITLE="signup" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#user-post.xhtml" PATH="/user-post.xhtml"
+  SHAPE="240,2945,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::28" SHAPE="32,3041,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::28" NAME="item" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
     ID="user-information-front-end::#user-information.xhtml"
     NAME="output" PATH="/user-information.xhtml"
@@ -268,6 +277,6 @@
     TITLE="user-information-front-end" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#user-post.xhtml" PATH="/user-post.xhtml"
-  SHAPE="240,2945,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#user-chalet.xhtml" PATH="/user-chalet.xhtml"
+  SHAPE="240,3057,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

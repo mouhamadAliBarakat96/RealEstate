@@ -6,16 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Response;
 
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Constants;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.ResponsiveOption;
@@ -40,7 +43,10 @@ public class RealEstateCardController implements Serializable {
 	private String fullUrl = "";
 	private String ipAddressWithPort;
 
-	private String fullUrlProfilePicture ="";
+	private String fullUrlProfilePicture = "";
+
+	@EJB
+	private PostService postService;
 
 	@PostConstruct
 	public void init() {
@@ -82,6 +88,28 @@ public class RealEstateCardController implements Serializable {
 				}
 			}
 
+		}
+	}
+
+	public void navigateToWhatsApp( ) throws IOException {
+		// Get the phone number parameter from the request
+		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			String phoneNumber = item.getUser().getPhoneNumber();
+			// Construct the WhatsApp URL
+			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
+			// Navigate to the URL
+			externalContext.redirect(url);
+		}
+	}
+
+	public void addCallNumber( ) {
+		try {
+			Response response = postService.updateCallPost(item.getId(), item.getPostType().toString());
+			System.out.println(response.getStatus());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

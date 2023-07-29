@@ -827,6 +827,8 @@ public class PostService implements Serializable {
 	private void checkChaletConstraintFields(Chalet chalet) {
 
 		// TODO
+		// check name and descrpitionnn
+		
 	}
 	/*
 	 *

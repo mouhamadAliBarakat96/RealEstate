@@ -12,11 +12,14 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Response;
 
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.Chalet;
+import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
+import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Constants;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
@@ -40,7 +43,8 @@ public class ChaletCardController implements Serializable {
 	private String fullUrlProfilePicture = "";
 
 
-
+	@EJB
+	private PostService postService;
 	
 	
 	@PostConstruct
@@ -86,6 +90,27 @@ public class ChaletCardController implements Serializable {
 		}
 	}
 
+	public void addCallNumber_chalet( ) {
+		try {
+			Response response = postService.updateChaletCall(item.getId());
+			System.out.println(response.getStatus());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void navigateToWhatsApp_chalet( ) throws IOException {
+		// Get the phone number parameter from the request
+		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			String phoneNumber = item.getUser().getPhoneNumber();
+			// Construct the WhatsApp URL
+			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
+			// Navigate to the URL
+			externalContext.redirect(url);
+		}
+	}
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();

@@ -63,7 +63,7 @@
 											style="color: #00B98E; font-size: 22px; font-weight: 700">
 											#{chaletCardController.item.name}</span> <span
 											style="margin-top: 0.5%; display: block; color: #2d383f; font-size: 18px; font-weight: 600">
-											#{chaletCardController.item.descrption}}</span>
+											#{chaletCardController.item.descrption}</span>
 
 
 
@@ -132,13 +132,15 @@
 														</h:link>
 														<small class="flex-fill   "> <h:commandLink
 																style=" display:block ; font-weight: bold;"
-																action="#{indexController.navigateToWhatsApp(real)}"
+																actionListener="#{chaletCardController.navigateToWhatsApp_chalet()}"
 																target="_blank"
 																value="#{bundle.whatsapp} #{chaletCardController.item.user.phoneNumber}">
 
 																<i class="fab fa-whatsapp text-primary me-2"></i>
 																<f:actionListener
-																	binding="#{indexController.addCallNumber(real)}" />
+																	binding="#{chaletCardController.addCallNumber_chalet()}" />
+						
+																	
 															</h:commandLink>
 														</small>
 

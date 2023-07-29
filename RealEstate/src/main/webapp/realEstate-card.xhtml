@@ -134,13 +134,13 @@
 														</h:link>
 														<small class="flex-fill   "> <h:commandLink
 																style=" display:block ; font-weight: bold;"
-																action="#{indexController.navigateToWhatsApp(real)}"
+																action="#{realEstateCardController.navigateToWhatsApp()}"
 																target="_blank"
 																value="#{bundle.whatsapp} #{realEstateCardController.item.user.phoneNumber}">
 
 																<i class="fab fa-whatsapp text-primary me-2"></i>
 																<f:actionListener
-																	binding="#{indexController.addCallNumber(real)}" />
+																	binding="#{realEstateCardController.addCallNumber()}" />
 															</h:commandLink>
 														</small>
 
