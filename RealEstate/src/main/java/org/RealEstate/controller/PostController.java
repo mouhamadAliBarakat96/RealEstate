@@ -2,6 +2,7 @@ package org.RealEstate.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -43,8 +44,7 @@ public class PostController implements Serializable {
 	private RealEstateFacade realEstateFacade;
 	@EJB
 	private ChaletFacade chaletFacade;
-	
-	
+
 	private String fullUrl = "";
 
 	private final String REQUEST_PARAM = "id";
@@ -56,6 +56,8 @@ public class PostController implements Serializable {
 
 	private User user;
 
+	private PostStatus postStatus;
+
 	@PostConstruct
 	public void init() {
 
@@ -64,7 +66,7 @@ public class PostController implements Serializable {
 		} else {
 			realEstate = realEstateFacade.find(id);
 			user = realEstate.getUser();
-			 nbOfActivePostByThisUser = realEstateFacade.findUserCountPostPendingOrActive(user.getId())
+			nbOfActivePostByThisUser = realEstateFacade.findUserCountPostPendingOrActive(user.getId())
 					+ chaletFacade.findUserCountPostPendingOrActive(user.getId());
 			if (realEstate.getPostStatus() == PostStatus.ACCEPTED) {
 				nbOfActivePostByThisUser -= 1;
@@ -74,6 +76,7 @@ public class PostController implements Serializable {
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+			postStatus = realEstate.getPostStatus();
 			if (flash.containsKey("update-card")) {
 
 				flash.setKeepMessages(true);
@@ -133,9 +136,15 @@ public class PostController implements Serializable {
 			}
 
 			if (nbOfActivePostByThisUser >= nbOfPostAllowed) {
-			//	realEstateFacade.getEm().detach(realEstate);
+				// realEstateFacade.getEm().detach(realEstate);
 				CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER, "error");
 				throw new Exception(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER);
+
+			}
+
+			// hon if mshe halo
+			if (postStatus != PostStatus.ACCEPTED) {
+				realEstate.setPostDate(new Date());
 
 			}
 
@@ -180,11 +189,10 @@ public class PostController implements Serializable {
 			flash.put("update-card", "true");
 
 			changeUrl();
-		}
-		catch(Exception e ) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 
 	private void changeUrl() {

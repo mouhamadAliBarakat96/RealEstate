@@ -117,6 +117,8 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@Expose
 	private int numberOfCall;
 
+	
+	// this date used when the post is transfer to accpeted
 	@Temporal(TemporalType.TIMESTAMP)
 	@Expose
 	private Date postDate;

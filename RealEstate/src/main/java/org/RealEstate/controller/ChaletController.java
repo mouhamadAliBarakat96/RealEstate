@@ -2,6 +2,7 @@ package org.RealEstate.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -51,6 +52,7 @@ public class ChaletController implements Serializable {
 	private AppSinglton appSinglton;
 
 	private User user;
+	private PostStatus postStatus;
 
 	@PostConstruct
 	public void init() {
@@ -70,6 +72,7 @@ public class ChaletController implements Serializable {
 				nbOfActivePostByThisUser -= 1;
 			}
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+			postStatus = chalet.getPostStatus();
 			if (flash.containsKey("update-card")) {
 
 				flash.setKeepMessages(true);
@@ -120,6 +123,13 @@ public class ChaletController implements Serializable {
 				// realEstateFacade.getEm().detach(realEstate);
 				CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER, "error");
 				throw new Exception(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER);
+
+			}
+
+			// hon if mshe halo
+			// hon if mshe halo
+			if (postStatus != PostStatus.ACCEPTED) {
+				chalet.setPostDate(new Date());
 
 			}
 

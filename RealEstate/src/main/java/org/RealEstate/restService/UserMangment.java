@@ -63,7 +63,7 @@ public class UserMangment implements Serializable {
 	@Path("/v1")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response changeProfilePicture(User user) {
+	public Response updateUser(User user) {
 
 		return userService.updateUserInforamtion(user);
 
@@ -100,7 +100,7 @@ public class UserMangment implements Serializable {
 	 * }
 	 */
 
-	// add update function 
+
 	
 	@GET
 	@Path("/login/v1")
