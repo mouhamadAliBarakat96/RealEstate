@@ -1,6 +1,7 @@
 package org.RealEstate.web.controller;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,19 +17,16 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
-import org.RealEstate.dto.ChaletLazyDataModel;
 import org.RealEstate.dto.RealEstateLazyDataModel;
 import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.enumerator.YesNoEnum;
-import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.DistrictFacade;
 import org.RealEstate.facade.GovernorateFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.facade.VillageFacade;
-import org.RealEstate.model.Chalet;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
 import org.RealEstate.model.RealEstate;
@@ -37,12 +35,11 @@ import org.RealEstate.model.Village;
 import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
-import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.cdi.Param;
 
 @Named
 @ViewScoped
-public class UserPostVieuxController {
+public class UserPostVieuxController implements Serializable{
 	/**
 	 * 
 	 */

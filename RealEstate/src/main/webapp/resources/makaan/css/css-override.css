@@ -1,5 +1,10 @@
 @charset "ISO-8859-1";
 
 [dir="rtl"] {
-   font-family: "Droid Kufi", sans-serif !important;
+   font-family: 'DroidKufi', sans-serif;
 }
+
+[dir="ltr"] {
+ font-family: "Heebo", sans-serif;
+}
+
