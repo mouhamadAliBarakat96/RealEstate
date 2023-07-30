@@ -62,18 +62,17 @@
 		<div class="card"
 			style="background: transparent; -webkit-box-shadow: none; margin-top: 1%;">
 			<div class="row">
-		
 
-<div class="col-lg-3">
+
+				<div class="col-lg-3">
 					<div class="card dashbord green " style="">
 						<div class="card-body dashbord">
 							<div class="icon-contain">
 								<div class="row">
 									<div class="col-10 align-self-center">
-										<h5 class="">ALL  REAL ESTATE</h5>
+										<h5 class="">ALL REAL ESTATE</h5>
 										<p class="font-weight-bold">
-											Number : #{postListController.numAllPost} <i
-												class=""></i>
+											Number : #{postListController.numAllPost} <i class=""></i>
 										</p>
 									</div>
 
@@ -90,8 +89,8 @@
 					</div>
 
 				</div>
-				
-						<div class="col-lg-3">
+
+				<div class="col-lg-3">
 					<div class="card dashbord green " style="">
 						<div class="card-body dashbord ">
 							<div class="icon-contain">
@@ -117,7 +116,7 @@
 					</div>
 
 				</div>
-				
+
 				<div class="col-lg-3">
 					<div class="card dashbord red " style="">
 						<div class="card-body dashbord">
@@ -144,7 +143,7 @@
 					</div>
 
 				</div>
-					<div class="col-lg-3">
+				<div class="col-lg-3">
 					<div class="card dashbord red " style="">
 						<div class="card-body dashbord">
 							<div class="icon-contain">
@@ -170,9 +169,9 @@
 					</div>
 
 				</div>
-				
-				
-					<div class="col-lg-3">
+
+
+				<div class="col-lg-3">
 					<div class="card dashbord red " style="">
 						<div class="card-body dashbord">
 							<div class="icon-contain">
@@ -198,7 +197,7 @@
 					</div>
 
 				</div>
-				
+
 				<!--end col-->
 
 				<div class="col-lg-3">
@@ -472,7 +471,7 @@
 
 					<h:panelGroup id="filters">
 						<div class="row">
-<!-- 
+							<!-- 
 
 
 							<div class="col-md-3">
@@ -510,7 +509,7 @@
 							
 							
 							 -->
-							
+
 							<div class="col-md-3">
 								<p:outputLabel class="control-label" for="governorate"
 									value="governorate ">
@@ -678,8 +677,7 @@
 
 
 							<p:column headerText="Reffuse Cause ">
-								<h:outputText
-									value="#{var.reffuseCause}" />
+								<h:outputText value="#{var.reffuseCause}" />
 							</p:column>
 
 
@@ -709,6 +707,17 @@
 
 								<h:outputText value="#{var.price}" />
 							</p:column>
+
+
+							<p:column headerText="Creation Date" sortBy="#{var.creationDate}"
+								width="100" style="padding-bottom: 45px;">
+								<h:outputText id="creationDate" styleClass="text-ellipsis"
+									title="#{var.creationDate}" value="#{var.creationDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+
 
 							<p:column headerText="Post Date" sortBy="#{var.postDate}"
 								width="100" style="padding-bottom: 45px;">

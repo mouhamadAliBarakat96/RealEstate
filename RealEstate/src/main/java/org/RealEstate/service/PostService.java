@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response.Status;
 import org.RealEstate.dto.PaginationResponse;
 import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostStatus;
-import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.facade.AppratmentRentFacade;
 import org.RealEstate.facade.AppratmentSellFacade;
@@ -824,11 +823,15 @@ public class PostService implements Serializable {
 
 	}
 
-	private void checkChaletConstraintFields(Chalet chalet) {
+	private void checkChaletConstraintFields(Chalet chalet) throws Exception {
 
-		// TODO
-		// check name and descrpitionnn
 		
+		if(StringUtils.isBlank( chalet.getName() ) || StringUtils.isBlank(chalet.getDescrption())  ) {
+			throw new Exception("CHALET_NAME_AND_DESCRPTION_SHOULD_NOT_BE_EMPTY");
+		}
+		
+		
+	
 	}
 	/*
 	 *

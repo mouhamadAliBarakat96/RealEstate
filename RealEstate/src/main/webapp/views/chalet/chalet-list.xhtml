@@ -73,7 +73,7 @@
 					<h:panelGroup id="filters">
 						<div class="row">
 
-<!-- 
+							<!-- 
 							<div class="col-md-3">
 								<div class="form-group">
 									<h:outputLabel class="control-label" for="fromDate"
@@ -319,6 +319,18 @@
 
 								<h:outputText value="#{var.weekenddays}" />
 							</p:column>
+
+
+							<p:column headerText="Creation Date" sortBy="#{var.creationDate}"
+								width="100" style="padding-bottom: 45px;">
+								<h:outputText id="creationDate" styleClass="text-ellipsis"
+									title="#{var.creationDate}" value="#{var.creationDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+
+
 
 							<p:column headerText="Post Date" sortBy="#{var.postDate}"
 								width="100" style="padding-bottom: 45px;">

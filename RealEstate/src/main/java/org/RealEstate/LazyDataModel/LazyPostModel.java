@@ -114,13 +114,11 @@ public class LazyPostModel extends LazyDataModel<RealEstate> {
 
 				}
 
-				
-
 				// Add more conditions for other fields as needed
 			}
-			
+
 		}
-		
+
 		if (village != null) {
 			predicates.add(cb.equal(root.get("village"), village));
 
@@ -149,12 +147,11 @@ public class LazyPostModel extends LazyDataModel<RealEstate> {
 		}
 		if (toDate != null) {
 			Predicate datePredicateTo = cb.lessThanOrEqualTo(root.get("postDate"), toDate);
-		
+
 			predicates.add(datePredicateTo);
 		}
-		return  cb.and(predicates.toArray(new Predicate[0]));
+		return cb.and(predicates.toArray(new Predicate[0]));
 
-		
 	}
 
 	@Override
