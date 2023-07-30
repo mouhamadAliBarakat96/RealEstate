@@ -75,7 +75,9 @@
 
 										<div class="col-md-12 top-0 start-0 position-absolute">
 											<div class="d-flex justify-content-between">
-												<div class="bg-primary rounded text-white py-1 px-3">#{real.postType.name}</div>
+												<div class="bg-primary rounded text-white py-1 px-3">
+												 #{languageController.locale=='en'? real.postType.name : real.postType.name_ar}
+												</div>
 
 												<h:panelGroup layout="block" rendered="#{real.boosted}"
 													styleClass="bg-primary rounded text-white py-1 px-3">
@@ -162,7 +164,7 @@
 
 											<div class="col-md-12 top-0 start-0 position-absolute">
 												<div class="d-flex justify-content-between">
-													<div class="bg-primary rounded text-white py-1 px-3">#{real.postType.name}</div>
+													<div class="bg-primary rounded text-white py-1 px-3"> #{languageController.locale=='en'? real.postType.name : real.postType.name_ar}</div>
 
 													<h:panelGroup layout="block" rendered="#{real.boosted}"
 														styleClass="bg-primary rounded text-white py-1 px-3">
