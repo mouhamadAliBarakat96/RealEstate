@@ -632,7 +632,7 @@
 							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 							rowsPerPageTemplate="5,10,15,20">
 
-							<p:column headerText="Id" sortBy="#{var.id}" filterBy="#{var.id}">
+							<p:column headerText="Id" sortBy="#{var.id}" filterBy="#{var.id}" >
 								<h:link value="#{var.id}" outcome="post">
 									<f:param name="id" value="#{var.id}" />
 								</h:link>

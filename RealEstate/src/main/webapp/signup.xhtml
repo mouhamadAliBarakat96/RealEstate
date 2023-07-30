@@ -10,6 +10,14 @@
 
 <ui:composition template="/views/template/makaan-template.xhtml">
 
+
+
+	<ui:define name="customStyleSheet">
+
+	
+
+	</ui:define>
+
 	<ui:define name="property-content">
 		<script>
   window.fbAsyncInit = function() {
@@ -80,6 +88,13 @@
      
    }(document));
 </script>
+
+		<style>
+.form-group {
+	margin-left: 5%;
+}
+</style>
+
 		<!-- Contact Start -->
 		<div class="container-xxl py-5">
 			<div class="container">
@@ -92,8 +107,9 @@
 						<div class="text-center mx-auto mb-5 wow fadeInUp"
 							data-wow-delay="0.1s" style="max-width: 600px;">
 							<span style="font-size: 20px; font-weight: 700" class="mb-3">#{bundle.new_user}</span>
-							<br></br> <span> Sign up with your Facebook account is
-								required After Fill All information </span>
+							<br></br> <span> #{bundle.singup_with_facebook_required}
+								
+								</span>
 						</div>
 						<h:panelGroup id="test">
 							<div class="row">
@@ -183,14 +199,15 @@
 											label="#{bundle.phoneNumber} " title="#{bundle.phoneNumber} "
 											value="#{signUpController.user.phoneNumber}"
 											styleClass="form-control">
-											
+
 										</h:inputText>
-											<h:outputLabel class="control-label"  
-											style="padding-left:1.5%;font-size:12px;" value="#{bundle.phoneNumberFormat} ">
-											
+										<h:outputLabel class="control-label"
+											style="padding-left:1.5%;font-size:12px;"
+											value="#{bundle.phoneNumberFormat} ">
+
 										</h:outputLabel>
-										
-										
+
+
 										<h:message for="phoneNumber" styleClass="error-message" />
 									</div>
 								</div>
@@ -221,14 +238,15 @@
 								style="margin-top: 1.5%; display: flex; justify-content: center; align-items: center;">
 
 
-							
+
 
 								<div class="fb-login-button" data-width="" data-size=""
 									style="width: 25%" data-button-type="" data-layout=""
 									data-auto-logout-link="false" data-use-continue-as="false"></div>
 
-								<p:remoteCommand process="@this phoneNumber " name="remoteCommandAction"
-									update=":messageScript"
+								<p:remoteCommand process="@this phoneNumber "
+								immediate="true"
+									name="remoteCommandAction" update=":messageScript"
 									actionListener="#{signUpController.save()}">
 
 								</p:remoteCommand>

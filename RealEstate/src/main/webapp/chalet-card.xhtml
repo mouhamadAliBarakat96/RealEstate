@@ -73,10 +73,10 @@
 										<div class="row">
 
 											<div class="col-md-6">
-
-												<span
-													style="font-weight: 600; margin-left: 20px; color: #2d383f; font-size: 20px; font-weight: 700">Location</span>
-
+												<div class="col-md-3">
+													<span
+														style="display: flex !important; justify-content: center !important; font-weight: 600; color: #2d383f; font-size: 20px; font-weight: 700">#{bundle.location}</span>
+												</div>
 												<div style="display: flex;">
 													<div style="width: 30%; display: inline-block;">
 
@@ -94,9 +94,11 @@
 												</div>
 											</div>
 											<div class="col-md-6">
+												<div class="col-md-3">
+													<span
+														style="display: flex !important; justify-content: center !important; color: #2d383f; font-size: 20px; font-weight: 700">Agent</span>
 
-												<span
-													style="margin-left: 45px; display: block;; color: #2d383f; font-size: 20px; font-weight: 700">Agent</span>
+												</div>
 												<div style="display: flex;">
 													<div style="width: 30%; display: inline-block;">
 														<h:panelGroup
@@ -120,7 +122,7 @@
 													<div
 														style="margin-left: 50px; width: 60%; display: inline-block">
 
-														<h:link outcome= "userchalet-search"
+														<h:link outcome="userchalet-search"
 															value="#{chaletCardController.item.user.firstName}
 															#{chaletCardController.item.user.lastName} "
 															style=" color:#666565 ; font-size: 15px; font-weight: 600">
@@ -139,8 +141,8 @@
 																<i class="fab fa-whatsapp text-primary me-2"></i>
 																<f:actionListener
 																	binding="#{chaletCardController.addCallNumber_chalet()}" />
-						
-																	
+
+
 															</h:commandLink>
 														</small>
 
@@ -159,9 +161,8 @@
 									</div>
 
 
-									<div 
-									style="margin-top: 4%"
-									class="row col-md-12 border-top border-end">
+									<div style="margin-top: 4%"
+										class="row col-md-12 border-top border-end">
 
 										<small
 											class="col-md-3 text-center border-end py-2 border-bottom">

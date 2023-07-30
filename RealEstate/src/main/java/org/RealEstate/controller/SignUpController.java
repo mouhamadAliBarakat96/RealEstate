@@ -22,6 +22,7 @@ import org.RealEstate.model.User;
 import org.RealEstate.service.UserService;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
 import org.omnifaces.util.Faces;
 
@@ -46,7 +47,17 @@ public class SignUpController implements Serializable {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		if (flash.containsKey("type")) {
 			String type = (String) flash.get("type");
+
+			// try get message on arabic
+
 			String message = (String) flash.get("message");
+
+			try {
+				message = Utility.getMessage(message);
+			} catch (Exception e) {
+
+			}
+
 			flash.setKeepMessages(true);
 			CommonUtility.addMessageToFacesContext(message, type);
 		}

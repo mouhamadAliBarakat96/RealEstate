@@ -128,12 +128,7 @@
 
 
 							<p:column styleClass="no-header table-actions-column" width="200">
-								<span> <h:link outcome='governorate'
-										styleClass="btn btn-warning  waves-effect waves-light   btn-xs">
-										<f:param name="id" value="#{entity.id}" />
-										<span class=" dripicons-document-edit  " style="color: white;" />
-										<f:ajax></f:ajax>
-									</h:link> <p:commandLink
+								<span> <p:commandLink
 										actionListener="#{adsController.selectForImageUrl(entity)}"
 										immediate="true" style="margin-left:5px;"
 										update=":messageScript header-panel"
@@ -141,7 +136,7 @@
 										<i class="  fa fa-file-image   "
 											style="color: white; font-size: 11px;" />
 
-										<p:ajax >
+										<p:ajax>
 										</p:ajax>
 									</p:commandLink> <p:commandLink
 										actionListener="#{adsController.remove(entity)}"
@@ -170,6 +165,17 @@
 								headerText="information" filterMatchMode="contains">
 								<h:outputText value="#{entity.information}" />
 							</p:column>
+							<p:column headerText="Creation Date"
+								sortBy="#{entity.creationDate}" style="padding-bottom: 45px;">
+								<h:outputText id="creationDate" styleClass="text-ellipsis"
+									title="#{entity.creationDate}" value="#{entity.creationDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+
+
+
 
 
 
@@ -225,18 +231,18 @@
 					<div class="modal-header">
 
 
-						<label style="font-size: 21px; margin-top: 5px;"> Supplier
-							Repport </label> 
-							
-					
+						<label style="font-size: 21px; margin-top: 5px;"> Ads  Image
+							 </label>
 
-					
+
+
+
 						<button type="button" class="close" data-dismiss="modal">×</button>
 					</div>
-		<span>#{adsController.fullUrl}</span>
+					<span>#{adsController.fullUrl}</span>
 					<!-- Modal body -->
-	<p:graphicImage id="image" url="#{adsController.fullUrl}"
-							style="width: 50%" alt="#{photo}" />
+					<p:graphicImage id="image" url="#{adsController.fullUrl}"
+						style="width: 50%" alt="#{photo}" />
 
 
 

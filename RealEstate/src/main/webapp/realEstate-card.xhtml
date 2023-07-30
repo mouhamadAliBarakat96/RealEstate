@@ -10,11 +10,13 @@
 
 	<ui:define name="customStylesheet">
 		<script src="https://cdn.jsdelivr.net/npm/ol@v7.4.0/dist/ol.js" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" />
+		<link rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" />
 	</ui:define>
 
 	<ui:define name="customOutputScript">
-		<script type="text/javascript" src="/resources/makaan/js/realestate-card.js" />
+		<script type="text/javascript"
+			src="/resources/makaan/js/realestate-card.js" />
 	</ui:define>
 
 	<ui:define name="property-content">
@@ -75,10 +77,10 @@
 										<div class="row">
 
 											<div class="col-md-6">
-
-												<span
-													style="font-weight: 600; margin-left: 20px; color: #2d383f; font-size: 20px; font-weight: 700">Location</span>
-
+												<div class="col-md-3">
+													<span
+														style="display: flex !important ; justify-content: center !important; font-weight: 600; color: #2d383f; font-size: 20px; font-weight: 700">#{bundle.location}</span>
+												</div>
 												<div style="display: flex;">
 													<div style="width: 30%; display: inline-block;">
 
@@ -96,9 +98,10 @@
 												</div>
 											</div>
 											<div class="col-md-6">
-
-												<span
-													style="margin-left: 45px; display: block;; color: #2d383f; font-size: 20px; font-weight: 700">Agent</span>
+												<div class="col-md-3">
+													<span
+														style="display: flex !important; justify-content: center !important; display: block;; color: #2d383f; font-size: 20px; font-weight: 700">#{bundle.agent}</span>
+												</div>
 												<div style="display: flex;">
 													<div style="width: 30%; display: inline-block;">
 														<h:panelGroup
@@ -125,7 +128,7 @@
 														<h:link outcome="userpost-search"
 															value="#{realEstateCardController.item.user.firstName}
 															#{realEstateCardController.item.user.lastName} "
-															style=" color:#666565 ; font-size: 15px; font-weight: 600">
+															style=" color:#666565 ; margin-right:5%; font-size: 15px; font-weight: 600">
 
 
 
@@ -133,7 +136,7 @@
 																value="#{realEstateCardController.item.user.id}" />
 														</h:link>
 														<small class="flex-fill   "> <h:commandLink
-																style=" display:block ; font-weight: bold;"
+																style=" margin-right:5%;  display:block ; font-weight: bold;"
 																action="#{realEstateCardController.navigateToWhatsApp()}"
 																target="_blank"
 																value="#{bundle.whatsapp} #{realEstateCardController.item.user.phoneNumber}">
@@ -147,7 +150,7 @@
 														<h:panelGroup
 															rendered="#{realEstateCardController.item.user.broker}">
 															<span
-																style="display: block; margin-top: 0.9%; width: 60px; background-color: #00B98E; color: #FFFFFF; padding: 5px; border-radius: 5px;">broker</span>
+																style="display: block; margin-top: 0.9%; margin-right: 5%; width: 60px; background-color: #00B98E; color: #FFFFFF; padding: 5px; border-radius: 5px;">#{bundle.broker}</span>
 														</h:panelGroup>
 													</div>
 												</div>
