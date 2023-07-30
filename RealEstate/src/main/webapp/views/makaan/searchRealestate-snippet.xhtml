@@ -134,11 +134,11 @@
 				<h:outputLabel value="#{bundle.max_price}" style="color:white" />
 			</div>
 
-			<div class="col-md-1 col-sm-12">
+			<div class="col-md-1 col-sm-12 pe-5 mt-2">
 				<h:commandButton action="#{actionBean.search()}"
 					value="#{bundle.search}"
 					style=" background-color: #007ad9;color:white"
-					styleClass="btn mt-3">
+					styleClass="btn">
 					<f:ajax execute="myForm:panelSearchBar"
 						render="myForm:RealEstatePanelId :messageScript" />
 				</h:commandButton>

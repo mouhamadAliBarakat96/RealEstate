@@ -27,7 +27,7 @@
 	<div class="tab-content">
 		<div id="tab-1" class="tab-pane fade show p-0 active">
 			<div class="row g-4">
-				<p:dataView var="chalet" value="#{actionBean.chaletLazyModel}"
+				<p:dataView var="chalet" value="#{indexController.chaletLazyModel}"
 					rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
 					paginatorPosition="bottom" widgetVar="chaletDataView"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -37,13 +37,13 @@
 							<div class="col-md-12 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="property-item rounded overflow-hidden">
 									<div class="position-relative overflow-hidden">
-										<h:commandLink action="#{actionBean.navigate_chalet(chalet)}"
+										<h:commandLink action="#{indexController.navigate_chalet(chalet)}"
 											styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 											<p:graphicImage alt="no photos" styleClass="img-fluid"
-												url="#{actionBean.fullUrl}#{chalet.images[0]}">
+												url="#{indexController.fullUrl}#{chalet.images[0]}">
 											</p:graphicImage>
 											<f:actionListener
-												binding="#{actionBean.addViewsAfterClick_chalet(chalet)}" />
+												binding="#{indexController.addViewsAfterClick_chalet(chalet)}" />
 										</h:commandLink>
 										<div class="col-md-12 top-0 start-0 position-absolute">
 											<div class="d-flex justify-content-between">
@@ -62,11 +62,11 @@
 									</div>
 									<div class="p-4 pb-0">
 
-										<h:commandLink action="#{actionBean.navigate_chalet(chalet)}"
+										<h:commandLink action="#{indexController.navigate_chalet(chalet)}"
 											target="_blank" value="#{chalet.name}"
 											styleClass="text-primary d-block h5 mb-2">
 											<f:actionListener
-												binding="#{actionBean.addViewsAfterClick_chalet(chalet)}" />
+												binding="#{indexController.addViewsAfterClick_chalet(chalet)}" />
 										</h:commandLink>
 
 										<h6 class="mb-3">
@@ -92,11 +92,11 @@
 											class="fa fa-ruler-combined text-primary me-2" />
 										</small> <small class="flex-fill text-center border-end py-2">
 											<h:commandLink style="font-weight: bold;"
-												action="#{actionBean.navigateToWhatsApp_chalet(chalet)}"
+												action="#{indexController.navigateToWhatsApp_chalet(chalet)}"
 												target="_blank" value="#{bundle.whatsapp}">
 												<i class="fab fa-whatsapp text-primary me-2"></i>
 												<f:actionListener
-													binding="#{actionBean.addCallNumber_chalet(chalet)}" />
+													binding="#{indexController.addCallNumber_chalet(chalet)}" />
 											</h:commandLink>
 										</small>
 
@@ -113,14 +113,14 @@
 								<div class="row">
 									<div class="col-md-4 ">
 										<div class="position-relative overflow-hidden">
-											<h:commandLink action="#{actionBean.navigate_chalet(chalet)}"
+											<h:commandLink action="#{indexController.navigate_chalet(chalet)}"
 												  styleClass="d-block img-fluid"
 												target="_blank">
 												<p:graphicImage alt="no photos" styleClass="img-fluid"
-													url="#{actionBean.fullUrl}#{chalet.images[0]}">
+													url="#{indexController.fullUrl}#{chalet.images[0]}">
 												</p:graphicImage>
 												<f:actionListener
-													binding="#{actionBean.addViewsAfterClick_chalet(chalet)}" />
+													binding="#{indexController.addViewsAfterClick_chalet(chalet)}" />
 											</h:commandLink>
 											<div class="col-md-12 top-0 start-0 position-absolute">
 												<div class="d-flex justify-content-between">
@@ -140,11 +140,11 @@
 									</div>
 									<div class="col-md-8 ">
 										<div class="p-4 pb-0">
-											<h:commandLink action="#{actionBean.navigate_chalet(chalet)}"
+											<h:commandLink action="#{indexController.navigate_chalet(chalet)}"
 												target="_blank" value="#{chalet.name}"
 												styleClass="text-primary d-block h5 mb-2">
 												<f:actionListener
-													binding="#{actionBean.addViewsAfterClick_chalet(chalet)}" />
+													binding="#{indexController.addViewsAfterClick_chalet(chalet)}" />
 											</h:commandLink>
 
 											<h6 class="mb-3">
@@ -171,11 +171,11 @@
 												class="fa fa-ruler-combined text-primary me-2" />
 											</small> <small class="flex-fill text-center border-end py-2">
 												<h:commandLink style="font-weight: bold;"
-													action="#{actionBean.navigateToWhatsApp_chalet(chalet)}"
+													action="#{indexController.navigateToWhatsApp_chalet(chalet)}"
 													target="_blank" value="#{bundle.whatsapp}">
 													<i class="fab fa-whatsapp text-primary me-2"></i>
 													<f:actionListener
-														binding="#{actionBean.addCallNumber(chalet)}" />
+														binding="#{indexController.addCallNumber(chalet)}" />
 												</h:commandLink>
 											</small>
 										</div>
