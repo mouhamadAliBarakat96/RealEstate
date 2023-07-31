@@ -1264,7 +1264,7 @@ public class PostService implements Serializable {
 						exchangeRealEstateType = ExchangeRealEstateType.RENT;
 				}
 			}
-
+			}
 			// check priority
 			// villageId
 			// districtId
@@ -1279,7 +1279,7 @@ public class PostService implements Serializable {
 				governorate = governorateFacade.findWithExcption(governorateId);
 
 			}
-			}
+			
 
 			AtomicLong totalResults = new AtomicLong();
 			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice,
