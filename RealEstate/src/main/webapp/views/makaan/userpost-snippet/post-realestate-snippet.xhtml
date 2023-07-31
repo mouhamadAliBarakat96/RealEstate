@@ -22,7 +22,7 @@
 		<h:panelGroup id="inputPanel">
 			<h:panelGroup rendered="#{userPostCardController.postType != null}">
 				<div class="row">
-					<div class="col-12 md:col-4">
+					<div class="col-md-12  col-md-4">
 						<p:staticMessage severity="warn" summary="WARN"
 							rendered="#{userPostCardController.item.postStatus == 'REFFUSED'}"
 							detail="#{userPostCardController.item.reffuseCause}"
