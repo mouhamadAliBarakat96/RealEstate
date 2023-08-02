@@ -35,7 +35,36 @@
 </h:head>
 <h:body>
 
-	<script>
+
+	<o:onloadScript>
+($('.toogle')).bootstrapToggle();
+</o:onloadScript>
+	<ui:composition template="/views/template/makaan-template.xhtml">
+
+		<ui:define name="customStylesheet">
+			<link href="/resources/makaan/css/index.css" rel="stylesheet" />
+			<style>
+.login-custom {
+	max-width: 550px;
+	position: relative;
+	margin: 0 auto;
+}
+
+.vh-100 {
+	height: 85vh !important;
+}
+.card{
+border-radius: 50px;
+}
+
+</style>
+
+
+		</ui:define>
+
+		<ui:define name="customOutputScript">
+
+			<script>
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '1504756280267313',
@@ -104,161 +133,160 @@
      
    }(document));
 </script>
+		</ui:define>
 
-	<o:onloadScript>
-($('.toogle')).bootstrapToggle();
-</o:onloadScript>
-	<h:form styleClass="account-body accountbg" prependId="false"
-		method="post">
-		<div class="row vh-100 " style="margin-top: 0%">
-			<div class="col-12 align-self-center">
-				<div class="auth-page">
-					<div class="card auth-card shadow-lg">
-						<div class="card-body">
-							<div class="px-3">
-								<div class="text-center auth-logo-text">
-									<h4 class="mt-0 mb-3 mt-5">Let's Get Started Real Estate</h4>
-									<p class="text-muted mb-0" style="font-size: 16px;">Sign in
-										to continue to Real Estate.</p>
-								</div>
-								<!--end auth-logo-text-->
-								<div class="form-horizontal auth-form my-4"
-									style="margin-top: 5% !important">
-									<h:panelGroup id="login-form">
-										<div class="form-group">
-											<label for="username">Username </label>
-											<div class="input-group mb-3">
-												<span class="auth-form-icon"> <em
-													class="dripicons-user"></em>
-												</span>
-												<h:inputText type="text"
-													styleClass=" form-control #{component.valid ? '' :'error' } "
-													id="username" required="true"
-													value="#{loginController.userName}"
-													h5:placeholder="Enter username"></h:inputText>
-											</div>
-											<h:message for="username" styleClass="error-message" />
+
+		<ui:define name="property-content">
+
+			<div class="login-custom">
+
+				<div class="row vh-100 " style="margin-top: 0%">
+					<div class="col-12 align-self-center">
+						<div class="auth-page">
+							<div class="card auth-card shadow-lg">
+								<div class="card-body">
+									<div class="px-3">
+										<div class="text-center auth-logo-text">
+											<h4 class="mt-0 mb-3 mt-5">#{bundle.login_welcome_message}</h4>
+											<p class="text-muted mb-0" style="font-size: 16px;">#{bundle.login_welcome_message_2}</p>
 										</div>
-										<!--end form-group-->
-										<div class="form-group">
-											<label for="userpassword">Password</label>
-											<div class="input-group mb-3">
-												<span class="auth-form-icon"> <i
-													class="dripicons-lock"></i>
-												</span>
+										<!--end auth-logo-text-->
+										<div class="form-horizontal auth-form my-4"
+											style="margin-top: 5% !important">
+											<h:panelGroup id="login-form">
 
-												<p:inputText h5:type="password"
-													styleClass=" form-control #{component.valid ? '' :'error' } "
-													value="#{loginController.passowrd}" required="true"
-													id="userpassword" h5:placeholder="Enter password">
-												</p:inputText>
-											</div>
-											<h:message for="userpassword" styleClass="error-message" />
-										</div>
-										<!--end form-group-->
-										<div
-											style="text-align: center; color: #da4453; font-weight: 600">
-											<h:messages globalOnly="true" id="messages" layout="table"
-												style="margin: auto;" />
-										</div>
-										<!--end form-group-->
-									</h:panelGroup>
-									<div class="form-group mb-0 row" style="margin-top: 1%">
-										<div class="col-12 mt-2">
-											<h:commandLink actionListener="#{loginController.login()}"
-												styleClass="btn btn-primary  btn-block waves-effect waves-light">
-												Log In <i class="fas fa-sign-in-alt ml-1"></i>
-												<f:ajax execute="login-form " render="messages login-form"></f:ajax>
-											</h:commandLink>
+												<div class="test" style="margin: 0 10%">
 
-											<div class="row"
-												style="margin-top: 2.5%; display: flex; justify-content: center; align-items: center;">
+													<div class="form-group">
+														<label for="username">#{bundle.userName} </label>
+														<div class="input-group mb-3">
+															<span class="auth-form-icon"> <em
+																class="dripicons-user"></em>
+															</span>
+															<p:inputText type="text"
+															style="border-radius: 10px;"
+																styleClass=" form-control #{component.valid ? '' :'error' } "
+																id="username" required="true"
+																value="#{loginController.userName}"
+																h5:placeholder="Enter username"></p:inputText>
+														</div>
+														<h:message for="username" styleClass="error-message" />
+													</div>
+													<!--end form-group-->
+													<div class="form-group">
+														<label for="userpassword">#{bundle.password}</label>
+														<div class="input-group mb-3">
+															<span class="auth-form-icon"> <i
+																class="dripicons-lock"></i>
+															</span>
 
-
-
-												<div class="fb-login-button" data-width=""
-													data-size="Medium" data-button-type="" data-layout=""
-													data-auto-logout-link="false" data-use-continue-as="false"></div>
-
-												<p:remoteCommand process="@this  "
-													name="remoteCommandAction" update=""
-													actionListener="#{loginController.loginFb()}">
-
-												</p:remoteCommand>
-
-
-
-											</div>
-
-											<h:panelGroup id="error-message"
-												rendered="#{loginController.showErrorMessage}">
-												<div
-													style="margin-top: 3%; display: flex; justify-content: center; align-items: center">
-													<span
-														style="font-size: 14px; font-weight: 400; margin-right: 10px; color: #af0a0a">
-														#{loginController.errorMessage} </span>
+															<p:inputText h5:type="password"
+															style="border-radius: 10px;"
+																styleClass=" form-control #{component.valid ? '' :'error' } "
+																value="#{loginController.passowrd}" required="true"
+																id="userpassword" h5:placeholder="Enter password">
+															</p:inputText>
+														</div>
+														<h:message for="userpassword" styleClass="error-message" />
+													</div>
 
 												</div>
 
-
+												<!--end form-group-->
+												<div
+													style="text-align: center; color: #da4453; font-weight: 600">
+													<h:messages globalOnly="true" id="messages" layout="table"
+														style="margin: auto;" />
+												</div>
+												<!--end form-group-->
 											</h:panelGroup>
+											<div class="form-group mb-0 row  "
+												style="margin-top: 1%; display: flex; justify-content: center; align-items: center">
+												<div class="col-6 mt-2">
+													<h:commandLink actionListener="#{loginController.login()}"
+														style="width:100%"
+														styleClass="btn btn-primary  btn-block waves-effect waves-light">
+												#{bundle.log_in} <i class="fas fa-sign-in-alt ml-1"></i>
+														<f:ajax execute="login-form " render="messages login-form"></f:ajax>
+													</h:commandLink>
 
-											<div
-												style="margin-top: 3%; display: flex; justify-content: center; align-items: center">
-												<span
-													style="font-size: 14px; font-weight: 400; margin-right: 10px;">Not
-													registered yet? </span>
-												<h:link outcome="signup"
-													style=" text-decoration:underline !important;font-size:14px;color:rgb(0, 126, 168)">  Create account</h:link>
 
+
+
+													<div
+														style="margin-top: 6%; margin-left: 15%; margin-right: 15%;"
+														class="fb-login-button" data-width="" data-size="Medium"
+														data-button-type="" data-layout=""
+														data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+													<p:remoteCommand process="@this  "
+														name="remoteCommandAction" update=""
+														actionListener="#{loginController.loginFb()}">
+
+													</p:remoteCommand>
+
+
+
+
+
+													<h:panelGroup id="error-message"
+														rendered="#{loginController.showErrorMessage}">
+														<div
+															style="margin-top: 3%; display: flex; justify-content: center; align-items: center">
+															<span
+																style="font-size: 14px; font-weight: 400; margin-right: 10px; color: #af0a0a">
+																#{loginController.errorMessage} </span>
+
+														</div>
+
+
+													</h:panelGroup>
+
+													<div
+														style="margin-top: 3%; display: flex; justify-content: center; align-items: center">
+														<span
+															style="font-size: 14px; font-weight: 400; margin-right: 10px;">#{bundle.not_registred_yet} </span>
+														<h:link outcome="signup"
+															style=" text-decoration:underline !important;font-size:14px;color:rgb(0, 126, 168)">  #{bundle.create_account}</h:link>
+
+													</div>
+
+
+												</div>
+												<!--end col-->
 											</div>
 
 
+
+
+
+
+											<!--end form-group-->
 										</div>
-										<!--end col-->
+										<!--end form-->
 									</div>
+									<!--end /div-->
 
 
-
-
-
-
-									<!--end form-group-->
 								</div>
-								<!--end form-->
+								<!--end card-body-->
 							</div>
-							<!--end /div-->
-
-
+							<!--end card-->
+							<!--end account-social-->
 						</div>
-						<!--end card-body-->
+						<!--end auth-page-->
 					</div>
-					<!--end card-->
-					<!--end account-social-->
-				</div>
-				<!--end auth-page-->
-			</div>
-			<!--end col-->
-		</div>
-		<footer>
-		<div class="container">
-			<div style="text-align: center">
-				<div class="row">
-
-					<div class="col-lg-12 col-md-12 col-sm-12">
-						<p class="copyright">Copyright &copy; 2020 developed and
-							designed by Mouhamad Ali Barakat</p>
-
-						<p class="copyright">mouhamadalibarakat@hotmail.com</p>
-
-					</div>
+					<!--end col-->
 				</div>
 			</div>
-		</div>
-		</footer>
-		<!--end row-->
-		<!-- End Log In page -->
-	</h:form>
+		</ui:define>
+
+
+	</ui:composition>
+
+
+
+
 	<h:outputScript name="front-end-template/bootstrap.min.js" library="js" />
 	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 	<h:outputScript name="metisMenu.min.js" library="js" />
