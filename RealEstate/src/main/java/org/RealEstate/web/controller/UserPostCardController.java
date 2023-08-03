@@ -245,6 +245,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		default:
 			break;
 		}
+//		Ajax.update("myForm:panelCoordinates");
 	}
 
 	public void save() {

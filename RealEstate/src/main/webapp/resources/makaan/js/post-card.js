@@ -60,9 +60,22 @@ function isCoordinatesNotEmpty(latitude, longitude) {
 			&& longitude !== '';
 }
 
+function showTheMap() {
+	var postType = $('#myForm\\:postType').val();
+	var kinEnum = $('#myForm\\:kind').val();
+
+	if (postType == '' && kinEnum == '')
+		$('#map').hide();
+	else
+		$('#map').show();
+
+}
+
+
 $(document).ready(function() {
 	map = initMap();
 	loadCoordinates();
+	showTheMap();
 });
 /** END */
 
