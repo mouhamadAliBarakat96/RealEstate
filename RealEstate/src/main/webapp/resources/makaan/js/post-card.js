@@ -75,7 +75,7 @@ function showTheMap() {
 $(document).ready(function() {
 	map = initMap();
 	loadCoordinates();
-	showTheMap();
+	//showTheMap();
 });
 /** END */
 
