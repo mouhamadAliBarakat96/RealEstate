@@ -130,7 +130,7 @@ function changeLang(lang) {
 	var path = window.location.pathname;
 	var pageName = path.split("/").pop();
 
-	if (pageName === 'user-login.xhtml') {
+	if (pageName === 'user-login.xhtml' || pageName === 'user-login.xhtml') {
 		window.location.reload();
 	}
 
