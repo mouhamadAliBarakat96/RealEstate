@@ -1,5 +1,8 @@
 package org.RealEstate.web.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -140,11 +144,32 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 
 	public void handleFileUploadChalet(FileUploadEvent event) {
-		list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
-		chalet.addToImages(uploadToChalet(list));
+		try {
+			int targetSize = 500;
+			BufferedImage bufferedImage = ImageIO.read(event.getFile().getInputStream());
+			BufferedImage resizedIamge = new BufferedImage(targetSize, targetSize, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g=resizedIamge.createGraphics();
+			g.drawImage(bufferedImage, 0, 0, targetSize, targetSize, null);
+			g.dispose();
+			String filename=event.getFile().getFileName();
+			list.add(new ImageDto(filename, getByteFromBufferedIamge(resizedIamge)));
+			chalet.addToImages(uploadToChalet(list));
+			FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		
+	}
+	
+	public byte[] getByteFromBufferedIamge(BufferedImage image) throws IOException {
+		ByteArrayOutputStream baos=new ByteArrayOutputStream();
+		ImageIO.write(image, "png", baos);
+		baos.flush();
+		byte[] imageBytes=baos.toByteArray();
+		baos.close();
+		return imageBytes;
 	}
 
 	public List<String> uploadToReal(List<ImageDto> images) {
@@ -479,7 +504,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			Faces.redirect("userPost-card.xhtml?id=" + chalet.getId() + "&kind=" + PropertyKindEnum.CHALET);
+			Faces.redirect(url+"?id=" + chalet.getId() + "&kind=" + PropertyKindEnum.CHALET);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -490,7 +515,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			Faces.redirect("userPost-card.xhtml?id=" + estate.getId() + "&kind=" + PropertyKindEnum.REALESTATE);
+			Faces.redirect(url+"?id=" + estate.getId() + "&kind=" + PropertyKindEnum.REALESTATE);
 
 		} catch (IOException e) {
 			e.printStackTrace();
