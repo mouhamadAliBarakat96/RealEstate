@@ -554,3 +554,6 @@ body .ui-selectbooleanbutton, body .ui-selectonebutton>.ui-button, body .ui-sele
 	display: inline-grid;
 }
 
+.max-width388 {
+    max-width: 388px;
+}

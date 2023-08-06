@@ -145,11 +145,12 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	public void handleFileUploadChalet(FileUploadEvent event) {
 		try {
-			int targetSize = 500;
+			int targetwidth = 388;
+			int targetHeight = 259;
 			BufferedImage bufferedImage = ImageIO.read(event.getFile().getInputStream());
-			BufferedImage resizedIamge = new BufferedImage(targetSize, targetSize, BufferedImage.TYPE_INT_RGB);
+			BufferedImage resizedIamge = new BufferedImage(targetwidth, targetHeight, BufferedImage.TYPE_INT_RGB);
 			Graphics2D g=resizedIamge.createGraphics();
-			g.drawImage(bufferedImage, 0, 0, targetSize, targetSize, null);
+			g.drawImage(bufferedImage, 0, 0, targetwidth, targetHeight, null);
 			g.dispose();
 			String filename=event.getFile().getFileName();
 			list.add(new ImageDto(filename, getByteFromBufferedIamge(resizedIamge)));
