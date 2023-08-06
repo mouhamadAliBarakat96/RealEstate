@@ -524,11 +524,15 @@ body .ui-selectbooleanbutton, body .ui-selectonebutton>.ui-button, body .ui-sele
 
 .ui-dataview-column .img-fluid {
     max-width: 100%;
-    height: 23rem !important;
+    /*  height: 23rem !important; */
+    width: 388px;
+    height: 259px;
 }
 .ui-dataview-list-container .img-fluid {
     max-width: 100%;
    /*  height: 23rem !important; */
+    width: 388px;
+    height: 259px;
 }
 .line-border {
 	margin: 0;
