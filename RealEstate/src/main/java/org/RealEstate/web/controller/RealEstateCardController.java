@@ -2,6 +2,7 @@ package org.RealEstate.web.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,7 @@ public class RealEstateCardController implements Serializable {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
-
+		addToResponsiveImages();
 		if (!facesContext.isPostback()) {
 			String id = externalContext.getRequestParameterMap().get(REQUEST_PARAM);
 
@@ -91,7 +92,19 @@ public class RealEstateCardController implements Serializable {
 		}
 	}
 
-	public void navigateToWhatsApp( ) throws IOException {
+	public void changeActiveIndex() {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		this.activeIndex = Integer.valueOf(params.get("index"));
+	}
+
+	public void addToResponsiveImages() {
+		responsiveOptions1 = new ArrayList<ResponsiveOption>();
+		responsiveOptions1.add(new ResponsiveOption("1024px", 5));
+		responsiveOptions1.add(new ResponsiveOption("768px", 3));
+		responsiveOptions1.add(new ResponsiveOption("560px", 1));
+	}
+
+	public void navigateToWhatsApp() throws IOException {
 		// Get the phone number parameter from the request
 		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -104,7 +117,7 @@ public class RealEstateCardController implements Serializable {
 		}
 	}
 
-	public void addCallNumber( ) {
+	public void addCallNumber() {
 		try {
 			Response response = postService.updateCallPost(item.getId(), item.getPostType().toString());
 			System.out.println(response.getStatus());
@@ -132,11 +145,6 @@ public class RealEstateCardController implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void changeActiveIndex() {
-		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		activeIndex = Integer.valueOf(params.get("index"));
 	}
 
 	public RealEstate getItem() {

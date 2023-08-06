@@ -11,3 +11,25 @@
 .ol-viewport{
 	direction: ltr !important;
 }
+
+
+/* Styles for small screens */
+@media screen and (max-width: 767px) {
+    .my-galleria {
+        /* Custom styles for small screens */
+    }
+}
+
+/* Styles for medium screens */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .my-galleria {
+        /* Custom styles for medium screens */
+    }
+}
+
+/* Styles for large screens */
+@media screen and (min-width: 1024px) {
+    .my-galleria {
+        /* Custom styles for large screens */
+    }
+}

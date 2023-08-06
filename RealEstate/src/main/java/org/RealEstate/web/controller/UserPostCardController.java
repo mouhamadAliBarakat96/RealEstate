@@ -93,8 +93,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private UploadedFiles files;
 	private String id = null;
 	private String kind = null;
-	
-	
+
 	private MapModel mapModel = new DefaultMapModel();
 	private String title;
 	private double lat;
@@ -136,39 +135,59 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 
 	public void handleFileUploadReal(FileUploadEvent event) {
-		list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
-		item.addToImages(uploadToReal(list));
-
-		FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		try {
+			if (item.getImages().isEmpty()) {
+				int targetwidth = 388;
+				int targetHeight = 259;
+				BufferedImage bufferedImage = ImageIO.read(event.getFile().getInputStream());
+				BufferedImage resizedIamge = new BufferedImage(targetwidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+				Graphics2D g = resizedIamge.createGraphics();
+				g.drawImage(bufferedImage, 0, 0, targetwidth, targetHeight, null);
+				g.dispose();
+				String filename = event.getFile().getFileName();
+				list.add(new ImageDto(filename, getByteFromBufferedIamge(resizedIamge)));
+			} else {
+				list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
+			}
+			
+			item.addToImages(uploadToReal(list));
+			FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void handleFileUploadChalet(FileUploadEvent event) {
 		try {
-			int targetwidth = 388;
-			int targetHeight = 259;
-			BufferedImage bufferedImage = ImageIO.read(event.getFile().getInputStream());
-			BufferedImage resizedIamge = new BufferedImage(targetwidth, targetHeight, BufferedImage.TYPE_INT_RGB);
-			Graphics2D g=resizedIamge.createGraphics();
-			g.drawImage(bufferedImage, 0, 0, targetwidth, targetHeight, null);
-			g.dispose();
-			String filename=event.getFile().getFileName();
-			list.add(new ImageDto(filename, getByteFromBufferedIamge(resizedIamge)));
-			chalet.addToImages(uploadToChalet(list));
+			if (chalet.getImages().isEmpty()) {
+				int targetwidth = 388;
+				int targetHeight = 259;
+				BufferedImage bufferedImage = ImageIO.read(event.getFile().getInputStream());
+				BufferedImage resizedIamge = new BufferedImage(targetwidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+				Graphics2D g = resizedIamge.createGraphics();
+				g.drawImage(bufferedImage, 0, 0, targetwidth, targetHeight, null);
+				g.dispose();
+				String filename = event.getFile().getFileName();
+				list.add(new ImageDto(filename, getByteFromBufferedIamge(resizedIamge)));
+			} else {
+				list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
+			}
+			
+			chalet.addToImages(uploadToReal(list));
 			FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		
 	}
-	
+
 	public byte[] getByteFromBufferedIamge(BufferedImage image) throws IOException {
-		ByteArrayOutputStream baos=new ByteArrayOutputStream();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(image, "png", baos);
 		baos.flush();
-		byte[] imageBytes=baos.toByteArray();
+		byte[] imageBytes = baos.toByteArray();
 		baos.close();
 		return imageBytes;
 	}
@@ -209,14 +228,14 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				}
 				postType = item.getPostType();
 				setActiveIndex(0);
-				setCoordinates(item.getTittle(), item.getAddressEmbeddable().getLatitude(), item.getAddressEmbeddable().getLongitude());
+				setCoordinates(item.getTittle(), item.getAddressEmbeddable().getLatitude(),
+						item.getAddressEmbeddable().getLongitude());
 			}
 		} else if (kind.equals(PropertyKindEnum.CHALET.toString())) {// ADD EDIT Chalet
 			if (StringUtils.isBlank(id) || Long.parseLong(id) <= 0) {
 				kindEnum = PropertyKindEnum.CHALET;
 				chalet = new Chalet();
 				setActiveIndex(1);
- 
 
 			} else {
 				kindEnum = PropertyKindEnum.CHALET;
@@ -229,15 +248,16 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 					}
 				}
 				setActiveIndex(0);
-				setCoordinates(chalet.getName(), chalet.getAddressEmbeddable().getLatitude(), chalet.getAddressEmbeddable().getLongitude());
+				setCoordinates(chalet.getName(), chalet.getAddressEmbeddable().getLatitude(),
+						chalet.getAddressEmbeddable().getLongitude());
 			}
 		}
 	}
-	
-	public void setCoordinates(String title , double  lat, double lng) {
-		this.title=title;
-		this.lat=lat;
-		this.lng=lng;
+
+	public void setCoordinates(String title, double lat, double lng) {
+		this.title = title;
+		this.lat = lat;
+		this.lng = lng;
 	}
 
 	public RealEstate findRealWithId(String id) {
@@ -271,7 +291,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		default:
 			break;
 		}
-//		Ajax.update("myForm:panelCoordinates");
+		// Ajax.update("myForm:panelCoordinates");
 	}
 
 	public void save() {
@@ -290,11 +310,10 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			if (realEstatesHasEmptyFields()) {
 				return;
 			}
-			
+
 			if (realEstateValidationFields()) {
 				return;
 			}
-			
 
 			if (getItem().getId() <= 0) {
 				item.setPostDate(new Date());
@@ -316,12 +335,12 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	public boolean realEstateValidationFields() {
 		boolean hasErrorEntries = false;
-		
+
 		if (item.getImages().size() > Constants.NB_IMAGE_IN_POST_ALLOWED) {
 			Utility.addErrorMessage("YOU_EXCEED_THE_LIMIT_SIZE_OF_PHOTOS");
 			hasErrorEntries = true;
 		}
-		
+
 		if (item.getPostType() == PostType.APPRATMENT_RENT) {
 			if (item.getSpace() < 50) {
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50");
@@ -428,16 +447,15 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	public void saveChalet() {
 		try {
-			
+
 			if (chaletHasEmptyFields()) {
 				return;
 			}
-			
+
 			if (chaletValidationFields()) {
 				return;
 			}
-			
-			
+
 			if (chalet.getId() <= 0) {
 				chalet.setPostDate(new Date());
 				chalet.setUser(user);
@@ -505,7 +523,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			Faces.redirect(url+"?id=" + chalet.getId() + "&kind=" + PropertyKindEnum.CHALET);
+			Faces.redirect(url + "?id=" + chalet.getId() + "&kind=" + PropertyKindEnum.CHALET);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -516,7 +534,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			Faces.redirect(url+"?id=" + estate.getId() + "&kind=" + PropertyKindEnum.REALESTATE);
+			Faces.redirect(url + "?id=" + estate.getId() + "&kind=" + PropertyKindEnum.REALESTATE);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -631,16 +649,18 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	public boolean disableSelectOneButton() {
 		return !StringUtils.isBlank(this.id) || !StringUtils.isBlank(this.kind);
 	}
-	
+
 	public boolean hideChaletTab() {
-		if(!StringUtils.isBlank(this.id) && !StringUtils.isBlank(this.kind) &&  this.kind.equals(PropertyKindEnum.REALESTATE.toString())) {
+		if (!StringUtils.isBlank(this.id) && !StringUtils.isBlank(this.kind)
+				&& this.kind.equals(PropertyKindEnum.REALESTATE.toString())) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public boolean hideRealEsateTab() {
-		if(!StringUtils.isBlank(this.id) && !StringUtils.isBlank(this.kind) &&  this.kind.equals(PropertyKindEnum.CHALET.toString())) {
+		if (!StringUtils.isBlank(this.id) && !StringUtils.isBlank(this.kind)
+				&& this.kind.equals(PropertyKindEnum.CHALET.toString())) {
 			return true;
 		}
 		return false;
@@ -677,7 +697,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	public void addMarker() {
 		mapModel.getMarkers().clear();
 		Ajax.oncomplete("loadPointOnMap();");

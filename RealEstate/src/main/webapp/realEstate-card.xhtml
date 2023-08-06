@@ -26,60 +26,46 @@
 					<div id="tab-1" class="tab-pane fade show p-0 active">
 						<div class="card">
 							<div class="row">
-								<div class="col-md-3">
-									<p:galleria value="#{realEstateCardController.item.images}"
-										var="photo" numVisible="3"
-										responsiveOptions="#{realEstateCardController.responsiveOptions1}"
-										style="max-width: 100% ; display:inline-block">
-										<p:graphicImage
-											url="#{realEstateCardController.fullUrl}#{photo}"
-											alt="the photos" width="300px" height="300px">
-											<div class="col-md-12 top-0 start-0 position-absolute">
-												<div class="d-flex justify-content-between">
-													<h:panelGroup layout="block"
-														rendered="#{realEstateCardController.item.boosted}"
-														styleClass="bg-primary rounded text-white px-3 py-1">
-												#{bundle.post_boosted}
-												<i class="fa fa-certificate"></i>
-													</h:panelGroup>
-													<h:panelGroup
-														rendered="#{realEstateCardController.item.verfied}"
-														styleClass="bg-primary rounded text-white px-3 py-1 ">
-												#{bundle.post_verified}
-												<i class="fa fa-check"></i>
-													</h:panelGroup>
+								<div class="col-md-12 ">
+									<div class="row p-4 pb-0">
+										<div class="col-md-6">
+											<span
+												style="color: #00B98E; font-size: 22px; font-weight: 700">
+												#{realEstateCardController.item.tittle}</span> <span
+												style="margin-top: 0.5%; display: block; color: #2d383f; font-size: 18px; font-weight: 600">
+												#{realEstateCardController.item.subTittle}</span>
+										</div>
+										<div class="col-md-6 d-flex justify-content-end">
+											<div>
+												<p:remoteCommand name="rc"
+													actionListener="#{realEstateCardController.changeActiveIndex}"
+													oncomplete="PF('galleria3').show()" />
+
+												<div class="card">
+													<h5>#{bundle.post_photos}</h5>
+													<p:galleria widgetVar="galleria1"
+														value="#{realEstateCardController.item.images}"
+														var="photo" numVisible="9"
+														responsiveOptions="#{realEstateCardController.responsiveOptions1}"
+														circular="true" fullScreen="true"
+														showItemNavigators="true" showThumbnails="false" style="max-width: 40%">
+														<p:graphicImage
+															url="#{realEstateCardController.fullUrl}#{photo}"
+															alt="the photos" style="width: 100%; display: block" />
+													</p:galleria>
+
+													<p:commandButton value="#{bundle.show_photos}"
+														icon="pi pi-external-link"
+														onclick="PF('galleria1').show()" />
 												</div>
 											</div>
-										</p:graphicImage>
-										<f:facet name="thumbnail">
-											<p:graphicImage
-												url="#{realEstateCardController.fullUrl}#{photo}"
-												style="width: 100%;max-height:70px;" alt="#{photo}" />
-										</f:facet>
-									</p:galleria>
-								</div>
-
-								<div class="col-md-8 ">
-									<div class="p-4 pb-0">
-										<span
-											style="color: #00B98E; font-size: 22px; font-weight: 700">
-											#{realEstateCardController.item.tittle}</span> <span
-											style="margin-top: 0.5%; display: block; color: #2d383f; font-size: 18px; font-weight: 600">
-											#{realEstateCardController.item.subTittle}</span>
-
-
-
+										</div>
 										<hr class="line-border"></hr>
-
-
-
-
 										<div class="row">
-
 											<div class="col-md-6">
 												<div class="col-md-3">
 													<span
-														style="display: flex !important ; justify-content: center !important; font-weight: 600; color: #2d383f; font-size: 20px; font-weight: 700">#{bundle.location}</span>
+														style="display: flex !important; justify-content: center !important; font-weight: 600; color: #2d383f; font-size: 20px; font-weight: 700">#{bundle.location}</span>
 												</div>
 												<div style="display: flex;">
 													<div style="width: 30%; display: inline-block;">
@@ -156,9 +142,6 @@
 												</div>
 											</div>
 										</div>
-
-
-
 									</div>
 
 									<div style="margin-top: 4%"
