@@ -23,7 +23,6 @@ import org.RealEstate.model.Chalet;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.utils.Constants;
-import org.omnifaces.util.Faces;
 
 @Named
 @ViewScoped
@@ -34,6 +33,8 @@ public class UserPostListController implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final String NO_PHOTO = "nophoto.jpg";
+	private final String RQUEST_FROM = "from";
+
 	@Inject
 	private HttpServletRequest request;
 
@@ -65,9 +66,7 @@ public class UserPostListController implements Serializable {
 
 		if (user == null) {
 			String currentUrl = externalContext.getRequestServletPath();
-			Flash flash = externalContext.getFlash();
-			flash.put(Constants.CURRENT_URL, currentUrl);
-			Faces.redirect("/user-login.xhtml");
+			externalContext.redirect("/user-login.xhtml?"+RQUEST_FROM+"="+currentUrl);
 		} else {
 			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");

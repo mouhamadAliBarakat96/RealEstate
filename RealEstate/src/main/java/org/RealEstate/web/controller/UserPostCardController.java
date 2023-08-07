@@ -1,6 +1,5 @@
 package org.RealEstate.web.controller;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,7 +13,6 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -45,13 +43,9 @@ import org.omnifaces.util.Faces;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.TabChangeEvent;
-import org.primefaces.event.map.MarkerDragEvent;
-import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.file.UploadedFiles;
 import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
 
 @Named
 @ViewScoped
@@ -105,7 +99,10 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		user = getUser();
 		if (user == null) {
 			try {
-				Faces.redirect("/user-login.xhtml");
+				FacesContext context = FacesContext.getCurrentInstance();
+				ExternalContext externalContext=context.getExternalContext();
+				String url = externalContext.getRequestServletPath();
+				externalContext.redirect("/user-login.xhtml?from=" + url);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

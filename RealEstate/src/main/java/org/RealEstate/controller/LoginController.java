@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
-import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.apache.commons.lang3.StringUtils;
@@ -31,6 +30,7 @@ public class LoginController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private final String RQUEST_FROM = "from";
 
 	private String userName = "";
 	// passowrd as sha256
@@ -44,8 +44,16 @@ public class LoginController implements Serializable {
 	private boolean showErrorMessage;
 	private String errorMessage;
 
+	private String from_url = "";
+
 	@PostConstruct
 	public void init() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		if (!facesContext.isPostback()) {
+			from_url = externalContext.getRequestParameterMap().get(RQUEST_FROM);
+		}
+
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		if (flash.containsKey("message")) {
 			showErrorMessage = true;
@@ -77,14 +85,14 @@ public class LoginController implements Serializable {
 					FacesContext facesContext = FacesContext.getCurrentInstance();
 					ExternalContext externalContext = facesContext.getExternalContext();
 
-					Map<String, Object> flash = externalContext.getFlash();
-					String currentUrl = (String) flash.get(Constants.CURRENT_URL);
+					// Map<String, Object> flash = externalContext.getFlash();
+					// String currentUrl = (String) flash.get(Constants.CURRENT_URL);
 
-					if (StringUtils.isBlank(currentUrl)) {
+					if (!StringUtils.isBlank(from_url)) {
 						// Redirect to default page after successful login
-						externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
+						requestFromUrl();
 					} else {
-						externalContext.redirect(currentUrl);
+						externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
 					}
 				}
 
@@ -119,6 +127,17 @@ public class LoginController implements Serializable {
 		}
 	}
 
+	private void requestFromUrl() {
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext=context.getExternalContext();
+			String request = externalContext.getRequestContextPath();
+			externalContext.redirect(request.concat(from_url));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void login() {
 		try {
 			String hashPass = Utility.hashPassword(passowrd);
@@ -130,20 +149,21 @@ public class LoginController implements Serializable {
 				flash.put("message", Utility.getMessage("wrong_user_name_or_password"));
 				changeUrl();
 			} else {
+
 				HttpSession session = request.getSession(true);
 				session.setAttribute(Constants.USER_SESSION, user);
 
 				FacesContext facesContext = FacesContext.getCurrentInstance();
 				ExternalContext externalContext = facesContext.getExternalContext();
 
-				Map<String, Object> flash = externalContext.getFlash();
-				String currentUrl = (String) flash.get(Constants.CURRENT_URL);
+				// Map<String, Object> flash = externalContext.getFlash();
+				// String currentUrl = (String) flash.get(Constants.CURRENT_URL);
 
-				if (StringUtils.isBlank(currentUrl)) {
+				if (!StringUtils.isBlank(from_url)) {
 					// Redirect to default page after successful login
-					externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
+					requestFromUrl();
 				} else {
-					externalContext.redirect(currentUrl);
+					externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
 				}
 			}
 
