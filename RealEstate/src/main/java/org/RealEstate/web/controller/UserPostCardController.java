@@ -135,8 +135,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 
 	public void handleFileUploadReal(FileUploadEvent event) {
-		try {
-			if (item.getImages().isEmpty()) {
+			/*if (item.getImages().isEmpty()) {
 				int targetwidth = 388;
 				int targetHeight = 259;
 				BufferedImage bufferedImage = ImageIO.read(event.getFile().getInputStream());
@@ -146,21 +145,19 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				g.dispose();
 				String filename = event.getFile().getFileName();
 				list.add(new ImageDto(filename, getByteFromBufferedIamge(resizedIamge)));
-			} else {
+			} else {*/
 				list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
-			}
+			//}
 			
 			item.addToImages(uploadToReal(list));
 			FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		 
 	}
 
 	public void handleFileUploadChalet(FileUploadEvent event) {
-		try {
-			if (chalet.getImages().isEmpty()) {
+		 
+			/*if (chalet.getImages().isEmpty()) {
 				int targetwidth = 388;
 				int targetHeight = 259;
 				BufferedImage bufferedImage = ImageIO.read(event.getFile().getInputStream());
@@ -170,16 +167,14 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				g.dispose();
 				String filename = event.getFile().getFileName();
 				list.add(new ImageDto(filename, getByteFromBufferedIamge(resizedIamge)));
-			} else {
+			} else {*/
 				list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
-			}
+			//}
 			
 			chalet.addToImages(uploadToReal(list));
 			FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		 
 
 	}
 

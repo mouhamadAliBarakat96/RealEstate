@@ -21,7 +21,7 @@
 									action="#{userPostListController.navigateToUserChalet(chalet)}"
 									styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 									<p:graphicImage alt="no photos" styleClass="img-fluid"
-										url="#{userPostListController.fullUrl}#{chalet.images[0]}">
+										url="#{userPostListController.displayFirstImageChalet(chalet)}">
 									</p:graphicImage>
 								</h:commandLink>
 								<h:outputLabel
@@ -76,7 +76,7 @@
 										action="#{userPostListController.navigateToUserChalet(chalet)}"
 										styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 										<p:graphicImage alt="no photos" styleClass="img-fluid"
-											url="#{userPostListController.fullUrl}#{chalet.images[0]}">
+											url="#{userPostListController.displayFirstImageChalet(chalet)}">
 										</p:graphicImage>
 									</h:commandLink>
 									<h:outputLabel

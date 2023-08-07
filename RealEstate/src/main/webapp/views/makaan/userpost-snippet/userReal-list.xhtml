@@ -21,7 +21,7 @@
 									action="#{userPostListController.navigateToUserReal(real)}"
 									styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 									<p:graphicImage alt="no photos" styleClass="img-fluid"
-										url="#{userPostListController.fullUrl}#{real.images[0]}">
+										url="#{userPostListController.displayFirstImageReal(real)}">
 									</p:graphicImage>
 								</h:commandLink>
 								<h:outputLabel
@@ -78,7 +78,7 @@
 										action="#{userPostListController.navigateToUserReal(real)}"
 										styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 										<p:graphicImage alt="no photos" styleClass="img-fluid"
-											url="#{userPostListController.fullUrl}#{real.images[1]}">
+											url="#{userPostListController.displayFirstImageReal(real)}">
 										</p:graphicImage>
 									</h:commandLink>
 

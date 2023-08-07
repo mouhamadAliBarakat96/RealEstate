@@ -34,6 +34,7 @@ public class RealEstateCardController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final String REQUEST_PARAM = "id";
+	private final String NO_PHOTO = "nophoto.jpg";
 	private RealEstate item;
 	private List<ResponsiveOption> responsiveOptions1;
 	private int activeIndex = 0;
@@ -76,7 +77,7 @@ public class RealEstateCardController implements Serializable {
 					fullUrlProfilePicture = fullUrlProfilePicture.concat("http://").concat(getIpAddressWithPort())
 							.concat("/").concat(Constants.IMAGES).concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME)
 							.concat("/");
-					if (item.getUser().getProfileImageUrl() != null) {
+					if (item.getUser() != null && item.getUser().getProfileImageUrl() != null) {
 						fullUrlProfilePicture = fullUrlProfilePicture.concat(item.getUser().getProfileImageUrl());
 					}
 
@@ -226,4 +227,11 @@ public class RealEstateCardController implements Serializable {
 		this.fullUrlProfilePicture = fullUrlProfilePicture;
 	}
 
+	public String displayFirstImage() {
+		if(item!=null && !item.getImages().isEmpty()) {
+			return fullUrl.concat(item.getImages().get(0));
+		}else {
+			return fullUrl.concat(NO_PHOTO);
+		}
+	}
 }

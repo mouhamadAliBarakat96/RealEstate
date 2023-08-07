@@ -26,7 +26,32 @@
 					<div id="tab-1" class="tab-pane fade show p-0 active">
 						<div class="card">
 							<div class="row">
-								<div class="col-md-12 ">
+								<div class="col-md-4">
+									<div class="col-md-12">
+										<p:remoteCommand name="rc"
+											actionListener="#{realEstateCardController.changeActiveIndex}"
+											oncomplete="PF('galleria1').show()" />
+										<p:graphicImage
+											url="#{realEstateCardController.displayFirstImage()}"
+											alt="the photos"
+											style="width: 100%;height: 23rem; display: block" />
+										<p:galleria widgetVar="galleria1"
+											value="#{realEstateCardController.item.images}" var="photo"
+											numVisible="9"
+											responsiveOptions="#{realEstateCardController.responsiveOptions1}"
+											circular="true" fullScreen="true" showItemNavigators="true"
+											showThumbnails="false" style="max-width: 40%">
+											<p:graphicImage
+												url="#{realEstateCardController.fullUrl}#{photo}"
+												alt="the photos" style="width: 100%; display: block" />
+										</p:galleria>
+										<p:commandButton value="#{bundle.show_photos}"  styleClass="col-md-12"
+											icon="pi pi-external-link" onclick="PF('galleria1').show()"
+											process="@this" />
+
+									</div>
+								</div>
+								<div class="col-md-8 ">
 									<div class="row p-4 pb-0">
 										<div class="col-md-6">
 											<span
@@ -34,31 +59,6 @@
 												#{realEstateCardController.item.tittle}</span> <span
 												style="margin-top: 0.5%; display: block; color: #2d383f; font-size: 18px; font-weight: 600">
 												#{realEstateCardController.item.subTittle}</span>
-										</div>
-										<div class="col-md-6 d-flex justify-content-end">
-											<div>
-												<p:remoteCommand name="rc"
-													actionListener="#{realEstateCardController.changeActiveIndex}"
-													oncomplete="PF('galleria3').show()" />
-
-												<div class="card">
-													<h5>#{bundle.post_photos}</h5>
-													<p:galleria widgetVar="galleria1"
-														value="#{realEstateCardController.item.images}"
-														var="photo" numVisible="9"
-														responsiveOptions="#{realEstateCardController.responsiveOptions1}"
-														circular="true" fullScreen="true"
-														showItemNavigators="true" showThumbnails="false" style="max-width: 40%">
-														<p:graphicImage
-															url="#{realEstateCardController.fullUrl}#{photo}"
-															alt="the photos" style="width: 100%; display: block" />
-													</p:galleria>
-
-													<p:commandButton value="#{bundle.show_photos}"
-														icon="pi pi-external-link"
-														onclick="PF('galleria1').show()" />
-												</div>
-											</div>
 										</div>
 										<hr class="line-border"></hr>
 										<div class="row">
@@ -144,8 +144,8 @@
 										</div>
 									</div>
 
-									<div style="margin-top: 4%"
-										class="row col-md-12 border-top border-end">
+									<div style="margin: 0%;"
+										class="row col-md-12 border-top border-end border-start mt-2">
 										<small
 											class="col-md-3 text-center border-end py-2 border-bottom">
 

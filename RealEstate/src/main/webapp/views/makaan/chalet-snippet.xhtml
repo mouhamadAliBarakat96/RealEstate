@@ -40,7 +40,7 @@
 										<h:commandLink action="#{indexController.navigate_chalet(chalet)}"
 											styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 											<p:graphicImage alt="no photos" styleClass="img-fluid"
-												url="#{indexController.fullUrl}#{chalet.images[0]}">
+												url="#{actionBean.displayFirstImageChalet(chalet)}">
 											</p:graphicImage>
 											<f:actionListener
 												binding="#{indexController.addViewsAfterClick_chalet(chalet)}" />
@@ -117,7 +117,7 @@
 												  styleClass="d-block img-fluid"
 												target="_blank">
 												<p:graphicImage alt="no photos" styleClass="img-fluid"
-													url="#{indexController.fullUrl}#{chalet.images[0]}">
+													url="#{actionBean.displayFirstImageChalet(chalet)}">
 												</p:graphicImage>
 												<f:actionListener
 													binding="#{indexController.addViewsAfterClick_chalet(chalet)}" />

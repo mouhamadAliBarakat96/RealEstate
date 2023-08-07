@@ -2,6 +2,8 @@ package org.RealEstate.web.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -23,6 +25,7 @@ import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Constants;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
+import org.primefaces.model.ResponsiveOption;
 
 @Named
 @ViewScoped
@@ -30,6 +33,7 @@ public class ChaletCardController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private final String REQUEST_PARAM = "id";
+	private final String NO_PHOTO = "nophoto.jpg";
 
 	@Inject
 	private ChaletFacade facade;
@@ -41,18 +45,17 @@ public class ChaletCardController implements Serializable {
 	private int activeIndex = 0;
 
 	private String fullUrlProfilePicture = "";
-
+	private List<ResponsiveOption> responsiveOptions1;
 
 	@EJB
 	private PostService postService;
-	
-	
+
 	@PostConstruct
 	public void init() {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
-
+		addToResponsiveImages();
 		if (!facesContext.isPostback()) {
 			String id = externalContext.getRequestParameterMap().get(REQUEST_PARAM);
 
@@ -90,7 +93,7 @@ public class ChaletCardController implements Serializable {
 		}
 	}
 
-	public void addCallNumber_chalet( ) {
+	public void addCallNumber_chalet() {
 		try {
 			Response response = postService.updateChaletCall(item.getId());
 			System.out.println(response.getStatus());
@@ -99,7 +102,7 @@ public class ChaletCardController implements Serializable {
 		}
 	}
 
-	public void navigateToWhatsApp_chalet( ) throws IOException {
+	public void navigateToWhatsApp_chalet() throws IOException {
 		// Get the phone number parameter from the request
 		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -111,6 +114,7 @@ public class ChaletCardController implements Serializable {
 			externalContext.redirect(url);
 		}
 	}
+
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -161,9 +165,20 @@ public class ChaletCardController implements Serializable {
 	public void setFullUrlProfilePicture(String fullUrlProfilePicture) {
 		this.fullUrlProfilePicture = fullUrlProfilePicture;
 	}
-	
-	
-	
-	
+
+	public String displayFirstImage() {
+		if (item != null && !item.getImages().isEmpty()) {
+			return fullUrl.concat(item.getImages().get(0));
+		} else {
+			return fullUrl.concat(NO_PHOTO);
+		}
+	}
+
+	public void addToResponsiveImages() {
+		responsiveOptions1 = new ArrayList<ResponsiveOption>();
+		responsiveOptions1.add(new ResponsiveOption("1024px", 5));
+		responsiveOptions1.add(new ResponsiveOption("768px", 3));
+		responsiveOptions1.add(new ResponsiveOption("560px", 1));
+	}
 
 }

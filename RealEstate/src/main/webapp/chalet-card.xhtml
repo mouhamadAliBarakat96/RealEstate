@@ -26,48 +26,53 @@
 						<div class="card">
 							<div class="row">
 								<div class="col-md-4">
-									<p:galleria value="#{chaletCardController.item.images}"
-										var="photo" numVisible="3"
-										style="max-width: 100% ; display:inline-block">
-										<p:graphicImage url="#{chaletCardController.fullUrl}#{photo}"
-											alt="the photos" style="width: 100%">
-											<div class="col-md-12 top-0 start-0 position-absolute">
-												<div class="d-flex justify-content-between">
-													<h:panelGroup layout="block"
-														rendered="#{chaletCardController.item.boosted}"
-														styleClass="bg-primary rounded text-white px-3 py-1">
-												#{bundle.post_boosted}
-												<i class="fa fa-certificate"></i>
-													</h:panelGroup>
-													<h:panelGroup
-														rendered="#{chaletCardController.item.verfied}"
-														styleClass="bg-primary rounded text-white px-3 py-1 ">
-												#{bundle.post_verified}
-												<i class="fa fa-check"></i>
-													</h:panelGroup>
-												</div>
-											</div>
+									<div class="col-md-12">
+										<p:remoteCommand name="rc"
+											actionListener="#{chaletCardController.changeActiveIndex}"
+											oncomplete="PF('chaletGallerie').show()" />
+										<p:graphicImage
+											url="#{chaletCardController.displayFirstImage()}"
+											alt="the photos"
+											style="width: 100%;height: 23rem; display: block">
 										</p:graphicImage>
-										<f:facet name="thumbnail">
+
+										<p:commandButton value="#{bundle.show_photos}"
+											icon="pi pi-external-link" styleClass="col-md-12"
+											onclick="PF('chaletGallerie').show()" process="@this"
+											partialSubmit="true">
+										</p:commandButton>
+
+										<p:galleria widgetVar="chaletGallerie"
+											value="#{chaletCardController.item.images}" var="photo"
+											numVisible="4" circular="true" fullScreen="true"
+											showItemNavigators="true" showThumbnails="false"
+											style="max-width: 40%">
 											<p:graphicImage url="#{chaletCardController.fullUrl}#{photo}"
-												style="width: 100%;max-height:70px;" alt="#{photo}" />
-										</f:facet>
-									</p:galleria>
+												alt="the photos" style="width: 100%; display: block" />
+										</p:galleria>
+									</div>
 								</div>
-
-
-
 								<div class="col-md-8 ">
 									<div class="p-4 pb-0">
+										<div class="d-flex justify-content-between">
+											<span
+												style="color: #00B98E; font-size: 22px; font-weight: 700">
+												#{chaletCardController.item.name}</span>
+											<h:panelGroup layout="block"
+												rendered="#{chaletCardController.item.boosted}"
+												styleClass="bg-primary rounded text-white px-3 py-1">
+												#{bundle.post_boosted}
+												<i class="fa fa-certificate"></i>
+											</h:panelGroup>
+											<h:panelGroup rendered="#{chaletCardController.item.verfied}"
+												styleClass="bg-primary rounded text-white px-3 py-1 ">
+												#{bundle.post_verified}
+												<i class="fa fa-check"></i>
+											</h:panelGroup>
+										</div>
 										<span
-											style="color: #00B98E; font-size: 22px; font-weight: 700">
-											#{chaletCardController.item.name}</span> <span
 											style="margin-top: 0.5%; display: block; color: #2d383f; font-size: 18px; font-weight: 600">
 											#{chaletCardController.item.descrption}</span>
-
-
-
-
 										<hr class="line-border"></hr>
 
 										<div class="row">
@@ -161,8 +166,8 @@
 									</div>
 
 
-									<div style="margin-top: 4%"
-										class="row col-md-12 border-top border-end">
+									<div style="margin: 0%;"
+										class="row col-md-12 border-top border-end border-start mt-2">
 
 										<small
 											class="col-md-3 text-center border-end py-2 border-bottom">

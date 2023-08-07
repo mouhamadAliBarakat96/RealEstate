@@ -67,7 +67,7 @@
 										<h:commandLink action="#{actionBean.navigate(real)}"
 											styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 											<p:graphicImage alt="no photos" styleClass="img-fluid"
-												url="#{actionBean.fullUrl}#{real.images[0]}">
+												url="#{actionBean.displayFirstImageReal(real)}">
 											</p:graphicImage>
 											<f:actionListener
 												binding="#{actionBean.addViewsAfterClick(real)}" />
@@ -156,7 +156,7 @@
 											<h:commandLink action="#{actionBean.navigate(real)}"
 												styleClass="d-block img-fluid  mb-2" target="_blank">
 												<p:graphicImage alt="no photos" styleClass="img-fluid"
-													url="#{actionBean.fullUrl}#{real.images[0]}">
+													url="#{actionBean.displayFirstImageReal(real)}">
 												</p:graphicImage>
 												<f:actionListener
 													binding="#{actionBean.addViewsAfterClick(real)}" />

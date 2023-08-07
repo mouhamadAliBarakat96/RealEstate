@@ -33,7 +33,7 @@ public class UserPostListController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	private final String NO_PHOTO = "nophoto.jpg";
 	@Inject
 	private HttpServletRequest request;
 
@@ -107,6 +107,7 @@ public class UserPostListController implements Serializable {
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
+
 	public boolean aLand(PostType type) {
 		return (type.equals(PostType.LAND));
 	}
@@ -115,7 +116,7 @@ public class UserPostListController implements Serializable {
 		try {
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			flash.put("edit-realestate", "true");
-			String url = "userPost-card.xhtml?id=" + item.getId()+"&kind=" + PropertyKindEnum.REALESTATE;
+			String url = "userPost-card.xhtml?id=" + item.getId() + "&kind=" + PropertyKindEnum.REALESTATE;
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -126,7 +127,7 @@ public class UserPostListController implements Serializable {
 		try {
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			flash.put("edit-chalet", "true");
-			String url = "userPost-card.xhtml?id=" + item.getId()+"&kind=" + PropertyKindEnum.CHALET;
+			String url = "userPost-card.xhtml?id=" + item.getId() + "&kind=" + PropertyKindEnum.CHALET;
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -157,4 +158,19 @@ public class UserPostListController implements Serializable {
 		this.fullUrl = fullUrl;
 	}
 
+	public String displayFirstImageReal(RealEstate item) {
+		if (item != null && !item.getImages().isEmpty()) {
+			return fullUrl.concat(item.getImages().get(0));
+		} else {
+			return fullUrl.concat(NO_PHOTO);
+		}
+	}
+
+	public String displayFirstImageChalet(Chalet item) {
+		if (item != null && !item.getImages().isEmpty()) {
+			return fullUrl.concat(item.getImages().get(0));
+		} else {
+			return fullUrl.concat(NO_PHOTO);
+		}
+	}
 }

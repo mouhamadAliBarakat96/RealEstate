@@ -46,7 +46,7 @@ public class IndexController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	private final String NO_PHOTO = "nophoto.jpg";
 	@Inject
 	private GovernorateFacade governorateFacade;
 	@Inject
@@ -596,5 +596,20 @@ public class IndexController implements Serializable {
 	public void changeTypeRealEstateSearch(ExchangeRealEstateType type) {
 		this.estateTypeEnum = type;
 	}
-
+	
+	public String displayFirstImageReal(RealEstate item) {
+		if(item!=null && !item.getImages().isEmpty()) {
+			return fullUrl.concat(item.getImages().get(0));
+		}else {
+			return fullUrl.concat(NO_PHOTO);
+		}
+	}
+	
+	public String displayFirstImageChalet(Chalet item) {
+		if(item!=null && !item.getImages().isEmpty()) {
+			return fullUrl.concat(item.getImages().get(0));
+		}else {
+			return fullUrl.concat(NO_PHOTO);
+		}
+	}
 }
