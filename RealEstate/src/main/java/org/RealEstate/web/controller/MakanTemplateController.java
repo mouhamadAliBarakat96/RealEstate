@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpSession;
 
 import org.RealEstate.dto.MenuItem;
 import org.RealEstate.enumerator.PropertyKindEnum;
+import org.RealEstate.facade.AdsFacade;
+import org.RealEstate.model.Ads;
 import org.RealEstate.model.User;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
@@ -37,11 +40,35 @@ public class MakanTemplateController implements Serializable {
 
 	private User user;
 
+	/**
+	 * Ads
+	 */
+
+	@EJB
+	private AdsFacade adsFacade;
+
+	private List<Ads> adsList;
+
+	private String fullUrlAdsImage = "";
+
 	@PostConstruct
 	public void init() {
 		HttpSession session = request.getSession(true);
 		user = (User) session.getAttribute(Constants.USER_SESSION);
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(languageController.getLocale());
+		adsList = adsFacade.findAll();
+		fullUrlAdsImage = fullUrlAdsImage.concat("http://").concat(getIpAddressWithPort()).concat("/")
+				.concat(Constants.IMAGES).concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/");
+
+	}
+
+	public String getIpAddressWithPort() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		String ipAddress = request.getRemoteAddr();
+		int port = request.getLocalPort();
+		return ipAddress + ":" + port;
+
 	}
 
 	public List<MenuItem> fillMenuItems() {
@@ -67,23 +94,17 @@ public class MakanTemplateController implements Serializable {
 
 		if (user == null) {
 			m1 = new MenuItem(Utility.getMessage("login"), "", "login-user", true, "nav-item nav-link", "login");
-		menu.add(m1);
-		
-		m1 = new MenuItem(Utility.getMessage("register"), "", "signup", true, "nav-item nav-link", "register");
-		menu.add(m1);
-		
-		
-		}
-		else {
-			m1 = new MenuItem(Utility.getMessage("user-information"), "", "user-information-front-end", true, "nav-item nav-link", "user-information-front-end");
 			menu.add(m1);
-			
-		}
-		// else
-		// m1 = new MenuItem(Utility.getMessage("logout"), "", "logout-user", true,
-		// "nav-item nav-link", "logout");
 
-		// menu.add(m1);
+			m1 = new MenuItem(Utility.getMessage("register"), "", "signup", true, "nav-item nav-link", "register");
+			menu.add(m1);
+
+		} else {
+			m1 = new MenuItem(Utility.getMessage("user-information"), "", "user-information-front-end", true,
+					"nav-item nav-link", "user-information-front-end");
+			menu.add(m1);
+
+		}
 
 		return menu;
 	}
@@ -124,7 +145,7 @@ public class MakanTemplateController implements Serializable {
 	public String showRealEstateTitle() {
 		return Utility.getMessage("house_and_land");
 	}
-	
+
 	public void logout() {
 
 		try {
@@ -136,13 +157,28 @@ public class MakanTemplateController implements Serializable {
 		}
 	}
 
-
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Ads> getAdsList() {
+		return adsList;
+	}
+
+	public void setAdsList(List<Ads> adsList) {
+		this.adsList = adsList;
+	}
+
+	public String getFullUrlAdsImage() {
+		return fullUrlAdsImage;
+	}
+
+	public void setFullUrlAdsImage(String fullUrlAdsImage) {
+		this.fullUrlAdsImage = fullUrlAdsImage;
 	}
 
 }

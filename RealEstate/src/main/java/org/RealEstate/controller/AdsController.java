@@ -19,7 +19,6 @@ import org.RealEstate.service.UploadImagesMultiPart;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
 import org.omnifaces.util.Ajax;
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 
 @ViewScoped
