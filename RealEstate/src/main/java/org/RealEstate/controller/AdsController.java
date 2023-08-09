@@ -1,5 +1,6 @@
 package org.RealEstate.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.RealEstate.service.UploadImagesMultiPart;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
 import org.omnifaces.util.Ajax;
+import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 
 @ViewScoped
@@ -55,7 +57,7 @@ public class AdsController implements Serializable {
 				.concat(ads.getUrl() == null ? "" : ads.getUrl());
 
 
-		Ajax.oncomplete("$('#imageModal').modal({backdrop: 'static', keyboard: false})");
+		Ajax.oncomplete("PF('dlg3').show()");
 		Ajax.update("image");
 	}
 
@@ -93,9 +95,11 @@ public class AdsController implements Serializable {
 			adsFacade.getEm().detach(adsToSave);
 			adsToSave = new Ads();
 			imageDto = new ImageDto();
-			pageItems = adsFacade.findAll();
-			Ajax.oncomplete("PF('tableWidget').filter()");
-			CommonUtility.addMessageToFacesContext(" save_success ", "success");
+			//pageItems = adsFacade.findAll();
+			//Ajax.oncomplete("PF('tableWidget').filter()");
+			//CommonUtility.addMessageToFacesContext(" save_success ", "success");
+			
+			changeUrl();
 
 		} catch (Exception e) {
 			CommonUtility.addMessageToFacesContext(e.getMessage(), "error");
@@ -103,6 +107,23 @@ public class AdsController implements Serializable {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private void changeUrl( ) {
+		
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+			String url = request.getRequestURL().toString();
+			Faces.redirect(url );
+			
+		}
+		
+		catch(Exception e) {
+e.printStackTrace();			
+		}
+
+	
 	}
 
 	public void remove(Ads item) {

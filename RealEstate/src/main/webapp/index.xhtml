@@ -10,6 +10,12 @@
 <ui:composition template="/views/template/makaan-template.xhtml">
 	<ui:define name="customStylesheet">
 		<link href="/resources/makaan/css/index.css" rel="stylesheet" />
+		<style>
+		.ui-galleria-items{
+		width: 100%;
+		}
+		</style>
+		
 	</ui:define>
 
 	<ui:define name="header-start">
@@ -39,12 +45,13 @@
 
 		<p:galleria value="#{makanTemplateController.adsList}" var="photo"
 		circular="true"
-			autoPlay="true" numVisible="3" transitionInterval="999999"
-			style="max-width: 512px">
+			autoPlay="true" numVisible="5" transitionInterval="5000"
+			style="height:275px;width: 100%;"
+			>
 			<p:graphicImage
 	
 				url="#{makanTemplateController.fullUrlAdsImage}#{photo.url}"
-				style="width: 100%; display: block;" />
+				style="height:275px ;width: 70%; display: block;" />
 
 		</p:galleria>
 
@@ -54,7 +61,7 @@
 	</ui:define>
 
 	<ui:define name="property-content">
-	<div style="margin-top:2%"></div>
+	<div style="margin-top:3%"></div>
 		<h:panelGroup id="RealEstatePanelId"
 			rendered="#{indexController.propertyKind == 'REALESTATE'}">
 			<ui:include src="/views/makaan/realestate-snippet.xhtml">

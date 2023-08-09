@@ -31,7 +31,6 @@
 		<h4 class="page-title">Ads List</h4>
 	</ui:define>
 	<ui:define name="customFormContent">
-
 		<h:panelGroup>
 
 
@@ -218,38 +217,23 @@
 		</p:confirmDialog>
 
 
-		<div class="modal  fade bs-example-modal-center" f5:tabindex="-1"
-			f5:data-backdrop="static" f5:data-keyboard="false" id="imageModal"
-			f5:role="dialog" f5:aria-labelledby="mySmallModalLabel"
-			f5:aria-hidden="true">
-			<div class="modal-dialog modal-xl modal-dialog-centered">
-				<div class="modal-content">
-
-
-
-					<!-- Modal Header -->
-					<div class="modal-header">
-
-
-						<label style="font-size: 21px; margin-top: 5px;"> Ads  Image
-							 </label>
+		<p:dialog header="Image " widgetVar="dlg3" minHeight="40" width="350"
+			showEffect="fade">
 
 
 
 
-						<button type="button" class="close" data-dismiss="modal">×</button>
-					</div>
-					<span>#{adsController.fullUrl}</span>
-					<!-- Modal body -->
-					<p:graphicImage id="image" url="#{adsController.fullUrl}"
-						style="width: 50%" alt="#{photo}" />
+
+
+			<p:graphicImage id="image" url="#{adsController.fullUrl}"
+				style="width: 100%" alt="#{photo}" />
 
 
 
 
-				</div>
-			</div>
-		</div>
+
+
+		</p:dialog>
 
 	</ui:define>
 </ui:decorate>
