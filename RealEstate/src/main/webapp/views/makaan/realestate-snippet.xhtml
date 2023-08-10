@@ -53,8 +53,8 @@
 	<div class="tab-content">
 		<div id="tab-1" class="tab-pane fade show p-0 active">
 			<div class="row g-4">
-				<p:dataView var="real" value="#{actionBean.realLazyModel}"
-					rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
+				<p:dataView var="real" value="#{actionBean.realLazyModel}" rows="6"
+					lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
 					paginatorPosition="bottom" widgetVar="realEstatesDataView"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					gridIcon="pi pi-th-large" listIcon="pi pi-bars">
@@ -75,10 +75,6 @@
 
 										<div class="col-md-12 top-0 start-0 position-absolute">
 											<div class="d-flex justify-content-between">
-												<div class="bg-primary rounded text-white py-1 px-3">
-												 #{languageController.locale=='en'? real.postType.name : real.postType.name_ar}
-												</div>
-
 												<h:panelGroup layout="block" rendered="#{real.boosted}"
 													styleClass="bg-primary rounded text-white py-1 px-3">
 															#{bundle.post_boosted}
@@ -103,9 +99,12 @@
 									</div>
 									<div class="p-4 pb-0">
 
-										<h5 class="text-primary mb-3">$ #{real.price}</h5>
-
-
+											<div class="d-flex justify-content-between">
+												<h5 class="text-primary py-1 px-3">$ #{real.price}</h5>
+												<div class="text-primary py-1 px-3">
+													#{languageController.locale=='en'? real.postType.name : real.postType.name_ar}
+												</div>
+											</div>
 										<p>
 											<i class="fa fa-map-marker-alt text-primary me-2"></i>#{real.village.fullAddress()}
 										</p>
@@ -164,8 +163,6 @@
 
 											<div class="col-md-12 top-0 start-0 position-absolute">
 												<div class="d-flex justify-content-between">
-													<div class="bg-primary rounded text-white py-1 px-3"> #{languageController.locale=='en'? real.postType.name : real.postType.name_ar}</div>
-
 													<h:panelGroup layout="block" rendered="#{real.boosted}"
 														styleClass="bg-primary rounded text-white py-1 px-3">
 															#{bundle.post_boosted}
@@ -184,7 +181,15 @@
 									</div>
 									<div class="col-md-8 inline-gride">
 										<div class="p-4 pb-0">
-											<h5 class="text-primary mb-3">$ #{real.price}</h5>
+
+											<div class="d-flex justify-content-between">
+												<h5 class="text-primary py-1 px-3">$ #{real.price}</h5>
+												<div class="text-primary py-1 px-3">
+													#{languageController.locale=='en'? real.postType.name :
+													real.postType.name_ar}</div>
+											</div>
+
+
 
 											<h:commandLink action="#{actionBean.navigate(real)}"
 												target="_blank" value="#{real.tittle}"
@@ -222,8 +227,7 @@
 													#{bundle.real_estate_bathrooms}
 												</small>
 											</h:panelGroup>
-											<h:panelGroup
-												rendered="#{actionBean.aLand(real.postType)}">
+											<h:panelGroup rendered="#{actionBean.aLand(real.postType)}">
 												<small class="flex-fill text-center border-end py-2">
 													<i class="fa fa-solid fa-road text-primary me-2" />#{bundle.real_estate_road}:
 													<i
