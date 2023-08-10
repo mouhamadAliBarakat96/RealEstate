@@ -135,3 +135,8 @@ function changeLang(lang) {
 	}
 
 }
+
+
+//Use noConflict to release control of the $ variable
+jQuery.noConflict();
+

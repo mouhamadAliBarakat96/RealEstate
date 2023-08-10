@@ -81,10 +81,3 @@ $(document).ready(function() {
 
 // Use noConflict to release control of the $ variable
 jQuery.noConflict();
-
-// Use jQuery with the "jQuery" variable instead of "$"
-jQuery(document).ready(function() {
-	jQuery('p').click(function() {
-		jQuery(this).hide();
-	});
-});

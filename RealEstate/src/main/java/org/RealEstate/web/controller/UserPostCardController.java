@@ -58,7 +58,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private final String REQUEST_PARAM_ID = "id";
 	private final String REQUEST_PARAM_KIND = "kind";
 
-	private PostType postType;
+	private PostType postType=PostType.APPRATMENT_RENT;
 	private PropertyKindEnum kindEnum = PropertyKindEnum.REALESTATE;
 
 	@Inject
