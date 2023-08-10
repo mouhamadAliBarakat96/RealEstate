@@ -8,10 +8,12 @@
 
 <ui:composition template="/views/template/makaan-template.xhtml">
 	<ui:define name="customStylesheet">
-	<script src="/resources/makaan/js/jquery-3.4.1.min.js"></script> 
-		<link href="/resources/makaan/css/user-post.css" rel="stylesheet" type="text/css" />
+		<script src="/resources/makaan/js/jquery-3.4.1.min.js"></script>
+		<link href="/resources/makaan/css/user-post.css" rel="stylesheet"
+			type="text/css" />
 		<script src="https://cdn.jsdelivr.net/npm/ol@v7.4.0/dist/ol.js" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" />
+		<link rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" />
 	</ui:define>
 	<ui:define name="customOutputScript">
 		<script src="resources/makaan/js/post-card.js" />
@@ -26,7 +28,9 @@
 					<p:tabView id="tabView" style="border:1px solid #ddd !important"
 						activeIndex="#{userPostCardController.activeIndex}"
 						binding="#{userPostCardController.tabView}">
-						<p:ajax event="tabChange"   listener="#{userPostCardController.onTabChange}" oncomplete="showTheMap();" />
+						<p:ajax event="tabChange"
+							listener="#{userPostCardController.onTabChange}"
+							oncomplete="showTheMap();" />
 
 						<p:tab id="realestate" title="#{bundle.real_estates}"
 							rendered="#{!userPostCardController.hideRealEsateTab()}">
@@ -43,12 +47,14 @@
 
 					<div class="row">
 						<div class="col-md-12">
+							<div class="alert alert-info mt-2" role="alert">#{bundle.click_on_map}</div>
+						</div>
+						<div class="col-md-12">
 							<div id="map" style="width: 100%; height: 500px;" />
 						</div>
 					</div>
 				</div>
 			</div>
-
 			<div id="marker" style="display: none;">
 				<h:graphicImage value="/resources/images/marker.png" alt="marker"
 					style="height: 3rem;  width: 1.5rem;" />
@@ -62,7 +68,8 @@
 				<h:inputHidden id="lng" value="#{userPostCardController.lng}" />
 				<h:inputHidden id="title" value="#{userPostCardController.title}" />
 				<h:inputHidden id="kind" value="#{userPostCardController.kindEnum}" />
-				<h:inputHidden id="postType" value="#{userPostCardController.postType}" />
+				<h:inputHidden id="postType"
+					value="#{userPostCardController.postType}" />
 			</h:panelGroup>
 		</div>
 	</ui:define>

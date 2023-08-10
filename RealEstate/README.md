@@ -231,11 +231,9 @@ lh manak 3mil padding lal safha lzm ykon el jawenib white  --to discusion with y
 
  /******
 /
-new 
-userPost-card badak tkbos marten 3ala kabset el save la  trouh ( aw2t 3am t3ale2)
+new  userPost-card badak tkbos marten 3ala kabset el save la  trouh ( aw2t 3am t3ale2)
 
 
-by default kon mkhtar whde menon whde 
-lal apprement for rent aw sale hol
+by default kon mkhtar whde menon whde  lal apprement for rent aw sale hol
 
 fo2 l map hot eno lzm nkon mkhtarin shi khaso bel map 
