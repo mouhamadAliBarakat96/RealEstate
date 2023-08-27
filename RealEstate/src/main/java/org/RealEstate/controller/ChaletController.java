@@ -188,6 +188,10 @@ public class ChaletController implements Serializable {
 		String url = request.getRequestURL().toString();
 		try {
 
+			
+			url = Utils.replaceHost(url, appSinglton.getRealDns());
+			
+			
 			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", id + "");
 
 		} catch (IOException e) {

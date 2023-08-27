@@ -334,4 +334,17 @@ public class Utils {
 
 		return matcher.matches();
 	}
+
+	public static String replaceHost(String originalUrl, String newHost) {
+		int startIndex = originalUrl.indexOf("://") + 3; // Find the start of the host
+		int endIndex = originalUrl.indexOf(":", startIndex); // Find the end of the host
+
+		if (startIndex >= 0 && endIndex >= 0) {
+			String oldHost = originalUrl.substring(startIndex, endIndex);
+			return originalUrl.replace(oldHost, newHost);
+		}
+
+		return originalUrl;
+	}
+
 }

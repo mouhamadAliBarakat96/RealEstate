@@ -17,8 +17,10 @@ import javax.servlet.http.HttpSession;
 
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
+import org.RealEstate.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Faces;
 
@@ -46,6 +48,9 @@ public class LoginController implements Serializable {
 
 	private String from_url = "";
 
+	@Inject
+	private AppSinglton appSinglton;
+
 	@PostConstruct
 	public void init() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -68,6 +73,7 @@ public class LoginController implements Serializable {
 			Map<String, String> requestParamMap = FacesContext.getCurrentInstance().getExternalContext()
 					.getRequestParameterMap();
 			User user;
+			// todo change fbId to final static String
 			if (requestParamMap.containsKey("fbId")) {
 				fbId = requestParamMap.get("fbId");
 
@@ -118,6 +124,8 @@ public class LoginController implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
+		url = Utils.replaceHost(url, appSinglton.getRealDns());
+
 		try {
 
 			Faces.redirect(url);
@@ -130,7 +138,7 @@ public class LoginController implements Serializable {
 	private void requestFromUrl() {
 		try {
 			FacesContext context = FacesContext.getCurrentInstance();
-			ExternalContext externalContext=context.getExternalContext();
+			ExternalContext externalContext = context.getExternalContext();
 			String request = externalContext.getRequestContextPath();
 			externalContext.redirect(request.concat(from_url));
 		} catch (IOException e) {

@@ -144,7 +144,7 @@ public class TemplateController implements Serializable {
 	}
 
 	private String getValue(java.lang.String key) {
-		ResourceBundle bundle = ResourceBundle.getBundle("resources.Bundle");
+		ResourceBundle bundle = ResourceBundle.getBundle("resources.bundle");
 		return bundle.getString(key);
 	}
 

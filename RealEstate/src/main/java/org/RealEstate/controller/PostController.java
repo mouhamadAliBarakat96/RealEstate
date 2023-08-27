@@ -200,6 +200,8 @@ public class PostController implements Serializable {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
+			
+			url = Utils.replaceHost(url, appSinglton.getRealDns());
 
 			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", id + "");
 

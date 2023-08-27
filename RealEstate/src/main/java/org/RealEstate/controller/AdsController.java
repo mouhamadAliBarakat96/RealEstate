@@ -1,6 +1,5 @@
 package org.RealEstate.controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.RealEstate.dto.ImageDto;
 import org.RealEstate.facade.AdsFacade;
 import org.RealEstate.model.Ads;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.service.UploadImagesMultiPart;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utils;
 import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
@@ -44,6 +45,9 @@ public class AdsController implements Serializable {
 
 	private String ipAddressWithPort;
 
+	@javax.inject.Inject
+	private AppSinglton appSinglton;
+
 	@PostConstruct
 	public void init() {
 		pageItems = adsFacade.findAll();
@@ -55,7 +59,6 @@ public class AdsController implements Serializable {
 		fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 				.concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/")
 				.concat(ads.getUrl() == null ? "" : ads.getUrl());
-
 
 		Ajax.oncomplete("PF('dlg3').show()");
 		Ajax.update("image");
@@ -95,10 +98,10 @@ public class AdsController implements Serializable {
 			adsFacade.getEm().detach(adsToSave);
 			adsToSave = new Ads();
 			imageDto = new ImageDto();
-			//pageItems = adsFacade.findAll();
-			//Ajax.oncomplete("PF('tableWidget').filter()");
-			//CommonUtility.addMessageToFacesContext(" save_success ", "success");
-			
+			// pageItems = adsFacade.findAll();
+			// Ajax.oncomplete("PF('tableWidget').filter()");
+			// CommonUtility.addMessageToFacesContext(" save_success ", "success");
+
 			changeUrl();
 
 		} catch (Exception e) {
@@ -108,22 +111,23 @@ public class AdsController implements Serializable {
 		}
 
 	}
-	
-	private void changeUrl( ) {
-		
+
+	private void changeUrl() {
+
 		try {
 			FacesContext context = FacesContext.getCurrentInstance();
+
 			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 			String url = request.getRequestURL().toString();
-			Faces.redirect(url );
-			
-		}
-		
-		catch(Exception e) {
-e.printStackTrace();			
+			url = Utils.replaceHost(url, appSinglton.getRealDns());
+			Faces.redirect(url);
+
 		}
 
-	
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void remove(Ads item) {

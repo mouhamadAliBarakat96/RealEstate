@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.model.User;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.service.UserService;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
@@ -42,6 +43,9 @@ public class SignUpController implements Serializable {
 	@Inject
 	private HttpServletRequest request;
 
+	@Inject
+	private  AppSinglton appSinglton ;
+	
 	@PostConstruct
 	public void init() {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
@@ -119,6 +123,7 @@ public class SignUpController implements Serializable {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
+			url = Utils.replaceHost(url, appSinglton.getRealDns());
 
 			Faces.redirect(url);
 

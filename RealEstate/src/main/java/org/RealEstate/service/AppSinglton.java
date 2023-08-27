@@ -57,11 +57,15 @@ public class AppSinglton implements Serializable {
 	@EJB
 	private ChaletFacade chaletFacade;
 
+	private String realDns;
+
 	@PostConstruct
 	public void init() {
 		prepareData();
 
 		try {
+
+			realDns = System.getProperty("server.dns");
 
 			String timerPostExpireDate = "11-11-2001 23:00";
 			Calendar postExpire = Calendar.getInstance();
@@ -83,7 +87,6 @@ public class AppSinglton implements Serializable {
 									.minute(String.valueOf(postBoost.get(Calendar.MINUTE))),
 							new TimerConfig("POST_BOOST", false));
 
-			
 			chaletFacade.updatePostBoost();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,9 +110,6 @@ public class AppSinglton implements Serializable {
 
 			break;
 
-			
-			
-			
 		}
 
 	}
@@ -302,6 +302,14 @@ public class AppSinglton implements Serializable {
 
 	public void setPostBadgePay(int postBadgePay) {
 		this.postBadgePay = postBadgePay;
+	}
+
+	public String getRealDns() {
+		return realDns;
+	}
+
+	public void setRealDns(String realDns) {
+		this.realDns = realDns;
 	}
 
 }

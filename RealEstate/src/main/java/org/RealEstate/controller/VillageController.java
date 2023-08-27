@@ -19,7 +19,9 @@ import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.interfaces.ICRUDOperations;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Village;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.CommonUtility;
+import org.RealEstate.utils.Utils;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 
@@ -41,6 +43,8 @@ public class VillageController extends AbstractController<Village> implements Se
 	@Param(name = "id")
 	private long id;
 	private final String REQUEST_PARAM = "id";
+
+	private AppSinglton appSinglton;
 
 	@PostConstruct
 	public void init() {
@@ -67,7 +71,7 @@ public class VillageController extends AbstractController<Village> implements Se
 			}
 		}
 	}
-	
+
 	public void save(boolean isSaveAndNew) {
 		try {
 			if (getItem().getId() <= 0) {
@@ -90,18 +94,18 @@ public class VillageController extends AbstractController<Village> implements Se
 		}
 
 	}
-	
-	
+
 	private void changeUrl(boolean isSaveAndNew) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
+		url = Utils.replaceHost(url, appSinglton.getRealDns());
 		try {
 			if (!isSaveAndNew) {
 				Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", getItem().getId() + "");
 
 			} else {
-				Faces.redirect(url+"?");
+				Faces.redirect(url + "?");
 
 			}
 
@@ -109,7 +113,6 @@ public class VillageController extends AbstractController<Village> implements Se
 			e.printStackTrace();
 		}
 	}
-	
 
 	public Village getVillage() {
 		return village;

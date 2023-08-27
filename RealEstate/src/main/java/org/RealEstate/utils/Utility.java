@@ -32,6 +32,7 @@ public class Utility {
 	}
 
 	public static String getMessage(String key, String bundle) {
+		
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(bundle);
 		MessageFormat msgFormat = new MessageFormat(resourceBundle.getString(key));
 		return msgFormat.format(null);

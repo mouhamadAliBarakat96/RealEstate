@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.RealEstate.facade.GovernorateFacade;
 import org.RealEstate.interfaces.ICRUDOperations;
 import org.RealEstate.model.Governorate;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Utility;
+import org.RealEstate.utils.Utils;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 
@@ -33,6 +35,9 @@ public class GovernorateController extends AbstractController<Governorate> imple
 	@Param(name = "id")
 	private long id;
 	private final String REQUEST_PARAM = "id";
+
+	@Inject
+	private AppSinglton appSinglton;
 
 	@PostConstruct
 	public void init() {
@@ -87,6 +92,9 @@ public class GovernorateController extends AbstractController<Governorate> imple
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
+
+		url = Utils.replaceHost(url, appSinglton.getRealDns());
+
 		try {
 			if (!isSaveAndNew) {
 				Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", getItem().getId() + "");
