@@ -88,18 +88,8 @@ public class LoginController implements Serializable {
 					HttpSession session = request.getSession(true);
 					session.setAttribute(Constants.USER_SESSION, user);
 
-					FacesContext facesContext = FacesContext.getCurrentInstance();
-					ExternalContext externalContext = facesContext.getExternalContext();
-
-					// Map<String, Object> flash = externalContext.getFlash();
-					// String currentUrl = (String) flash.get(Constants.CURRENT_URL);
-
-					if (!StringUtils.isBlank(from_url)) {
-						// Redirect to default page after successful login
-						requestFromUrl();
-					} else {
-						externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
-					}
+					// Redirect to default page after successful login
+					requestFromUrl();
 				}
 
 			} else {
@@ -138,9 +128,17 @@ public class LoginController implements Serializable {
 	private void requestFromUrl() {
 		try {
 			FacesContext context = FacesContext.getCurrentInstance();
-			ExternalContext externalContext = context.getExternalContext();
-			String request = externalContext.getRequestContextPath();
-			externalContext.redirect(request.concat(from_url));
+			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+			String url = request.getRequestURL().toString();
+			String requestUri = request.getRequestURI();
+			
+			if (!StringUtils.isEmpty(from_url)) {
+				url = url.replace(requestUri, from_url);
+			} else {
+				url = url.replace(requestUri, "/index.xhtml");
+			}
+			url = Utils.replaceHost(url, appSinglton.getRealDns());
+			Faces.redirect(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -161,18 +159,9 @@ public class LoginController implements Serializable {
 				HttpSession session = request.getSession(true);
 				session.setAttribute(Constants.USER_SESSION, user);
 
-				FacesContext facesContext = FacesContext.getCurrentInstance();
-				ExternalContext externalContext = facesContext.getExternalContext();
-
-				// Map<String, Object> flash = externalContext.getFlash();
-				// String currentUrl = (String) flash.get(Constants.CURRENT_URL);
-
-				if (!StringUtils.isBlank(from_url)) {
-					// Redirect to default page after successful login
-					requestFromUrl();
-				} else {
-					externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
-				}
+			 	// Redirect to default page after successful login
+				requestFromUrl();
+				 
 			}
 
 		} catch (Exception e) {
