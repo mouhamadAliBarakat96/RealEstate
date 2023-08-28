@@ -34,9 +34,11 @@ import org.RealEstate.model.GoogleMapAttribute;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.service.UploadImagesMultiPart;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
+import org.RealEstate.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
@@ -67,6 +69,8 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private RealEstateFacade estateFacade;
 	@Inject
 	private VillageFacade villageFacade;
+	@Inject
+	private AppSinglton appSinglton;
 
 	private List<Village> villages = new ArrayList<Village>();
 
@@ -514,17 +518,21 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
+		url = Utils.replaceHost(url, appSinglton.getRealDns());
 		try {
 			Faces.redirect(url + "?id=" + chalet.getId() + "&kind=" + PropertyKindEnum.CHALET);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	private void changeUrl(RealEstate estate) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
+		url = Utils.replaceHost(url, appSinglton.getRealDns());
 		try {
 			Faces.redirect(url + "?id=" + estate.getId() + "&kind=" + PropertyKindEnum.REALESTATE);
 
