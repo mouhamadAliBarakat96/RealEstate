@@ -557,3 +557,20 @@ body .ui-selectbooleanbutton, body .ui-selectonebutton>.ui-button, body .ui-sele
 .max-width388 {
     max-width: 388px;
 }
+
+.gallery-item {
+  position: relative;
+  display: inline-block;
+}
+
+.gallery-item .delete-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.ui-galleria-item {
+    justify-content: space-between;
+    flex-direction: column;
+}
