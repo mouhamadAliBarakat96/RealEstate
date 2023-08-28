@@ -70,20 +70,20 @@ public class UserMangment implements Serializable {
 	}
 
 	
-	@GET
-	@Path("/v1/{id}")
-
-	@Produces(MediaType.APPLICATION_JSON)
-
-	public Response findAllUser(@PathParam("id") Long id) {
-		try {
-			return userService.find(id);
-		} catch (Exception e) {
-			return analyzeException(e);
-
-		}
-
-	}
+	/*
+	 * @GET
+	 * 
+	 * @Path("/v1/{id}")
+	 * 
+	 * @Produces(MediaType.APPLICATION_JSON)
+	 * 
+	 * public Response findAllUser(@PathParam("id") Long id) { try { return
+	 * userService.find(id); } catch (Exception e) { return analyzeException(e);
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 
 	/*
 	 * @GET
