@@ -35,21 +35,19 @@
 											alt="the photos"
 											style="width: 100%;height: 23rem; display: block">
 										</p:graphicImage>
-
-										<p:commandButton value="#{bundle.show_photos}"
-											icon="pi pi-external-link" styleClass="col-md-12"
-											onclick="PF('chaletGallerie').show()" process="@this"
-											partialSubmit="true">
-										</p:commandButton>
-
 										<p:galleria widgetVar="chaletGallerie"
 											value="#{chaletCardController.item.images}" var="photo"
 											numVisible="4" circular="true" fullScreen="true"
 											showItemNavigators="true" showThumbnails="false"
-											style="max-width: 40%">
+											style="max-width: 40%"
+											responsiveOptions="#{chaletCardController.responsiveOptions1}">
 											<p:graphicImage url="#{chaletCardController.fullUrl}#{photo}"
 												alt="the photos" style="width: 100%; display: block" />
 										</p:galleria>
+										<p:commandButton value="#{bundle.show_photos}"
+											icon="pi pi-external-link" styleClass="col-md-12"
+											onclick="PF('chaletGallerie').show()" process="@this">
+										</p:commandButton>
 									</div>
 								</div>
 								<div class="col-md-8 ">

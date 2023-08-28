@@ -181,4 +181,12 @@ public class ChaletCardController implements Serializable {
 		responsiveOptions1.add(new ResponsiveOption("560px", 1));
 	}
 
+	public List<ResponsiveOption> getResponsiveOptions1() {
+		return responsiveOptions1;
+	}
+
+	public void setResponsiveOptions1(List<ResponsiveOption> responsiveOptions1) {
+		this.responsiveOptions1 = responsiveOptions1;
+	}
+
 }
