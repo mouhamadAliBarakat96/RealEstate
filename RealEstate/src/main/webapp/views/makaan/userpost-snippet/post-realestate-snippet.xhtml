@@ -274,6 +274,32 @@
 							</h:inputTextarea>
 						</div>
 					</div>
+					
+					<div class="col-md-12">
+						<p:remoteCommand name="rc"
+							actionListener="#{userPostCardController.changeActiveIndex}"
+							oncomplete="PF('galleria1').show()" />
+						<p:galleria widgetVar="galleria1" rendered="#{userPostCardController.item.images.size() >0}"
+							value="#{userPostCardController.item.images}" var="photo"
+							numVisible="4" id="realGalleria"  
+							responsiveOptions="#{userPostCardController.responsiveOptions1}"
+							circular="true" fullScreen="true" showItemNavigators="true"
+							showThumbnails="false" style="max-width: 40%">
+							<p:graphicImage styleClass="gallery-item mt-2"   
+								url="#{userPostCardController.fullUrl}#{photo}"
+								alt="the photos" style="width: 100%; display: block" />
+							<p:commandButton process="@this" value="#{bundle.delete}"  onclick="closeGalleria();"
+								action="#{userPostCardController.deleteRealPhoto(photo)}"  update="myForm:tabView:imagesPhotos  myForm:tabView:realGalleria" />
+						</p:galleria>
+
+						<h:panelGroup id="imagesPhotos">
+							<p:commandButton rendered="#{userPostCardController.item.images.size() >0}" value="#{bundle.show_photos}"
+								partialSubmit="true" styleClass="col-md-12"
+								icon="pi pi-external-link"
+								onclick="$('.navbar').addClass('hidden');PF('galleria1').show();"
+								process="@this" />
+						</h:panelGroup>
+					</div>
 
 					<div class="col-md-12 mt-3">
 

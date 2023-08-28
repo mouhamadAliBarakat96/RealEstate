@@ -92,6 +92,34 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-md-12">
+			<p:remoteCommand name="rc"
+				actionListener="#{userPostCardController.changeActiveIndex}"
+				oncomplete="PF('chaletgalleriawgvar').show()" />
+			<p:galleria widgetVar="chaletgalleriawgvar" rendered="#{userPostCardController.chalet.images.size() >0}"
+				value="#{userPostCardController.chalet.images}" var="photo"
+				numVisible="4" id="chaletGalleria"
+				responsiveOptions="#{userPostCardController.responsiveOptions1}"
+				circular="true" fullScreen="true" showItemNavigators="true"
+				showThumbnails="false" style="max-width: 40%">
+				<p:graphicImage styleClass="gallery-item mt-2"
+					url="#{userPostCardController.fullUrl}#{photo}" alt="the photos"
+					style="width: 100%; display: block" />
+				<p:commandButton process="@this" value="#{bundle.delete}"
+					onclick="closeGalleria();"
+					action="#{userPostCardController.deleteChaletPhoto(photo)}"
+					update="myForm:tabView:imagesChaletPhotos  myForm:tabView:chaletGalleria" />
+			</p:galleria>
+
+			<h:panelGroup id="imagesChaletPhotos">
+				<p:commandButton
+					rendered="#{userPostCardController.chalet.images.size() >0}"
+					value="#{bundle.show_photos}" partialSubmit="true"
+					styleClass="col-md-12" icon="pi pi-external-link"
+					onclick="$('.navbar').addClass('hidden');PF('chaletgalleriawgvar').show();"
+					process="@this" />
+			</h:panelGroup>
+		</div>
 		<div class="col-md-12 mt-3">
 			<h:form>
 				<p:fileUpload id="uploadImageChalet"

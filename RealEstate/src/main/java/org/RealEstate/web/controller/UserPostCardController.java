@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -29,6 +30,7 @@ import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.interfaces.ICRUDOperations;
+import org.RealEstate.model.AppratmentRent;
 import org.RealEstate.model.Chalet;
 import org.RealEstate.model.GoogleMapAttribute;
 import org.RealEstate.model.RealEstate;
@@ -45,6 +47,7 @@ import org.omnifaces.util.Faces;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.TabChangeEvent;
+import org.primefaces.model.ResponsiveOption;
 import org.primefaces.model.file.UploadedFiles;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
@@ -96,6 +99,11 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private String title;
 	private double lat;
 	private double lng;
+	
+	private List<ResponsiveOption> responsiveOptions1;
+	private int galleriaIndex = 0;
+	private String fullUrl = "";
+	private String ipAddressWithPort;
 
 	@PostConstruct
 	public void init() {
@@ -111,6 +119,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				e.printStackTrace();
 			}
 		} else {
+			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 			villages = villageFacade.findAll();
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
@@ -122,7 +131,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				else {
 					// add new post
 					chalet = new Chalet();
-					item = null;
+					item = new AppratmentRent();
 				}
 
 			}
@@ -134,7 +143,15 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		User user = (User) session.getAttribute(Constants.USER_SESSION);
 		return user;
 	}
-
+	public String getIpAddressWithPort() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		String ipAddress = request.getRemoteAddr();
+		int port = request.getLocalPort();
+		ipAddressWithPort = ipAddress + ":" + port;
+		System.out.println(ipAddressWithPort);
+		return ipAddressWithPort;
+	}
 	public void handleFileUploadReal(FileUploadEvent event) {
 			/*if (item.getImages().isEmpty()) {
 				int targetwidth = 388;
@@ -366,7 +383,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_200");
 				hasErrorEntries = true;
 			}
-			if (item.getSpace() * 4 < item.getPrice()) {
+			if (item.getSpace() * 4 > item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
 				hasErrorEntries = true;
 			}
@@ -449,6 +466,11 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			}
 
 			if (chaletValidationFields()) {
+				return;
+			}
+			
+			if (chalet.getImages().size() == 0) {
+				Utility.addWarningMessage("please_add_at_least_one_photo");
 				return;
 			}
 
@@ -701,5 +723,48 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	public void addMarker() {
 		mapModel.getMarkers().clear();
 		Ajax.oncomplete("loadPointOnMap();");
+	}
+	
+	public void changeActiveIndex() {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		this.galleriaIndex = Integer.valueOf(params.get("index"));
+	}
+	public void addToResponsiveImages() {
+		responsiveOptions1 = new ArrayList<ResponsiveOption>();
+		responsiveOptions1.add(new ResponsiveOption("1024px", 5));
+		responsiveOptions1.add(new ResponsiveOption("768px", 3));
+		responsiveOptions1.add(new ResponsiveOption("560px", 1));
+	}
+
+	public List<ResponsiveOption> getResponsiveOptions1() {
+		return responsiveOptions1;
+	}
+
+	public void setResponsiveOptions1(List<ResponsiveOption> responsiveOptions1) {
+		this.responsiveOptions1 = responsiveOptions1;
+	}
+
+	public int getGalleriaIndex() {
+		return galleriaIndex;
+	}
+
+	public void setGalleriaIndex(int galleriaIndex) {
+		this.galleriaIndex = galleriaIndex;
+	}
+
+	public String getFullUrl() {
+		return fullUrl;
+	}
+
+	public void setFullUrl(String fullUrl) {
+		this.fullUrl = fullUrl;
+	}
+
+	public void deleteRealPhoto(String image) {
+		this.item.removeFromPhotos(image);
+	}
+
+	public void deleteChaletPhoto(String image) {
+		this.chalet.removeFromPhotos(image);
 	}
 }

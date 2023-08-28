@@ -560,17 +560,16 @@ body .ui-selectbooleanbutton, body .ui-selectonebutton>.ui-button, body .ui-sele
 
 .gallery-item {
   position: relative;
-  display: inline-block;
-}
-
-.gallery-item .delete-icon {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .ui-galleria-item {
-    justify-content: space-between;
     flex-direction: column;
+}
+
+.hidden {
+	display: none;
+}
+.visible {
+	display: '';
 }

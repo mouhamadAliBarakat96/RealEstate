@@ -344,4 +344,7 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 		this.isVerfied = isVerfied;
 	}
 
+	public void removeFromPhotos(String image) {
+		this.images.remove(image);
+	}
 }
