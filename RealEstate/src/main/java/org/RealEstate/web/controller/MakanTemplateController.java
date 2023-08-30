@@ -52,13 +52,13 @@ public class MakanTemplateController implements Serializable {
 	private List<Ads> adsList;
 
 	private String fullUrlAdsImage = "";
-<<<<<<< Upstream, based on origin/development
+ 
 
 	@Inject
 	private AppSinglton appSinglton ;
-=======
+ 
 	private Locale locale;
->>>>>>> 7e4ec34 fix languages
+ 
 	
 	@PostConstruct
 	public void init() {
