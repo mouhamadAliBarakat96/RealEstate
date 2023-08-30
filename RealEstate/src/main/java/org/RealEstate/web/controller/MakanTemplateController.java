@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -51,15 +52,20 @@ public class MakanTemplateController implements Serializable {
 	private List<Ads> adsList;
 
 	private String fullUrlAdsImage = "";
+<<<<<<< Upstream, based on origin/development
 
 	@Inject
 	private AppSinglton appSinglton ;
+=======
+	private Locale locale;
+>>>>>>> 7e4ec34 fix languages
 	
 	@PostConstruct
 	public void init() {
 		HttpSession session = request.getSession(true);
 		user = (User) session.getAttribute(Constants.USER_SESSION);
-		FacesContext.getCurrentInstance().getViewRoot().setLocale(languageController.getLocale());
+		locale=languageController.getLocale();
+		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
 		adsList = adsFacade.findAll();
 		fullUrlAdsImage = fullUrlAdsImage.concat(getIpAddressWithPort()).concat("/")
 				.concat(Constants.IMAGES).concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/");
@@ -89,32 +95,32 @@ public class MakanTemplateController implements Serializable {
 		List<MenuItem> menu = new ArrayList<>();
 		MenuItem m1 = null;
 
-		m1 = new MenuItem(Utility.getMessage("real_estates"), "", "index-page", true, "nav-item nav-link active",
+		m1 = new MenuItem(languageController.getMessage("real_estates"), "", "index-page", true, "nav-item nav-link active",
 				PropertyKindEnum.REALESTATE.toString());
 		menu.add(m1);
 
-		m1 = new MenuItem(Utility.getMessage("chalets"), "", "index-page", true, "nav-item nav-link",
+		m1 = new MenuItem(languageController.getMessage("chalets"), "", "index-page", true, "nav-item nav-link",
 				PropertyKindEnum.CHALET.toString());
 		menu.add(m1);
 
-		m1 = new MenuItem(Utility.getMessage("add_new"), "", "userpost-card", true, "nav-item nav-link", "post-card");
+		m1 = new MenuItem(languageController.getMessage("add_new"), "", "userpost-card", true, "nav-item nav-link", "post-card");
 		menu.add(m1);
 
-		m1 = new MenuItem(Utility.getMessage("my_posts"), "", "userpost-list", true, "nav-item nav-link", "post-list");
+		m1 = new MenuItem(languageController.getMessage("my_posts"), "", "userpost-list", true, "nav-item nav-link", "post-list");
 		menu.add(m1);
 
-		m1 = new MenuItem(Utility.getMessage("contact_us"), "", "contact-us", true, "nav-item nav-link", "contact-us");
+		m1 = new MenuItem(languageController.getMessage("contact_us"), "", "contact-us", true, "nav-item nav-link", "contact-us");
 		menu.add(m1);
 
 		if (user == null) {
-			m1 = new MenuItem(Utility.getMessage("login"), "", "login-user", true, "nav-item nav-link", "login");
+			m1 = new MenuItem(languageController.getMessage("login"), "", "login-user", true, "nav-item nav-link", "login");
 			menu.add(m1);
 
-			m1 = new MenuItem(Utility.getMessage("register"), "", "signup", true, "nav-item nav-link", "register");
+			m1 = new MenuItem(languageController.getMessage("register"), "", "signup", true, "nav-item nav-link", "register");
 			menu.add(m1);
 
 		} else {
-			m1 = new MenuItem(Utility.getMessage("user-information"), "", "user-information-front-end", true,
+			m1 = new MenuItem(languageController.getMessage("user-information"), "", "user-information-front-end", true,
 					"nav-item nav-link", "user-information-front-end");
 			menu.add(m1);
 
@@ -157,7 +163,7 @@ public class MakanTemplateController implements Serializable {
 	}
 
 	public String showRealEstateTitle() {
-		return Utility.getMessage("house_and_land");
+		return languageController.getMessage("house_and_land");
 	}
 
 	public void logout() {

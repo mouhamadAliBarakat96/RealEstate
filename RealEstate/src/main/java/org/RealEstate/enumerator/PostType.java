@@ -14,15 +14,15 @@ import org.RealEstate.utils.Utility;
 
 public enum PostType {
 
-	APPRATMENT_RENT(Utility.getMessage("appartment_rent"),Utility.getMessage("appartment_rent",Utility.BUNDLE_FILE_NAME_AR)),
-	APPRATMENT_SELL(Utility.getMessage("appartment_sell"),Utility.getMessage("appartment_sell",Utility.BUNDLE_FILE_NAME_AR)),
-	LAND(Utility.getMessage("land"),Utility.getMessage("land",Utility.BUNDLE_FILE_NAME_AR)),
-	SHOP_RENT(Utility.getMessage("shop_rent"),Utility.getMessage("shop_rent",Utility.BUNDLE_FILE_NAME_AR)),
-	SHOP_SELL(Utility.getMessage("shop_sell"),Utility.getMessage("shop_sell",Utility.BUNDLE_FILE_NAME_AR)),
-	OFFICE_RENT(Utility.getMessage("office_rent"),Utility.getMessage("office_rent",Utility.BUNDLE_FILE_NAME_AR)),
-	OFFICE_SELL(Utility.getMessage("office_sell"),Utility.getMessage("office_sell",Utility.BUNDLE_FILE_NAME_AR)),
-	STORE_HOUSE_SELL(Utility.getMessage("store_house_sell"),Utility.getMessage("store_house_sell",Utility.BUNDLE_FILE_NAME_AR)),
-	STORE_HOUSE_RENT(Utility.getMessage("store_house_rent"),Utility.getMessage("store_house_rent",Utility.BUNDLE_FILE_NAME_AR));
+	APPRATMENT_RENT(Utility.getMessage("appartment_rent"),Utility.getMessage_ar("appartment_rent")),
+	APPRATMENT_SELL(Utility.getMessage("appartment_sell"),Utility.getMessage_ar("appartment_sell")),
+	LAND(Utility.getMessage("land"),Utility.getMessage_ar("land")),
+	SHOP_RENT(Utility.getMessage("shop_rent"),Utility.getMessage_ar("shop_rent")),
+	SHOP_SELL(Utility.getMessage("shop_sell"),Utility.getMessage_ar("shop_sell")),
+	OFFICE_RENT(Utility.getMessage("office_rent"),Utility.getMessage_ar("office_rent")),
+	OFFICE_SELL(Utility.getMessage("office_sell"),Utility.getMessage_ar("office_sell")),
+	STORE_HOUSE_SELL(Utility.getMessage("store_house_sell"),Utility.getMessage_ar("store_house_sell")),
+	STORE_HOUSE_RENT(Utility.getMessage("store_house_rent"),Utility.getMessage_ar("store_house_rent"));
 	
 	private String name;
 	private String name_ar;

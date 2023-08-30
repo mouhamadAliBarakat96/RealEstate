@@ -4,8 +4,8 @@ import org.RealEstate.utils.Utility;
 
 public enum YesNoEnum {
 
-	YES(Utility.getMessage("answer_yes"),Utility.getMessage("answer_yes",Utility.BUNDLE_FILE_NAME_AR)),
-	NO(Utility.getMessage("answer_no"),Utility.getMessage("answer_no",Utility.BUNDLE_FILE_NAME_AR));
+	YES(Utility.getMessage("answer_yes"),Utility.getMessage_ar("answer_yes")),
+	NO(Utility.getMessage("answer_no"),Utility.getMessage_ar("answer_no"));
 
 	private String answer;
 	private String answer_ar;

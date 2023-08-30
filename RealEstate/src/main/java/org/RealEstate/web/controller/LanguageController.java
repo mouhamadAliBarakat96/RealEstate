@@ -1,16 +1,16 @@
 package org.RealEstate.web.controller;
 
 import java.io.Serializable;
-import java.util.List;
+import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
+import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import org.RealEstate.dto.MenuItem;
 import org.RealEstate.enumerator.LanguageEnum;
-import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.utils.Utility;
 
 @SessionScoped
@@ -29,12 +29,13 @@ public class LanguageController implements Serializable {
 		if (lang == LanguageEnum.RTL) {
 			locale = new Locale("ar");
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-
-			Utility.changeBundleName("resources.bundle_ar");
+//			Utility.changeBundleName("resources.bundle_ar");
+			setBundle_name("resources.bundle_ar");
 		} else {
 			locale = new Locale("en");
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-			Utility.changeBundleName("resources.bundle");
+//			Utility.changeBundleName("resources.bundle");
+			setBundle_name("resources.bundle") ;
 		}
 
 		this.languageEnum = lang;
@@ -43,15 +44,20 @@ public class LanguageController implements Serializable {
 	public void changeLang(LanguageEnum lang) {
 		if (lang == LanguageEnum.RTL) {
 			setBundle_name("resources.bundle_ar");
-			Utility.changeBundleName("resources.bundle_ar");
+//			Utility.changeBundleName("resources.bundle_ar");
 		} else {
 			setBundle_name("resources.bundle");
-			Utility.changeBundleName("resources.bundle");
+//			Utility.changeBundleName("resources.bundle");
 		}
 		this.languageEnum = lang;
 	}
-	
- 
+
+	public String getMessage(String key) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(bundle_name);
+		MessageFormat msgFormat = new MessageFormat(resourceBundle.getString(key));
+		return msgFormat.format(null);
+	}
+
 	public LanguageEnum getLanguageEnum() {
 		return languageEnum;
 	}

@@ -65,7 +65,8 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	private PostType postType=PostType.APPRATMENT_RENT;
 	private PropertyKindEnum kindEnum = PropertyKindEnum.REALESTATE;
-
+	@Inject
+	private LanguageController sessionLanguage;
 	@Inject
 	private ChaletFacade chaletFacade;
 	@Inject
@@ -321,7 +322,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		} else if (kindEnum == PropertyKindEnum.CHALET) {
 			saveChalet();
 		} else {
-			Utility.addErrorMessage("no such tab found to save");
+			Utility.addErrorMessage("no such tab found to save",sessionLanguage.getLocale());
 		}
 	}
 
@@ -358,81 +359,81 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		boolean hasErrorEntries = false;
 
 		if (item.getImages().size() > Constants.NB_IMAGE_IN_POST_ALLOWED) {
-			Utility.addErrorMessage("YOU_EXCEED_THE_LIMIT_SIZE_OF_PHOTOS");
+			Utility.addErrorMessage("YOU_EXCEED_THE_LIMIT_SIZE_OF_PHOTOS",sessionLanguage.getLocale());
 			hasErrorEntries = true;
 		}
 
 		if (item.getPostType() == PostType.APPRATMENT_RENT) {
 			if (item.getSpace() < 50) {
-				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50");
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 
 			}
 			if (item.getPrice() < 60) {
-				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 
 		} else if (item.getPostType() == PostType.APPRATMENT_SELL) {
 
 			if (item.getSpace() < 50) {
-				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50");
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 
 			if (item.getSpace() * 100 < item.getPrice()) {
-				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 
 		} else if (item.getPostType() == PostType.LAND) {
 
 			if (item.getSpace() < 200) {
-				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_200");
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_200",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 			if (item.getSpace() * 4 > item.getPrice()) {
-				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS");
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 		} else if (item.getPostType() == PostType.SHOP_RENT) {
 			if (item.getPrice() < 60) {
-				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 			if (item.getSpace() < 40) {
-				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40");
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 		} else if (item.getPostType() == PostType.SHOP_SELL) {
 
 			if (item.getSpace() * 100 < item.getPrice()) {
-				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 			if (item.getSpace() < 40) {
-				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40");
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 		} else if (item.getPostType() == PostType.OFFICE_RENT) {
 
 			if (item.getPrice() < 60) {
-				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 			if (item.getSpace() < 40) {
-				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40");
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 
 		} else if (item.getPostType() == PostType.OFFICE_SELL) {
 
 			if (item.getSpace() * 100 < item.getPrice()) {
-				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 			if (item.getSpace() < 40) {
-				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40");
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
 		}
@@ -445,22 +446,22 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 		if (StringUtils.isBlank(item.getTittle())) {
 			hasEmptyField = true;
-			Utility.addWarningMessage("title_is_required");
+			Utility.addWarningMessage("title_is_required",sessionLanguage.getLocale());
 		}
 
 		if (StringUtils.isBlank(item.getSubTittle())) {
 			hasEmptyField = true;
-			Utility.addWarningMessage("subtitle_is_required");
+			Utility.addWarningMessage("subtitle_is_required",sessionLanguage.getLocale());
 		}
 
 		if (item.getVillage() == null) {
 			hasEmptyField = true;
-			Utility.addWarningMessage("village_is_required");
+			Utility.addWarningMessage("village_is_required",sessionLanguage.getLocale());
 		}
 
 		if (item.getImages().size() == 0) {
 			hasEmptyField = true;
-			Utility.addWarningMessage("please_add_at_least_one_photo");
+			Utility.addWarningMessage("please_add_at_least_one_photo",sessionLanguage.getLocale());
 		}
 
 		return hasEmptyField;
@@ -478,7 +479,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			}
 			
 			if (chalet.getImages().size() == 0) {
-				Utility.addWarningMessage("please_add_at_least_one_photo");
+				Utility.addWarningMessage("please_add_at_least_one_photo",sessionLanguage.getLocale());
 				return;
 			}
 

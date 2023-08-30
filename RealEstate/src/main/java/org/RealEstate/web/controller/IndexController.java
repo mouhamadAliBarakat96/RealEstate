@@ -49,6 +49,8 @@ public class IndexController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final String NO_PHOTO = "nophoto.jpg";
 	@Inject
+	private LanguageController sessionLanguage;
+	@Inject
 	private GovernorateFacade governorateFacade;
 	@Inject
 	private DistrictFacade districtFacade;
@@ -257,7 +259,7 @@ public class IndexController implements Serializable {
 		// boolean searchFeildsError=false;
 
 		if (maxPrice != 0 && minPrice > maxPrice) {
-			Utility.addErrorMessage("min_price_mut_be _less_than_max");
+			Utility.addErrorMessage("min_price_mut_be _less_than_max",sessionLanguage.getLocale());
 			return;
 		}
 
@@ -276,12 +278,12 @@ public class IndexController implements Serializable {
 		realLazyModel.setExchangeRealEstateType(estateTypeEnum);
 		// RealLazyModel.setTotalCount(totalCount);
 
-		Utility.addSuccessMessage("search_complete");
+		Utility.addSuccessMessage("search_complete",sessionLanguage.getLocale());
 	}
 
 	public void chaletSearch() {
 		if (maxPrice != 0 && minPrice > maxPrice) {
-			Utility.addErrorMessage("min_price_mut_be _less_than_max");
+			Utility.addErrorMessage("min_price_mut_be _less_than_max",sessionLanguage.getLocale());
 			return;
 		}
 		chaletLazyModel.setUser(user != null ? user : null);
@@ -294,7 +296,7 @@ public class IndexController implements Serializable {
 				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
 		chaletLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
 
-		Utility.addSuccessMessage("search_complete");
+		Utility.addSuccessMessage("search_complete",sessionLanguage.getLocale());
 
 	}
 

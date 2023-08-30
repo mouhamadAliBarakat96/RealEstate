@@ -45,7 +45,8 @@ public class UserPostVieuxController implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	@Inject
+	private LanguageController sessionLanguage;
 	@Inject
 	private GovernorateFacade governorateFacade;
 	@Inject
@@ -225,7 +226,7 @@ public class UserPostVieuxController implements Serializable{
 		// boolean searchFeildsError=false;
 
 		if (maxPrice != 0 && minPrice > maxPrice) {
-			Utility.addErrorMessage("min_price_mut_be _less_than_max");
+			Utility.addErrorMessage("min_price_mut_be _less_than_max",sessionLanguage.getLocale());
 			return;
 		}
 
@@ -244,7 +245,7 @@ public class UserPostVieuxController implements Serializable{
 		realLazyModel.setExchangeRealEstateType(estateTypeEnum);
 		// RealLazyModel.setTotalCount(totalCount);
 
-		Utility.addSuccessMessage("search_complete");
+		Utility.addSuccessMessage("search_complete",sessionLanguage.getLocale());
 	}
 
 	public boolean hasRoomsAndBathRooms(PostType type) {
