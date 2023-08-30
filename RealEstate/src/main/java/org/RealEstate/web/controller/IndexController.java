@@ -33,6 +33,7 @@ import org.RealEstate.model.Governorate;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
@@ -98,6 +99,9 @@ public class IndexController implements Serializable {
 	private String ipAddressWithPort;
 	private ExchangeRealEstateType estateTypeEnum = null;
 
+	@Inject
+	private  AppSinglton appSinglton ;
+	
 	@PostConstruct
 	public void init() {
 		governorates = governorateFacade.findAll();
@@ -108,7 +112,7 @@ public class IndexController implements Serializable {
 		realLazyModel = new RealEstateLazyDataModel(realEstateFacade);
 		chaletLazyModel = new ChaletLazyDataModel(chaletFacade);
 
-		fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
+		fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 				.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
 		propertyKind = parameterPropertyKind();
@@ -130,13 +134,19 @@ public class IndexController implements Serializable {
 		return PropertyKindEnum.REALESTATE;
 	}
 
+
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
+		
 		String ipAddress = request.getRemoteAddr();
-		int port = request.getLocalPort();
-		ipAddressWithPort = ipAddress + ":" + port;
-		System.out.println(ipAddressWithPort);
+
+		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
+			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+		} else {
+			ipAddressWithPort = "https://" + ipAddress ;
+		}
+
 		return ipAddressWithPort;
 	}
 

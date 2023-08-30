@@ -22,6 +22,7 @@ import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.Chalet;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
 
 @Named
@@ -50,6 +51,9 @@ public class UserPostListController implements Serializable {
 	@Inject
 	private ChaletFacade chaletFacade;
 
+	@Inject
+	private AppSinglton appSinglton ;
+	
 	@PostConstruct
 	public void init() {
 		try {
@@ -68,7 +72,7 @@ public class UserPostListController implements Serializable {
 			String currentUrl = externalContext.getRequestServletPath();
 			externalContext.redirect("/user-login.xhtml?"+RQUEST_FROM+"="+currentUrl);
 		} else {
-			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
+			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 			realEstates = findUserRealEstates(user);
 			chalets = findUserChalets(user);
@@ -89,16 +93,22 @@ public class UserPostListController implements Serializable {
 		return user;
 	}
 
+
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
+		
 		String ipAddress = request.getRemoteAddr();
-		int port = request.getLocalPort();
-		ipAddressWithPort = ipAddress + ":" + port;
-		System.out.println(ipAddressWithPort);
+
+		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
+			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+		} else {
+			ipAddressWithPort = "https://" + ipAddress ;
+		}
+
 		return ipAddressWithPort;
 	}
-
+	
 	public boolean hasRoomsAndBathRooms(PostType type) {
 		if (type == null) {
 			return true;

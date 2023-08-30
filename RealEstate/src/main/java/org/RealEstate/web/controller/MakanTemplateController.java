@@ -20,6 +20,7 @@ import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.facade.AdsFacade;
 import org.RealEstate.model.Ads;
 import org.RealEstate.model.User;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.omnifaces.util.Faces;
@@ -51,25 +52,38 @@ public class MakanTemplateController implements Serializable {
 
 	private String fullUrlAdsImage = "";
 
+	@Inject
+	private AppSinglton appSinglton ;
+	
 	@PostConstruct
 	public void init() {
 		HttpSession session = request.getSession(true);
 		user = (User) session.getAttribute(Constants.USER_SESSION);
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(languageController.getLocale());
 		adsList = adsFacade.findAll();
-		fullUrlAdsImage = fullUrlAdsImage.concat("http://").concat(getIpAddressWithPort()).concat("/")
+		fullUrlAdsImage = fullUrlAdsImage.concat(getIpAddressWithPort()).concat("/")
 				.concat(Constants.IMAGES).concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/");
 
 	}
 
+	private String ipAddressWithPort ;
+
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
+		
 		String ipAddress = request.getRemoteAddr();
-		int port = request.getLocalPort();
-		return ipAddress + ":" + port;
 
+		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
+			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+		} else {
+			ipAddressWithPort = "https://" + ipAddress ;
+		}
+
+		return ipAddressWithPort;
 	}
+	
+	
 
 	public List<MenuItem> fillMenuItems() {
 		List<MenuItem> menu = new ArrayList<>();

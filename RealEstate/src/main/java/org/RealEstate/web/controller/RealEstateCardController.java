@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Constants;
 import org.omnifaces.util.Faces;
@@ -50,6 +51,10 @@ public class RealEstateCardController implements Serializable {
 	@EJB
 	private PostService postService;
 
+	@Inject
+	
+	private AppSinglton appSinglton ; 
+	
 	@PostConstruct
 	public void init() {
 
@@ -71,7 +76,7 @@ public class RealEstateCardController implements Serializable {
 						e.printStackTrace();
 					}
 				} else {
-					fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/")
+					fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/")
 							.concat(Constants.IMAGES).concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
 					fullUrlProfilePicture = fullUrlProfilePicture.concat("http://").concat(getIpAddressWithPort())
@@ -130,23 +135,19 @@ public class RealEstateCardController implements Serializable {
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
+		
 		String ipAddress = request.getRemoteAddr();
-		int port = request.getLocalPort();
-		ipAddressWithPort = ipAddress + ":" + port;
-		System.out.println(ipAddressWithPort);
+
+		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
+			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+		} else {
+			ipAddressWithPort = "https://" + ipAddress ;
+		}
+
 		return ipAddressWithPort;
 	}
 
-	private void changeUrl() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		String url = request.getRequestURL().toString();
-		try {
-			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", item.getId() + "");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	public RealEstate getItem() {
 		return item;

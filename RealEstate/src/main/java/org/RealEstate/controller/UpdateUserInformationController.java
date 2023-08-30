@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
+import org.RealEstate.service.AppSinglton;
 import org.RealEstate.service.UserService;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
@@ -40,6 +41,9 @@ public class UpdateUserInformationController implements Serializable {
 	@Inject
 	private HttpServletRequest request;
 
+	@Inject
+	private AppSinglton appSinglton ;
+	
 	private User user;
 
 	private String fullUrl = "";
@@ -61,7 +65,7 @@ public class UpdateUserInformationController implements Serializable {
 				e.printStackTrace();
 			}
 		} else {
-			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
+			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
 			if (user.getProfileImageUrl() != null) {
 				fullUrl = fullUrl.concat(user.getProfileImageUrl());
@@ -73,9 +77,14 @@ public class UpdateUserInformationController implements Serializable {
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
+		
 		String ipAddress = request.getRemoteAddr();
-		int port = request.getLocalPort();
-		ipAddressWithPort = ipAddress + ":" + port;
+
+		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
+			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+		} else {
+			ipAddressWithPort = "https://" + ipAddress ;
+		}
 
 		return ipAddressWithPort;
 	}

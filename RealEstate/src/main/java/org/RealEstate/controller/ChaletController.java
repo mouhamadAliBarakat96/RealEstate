@@ -62,7 +62,7 @@ public class ChaletController implements Serializable {
 		} else {
 			chalet = chaletFacade.find(id);
 			user = chalet.getUser();
-			fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
+			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
 			nbOfActivePostByThisUser = realEstateFacade.findUserCountPostPendingOrActive(user.getId())
@@ -86,9 +86,14 @@ public class ChaletController implements Serializable {
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
+		
 		String ipAddress = request.getRemoteAddr();
-		int port = request.getLocalPort();
-		ipAddressWithPort = ipAddress + ":" + port;
+
+		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
+			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+		} else {
+			ipAddressWithPort = "https://" + ipAddress ;
+		}
 
 		return ipAddressWithPort;
 	}

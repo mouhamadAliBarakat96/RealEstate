@@ -72,8 +72,7 @@
 
 
 
-						<f:param name="id"
-							value="#{userPostVieuxController.user.id}" />
+						<f:param name="id" value="#{userPostVieuxController.user.id}" />
 					</h:link>
 					<small class="flex-fill   "> <h:commandLink
 							style=" display:block ; font-weight: bold;"
@@ -82,12 +81,11 @@
 							value="#{bundle.whatsapp} #{userPostVieuxController.user.phoneNumber}">
 
 							<i class="fab fa-whatsapp text-primary me-2"></i>
-						
+
 						</h:commandLink>
 					</small>
 
-					<h:panelGroup
-						rendered="#{userPostVieuxController.user.broker}">
+					<h:panelGroup rendered="#{userPostVieuxController.user.broker}">
 						<span
 							style="display: block; margin-top: 0.9%; width: 60px; background-color: #00B98E; color: #FFFFFF; padding: 5px; border-radius: 5px;">broker</span>
 					</h:panelGroup>
