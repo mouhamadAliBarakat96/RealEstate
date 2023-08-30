@@ -56,9 +56,8 @@ public class AdsController implements Serializable {
 
 	public void selectForImageUrl(Ads ads) {
 		fullUrl = "";
-		fullUrl = fullUrl.concat("http://").concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
-				.concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/")
-				.concat(ads.getUrl() == null ? "" : ads.getUrl());
+		fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
+				.concat(Constants.ADS_IMAGE_DIR_NAME).concat("/").concat(ads.getUrl() == null ? "" : ads.getUrl());
 
 		Ajax.oncomplete("PF('dlg3').show()");
 		Ajax.update("image");
@@ -67,9 +66,14 @@ public class AdsController implements Serializable {
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
+		
 		String ipAddress = request.getRemoteAddr();
-		int port = request.getLocalPort();
-		ipAddressWithPort = ipAddress + ":" + port;
+
+		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
+			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+		} else {
+			ipAddressWithPort = "https://" + ipAddress ;
+		}
 
 		return ipAddressWithPort;
 	}
@@ -119,7 +123,7 @@ public class AdsController implements Serializable {
 
 			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 			String url = request.getRequestURL().toString();
-			url = Utils.replaceHost(url, appSinglton.getRealDns());
+			url = Utils.replaceHost(url, appSinglton.getRealDns(), appSinglton.getMode());
 			Faces.redirect(url);
 
 		}

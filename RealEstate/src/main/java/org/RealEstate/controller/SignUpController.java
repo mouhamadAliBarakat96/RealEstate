@@ -123,7 +123,7 @@ public class SignUpController implements Serializable {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			url = Utils.replaceHost(url, appSinglton.getRealDns());
+			url = Utils.replaceHost(url, appSinglton.getRealDns() ,   appSinglton.getMode());
 
 			Faces.redirect(url);
 

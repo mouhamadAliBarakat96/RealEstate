@@ -335,16 +335,31 @@ public class Utils {
 		return matcher.matches();
 	}
 
-	public static String replaceHost(String originalUrl, String newHost) {
-		int startIndex = originalUrl.indexOf("://") + 3; // Find the start of the host
-		int endIndex = originalUrl.indexOf(":", startIndex); // Find the end of the host
+	public static String replaceHost(String originalUrl, String newHost ,String  mode ) {
+	    int startIndex = originalUrl.indexOf("://") + 3; // Find the start of the host
+	    int endIndex = originalUrl.indexOf("/", startIndex); // Find the end of the host or the start of the path
 
-		if (startIndex >= 0 && endIndex >= 0) {
-			String oldHost = originalUrl.substring(startIndex, endIndex);
-			return originalUrl.replace(oldHost, newHost);
-		}
+	    if (startIndex >= 0 && endIndex >= 0) {
+	        String oldHostAndPort = originalUrl.substring(startIndex, endIndex);
+	        String[] parts = oldHostAndPort.split(":", 2); // Split host and port
+	        String oldHost = parts[0];
 
-		return originalUrl;
+	        
+	        
+	        if (  mode.equals(Constants.PRODUCATION) && parts.length > 1) {
+	            // Check if the part after colon is a valid port
+	            String portPart = parts[1];
+	            if (portPart.matches("\\d{1,4}")) {
+	                // If valid port, replace host and port with new host
+	                return originalUrl.replace(oldHostAndPort, newHost);
+	            }
+	        } else {
+	            // If no port, replace only host with new host
+	            return originalUrl.replace(oldHost, newHost);
+	        }
+	    }
+
+	    return originalUrl;
 	}
-
+	
 }

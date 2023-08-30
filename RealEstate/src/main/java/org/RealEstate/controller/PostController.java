@@ -201,7 +201,7 @@ public class PostController implements Serializable {
 		String url = request.getRequestURL().toString();
 		try {
 			
-			url = Utils.replaceHost(url, appSinglton.getRealDns());
+			url = Utils.replaceHost(url, appSinglton.getRealDns() ,  appSinglton.getMode());
 
 			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", id + "");
 

@@ -59,6 +59,8 @@ public class AppSinglton implements Serializable {
 
 	private String realDns;
 
+	private String mode;
+
 	@PostConstruct
 	public void init() {
 		prepareData();
@@ -66,7 +68,8 @@ public class AppSinglton implements Serializable {
 		try {
 
 			realDns = System.getProperty("server.dns");
-
+			mode = System.getProperty("mode");
+			
 			String timerPostExpireDate = "11-11-2001 23:00";
 			Calendar postExpire = Calendar.getInstance();
 			postExpire.setTime(DateUtils.parseDate(timerPostExpireDate, "dd-MM-yyyy HH:mm"));
@@ -310,6 +313,14 @@ public class AppSinglton implements Serializable {
 
 	public void setRealDns(String realDns) {
 		this.realDns = realDns;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
 	}
 
 }

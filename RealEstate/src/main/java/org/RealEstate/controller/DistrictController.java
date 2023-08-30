@@ -101,7 +101,7 @@ public class DistrictController extends AbstractController<District> implements 
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
-		url = Utils.replaceHost(url, appSinglton.getRealDns());
+		url = Utils.replaceHost(url, appSinglton.getRealDns() ,  appSinglton.getMode());
 
 		try {
 			if (!isSaveAndNew) {

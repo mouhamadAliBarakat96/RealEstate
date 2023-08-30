@@ -63,6 +63,11 @@ public interface Constants {
 
 	public static final String FACEBOOK_ID_INVALID = "FACEBOOK_ID_INVALID";
 
+	
+	//FOR MODE
+	public static final String  DEVELOPMENT = "development" ;
+	public static final String  PRODUCATION = "production" ;
+	
 
 	
 }

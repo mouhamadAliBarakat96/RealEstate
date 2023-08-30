@@ -189,7 +189,7 @@ public class ChaletController implements Serializable {
 		try {
 
 			
-			url = Utils.replaceHost(url, appSinglton.getRealDns());
+			url = Utils.replaceHost(url, appSinglton.getRealDns() ,  appSinglton.getMode());
 			
 			
 			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", id + "");
