@@ -9,7 +9,7 @@
 	<div class="container-fluid bg-primary mb-5 wow " data-wow-delay="0.1s"
 		style="padding: 15px 5px 5px 5px;">
 		<div class="row">
-			<div class="col-md-3 col-sm-12 mt-2 pe-5">
+			<div class="col-md-3 col-sm-12 mt-2 ">
 				<h:selectOneMenu styleClass="form-select border-0 "
 					converter="omnifaces.SelectItemsConverter" id="chaletGovernate"
 					value="#{actionBean.selecteGovernorate}">
@@ -22,7 +22,7 @@
 				</h:selectOneMenu>
 			</div>
 
-			<div class="col-md-3 col-sm-12 mt-2 pe-5">
+			<div class="col-md-3 col-sm-12 mt-2 ">
 				<h:selectOneMenu converter="omnifaces.SelectItemsConverter"
 					styleClass="form-select border-0  " id="chaletDistrict"
 					value="#{actionBean.selecteDistrict}">
@@ -34,7 +34,7 @@
 						render="myForm:chaletVillage" />
 				</h:selectOneMenu>
 			</div>
-			<div class="col-md-3 col-sm-12 mt-2 pe-5">
+			<div class="col-md-3 col-sm-12 mt-2 ">
 				<h:selectOneMenu converter="omnifaces.SelectItemsConverter" id="chaletVillage"
 					styleClass="form-select border-0  "
 					value="#{actionBean.selecteVillage}">
@@ -45,7 +45,7 @@
 				</h:selectOneMenu>
 			</div>
 		
-			<div class="col-md-3 mt-2 col-sm-12 pe-5">
+			<div class="col-md-3 mt-2 col-sm-12 ">
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
 					maxValue="9999999999" id="chaletMinPriceId" emptyValue="0"
 					label="#{bundle.min_price}" required="true"
@@ -55,7 +55,7 @@
 				</p:inputNumber>
 				<h:outputLabel value="#{bundle.min_price}" style="color:white" />
 			</div>
-			<div class="col-md-3 mt-2 col-sm-12 pe-5">
+			<div class="col-md-3 mt-2 col-sm-12 ">
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
 					maxValue="9999999999" id="chaletMaxPriceId" label="#{bundle.max_price}"
 					required="true" styleClass="form-control" emptyValue="0"
@@ -65,7 +65,7 @@
 				<h:outputLabel value="#{bundle.max_price}" style="color:white" />
 			</div>
 			
-			<div class="col-md-3 col-sm-12 mt-2 pe-5">
+			<div class="col-md-3 col-sm-12 mt-2 ">
 				<h:selectOneMenu styleClass="form-select border-0  "
 					converter="omnifaces.SelectItemsConverter"
 					value="#{actionBean.chimneyYesNoEnum}">
@@ -76,7 +76,7 @@
 				<h:outputLabel value="#{bundle.chalet_chimney}" style="color:white" />
 			</div>
 			
-			<div class="col-md-3 col-sm-12 mt-2 pe-5">
+			<div class="col-md-3 col-sm-12 mt-2 ">
 				<h:selectOneMenu styleClass="form-select border-0  "
 					converter="omnifaces.SelectItemsConverter"
 					value="#{actionBean.poolYesNoEnum}">
@@ -87,7 +87,7 @@
 				<h:outputLabel value="#{bundle.chalet_pool}" style="color:white" />
 			</div>
 			
-			<div class="col-md-3 col-sm-12 pe-5 mt-2" style="text-align: center;">
+			<div class="col-md-3 col-sm-12  mt-2" style="text-align: center;">
 				<h:commandButton action="#{actionBean.chaletSearch()}"
 					value="#{bundle.search}"
 					style=" background-color: #007ad9;color:white"

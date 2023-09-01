@@ -103,13 +103,12 @@
 					<h2 class="m-0 text-primary">#{makanTemplateController.showRealEstateTitle()}</h2>
 				</h:link>
 				<button type="button" class="navbar-toggler"
-					data-bs-toggle="collapse" data-bs-target="#myForm:navbarCollapse">
+					data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<h:panelGroup layout="block" class="collapse navbar-collapse"
-					id="navbarCollapse">
+				<div  class="collapse navbar-collapse" id="navbarCollapse">
+					
 					<div class="navbar-nav ms-auto">
-
 						<ui:repeat var="item"
 							value="#{makanTemplateController.fillMenuItems()}">
 							<h:link outcome="#{item.url}" value="#{item.itemLabel}"
@@ -121,7 +120,6 @@
 
 
 						<h:panelGroup rendered="#{makanTemplateController.user != null}">
-
 							<h:commandLink
 								actionListener="#{makanTemplateController.logout()}"
 								class=" nav-item nav-link" value="#{bundle.logout}">
@@ -147,7 +145,7 @@
 							</div>
 						</div>
 					</div>
-				</h:panelGroup> </nav>
+				</div> </nav>
 			</div>
 			<!-- Navbar End -->
 
@@ -213,10 +211,11 @@
 	
 	<!-- JavaScript Libraries -->
 	<script src="/resources/makaan/js/jquery-3.4.1.min.js"></script>
+    <script src="/resources/makaan/js/bootstrap.min.js"></script>
 		
 		
 
-	<script src="/resources/makaan/js/bootstrap.min.js"></script>
+	 
 	<script src="/resources/makaan/lib/wow/wow.min.js"></script>
 	<script src="/resources/makaan/lib/easing/easing.min.js"></script>
 	<script src="/resources/makaan/lib/waypoints/waypoints.min.js"></script>
