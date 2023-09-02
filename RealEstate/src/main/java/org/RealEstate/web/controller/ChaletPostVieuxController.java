@@ -106,7 +106,7 @@ public class ChaletPostVieuxController implements Serializable {
 
 	private User user;
 	private String fullUrlProfilePicture = "";
-
+	@EJB
 	private AppSinglton appSinglton ;
 	
 	@PostConstruct
@@ -145,7 +145,7 @@ public class ChaletPostVieuxController implements Serializable {
 		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
 			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
 		} else {
-			ipAddressWithPort = "https://" + ipAddress ;
+			ipAddressWithPort = "https://" +  appSinglton.getRealDns() ;
 		}
 
 		return ipAddressWithPort;

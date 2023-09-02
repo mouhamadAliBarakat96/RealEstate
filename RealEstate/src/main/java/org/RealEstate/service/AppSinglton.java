@@ -69,7 +69,7 @@ public class AppSinglton implements Serializable {
 
 			realDns = System.getProperty("server.dns");
 			mode = System.getProperty("mode");
-			
+			System.out.println("!!!!!!mode" + mode);
 			String timerPostExpireDate = "11-11-2001 23:00";
 			Calendar postExpire = Calendar.getInstance();
 			postExpire.setTime(DateUtils.parseDate(timerPostExpireDate, "dd-MM-yyyy HH:mm"));

@@ -103,7 +103,7 @@ public class UserPostListController implements Serializable {
 		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
 			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
 		} else {
-			ipAddressWithPort = "https://" + ipAddress ;
+			ipAddressWithPort = "https://" +  appSinglton.getRealDns() ;
 		}
 
 		return ipAddressWithPort;

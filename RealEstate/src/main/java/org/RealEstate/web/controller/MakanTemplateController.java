@@ -52,71 +52,72 @@ public class MakanTemplateController implements Serializable {
 	private List<Ads> adsList;
 
 	private String fullUrlAdsImage = "";
- 
 
 	@Inject
-	private AppSinglton appSinglton ;
- 
+	private AppSinglton appSinglton;
+
 	private Locale locale;
- 
-	
+
 	@PostConstruct
 	public void init() {
 		HttpSession session = request.getSession(true);
 		user = (User) session.getAttribute(Constants.USER_SESSION);
-		locale=languageController.getLocale();
+		locale = languageController.getLocale();
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
 		adsList = adsFacade.findAll();
-		fullUrlAdsImage = fullUrlAdsImage.concat(getIpAddressWithPort()).concat("/")
-				.concat(Constants.IMAGES).concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/");
+		fullUrlAdsImage = fullUrlAdsImage.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
+				.concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/");
 
 	}
 
-	private String ipAddressWithPort ;
+	private String ipAddressWithPort;
 
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
-		
+
 		String ipAddress = request.getRemoteAddr();
 
 		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
-			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+			ipAddressWithPort = "http://" + ipAddress + ":" + request.getLocalPort();
 		} else {
-			ipAddressWithPort = "https://" + ipAddress ;
+			ipAddressWithPort = "https://" + appSinglton.getRealDns();
 		}
 
 		return ipAddressWithPort;
 	}
-	
-	
 
 	public List<MenuItem> fillMenuItems() {
 		List<MenuItem> menu = new ArrayList<>();
 		MenuItem m1 = null;
 
-		m1 = new MenuItem(languageController.getMessage("real_estates"), "", "index-page", true, "nav-item nav-link active",
-				PropertyKindEnum.REALESTATE.toString());
+		m1 = new MenuItem(languageController.getMessage("real_estates"), "", "index-page", true,
+				"nav-item nav-link active", PropertyKindEnum.REALESTATE.toString());
 		menu.add(m1);
 
 		m1 = new MenuItem(languageController.getMessage("chalets"), "", "index-page", true, "nav-item nav-link",
 				PropertyKindEnum.CHALET.toString());
 		menu.add(m1);
 
-		m1 = new MenuItem(languageController.getMessage("add_new"), "", "userpost-card", true, "nav-item nav-link", "post-card");
+		m1 = new MenuItem(languageController.getMessage("add_new"), "", "userpost-card", true, "nav-item nav-link",
+				"post-card");
 		menu.add(m1);
 
-		m1 = new MenuItem(languageController.getMessage("my_posts"), "", "userpost-list", true, "nav-item nav-link", "post-list");
+		m1 = new MenuItem(languageController.getMessage("my_posts"), "", "userpost-list", true, "nav-item nav-link",
+				"post-list");
 		menu.add(m1);
 
-		m1 = new MenuItem(languageController.getMessage("contact_us"), "", "contact-us", true, "nav-item nav-link", "contact-us");
+		m1 = new MenuItem(languageController.getMessage("contact_us"), "", "contact-us", true, "nav-item nav-link",
+				"contact-us");
 		menu.add(m1);
 
 		if (user == null) {
-			m1 = new MenuItem(languageController.getMessage("login"), "", "login-user", true, "nav-item nav-link", "login");
+			m1 = new MenuItem(languageController.getMessage("login"), "", "login-user", true, "nav-item nav-link",
+					"login");
 			menu.add(m1);
 
-			m1 = new MenuItem(languageController.getMessage("register"), "", "signup", true, "nav-item nav-link", "register");
+			m1 = new MenuItem(languageController.getMessage("register"), "", "signup", true, "nav-item nav-link",
+					"register");
 			menu.add(m1);
 
 		} else {
