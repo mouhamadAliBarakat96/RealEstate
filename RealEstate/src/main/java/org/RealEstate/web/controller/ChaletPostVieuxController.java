@@ -50,7 +50,7 @@ public class ChaletPostVieuxController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private LanguageController sessionLanguage;
-	
+
 	@Inject
 	private GovernorateFacade governorateFacade;
 	@Inject
@@ -72,6 +72,7 @@ public class ChaletPostVieuxController implements Serializable {
 	private List<Village> villages = new ArrayList<>();
 
 	private List<District> districts = new ArrayList<>();
+	private final String NO_PHOTO = "nophoto.jpg";
 
 	private String postType;
 	private int minPrice;
@@ -107,16 +108,16 @@ public class ChaletPostVieuxController implements Serializable {
 	private User user;
 	private String fullUrlProfilePicture = "";
 	@EJB
-	private AppSinglton appSinglton ;
-	
+	private AppSinglton appSinglton;
+
 	@PostConstruct
 	public void init() {
 		governorates = governorateFacade.findAll();
 
 		chaletLazyModel = new ChaletLazyDataModel(chaletFacade);
 
-		fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
-				.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
+		fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
+				.concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
 		propertyKind = parameterPropertyKind();
 
@@ -130,8 +131,15 @@ public class ChaletPostVieuxController implements Serializable {
 
 	}
 
+	public String displayFirstImageChalet(Chalet item) {
+		if (item != null && !item.getImages().isEmpty()) {
+			return fullUrl.concat(item.getImages().get(0));
+		} else {
+			return fullUrl.concat(NO_PHOTO);
+		}
+	}
+
 	private PropertyKindEnum parameterPropertyKind() {
-		
 
 		return PropertyKindEnum.CHALET;
 	}
@@ -139,18 +147,17 @@ public class ChaletPostVieuxController implements Serializable {
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
-		
+
 		String ipAddress = request.getRemoteAddr();
 
 		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
-			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+			ipAddressWithPort = "http://" + ipAddress + ":" + request.getLocalPort();
 		} else {
-			ipAddressWithPort = "https://" +  appSinglton.getRealDns() ;
+			ipAddressWithPort = "https://" + appSinglton.getRealDns();
 		}
 
 		return ipAddressWithPort;
 	}
-	
 
 	public void addViewsAfterClick(RealEstate item) {
 		try {
@@ -256,7 +263,7 @@ public class ChaletPostVieuxController implements Serializable {
 
 	public void chaletSearch() {
 		if (maxPrice != 0 && minPrice > maxPrice) {
-			Utility.addErrorMessage("min_price_mut_be _less_than_max",sessionLanguage.getLocale());
+			Utility.addErrorMessage("min_price_mut_be _less_than_max", sessionLanguage.getLocale());
 			return;
 		}
 		chaletLazyModel.setUser(user != null ? user : null);
@@ -269,7 +276,7 @@ public class ChaletPostVieuxController implements Serializable {
 				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
 		chaletLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
 
-		Utility.addSuccessMessage("search_complete",sessionLanguage.getLocale());
+		Utility.addSuccessMessage("search_complete", sessionLanguage.getLocale());
 
 	}
 
@@ -556,4 +563,3 @@ public class ChaletPostVieuxController implements Serializable {
 	}
 
 }
- 

@@ -174,6 +174,8 @@ public class UserPostListController implements Serializable {
 			return fullUrl.concat(NO_PHOTO);
 		}
 	}
+	
+	//todo hrer
 
 	public String displayFirstImageChalet(Chalet item) {
 		if (item != null && !item.getImages().isEmpty()) {
