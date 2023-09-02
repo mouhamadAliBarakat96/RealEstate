@@ -120,5 +120,8 @@ public class Village extends MainEntity implements Serializable {
 	public String fullAddress() {
 		return this.name + "/ " + this.getDistrict().getName() + "/ " + this.getDistrict().getGovernorate().getName();
 	}
+	public String fullAddress_ar() {
+		return this.nameAr + "/ " + this.getDistrict().getNameAr() + "/ " + this.getDistrict().getGovernorate().getNameAr();
+	}
 
 }

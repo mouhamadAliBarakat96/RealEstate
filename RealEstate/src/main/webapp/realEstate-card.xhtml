@@ -91,7 +91,15 @@
 													<div
 														style="font-weight: 600;; margin-left: 50px; width: 60%; display: inline-block">
 														<span style="display: block; margin-top: 1%">
-															#{realEstateCardController.item.village.fullAddress()} </span>
+														 <c:choose>
+																<c:when test="#{languageController.locale eq 'en'}">
+																	#{realEstateCardController.item.village.fullAddress()}
+																</c:when>
+																<c:otherwise>
+																	 #{realEstateCardController.item.village.fullAddress_ar()}
+																</c:otherwise>
+														 </c:choose>
+													   </span>
 
 													</div>
 												</div>

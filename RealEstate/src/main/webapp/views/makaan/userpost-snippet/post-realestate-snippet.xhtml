@@ -80,7 +80,7 @@
 							value="#{userPostCardController.item.village}">
 							<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
 							<f:selectItems value="#{userPostCardController.villages}"
-								var="option" itemLabel="#{option.name}" itemValue="#{option}" />
+								var="option" itemLabel="#{languageController.locale eq 'en' ? option.name :option.nameAr}" itemValue="#{option}" />
 							<f:ajax execute="@this" />
 						</h:selectOneMenu>
 					</div>

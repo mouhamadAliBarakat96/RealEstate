@@ -3,7 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:component>
 	<div class="container-xxl">
@@ -106,7 +107,15 @@
 												</div>
 											</div>
 										<p>
-											<i class="fa fa-map-marker-alt text-primary me-2"></i>#{real.village.fullAddress()}
+											<i class="fa fa-map-marker-alt text-primary me-2"></i>
+											 <c:choose>
+													<c:when test="#{languageController.locale eq 'en'}">
+														#{real.village.fullAddress()}
+													</c:when>
+													<c:otherwise>
+														 #{real.village.fullAddress_ar()}
+													</c:otherwise>
+											 </c:choose>
 										</p>
 									</div>
 									<div class="d-flex border-top" style="align-items: center;">
@@ -199,7 +208,15 @@
 											</h:commandLink>
 
 											<p>
-												<i class="fa fa-map-marker-alt text-primary me-2"></i>#{real.village.fullAddress()}
+												<i class="fa fa-map-marker-alt text-primary me-2"></i> 
+												 <c:choose>
+													<c:when test="#{languageController.locale eq 'en'}">
+														#{real.village.fullAddress()}
+													</c:when>
+													<c:otherwise>
+														 #{real.village.fullAddress_ar()}
+													</c:otherwise>
+												 </c:choose>
 											</p>
 										</div>
 
