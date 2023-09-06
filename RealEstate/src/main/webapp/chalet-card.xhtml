@@ -51,11 +51,8 @@
 									</div>
 								</div>
 								<div class="col-md-8 ">
-									<div class="p-4 pb-0">
+									<div class="pt-2 px-3 pb-0">
 										<div class="d-flex justify-content-between">
-											<span
-												style="color: #00B98E; font-size: 22px; font-weight: 700">
-												#{chaletCardController.item.name}</span>
 											<h:panelGroup layout="block"
 												rendered="#{chaletCardController.item.boosted}"
 												styleClass="bg-primary rounded text-white px-3 py-1">
@@ -68,11 +65,13 @@
 												<i class="fa fa-check"></i>
 											</h:panelGroup>
 										</div>
-										<span
+										<span class="border-top row mt-2"
+												style="color: #00B98E; font-size: 22px; font-weight: 700">
+												#{chaletCardController.item.name}</span>
+										<span class="border-bottom row mt-2"
 											style="margin-top: 0.5%; display: block; color: #2d383f; font-size: 18px; font-weight: 600">
 											#{chaletCardController.item.descrption}</span>
-										<hr class="line-border"></hr>
-
+										
 										<div class="row">
 
 											<div class="col-md-6">

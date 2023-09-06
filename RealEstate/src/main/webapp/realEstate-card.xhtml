@@ -51,12 +51,9 @@
 
 									</div>
 								</div>
-								<div class="col-md-8 ">
-									<div class="row p-4 pb-0">
-										<div class="d-flex justify-content-between">
-											<span
-												style="color: #00B98E; font-size: 22px; font-weight: 700">
-												#{realEstateCardController.item.tittle}</span>
+								<div class="col-md-8 px-5">
+									<div class="row pt-2 pb-0">
+										<div class="d-flex justify-content-between p-0">
 											<h:panelGroup layout="block"
 												rendered="#{realEstateCardController.item.boosted}"
 												styleClass="bg-primary rounded text-white px-3 py-1">
@@ -70,10 +67,12 @@
 												<i class="fa fa-check"></i>
 											</h:panelGroup>
 										</div>
-										<span
+										<span class="mt-2 border-top row"
+												style="color: #00B98E; font-size: 22px; font-weight: 700">
+												#{realEstateCardController.item.tittle}</span>
+										<span class="mt-2   row border-bottom"
 											style="margin-top: 0.5%; display: block; color: #2d383f; font-size: 18px; font-weight: 600">
 											#{realEstateCardController.item.subTittle}</span>
-										<hr class="line-border"></hr>
 										<div class="row">
 											<div class="col-md-6">
 												<div class="col-md-3">
@@ -166,7 +165,7 @@
 									</div>
 
 									<div style="margin: 0%;"
-										class="row col-md-12 border-top border-end border-start mt-2">
+										class="row col-md-12 border-top  border-start mt-2">
 										<small
 											class="col-md-3 text-center border-end py-2 border-bottom">
 
@@ -258,7 +257,7 @@
 													value="#{bundle.real_estate_road}" /> <i
 												class="text-primary #{realEstateCardController.item.road ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
 											</small>
-											<small class="col-md-3 text-center py-2 border-bottom">
+											<small class="col-md-3 text-center py-2 border-bottom border-start border-end">
 												<i class="fa fa-solid fa-water text-primary me-2" /> <h:outputLabel
 													value="#{bundle.real_estate_water}" /> <i
 												class="text-primary #{realEstateCardController.item.water ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
@@ -321,11 +320,13 @@
 												<f:convertNumber pattern="#,###" />
 												<i class="fa fa-regular fa-phone text-primary me-2" />
 											</h:outputLabel>
-										</small> <small
+										</small>
+										 <small
 											class="col-md-3 text-center border-end py-2 border-bottom">
-											<i class="far fa-calendar text-primary me-2" /> <h:outputLabel
+											 <h:outputLabel
 												value="#{realEstateCardController.item.postDate}">
 												<f:convertDateTime pattern="yyyy-MM-dd" />
+												<i class="far fa-calendar text-primary me-2" />
 											</h:outputLabel>
 										</small>
 									</div>
