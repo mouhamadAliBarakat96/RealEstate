@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
@@ -27,7 +28,6 @@ public class Utility {
 	public final static String BUNDLE_FILE_NAME_AR = "resources.bundle_ar";
 	public final static String BUNDLE_FILE_NAME = "resources.bundle";
 	public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
 
 	public static String getMessage(String key, String bundle) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(bundle);
@@ -61,7 +61,7 @@ public class Utility {
 		}
 	}
 
-	public static void addErrorMessage(String key,Locale local) {
+	public static void addErrorMessage(String key, Locale local) {
 		try {
 			if (local.getLanguage().equals("en"))
 				key = getMessage(key, BUNDLE_FILE_NAME);
@@ -75,7 +75,7 @@ public class Utility {
 		}
 	}
 
-	public static void addWarningMessage(String key,Locale local) {
+	public static void addWarningMessage(String key, Locale local) {
 		try {
 			if (local.getLanguage().equals("en"))
 				key = getMessage(key, BUNDLE_FILE_NAME);
@@ -162,4 +162,6 @@ public class Utility {
 			return null;
 		}
 	}
+
+
 }

@@ -14,7 +14,7 @@
 
 	<ui:define name="customStyleSheet">
 
-	
+
 
 	</ui:define>
 
@@ -107,9 +107,7 @@
 						<div class="text-center mx-auto mb-5 wow fadeInUp"
 							data-wow-delay="0.1s" style="max-width: 600px;">
 							<span style="font-size: 20px; font-weight: 700" class="mb-3">#{bundle.new_user}</span>
-							<br></br> <span> #{bundle.singup_with_facebook_required}
-								
-								</span>
+							<br></br> <span> #{bundle.singup_with_facebook_required} </span>
 						</div>
 						<h:panelGroup id="test">
 							<div class="row">
@@ -240,18 +238,28 @@
 
 
 
+								<!-- 
+
+TODO ACTIVE THIS CODE LATER
 								<div class="fb-login-button" data-width="" data-size=""
 									style="width: 25%" data-button-type="" data-layout=""
 									data-auto-logout-link="false" data-use-continue-as="false"></div>
+ -->
 
-								<p:remoteCommand process="@this phoneNumber "
-								immediate="true"
+
+								<h:commandLink styleClass="btn btn-success"  actionListener="#{signUpController.save()}"
+									value="#{bundle.register}">
+
+									<p:ajax process="@this phoneNumber "></p:ajax>
+								</h:commandLink>
+
+								<!-- 	<p:remoteCommand process="@this phoneNumber " immediate="true"
 									name="remoteCommandAction" update=":messageScript"
-									actionListener="#{signUpController.save()}">
+									>
 
 								</p:remoteCommand>
 
-
+ -->
 
 
 							</div>

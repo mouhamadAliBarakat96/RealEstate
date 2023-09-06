@@ -362,4 +362,27 @@ public class Utils {
 	    return originalUrl;
 	}
 	
+	public static String generateRandomStringBasedOnTime() {
+		// Get the current timestamp
+		long timestamp = System.currentTimeMillis();
+
+		// Initialize a random number generator with the timestamp as the seed
+		Random random = new Random(timestamp);
+
+		// Define the characters that can be used in the random string
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		// Set the length of the random string you want to generate
+		int length = 10; // Change this to your desired length
+
+		// Generate the random string
+		StringBuilder randomString = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			int randomIndex = random.nextInt(characters.length());
+			char randomChar = characters.charAt(randomIndex);
+			randomString.append(randomChar);
+		}
+
+		return randomString.toString();
+	}
 }

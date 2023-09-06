@@ -70,21 +70,26 @@ public class SignUpController implements Serializable {
 	public void save() {
 		try {
 
-			String fbId = null;
-			Map<String, String> requestParamMap = FacesContext.getCurrentInstance().getExternalContext()
-					.getRequestParameterMap();
-			if (requestParamMap.containsKey("fbId")) {
-				fbId = requestParamMap.get("fbId");
-
-			} else {
-				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-				flash.put("type", "error");
-				flash.put("message", "authntication errror refresh page and try again");
-
-				changeUrl();
-				return;
-			}
-			user.setFbId(fbId);
+			/**
+			 * TODO ACTIVE THIS CODE LATER
+			 */
+			
+			/*
+			 * String fbId = null; Map<String, String> requestParamMap =
+			 * FacesContext.getCurrentInstance().getExternalContext()
+			 * .getRequestParameterMap(); if (requestParamMap.containsKey("fbId")) { fbId =
+			 * requestParamMap.get("fbId");
+			 * 
+			 * } else { Flash flash =
+			 * FacesContext.getCurrentInstance().getExternalContext().getFlash();
+			 * flash.put("type", "error"); flash.put("message",
+			 * "authntication errror refresh page and try again");
+			 * 
+			 * changeUrl(); return; }
+			 */
+			
+			
+		
 			user.setPassowrd(Utils.sha256(user.getPassowrd()));
 
 			Response r = userService.createUser(user);

@@ -92,10 +92,20 @@ public class UserService implements Serializable {
 
 			// check fb id nt null
 
-			if (user.getFbId() == null || StringUtils.isBlank(user.getFbId())) {
-				return Response.status(Status.BAD_REQUEST).entity(Constants.FACEBOOK_ID_SHOUD_NOT_BE_NULL).build();
-
-			}
+			/**
+			 * This Code is not used now
+			 * TODO ACTIVE IT LATER
+			 */
+			/*
+			 * if (user.getFbId() == null || StringUtils.isBlank(user.getFbId())) { return
+			 * Response.status(Status.BAD_REQUEST).entity(Constants.
+			 * FACEBOOK_ID_SHOUD_NOT_BE_NULL).build();
+			 * 
+			 * }
+			 */
+			
+			user.setFbId(Utils.generateRandomStringBasedOnTime());
+			
 
 			// validite phone number
 
