@@ -76,13 +76,6 @@ $(document).ready(function() {
 	map = initMap();
 	loadCoordinates();
 	//showTheMap();
-	
-	
-	//add event to close btn
-	 $(".ui-galleria .ui-galleria-close .ui-galleria-close-icon").on("click", function() {
-		 $('.navbar').removeClass("hidden");
-	  });
-	
 });
 
 function closeGalleria(){

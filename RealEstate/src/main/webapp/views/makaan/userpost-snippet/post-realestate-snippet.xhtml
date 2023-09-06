@@ -288,7 +288,7 @@
 							<p:graphicImage styleClass="gallery-item mt-2"   
 								url="#{userPostCardController.fullUrl}#{photo}"
 								alt="the photos" style="width: 100%; display: block" />
-							<p:commandButton process="@this" value="#{bundle.delete}"  onclick="closeGalleria();"
+							<p:commandButton process="@this" value="#{bundle.delete}" onclick="closeGalleria();"   
 								action="#{userPostCardController.deleteRealPhoto(photo)}"  update="myForm:tabView:imagesPhotos  myForm:tabView:realGalleria" />
 						</p:galleria>
 
@@ -296,7 +296,7 @@
 							<p:commandButton rendered="#{userPostCardController.item.images.size() >0}" value="#{bundle.show_photos}"
 								partialSubmit="true" styleClass="col-md-12"
 								icon="pi pi-external-link"
-								onclick="$('.navbar').addClass('hidden');PF('galleria1').show();"
+								onclick="PF('galleria1').show();"
 								process="@this" />
 						</h:panelGroup>
 					</div>

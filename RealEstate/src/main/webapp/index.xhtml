@@ -44,19 +44,12 @@
 
 
 		<p:galleria value="#{makanTemplateController.adsList}" var="photo"
-		circular="true"
-			autoPlay="true" numVisible="5" transitionInterval="5000"
-			style="height:275px;width: 100%;"
-			>
-			<p:graphicImage
-	
+			circular="true" autoPlay="true" numVisible="5"
+			transitionInterval="5000" style="height:275px;width: 100%;">
+			<p:graphicImage 
 				url="#{makanTemplateController.fullUrlAdsImage}#{photo.url}"
-				style="height:275px ;width: 70%; display: block;" />
-
+				style="height:275px ;width: 70%; display: block;object-fit:contain;" />
 		</p:galleria>
-
-
-
 
 	</ui:define>
 

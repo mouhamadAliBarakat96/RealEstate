@@ -11,40 +11,38 @@
 		<div class="container">
 			<div class="tab-content">
 				<div id="tab-1" class="tab-pane fade show p-0 active">
-					<div class="row g-4">
-						<div class="row g-0 gx-5 align-items-end">
-							<div class="col-lg-6">
-								<div class="  mx-auto mb-5 wow " data-wow-delay="0.1s">
-									<h1 class="mb-3">#{bundle.properties_title}</h1>
-									<p>#{bundle.properties_description}</p>
-								</div>
+					<div class="row g-0 gx-5 align-items-end">
+						<div class="col-lg-6">
+							<div class="  mx-auto mb-5 wow " data-wow-delay="0.1s">
+								<h1 class="mb-3">#{bundle.properties_title}</h1>
+								<p>#{bundle.properties_description}</p>
 							</div>
-							<div class="col-lg-6 d-flex flex-row-reverse "
-								style="visibility: visible;">
-								<ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-									<li class="nav-item me-2"><h:commandLink
-											action="#{actionBean.search()}"
-											styleClass="btn btn-outline-primary" data-bs-toggle="pill"
-											value="#{bundle.all}">
-											<f:ajax render="myForm:RealEstatePanelId" execute="@this"
-												listener="#{actionBean.changeTypeRealEstateSearch(null)}" />
-										</h:commandLink></li>
-									<li class="nav-item me-2"><h:commandLink
-											action="#{actionBean.search()}"
-											styleClass="btn btn-outline-primary" data-bs-toggle="pill"
-											value="#{bundle.for_sale}">
-											<f:ajax render="myForm:RealEstatePanelId" execute="@this"
-												listener="#{actionBean.changeTypeRealEstateSearch('BUY')}" />
-										</h:commandLink></li>
-									<li class="nav-item me-2"><h:commandLink
-											action="#{actionBean.search()}"
-											styleClass="btn btn-outline-primary" data-bs-toggle="pill"
-											value="#{bundle.for_rent}">
-											<f:ajax render="myForm:RealEstatePanelId" execute="@this"
-												listener="#{actionBean.changeTypeRealEstateSearch('RENT')}" />
-										</h:commandLink></li>
-								</ul>
-							</div>
+						</div>
+						<div class="col-lg-6 d-flex flex-row-reverse "
+							style="visibility: visible;">
+							<ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
+								<li class="nav-item me-2"><h:commandLink
+										action="#{actionBean.search()}"
+										styleClass="btn btn-outline-primary" data-bs-toggle="pill"
+										value="#{bundle.all}">
+										<f:ajax render="myForm:RealEstatePanelId" execute="@this"
+											listener="#{actionBean.changeTypeRealEstateSearch(null)}" />
+									</h:commandLink></li>
+								<li class="nav-item me-2"><h:commandLink
+										action="#{actionBean.search()}"
+										styleClass="btn btn-outline-primary" data-bs-toggle="pill"
+										value="#{bundle.for_sale}">
+										<f:ajax render="myForm:RealEstatePanelId" execute="@this"
+											listener="#{actionBean.changeTypeRealEstateSearch('BUY')}" />
+									</h:commandLink></li>
+								<li class="nav-item me-2"><h:commandLink
+										action="#{actionBean.search()}"
+										styleClass="btn btn-outline-primary" data-bs-toggle="pill"
+										value="#{bundle.for_rent}">
+										<f:ajax render="myForm:RealEstatePanelId" execute="@this"
+											listener="#{actionBean.changeTypeRealEstateSearch('RENT')}" />
+									</h:commandLink></li>
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -60,7 +58,7 @@
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 					<p:dataViewGridItem>
-						<div class="card flex justify-content-center max-width388">
+						<div class="card flex justify-content-center">
 							<div class="col-md-12 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="property-item rounded overflow-hidden">
 									<div class="position-relative overflow-hidden">
@@ -83,7 +81,7 @@
 												</h:panelGroup>
 
 												<h:panelGroup rendered="#{real.verfied}" layout="block"
-													styleClass="bg-primary rounded text-white py-1 px-3">
+													styleClass="bg-primary rounded text-white py-1 px-3  ms-2">
 															#{bundle.post_verified}
 															<i class="fa fa-check"></i>
 												</h:panelGroup>
@@ -98,24 +96,24 @@
 												binding="#{actionBean.addViewsAfterClick(real)}" />
 										</h:commandLink>
 									</div>
-									<div class="p-4 pb-0">
+									<div class="pt-2 px-1 pb-0">
 
-											<div class="d-flex justify-content-between">
-												<h5 class="text-primary py-1 px-3">$ #{real.price}</h5>
-												<div class="text-primary py-1 px-3">
-													#{languageController.locale=='en'? real.postType.name : real.postType.name_ar}
-												</div>
-											</div>
+										<div class="d-flex justify-content-between">
+											<h5 class="text-primary py-1 ">$ #{real.price}</h5>
+											<div class="text-primary py-1 px-1">
+												#{languageController.locale=='en'? real.postType.name :
+												real.postType.name_ar}</div>
+										</div>
 										<p>
 											<i class="fa fa-map-marker-alt text-primary me-2"></i>
-											 <c:choose>
-													<c:when test="#{languageController.locale eq 'en'}">
+											<c:choose>
+												<c:when test="#{languageController.locale eq 'en'}">
 														#{real.village.fullAddress()}
 													</c:when>
-													<c:otherwise>
+												<c:otherwise>
 														 #{real.village.fullAddress_ar()}
 													</c:otherwise>
-											 </c:choose>
+											</c:choose>
 										</p>
 									</div>
 									<div class="d-flex border-top" style="align-items: center;">
@@ -159,7 +157,7 @@
 						<h:panelGrid columns="3" style="width:100%" cellspacing="20">
 							<p:outputPanel>
 								<div class="row">
-									<div class="col-md-4 max-width388">
+									<div class="col-md-4">
 										<div class="position-relative overflow-hidden">
 											<h:commandLink action="#{actionBean.navigate(real)}"
 												styleClass="d-block img-fluid  mb-2" target="_blank">
@@ -179,7 +177,7 @@
 													</h:panelGroup>
 
 													<h:panelGroup rendered="#{real.verfied}" layout="block"
-														styleClass="bg-primary rounded text-white py-1 px-3">
+														styleClass="bg-primary rounded text-white py-1 px-3  ms-2">
 															#{bundle.post_verified}
 															<i class="fa fa-check"></i>
 													</h:panelGroup>
@@ -189,11 +187,11 @@
 
 									</div>
 									<div class="col-md-8 inline-gride">
-										<div class="p-4 pb-0">
+										<div class="pt-2 px-1 pb-0">
 
 											<div class="d-flex justify-content-between">
-												<h5 class="text-primary py-1 px-3">$ #{real.price}</h5>
-												<div class="text-primary py-1 px-3">
+												<h5 class="text-primary py-1 ">$ #{real.price}</h5>
+												<div class="text-primary py-1 px-1">
 													#{languageController.locale=='en'? real.postType.name :
 													real.postType.name_ar}</div>
 											</div>
@@ -208,15 +206,15 @@
 											</h:commandLink>
 
 											<p>
-												<i class="fa fa-map-marker-alt text-primary me-2"></i> 
-												 <c:choose>
+												<i class="fa fa-map-marker-alt text-primary me-2"></i>
+												<c:choose>
 													<c:when test="#{languageController.locale eq 'en'}">
 														#{real.village.fullAddress()}
 													</c:when>
 													<c:otherwise>
 														 #{real.village.fullAddress_ar()}
 													</c:otherwise>
-												 </c:choose>
+												</c:choose>
 											</p>
 										</div>
 

@@ -3,6 +3,7 @@ package org.RealEstate.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -12,6 +13,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.RealEstate.utils.Utility;
 import org.omnifaces.util.Faces;
 
 @ViewScoped
@@ -63,7 +65,7 @@ public class LoginAdmin implements Serializable {
 			request.login(userName, password);
 			Faces.redirect(originalURI);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Utility.addMessage("faild to login");
 		}
 	}
 

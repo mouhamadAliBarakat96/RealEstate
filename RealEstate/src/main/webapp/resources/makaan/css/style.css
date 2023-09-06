@@ -524,15 +524,15 @@ body .ui-selectbooleanbutton, body .ui-selectonebutton>.ui-button, body .ui-sele
 
 .ui-dataview-column .img-fluid {
     max-width: 100%;
-    /*  height: 23rem !important; */
-    width: 388px;
+    width: 100%;
     height: 259px;
+    object-fit: cover;
 }
 .ui-dataview-list-container .img-fluid {
     max-width: 100%;
-   /*  height: 23rem !important; */
-    width: 388px;
+    width: 100%;
     height: 259px;
+    object-fit: cover;
 }
 .line-border {
 	margin: 0;
@@ -572,4 +572,8 @@ body .ui-selectbooleanbutton, body .ui-selectonebutton>.ui-button, body .ui-sele
 }
 .visible {
 	display: '';
+}
+
+.ui-galleria-mask.ui-galleria-visible.ui-widget-overlay{
+	z-index: 99999 !important;
 }
