@@ -6,8 +6,8 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:component>
-	<div class="container-fluid bg-primary mb-5 wow " data-wow-delay="0.1s"
-		style="padding: 15px 5px 5px 5px;">
+	<div class="container-fluid bg-primary mb-5 wow p-2" data-wow-delay="0.1s"
+		  >
 		<div class="row">
 			<div class="col-md-3 col-sm-12  ">
 				<h:outputLabel value="#{bundle.property_type}" style="color:white" />
@@ -139,7 +139,7 @@
 				</p:inputNumber>
 			</div>
 
-			<div class="col-md-1 col-sm-12  mt-4">
+			<div class="col-md-3 col-sm-12 d-flex flex-column-reverse flex-wrap  mt-2 align-content-start">
 				<h:commandButton action="#{actionBean.search()}"
 					value="#{bundle.search}"
 					style=" background-color: #007ad9;color:white"

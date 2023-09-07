@@ -7,18 +7,22 @@
 	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
 
 <ui:component>
-	<div class="row">
-		<p:selectOneButton value="#{userPostCardController.postType}"  
-			disabled="#{userPostCardController.disableSelectOneButton()}"
-			styleClass="white" converter="omnifaces.SelectItemsConverter">
-			<f:selectItems value="#{PostType.values()}" var="option"
-				itemLabel="#{languageController.locale=='en'? option.name : option.name_ar}"
-				itemValue="#{option}" />
-			<f:ajax execute="@this" render="myForm:tabView:inputPanel"
-				listener="#{userPostCardController.listenerSelectItemType()}" />
-		</p:selectOneButton>
-	</div>
+	
 	<div class="row p-3">
+		<div class="form-group ">
+			<p:outputLabel class="control-label" for="titleId"
+				value="#{bundle.property_type}">
+			</p:outputLabel>
+			<h:selectOneMenu   value="#{userPostCardController.postType}"
+				disabled="#{userPostCardController.disableSelectOneButton()}"
+				styleClass="white form-control" converter="omnifaces.SelectItemsConverter">
+				<f:selectItems value="#{PostType.values()}" var="option"
+					itemLabel="#{languageController.locale=='en'? option.name : option.name_ar}"
+					itemValue="#{option}" />
+				<f:ajax execute="@this" render="myForm:tabView:inputPanel"
+					listener="#{userPostCardController.listenerSelectItemType()}" />
+			</h:selectOneMenu>
+		</div>
 		<h:panelGroup id="inputPanel">
 			<h:panelGroup rendered="#{userPostCardController.postType != null}">
 				<div class="row">
@@ -279,7 +283,7 @@
 						<p:remoteCommand name="rc"
 							actionListener="#{userPostCardController.changeActiveIndex}"
 							oncomplete="PF('galleria1').show()" />
-						<p:galleria widgetVar="galleria1" rendered="#{userPostCardController.item.images.size() >0}"
+						<p:galleria  styleClass="galleria-arabic-fix" widgetVar="galleria1" rendered="#{userPostCardController.item.images.size() >0}"
 							value="#{userPostCardController.item.images}" var="photo"
 							numVisible="4" id="realGalleria"  
 							responsiveOptions="#{userPostCardController.responsiveOptions1}"
@@ -294,7 +298,7 @@
 
 						<h:panelGroup id="imagesPhotos">
 							<p:commandButton rendered="#{userPostCardController.item.images.size() >0}" value="#{bundle.show_photos}"
-								partialSubmit="true" styleClass="col-md-12"
+								partialSubmit="true" styleClass="col-12"
 								icon="pi pi-external-link"
 								onclick="PF('galleria1').show();"
 								process="@this" />

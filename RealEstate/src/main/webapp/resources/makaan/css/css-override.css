@@ -1,36 +1,58 @@
 @charset "ISO-8859-1";
 
 [dir="rtl"] {
-   font-family: 'DroidKufi', sans-serif;
+	font-family: 'DroidKufi', sans-serif;
 }
 
 [dir="ltr"] {
- font-family: "Heebo", sans-serif;
+	font-family: "Heebo", sans-serif;
 }
 
-.ol-viewport{
+.ol-viewport {
 	direction: ltr !important;
 }
 
-
 /* Styles for small screens */
 @media screen and (max-width: 767px) {
-    .my-galleria {
-        /* Custom styles for small screens */
-    }
+	.my-galleria {
+		/* Custom styles for small screens */
+		
+	}
+	
+	.container-xxl.bg-white.p-0 {
+		padding: 1% 0 0 1% !important;
+	}
 }
 
 /* Styles for medium screens */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-    .my-galleria {
-        /* Custom styles for medium screens */
-    }
+	.my-galleria {
+		/* Custom styles for medium screens */
+		
+	}
+	.container-xxl.bg-white.p-0 {
+		padding: 0 5% !important;
+	}
 }
 
 /* Styles for large screens */
 @media screen and (min-width: 1024px) {
-    .my-galleria {
-        /* Custom styles for large screens */
-    }
+	.my-galleria {
+		/* Custom styles for large screens */
+		
+	}
+	.container-xxl.bg-white.p-0 {
+		padding: 0 10% !important;
+	}
+}
+
+.form-control:read-only {
+	background-color: white !important;
+	opacity: 1 !important;
+}
+
+.form-control:disabled {
+	background-color: #e9ecef !important;
+	opacity: 1 !important;
 }
 

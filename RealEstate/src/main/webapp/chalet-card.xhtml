@@ -35,7 +35,7 @@
 											alt="the photos"
 											style="width: 100%;height: 23rem; display: block;object-fit:cover;">
 										</p:graphicImage>
-										<p:galleria widgetVar="chaletGallerie"
+										<p:galleria widgetVar="chaletGallerie" styleClass="galleria-arabic-fix"
 											value="#{chaletCardController.item.images}" var="photo"
 											numVisible="4" circular="true" fullScreen="true"
 											showItemNavigators="true" showThumbnails="false"
@@ -44,9 +44,9 @@
 											<p:graphicImage url="#{chaletCardController.fullUrl}#{photo}"
 												alt="the photos" style="width: 100%; display: block" />
 										</p:galleria>
-										<p:commandButton value="#{bundle.show_photos}"
-											icon="pi pi-external-link" styleClass="col-md-12"
-											onclick="PF('chaletGallerie').show()" process="@this">
+										<p:commandButton value="#{bundle.show_photos}"  
+											icon="pi pi-external-link" styleClass="col-12"
+											onclick="PF('chaletGallerie').show();" process="@this">
 										</p:commandButton>
 									</div>
 								</div>
@@ -175,54 +175,64 @@
 										class="row col-md-12 border-top border-end border-start mt-2">
 
 										<small
-											class="col-md-3 text-center border-end py-2 border-bottom">
-											<h:outputLabel value="#{bundle.chalet_weekdays}: " /> <h:outputLabel
+											class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel value="#{bundle.chalet_weekdays}: " />
+											 <h:outputLabel styleClass="me-2 ms-2"
 												value="#{chaletCardController.item.weekdays}">
 												<f:convertNumber pattern="#,###" />
-												<i class="fa fa-ligth fa-dollar-sign text-primary me-2" />
+												<i class="fa fa-ligth fa-dollar-sign text-primary me-2 ms-2" />
 											</h:outputLabel>
-										</small> <small
-											class="col-md-3 text-center border-end py-2 border-bottom">
-											<h:outputLabel value="#{bundle.chalet_weekenddays}: " /> <h:outputLabel
+										</small>
+										 <small
+											class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel value="#{bundle.chalet_weekenddays}: " />
+											 <h:outputLabel styleClass="me-2 ms-2"
 												value="#{chaletCardController.item.weekenddays}">
 												<f:convertNumber pattern="#,###" />
-												<i class="fa fa-ligth fa-dollar-sign text-primary me-2" />
+												<i class="fa fa-ligth fa-dollar-sign text-primary me-2 ms-2" />
 											</h:outputLabel>
-										</small> <small
-											class="col-md-3 text-center border-end py-2 border-bottom">
-											<h:outputLabel value="#{bundle.real_estate_space}: " /> <h:outputLabel
+										</small>
+										 <small
+											class="col-md-3  border-end py-2 border-bottom">
+											 <h:outputLabel value="#{bundle.real_estate_space}: " />
+											 <h:outputLabel styleClass="me-2 ms-2"
 												value="#{chaletCardController.item.space}">
 												<f:convertNumber pattern="#,###" />
-											</h:outputLabel> <i class="fa fa-ruler-combined text-primary me-2" />
-
-										</small> <small
-											class="col-md-3 text-center py-2 border-bottom border-end">
-											<h:outputLabel value="#{bundle.chalet_pool}" /> <i
-											class="text-primary #{chaletCardController.item.pool ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
-										</small> <small
-											class="col-md-3 text-center py-2 border-bottom border-end">
-											<h:outputLabel value="#{bundle.chalet_chimney}" /> <i
-											class="text-primary #{chaletCardController.item.chimney ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
-										</small> <small
-											class="col-md-3 text-center border-end py-2 border-bottom">
-											<h:outputLabel value="#{bundle.real_estate_views}:" /> <h:outputLabel
-												value="#{chaletCardController.item.views}" styleClass="ms-2">
+												<i class="fa fa-ruler-combined text-primary me-2 ms-2" />
+											</h:outputLabel>
+											
+										</small>
+										 <small
+											class="col-md-3  py-2 border-bottom border-end">
+											<h:outputLabel value="#{bundle.chalet_pool}" />
+											 <i class="text-primary #{chaletCardController.item.pool ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
+										</small>
+										 <small class="col-md-3  py-2 border-bottom border-end">
+											<h:outputLabel value="#{bundle.chalet_chimney}" /> 
+											<i class="text-primary #{chaletCardController.item.chimney ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
+										</small>
+										 <small class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel value="#{bundle.real_estate_views}:" /> 
+											<h:outputLabel 
+												value="#{chaletCardController.item.views}" styleClass="me-2 ms-2">
 												<f:convertNumber pattern="#,###" />
-												<i class=" fa fa-regular fa-eye text-primary me-2" />
+												<i class=" fa fa-regular fa-eye text-primary me-2 ms-2" />
 											</h:outputLabel>
 										</small> <small
-											class="col-md-3 text-center border-end border-bottom py-2">
-											<h:outputLabel value="#{bundle.real_estate_calls}:" /> <h:outputLabel
+											class="col-md-3  border-end border-bottom py-2">
+											<h:outputLabel value="#{bundle.real_estate_calls}:" /> 
+											<h:outputLabel  
 												value="#{chaletCardController.item.numberOfCall}"
-												styleClass="ms-2">
+												styleClass="ms-2 me-2">
 												<f:convertNumber pattern="#,###" />
-												<i class="fa fa-regular fa-phone text-primary me-2" />
+												<i class="fa fa-regular fa-phone text-primary me-2 ms-2" />
 											</h:outputLabel>
 										</small> <small
-											class="col-md-3 text-center border-end py-2 border-bottom">
-											<i class="far fa-calendar text-primary me-2" /> <h:outputLabel
+											class="col-md-3  border-end py-2 border-bottom">
+											 <h:outputLabel styleClass=" me-2 ms-2"
 												value="#{chaletCardController.item.postDate}">
 												<f:convertDateTime pattern="yyyy-MM-dd" />
+												<i class="far fa-calendar text-primary me-2 ms-2" />
 											</h:outputLabel>
 										</small>
 									</div>
