@@ -247,11 +247,24 @@ TODO ACTIVE THIS CODE LATER
  -->
 
 
-								<h:commandLink styleClass="btn btn-success"  actionListener="#{signUpController.save()}"
-									value="#{bundle.register}">
 
-									<p:ajax process="@this phoneNumber "></p:ajax>
-								</h:commandLink>
+
+
+								<div class="form-group mb-0 row  "
+									style="margin-top: 1%; display: flex; justify-content: center; align-items: center">
+									<div class="col-4 mt-2">
+										<h:commandLink actionListener="#{signUpController.save()}"
+											style="width:100%"
+											styleClass="btn btn-primary  btn-block waves-effect waves-light">
+											#{	bundle.register_here } 
+															<p:ajax process="@this phoneNumber "></p:ajax>
+										</h:commandLink>
+
+
+									</div>
+								</div>
+
+
 
 								<!-- 	<p:remoteCommand process="@this phoneNumber " immediate="true"
 									name="remoteCommandAction" update=":messageScript"

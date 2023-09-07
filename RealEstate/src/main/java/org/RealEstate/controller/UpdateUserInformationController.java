@@ -42,12 +42,14 @@ public class UpdateUserInformationController implements Serializable {
 	private HttpServletRequest request;
 
 	@Inject
-	private AppSinglton appSinglton ;
-	
+	private AppSinglton appSinglton;
+
 	private User user;
 
 	private String fullUrl = "";
 	private String ipAddressWithPort;
+
+	private boolean haveProfilePicture;
 
 	@PostConstruct
 	public void init() {
@@ -65,25 +67,40 @@ public class UpdateUserInformationController implements Serializable {
 				e.printStackTrace();
 			}
 		} else {
-			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
-					.concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
-			if (user.getProfileImageUrl() != null) {
+
+			if (user.getProfileImageUrl() == null) {
+				haveProfilePicture = false;
+			} else {
+				fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
+						.concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
+
 				fullUrl = fullUrl.concat(user.getProfileImageUrl());
+				haveProfilePicture = true;
+
 			}
+
 		}
 
+	}
+
+	public boolean isHaveProfilePicture() {
+		return haveProfilePicture;
+	}
+
+	public void setHaveProfilePicture(boolean haveProfilePicture) {
+		this.haveProfilePicture = haveProfilePicture;
 	}
 
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
-		
+
 		String ipAddress = request.getRemoteAddr();
 
 		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
-			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+			ipAddressWithPort = "http://" + ipAddress + ":" + request.getLocalPort();
 		} else {
-			ipAddressWithPort = "https://" + appSinglton.getRealDns() ;
+			ipAddressWithPort = "https://" + appSinglton.getRealDns();
 		}
 
 		return ipAddressWithPort;

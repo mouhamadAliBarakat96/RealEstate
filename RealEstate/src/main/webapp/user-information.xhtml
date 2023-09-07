@@ -26,171 +26,184 @@
 
 				<div class="card">
 					<div class="card-body">
-
-
-
 						<div class="text-center mx-auto mb-5 wow fadeInUp"
 							data-wow-delay="0.1s" style="max-width: 600px;">
 							<span style="font-size: 20px; font-weight: 700" class="mb-3">#{bundle.update_user_information}</span>
 
 						</div>
-						<h:panelGroup id="test">
+					<div style="width: 20%; display: inline-block; text-align: center;">
+
+
+							<h:panelGroup id="profilePicturePanel">
+
+								<h:panelGroup
+									rendered="#{updateUserInformationController.haveProfilePicture}">
+
+
+									<p:graphicImage 
+										url="#{updateUserInformationController.fullUrl}" width="150px"
+										style="margin-top: 4%; margin: 0 auto ; border-radius: 50%"
+										height="150px" />
+								</h:panelGroup>
+								<h:panelGroup
+									rendered="#{!updateUserInformationController.haveProfilePicture}">
+
+									<img class="img-fluid" width="150px" height="150px"
+										style="margin-top: 4%; margin: 0 auto ; border-radius: 50%"
+										src="/resources/makaan/img/profile.png" alt="Icon" />
+
+								</h:panelGroup>
+
+							</h:panelGroup>
+						</div>
 
 
 
 
-								<div style="width:20%; display: inline-block">
-								<p:graphicImage url="#{updateUserInformationController.fullUrl}"
-									width="200px" style="border-raduis:10%" />
-							</div>
+
+						<div style="width: 75%; display: inline-block">
+							<div class="row">
 
 
 
-							<div style="width: 75%; display: inline-block">
-								<div class="row">
-
-
-
-									<div style="display: inline-block" class="col-md-4">
-										<div class="form-group">
-											<h:outputLabel class="control-label" for="firstName"
-												style="padding-left:1.5%" value="#{bundle.firstName} ">
-												<span class="required">*</span>
-											</h:outputLabel>
-											<h:inputText id="firstName" required="true"
-												f5:placeholder="#{bundle.firstName}  "
-												label="#{bundle.firstName}  "
-												value="#{updateUserInformationController.user.firstName}"
-												styleClass="form-control">
-												<f:ajax render=":messageScript"></f:ajax>
-											</h:inputText>
-											<h:message for="firstName" styleClass="error-message" />
-										</div>
-									</div>
-
-									<div style="display: inline-block" class="col-md-4">
-										<div class="form-group">
-											<h:outputLabel class="control-label" for="lastName"
-												style="padding-left:1.5%" value="#{bundle.lastName} ">
-												<span class="required">*</span>
-											</h:outputLabel>
-											<h:inputText id="lastName" required="true"
-												f5:placeholder="#{bundle.lastName} "
-												label="#{bundle.lastName} " title="name "
-												value="#{updateUserInformationController.user.lastName}"
-												styleClass="form-control">
-												<f:ajax render=":messageScript"></f:ajax>
-											</h:inputText>
-											<h:message for="lastName" styleClass="error-message" />
-										</div>
-									</div>
-
-									<div style="display: inline-block" class="col-md-4">
-										<div class="form-group">
-											<h:outputLabel class="control-label" for="middleName"
-												style="padding-left:1.5%" value="#{bundle.middleName} ">
-												<span class="required">*</span>
-											</h:outputLabel>
-											<h:inputText id="middleName" required="true"
-												f5:placeholder="#{bundle.middleName} "
-												label="#{bundle.middleName} " title="#{bundle.middleName} "
-												value="#{updateUserInformationController.user.middleName}"
-												styleClass="form-control">
-												<f:ajax render=":messageScript"></f:ajax>
-											</h:inputText>
-											<h:message for="middleName" styleClass="error-message" />
-										</div>
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="firstName"
+											style="padding-left:1.5%" value="#{bundle.firstName} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="firstName" required="true"
+											f5:placeholder="#{bundle.firstName}  "
+											label="#{bundle.firstName}  "
+											value="#{updateUserInformationController.user.firstName}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="firstName" styleClass="error-message" />
 									</div>
 								</div>
 
-
-								<div class="row" style="margin-top: 2%">
-
-									<div style="display: inline-block" class="col-md-4">
-										<div class="form-group">
-											<h:outputLabel class="control-label" for="userName"
-												style="padding-left:1.5%" value="#{bundle.userName} ">
-												<span class="required">*</span>
-											</h:outputLabel>
-											<h:inputText id="userName" required="true"
-												f5:placeholder="#{bundle.userName} "
-												label="#{bundle.userName} " title="#{bundle.userName} "
-												value="#{updateUserInformationController.user.userName}"
-												styleClass="form-control">
-												<f:ajax render=":messageScript"></f:ajax>
-											</h:inputText>
-											<h:message for="userName" styleClass="error-message" />
-										</div>
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="lastName"
+											style="padding-left:1.5%" value="#{bundle.lastName} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="lastName" required="true"
+											f5:placeholder="#{bundle.lastName} "
+											label="#{bundle.lastName} " title="name "
+											value="#{updateUserInformationController.user.lastName}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="lastName" styleClass="error-message" />
 									</div>
+								</div>
 
-
-									<div style="display: inline-block" class="col-md-4">
-										<div class="form-group">
-											<h:outputLabel class="control-label" for="phoneNumber"
-												style="padding-left:1.5%" value="#{bundle.phoneNumber} ">
-												<span class="required">*</span>
-											</h:outputLabel>
-											<h:inputText id="phoneNumber" required="true"
-												f5:placeholder="#{bundle.phoneNumber} "
-												label="#{bundle.phoneNumber} "
-												title="#{bundle.phoneNumber} "
-												value="#{updateUserInformationController.user.phoneNumber}"
-												styleClass="form-control">
-
-											</h:inputText>
-											<h:outputLabel class="control-label"
-												style="padding-left:1.5%;font-size:12px;"
-												value="#{bundle.phoneNumberFormat} ">
-
-											</h:outputLabel>
-
-
-											<h:message for="phoneNumber" styleClass="error-message" />
-										</div>
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="middleName"
+											style="padding-left:1.5%" value="#{bundle.middleName} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="middleName" required="true"
+											f5:placeholder="#{bundle.middleName} "
+											label="#{bundle.middleName} " title="#{bundle.middleName} "
+											value="#{updateUserInformationController.user.middleName}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="middleName" styleClass="error-message" />
 									</div>
-
-									<div style="display: inline-block" class="col-md-4">
-
-										<div class="form-group">
-											<h:outputLabel class="control-label"
-												style="padding-left:1.5%"
-												value="#{bundle.profile_picture_have_agretion} :">
-
-											</h:outputLabel>
-											<br></br>
-
-
-											<h:outputText styleClass="value"
-												style="display:block;padding-left: 1.5%;"
-												class=" #{updateUserInformationController.user.showProfilePicture  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
-
-
-										</div>
-									</div>
-
-
 								</div>
 							</div>
 
 
+							<div class="row" style="margin-top: 2%">
+
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="userName"
+											style="padding-left:1.5%" value="#{bundle.userName} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="userName" required="true"
+											f5:placeholder="#{bundle.userName} "
+											label="#{bundle.userName} " title="#{bundle.userName} "
+											value="#{updateUserInformationController.user.userName}"
+											styleClass="form-control">
+											<f:ajax render=":messageScript"></f:ajax>
+										</h:inputText>
+										<h:message for="userName" styleClass="error-message" />
+									</div>
+								</div>
 
 
+								<div style="display: inline-block" class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="phoneNumber"
+											style="padding-left:1.5%" value="#{bundle.phoneNumber} ">
+											<span class="required">*</span>
+										</h:outputLabel>
+										<h:inputText id="phoneNumber" required="true"
+											f5:placeholder="#{bundle.phoneNumber} "
+											label="#{bundle.phoneNumber} " title="#{bundle.phoneNumber} "
+											value="#{updateUserInformationController.user.phoneNumber}"
+											styleClass="form-control">
+
+										</h:inputText>
+										<h:outputLabel class="control-label"
+											style="padding-left:1.5%;font-size:12px;"
+											value="#{bundle.phoneNumberFormat} ">
+
+										</h:outputLabel>
 
 
+										<h:message for="phoneNumber" styleClass="error-message" />
+									</div>
+								</div>
 
-							<div class="row"
-								style="margin-top: 1.5%; display: flex; justify-content: center; align-items: center;">
+								<div style="display: inline-block" class="col-md-4">
+
+									<div class="form-group">
+										<h:outputLabel class="control-label" style="padding-left:1.5%"
+											value="#{bundle.profile_picture_have_agretion} :">
+
+										</h:outputLabel>
+										<br></br>
 
 
-								<h:commandLink style="width:50%" styleClass="btn btn-success"
-									action="#{updateUserInformationController.updateUserInformation()}"
-									value="EDIT">
+										<h:outputText styleClass="value"
+											style="display:block;padding-left: 1.5%;"
+											class=" #{updateUserInformationController.user.showProfilePicture  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
 
-									<f:ajax execute="test" render=" :messageScript test"></f:ajax>
-								</h:commandLink>
+
+									</div>
+								</div>
+
 
 							</div>
-						</h:panelGroup>
+						</div>
+
+
+
+
+
+
+
+						<div class="row"
+							style="margin-top: 1.5%; display: flex; justify-content: center; align-items: center;">
+
+
+							<h:commandLink style="width:50%" styleClass="btn btn-success"
+								action="#{updateUserInformationController.updateUserInformation()}"
+								value="EDIT">
+
+								<f:ajax execute="test" render=" :messageScript test"></f:ajax>
+							</h:commandLink>
+
+						</div>
+
 					</div>
 				</div>
 			</div>
