@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	<div class="tab-content">
-		<div id="tab-1" class="tab-pane fade show p-0 active">
+		<div id="tab-1" class="tab-pane fade show p-2 active">
 			<div class="row g-4">
 				<p:dataView var="chalet" value="#{indexController.chaletLazyModel}"
 					rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
@@ -34,8 +34,8 @@
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 					<p:dataViewGridItem>
-						<div class="card flex justify-content-center max-width388">
-							<div class="col-md-12 wow fadeInUp" data-wow-delay="0.1s">
+						<div class="card flex justify-content-center">
+							<div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="property-item rounded overflow-hidden">
 									<div class="position-relative overflow-hidden">
 										<h:commandLink action="#{indexController.navigate_chalet(chalet)}"
@@ -120,7 +120,7 @@
 						<h:panelGrid columns="3" style="width:100%" cellspacing="20">
 							<p:outputPanel>
 								<div class="row">
-									<div class="col-md-4 max-width388">
+									<div class="col-md-4 ">
 										<div class="position-relative overflow-hidden">
 											<h:commandLink action="#{indexController.navigate_chalet(chalet)}"
 												  styleClass="d-block img-fluid"
