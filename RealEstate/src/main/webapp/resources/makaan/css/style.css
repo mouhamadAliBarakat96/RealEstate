@@ -579,3 +579,11 @@ body .ui-selectbooleanbutton, body .ui-selectonebutton>.ui-button, body .ui-sele
 .galleria-arabic-fix{
 	direction: ltr;
 }
+
+
+	
+@media (max-width: 1500px) {
+    .nav-item.nav-link {
+        font-size: 14px !important;
+    }
+}

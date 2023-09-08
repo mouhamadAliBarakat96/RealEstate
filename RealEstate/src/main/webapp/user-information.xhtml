@@ -11,6 +11,16 @@
 <ui:composition template="/views/template/makaan-template.xhtml">
 	<ui:define name="customStylesheet">
 		<h:outputStylesheet name="admin-template/color.css" library="css" />
+
+		<style>
+body .ui-fileupload .ui-fileupload-buttonbar {
+	border: none;
+	background: #fff;
+	color: #fff;
+	padding: 0.857rem 1rem;
+}
+</style>
+
 	</ui:define>
 
 
@@ -22,7 +32,7 @@
 			<div class="container">
 				<div class="card">
 					<div class="card-body">
-						<div class="text-center mx-auto mb-5 wow fadeInUp"
+						<div class="text-center mx-auto mb-2 wow fadeInUp"
 							data-wow-delay="0.1s" style="max-width: 600px;">
 							<span style="font-size: 20px; font-weight: 700" class="mb-3">#{bundle.update_user_information}</span>
 						</div>
@@ -30,10 +40,15 @@
 							<h:panelGroup id="profilePicturePanel">
 								<h:panelGroup
 									rendered="#{updateUserInformationController.haveProfilePicture}">
+
 									<p:graphicImage
 										url="#{updateUserInformationController.fullUrl}" width="150px"
-										style="margin-top: 4%; margin: 0 auto ; border-radius: 50%"
+										style="margin-top: 2%; margin: 0 auto ; border-radius: 50%"
 										height="150px" />
+
+
+
+
 								</h:panelGroup>
 								<h:panelGroup
 									rendered="#{!updateUserInformationController.haveProfilePicture}">
@@ -41,10 +56,36 @@
 									<img class="img-fluid" width="150px" height="150px"
 										style="margin-top: 4%; margin: 0 auto; border-radius: 50%"
 										src="/resources/makaan/img/profile.png" alt="Icon" />
+
+
+
+
 								</h:panelGroup>
 							</h:panelGroup>
+
 						</div>
-						<div class="row">
+
+						<div class="row mt-2 text-center mb-1"
+							style="display: flex; justify-content: center;">
+
+
+
+
+
+
+							<p:fileUpload multiple="false" id="uploadId" auto="true"
+								listener="#{updateUserInformationController.importFile}"
+								process="@this" update=" :messageScript">
+
+
+							</p:fileUpload>
+
+
+
+
+						</div>
+
+						<div class="row" style="margin-top: 2%">
 							<div style="display: inline-block" class="col-md-4">
 								<div class="form-group">
 									<h:outputLabel class="control-label" for="firstName"
@@ -102,6 +143,7 @@
 										<span class="required">*</span>
 									</h:outputLabel>
 									<h:inputText id="userName" required="true"
+									disabled="#{updateUserInformationController.user.id gt 0 }"
 										f5:placeholder="#{bundle.userName} "
 										label="#{bundle.userName} " title="#{bundle.userName} "
 										value="#{updateUserInformationController.user.userName}"
@@ -145,10 +187,13 @@
 							</div>
 						</div>
 					</div>
-					<div class="row mt-2 text-center mb-1" style="display: flex; justify-content: center;">
-						<h:commandLink style="width:auto;padding: 5px 2rem;" styleClass="btn btn-success"
-							action="#{updateUserInformationController.updateUserInformation()}" value="#{bundle.save}">
-							<f:ajax execute="test" render=" :messageScript test"></f:ajax>
+					<div class="row mt-2 text-center mb-1"
+						style="display: flex; justify-content: center;">
+						<h:commandLink style="width:auto;padding: 5px 2rem;"
+							styleClass="btn btn-success"
+							action="#{updateUserInformationController.updateUserInformation()}"
+							value="#{bundle.save}">
+							<f:ajax execute="test" render=" :messageScript test image "></f:ajax>
 						</h:commandLink>
 					</div>
 				</div>

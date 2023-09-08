@@ -120,6 +120,7 @@ public class UploadImagesMultiPart implements Serializable {
 		String fileNameOrgin = null;
 		MultivaluedMap<String, String> header = inputPart.getHeaders();
 		fileName = getFileName(header);
+		fileName = addRandomBeforeExtension(fileName);
 		fileNameOrgin = fileName;
 		InputStream inputStream = inputPart.getBody(InputStream.class, null);
 
@@ -136,6 +137,31 @@ public class UploadImagesMultiPart implements Serializable {
 		// files li nzlo li bdna nrdon 3al data base
 		return fileNameOrgin;
 	}
+	public String uploadImageUserProfileFrontEnd(byte[] bytes , String fileName) throws Exception {
+
+		
+		String fileNameOrgin = null;
+		
+		
+	
+		
+		fileName = addRandomBeforeExtension(fileName);
+		
+		fileNameOrgin = fileName;
+		
+		File customDir = new File(Constants.UPLOAD_DIR + Constants.PROFILE_IMAGE_DIR_NAME);
+		if (!customDir.exists()) {
+			customDir.mkdirs();
+		}
+
+		fileName = customDir.getAbsolutePath() + File.separator + fileName;
+		Files.write(Paths.get(fileName), bytes, StandardOpenOption.CREATE_NEW);
+
+		// files li nzlo li bdna nrdon 3al data base
+		return fileNameOrgin;
+	}
+	
+	
 
 	public String uploadImageUserProfileJSF(ImageDto imageDto) throws IOException {
 
