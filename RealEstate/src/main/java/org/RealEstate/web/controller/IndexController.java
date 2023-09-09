@@ -188,12 +188,12 @@ public class IndexController implements Serializable {
 		}
 	}
 
-	public void navigateToWhatsApp_chalet(Chalet item) throws IOException {
+	public void navigateToWhatsApp_chalet(Chalet chalet) throws IOException {
 		// Get the phone number parameter from the request
-		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
+		if (chalet.getUser() != null && chalet.getUser().getPhoneNumber() != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
-			String phoneNumber = item.getUser().getPhoneNumber();
+			String phoneNumber = chalet.getUser().getPhoneNumber();
 			// Construct the WhatsApp URL
 			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
 			// Navigate to the URL

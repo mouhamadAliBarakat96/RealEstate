@@ -130,7 +130,8 @@
 										<h:panelGroup
 											rendered="#{actionBean.hasRoomsAndBathRooms(real.postType)}">
 											<small class="flex-fill text-center border-end py-2">
-												<i class="fa fa-bed text-primary me-2" /> #{real.nbRoom}
+												<i class="fa fa-bed text-primary me-2" /> 
+												#{real.bedRoom ==0? bundle.no_value: real.bedRoom} 
 												#{bundle.real_estate_rooms}
 											</small>
 										</h:panelGroup>
@@ -233,12 +234,14 @@
 											<h:panelGroup
 												rendered="#{actionBean.hasRoomsAndBathRooms(real.postType)}">
 												<small class="flex-fill text-center border-end py-2">
-													<i class="fa fa-bed text-primary me-2" /> #{real.nbRoom}
+													<i class="fa fa-bed text-primary me-2" />
+													#{real.nbRoom ==0? bundle.no_value: real.nbRoom} 
 													#{bundle.real_estate_rooms}
 												</small>
 
 												<small class="flex-fill text-center py-2"> <i
-													class="fa fa-bath text-primary me-2" /> #{real.nbBathRoom}
+													class="fa fa-bath text-primary me-2" />
+													#{real.nbBathRoom ==0? bundle.no_value: real.nbBathRoom} 
 													#{bundle.real_estate_bathrooms}
 												</small>
 											</h:panelGroup>
