@@ -22,6 +22,7 @@ import org.RealEstate.model.RealEstate;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utility;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.ResponsiveOption;
 
@@ -234,5 +235,9 @@ public class RealEstateCardController implements Serializable {
 		}else {
 			return fullUrl.concat(NO_PHOTO);
 		}
+	}
+	
+	public String floorValue(int i) {
+		return Utility.convertToText(i);
 	}
 }

@@ -135,11 +135,14 @@
 								<p:outputLabel class="control-label" for="floorId"
 									value="#{bundle.real_estate_floor}">
 								</p:outputLabel>
-								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									emptyValue="0" minValue="0" maxValue="99" id="floorId"
-									label="#{bundle.real_estate_floor}" styleClass="form-control"
+								<h:selectOneMenu id="floorId"
+									converter="omnifaces.SelectItemsConverter"
+									styleClass="form-select"
 									value="#{userPostCardController.item.floor}">
-								</p:inputNumber>
+									<f:selectItems value="#{FloorEnum.values()}" var="floor"
+										itemValue="#{floor.floor}" itemLabel="#{bundle[floor]}" />
+									<f:ajax execute="@this" />
+								</h:selectOneMenu>
 							</div>
 						</div>
 						<div class="col-md-3">
