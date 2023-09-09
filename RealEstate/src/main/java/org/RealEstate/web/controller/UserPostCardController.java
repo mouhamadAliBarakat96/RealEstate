@@ -363,7 +363,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			hasErrorEntries = true;
 		}
 
-		if (item.getPostType() == PostType.APPRATMENT_RENT) {
+		if (postType == PostType.APPRATMENT_RENT) {
 			if (item.getSpace() < 50) {
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50",sessionLanguage.getLocale());
 				hasErrorEntries = true;
@@ -374,7 +374,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				hasErrorEntries = true;
 			}
 
-		} else if (item.getPostType() == PostType.APPRATMENT_SELL) {
+		} else if (postType == PostType.APPRATMENT_SELL) {
 
 			if (item.getSpace() < 50) {
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_50",sessionLanguage.getLocale());
@@ -386,7 +386,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				hasErrorEntries = true;
 			}
 
-		} else if (item.getPostType() == PostType.LAND) {
+		} else if (postType == PostType.LAND) {
 
 			if (item.getSpace() < 200) {
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_200",sessionLanguage.getLocale());
@@ -396,7 +396,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_4_DOLLARS",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
-		} else if (item.getPostType() == PostType.SHOP_RENT) {
+		} else if (postType == PostType.SHOP_RENT) {
 			if (item.getPrice() < 60) {
 				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60",sessionLanguage.getLocale());
 				hasErrorEntries = true;
@@ -405,7 +405,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
-		} else if (item.getPostType() == PostType.SHOP_SELL) {
+		} else if (postType == PostType.SHOP_SELL) {
 
 			if (item.getSpace() * 100 < item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",sessionLanguage.getLocale());
@@ -415,7 +415,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
-		} else if (item.getPostType() == PostType.OFFICE_RENT) {
+		} else if (postType == PostType.OFFICE_RENT) {
 
 			if (item.getPrice() < 60) {
 				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60",sessionLanguage.getLocale());
@@ -426,7 +426,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				hasErrorEntries = true;
 			}
 
-		} else if (item.getPostType() == PostType.OFFICE_SELL) {
+		} else if (postType == PostType.OFFICE_SELL) {
 
 			if (item.getSpace() * 100 < item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",sessionLanguage.getLocale());
@@ -448,15 +448,24 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			hasEmptyField = true;
 			Utility.addWarningMessage("title_is_required",sessionLanguage.getLocale());
 		}
+		
+		if (item.getPrice() == 0) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("price_is_required",sessionLanguage.getLocale());
+		}
+		if (item.getSpace() == 0) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("space_is_required",sessionLanguage.getLocale());
+		}
+		
+		if (item.getVillage() == null) {
+			Utility.addWarningMessage("village_is_required", sessionLanguage.getLocale());
+			hasEmptyField = true;
+		}
 
 		if (StringUtils.isBlank(item.getSubTittle())) {
 			hasEmptyField = true;
 			Utility.addWarningMessage("subtitle_is_required",sessionLanguage.getLocale());
-		}
-
-		if (item.getVillage() == null) {
-			hasEmptyField = true;
-			Utility.addWarningMessage("village_is_required",sessionLanguage.getLocale());
 		}
 
 		if (item.getImages().size() == 0) {
@@ -478,11 +487,6 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				return;
 			}
 			
-			if (chalet.getImages().size() == 0) {
-				Utility.addWarningMessage("please_add_at_least_one_photo",sessionLanguage.getLocale());
-				return;
-			}
-
 			if (chalet.getId() <= 0) {
 				chalet.setPostDate(new Date());
 				chalet.setUser(user);
@@ -506,8 +510,36 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 
 	private boolean chaletHasEmptyFields() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean emptyFields = false;
+		
+		if (chalet != null) {
+			if (StringUtils.isBlank(chalet.getName())) {
+				Utility.addWarningMessage("name_is_required", sessionLanguage.getLocale());
+				emptyFields = true;
+			}
+
+			if (chalet.getVillage() == null) {
+				Utility.addWarningMessage("village_is_required", sessionLanguage.getLocale());
+				emptyFields = true;
+			}
+
+			if (chalet.getWeekdays() == 0) {
+				Utility.addWarningMessage("week_days_price_is_required", sessionLanguage.getLocale());
+				emptyFields = true;
+			}
+			
+			if (chalet.getWeekenddays() == 0) {
+				Utility.addWarningMessage("week_end_price_is_required", sessionLanguage.getLocale());
+				emptyFields = true;
+			}
+
+			if (chalet.getImages().size() == 0) {
+				Utility.addWarningMessage("please_add_at_least_one_photo", sessionLanguage.getLocale());
+				emptyFields = true;
+			}
+		}
+
+		return emptyFields;
 	}
 
 	public boolean hasRoomsBathFloorElevator() {

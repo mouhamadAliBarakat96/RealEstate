@@ -3,11 +3,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
 
 <ui:component>
 	<div class="row p-3">
-		<div class="col-12 md:col-4">
+		<div class="col-12">
 			<p:staticMessage severity="warn" summary="WARN"
 				rendered="#{userPostCardController.chalet.postStatus == 'REFFUSED'}"
 				detail="#{userPostCardController.chalet.reffuseCause}"
@@ -28,7 +29,6 @@
 					styleClass="form-control"
 					value="#{userPostCardController.chalet.name}">
 				</h:inputText>
-				<h:message for="nameId" styleClass="error-message" />
 			</div>
 		</div>
 		<div class="col-md-3 ">
@@ -49,10 +49,10 @@
 				</p:outputLabel>
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
 					maxValue="9999" id="weekdayId" label="#{bundle.chalet_weekdays}"
-					required="true" styleClass="form-control"
+					required="true" styleClass="form-control" emptyValue="0"
 					value="#{userPostCardController.chalet.weekdays}">
 				</p:inputNumber>
-				<h:message for="weekdayId" styleClass="error-message" />
+				 
 			</div>
 		</div>
 		<div class="col-md-3">
@@ -62,10 +62,9 @@
 				</p:outputLabel>
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
 					maxValue="9999" id="weekendId" label="#{bundle.chalet_weekenddays}"
-					required="true" styleClass="form-control"
+					required="true" styleClass="form-control" emptyValue="0"
 					value="#{userPostCardController.chalet.weekenddays}">
 				</p:inputNumber>
-				<h:message for="weekendId" styleClass="error-message" />
 			</div>
 		</div>
 		<div class="col-md-3">
@@ -90,6 +89,19 @@
 						value="#{userPostCardController.chalet.pool}">
 					</h:selectBooleanCheckbox>
 				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group">
+
+				<p:outputLabel class="control-label" for="descrptionId"
+					value="#{bundle.chalet_description}">
+				</p:outputLabel>
+				<h:inputTextarea id="descrptionId" rows="10"
+					label="#{bundle.chalet_description}" styleClass="form-control"
+					h5:placeHolder="#{bundle.chalet_description}"
+					value="#{userPostCardController.chalet.descrption}">
+				</h:inputTextarea>
 			</div>
 		</div>
 		<div class="col-md-12">
@@ -137,7 +149,7 @@
 				<h:commandLink value='#{bundle.save}' id="save_btn"
 					action='#{userPostCardController.save()}'
 					styleClass="btn btn-primary btn-save">
-					<f:ajax render=":messageScript myForm:tabView:chalet"
+					<f:ajax render=":messageScript"
 						execute="myForm:tabView:chalet myForm:tabView:uploadImageChalet" />
 					<i class="fa fa-save" />
 				</h:commandLink>
