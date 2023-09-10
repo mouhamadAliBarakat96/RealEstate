@@ -1,6 +1,7 @@
 package org.RealEstate.enumerator;
 
 public enum FloorEnum {
+	  ZERO_FLOOR(0),
 	  FIRST(1),
 	  SECOND(2),
 	  THIRD(3),
