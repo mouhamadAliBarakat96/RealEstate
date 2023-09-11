@@ -98,7 +98,7 @@
 	margin-right: 20px;
 	/*padding: 25px 0;*/
 	color: #FFFFFF;
-	font-size: 15px;
+	font-size: 13px;
 	text-transform: uppercase;
 	outline: none;
 }
@@ -597,4 +597,11 @@ body .ui-selectbooleanbutton, body .ui-selectonebutton>.ui-button, body .ui-sele
 
 a.btn.btn-outline-primary.nav-item.nav-link:hover {
     color: white;
+}
+
+a.nav-item.nav-link:hover {
+	background-color: #00b98e;
+    border-radius: 19px;
+    color: white !important;
+	
 }
