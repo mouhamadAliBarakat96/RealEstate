@@ -56,3 +56,26 @@
 	opacity: 1 !important;
 }
 
+
+.ui-paginator-prev.ui-state-default.ui-corner-all,.ui-paginator-prev.ui-state-default.ui-corner-all.ui-state-disabled {
+	color: #00B98E !important;
+    border-color: #00B98E !important;
+	
+}
+ 
+.ui-paginator-next.ui-state-default.ui-corner-all,.ui-paginator-next.ui-state-default.ui-corner-all.ui-state-disabled {
+	color: #00B98E !important;
+    border-color: #00B98E !important;
+	
+}
+ 
+
+.ui-paginator-page.ui-state-default.ui-state-active.ui-corner-all{
+	color: #00B98E !important;
+    border-color: #00B98E !important;
+    background: white !important;;
+}
+
+
+
+
