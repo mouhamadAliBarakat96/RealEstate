@@ -137,6 +137,25 @@ function changeLang(lang) {
 }
 
 
-//Use noConflict to release control of the $ variable
+$(document).ready(function() {
+	// Get the current URL
+	var currentURL = window.location.href;
+
+	// Get all the navigation links
+	var navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
+	// Loop through each navigation link
+	for (var i = 0; i < navLinks.length; i++) {
+		var linkURL = navLinks[i].href;
+
+		// Compare the link URL with the current URL
+		if (currentURL === linkURL) {
+			// Add the active class to the matching link
+			navLinks[i].classList.add('active');
+		}
+	}
+});
+
+// Use noConflict to release control of the $ variable
 jQuery.noConflict();
 

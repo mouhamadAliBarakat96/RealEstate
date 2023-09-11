@@ -237,3 +237,47 @@ new  userPost-card badak tkbos marten 3ala kabset el save la  trouh ( aw2t 3am t
 by default kon mkhtar whde menon whde  lal apprement for rent aw sale hol
 
 fo2 l map hot eno lzm nkon mkhtarin shi khaso bel map 
+
+
+
+
+/***************Finish Working After Viewss*******************/
+
+ملاحظات للتعديل :
+
+1 مكان رقم 0 وضع كلمة لا يوجد --done
+2-رقم الطابق (سفلي- اول- ثاني ....) --done
+3-عند الاضافة زيادة القضاء و المحافظة
+4-ضمن الشاليه تعديل الاسم الى سعر ايام الاسبوع بدل ايام الاسبوع   --done
+
+ملاحظات جديدة :
+1-login tkun lahala button--done
+2-register fena nshela kawno mn 5elel login --done
+3-add insta fb playstore appstore
+4-remark location opened LINKS NAVIGHATION  --done
+5-add search ON select
+6-default value in select "Any"  --done 
+7-bedrooms w ath roos count enum 1 to 7+ multin select
+8-rent-sale-all in select menu before property type
+9-pagiantion fix 10 w next tkun button style
+10-bl add new filter property type ykun fe all rent sale
+11-subtitle---> description in addd new
+12-feedback by user
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

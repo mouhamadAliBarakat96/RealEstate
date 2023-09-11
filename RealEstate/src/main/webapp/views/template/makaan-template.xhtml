@@ -100,7 +100,7 @@
 						<img class="img-fluid" src="/resources/images/logoIkarPlus/fullsize.png"
 							alt="Icon" style="width: 60px; height: 60px;" />
 					</div>
-					<h2 class="m-0 text-primary">#{bundle.house_and_land}</h2>
+					<h2 class="m-0 text-primary">#{makanTemplateController.showRealEstateTitle()}</h2>
 				</h:link>
 				<button type="button" class="navbar-toggler"
 					data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -108,15 +108,15 @@
 				</button>
 				<div  class="collapse navbar-collapse" id="navbarCollapse">
 					<div class="navbar-nav flex-grow-1">
-				       
-						 <h:panelGroup rendered="#{makanTemplateController.user != null}">
+						
+						<h:panelGroup rendered="#{makanTemplateController.user != null}">
 							 <h:link outcome="user-information-front-end" value="#{bundle.user_information}"
 								  styleClass="nav-item nav-link">
 						   </h:link>
 						</h:panelGroup>
 						
 						 <h:link outcome="index-page" value="#{bundle.real_estates}"
-							  styleClass="nav-item nav-link">
+							  styleClass="nav-item nav-link  ">
 							<f:param name="property" value="REALESTATE" />
 						</h:link>
 						
@@ -124,6 +124,7 @@
 							  styleClass="nav-item nav-link">
 							<f:param name="property" value="CHALET" />
 						</h:link>
+						
 						
 						<h:link outcome="userpost-card" value="#{bundle.add_new}"
 							  styleClass="nav-item nav-link">

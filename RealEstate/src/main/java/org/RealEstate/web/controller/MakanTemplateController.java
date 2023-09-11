@@ -163,9 +163,9 @@ public class MakanTemplateController implements Serializable {
 		return uniqueMessages;
 	}
 
-//	public String showRealEstateTitle() {
-//		return languageController.getMessage("house_and_land");
-//	}
+	public String showRealEstateTitle() {
+		return languageController.getMessage("house_and_land");
+	}
 
 	public void logout() {
 
