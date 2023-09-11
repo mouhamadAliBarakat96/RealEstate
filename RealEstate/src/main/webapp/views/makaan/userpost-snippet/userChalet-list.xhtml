@@ -27,7 +27,7 @@
 								</h:commandLink>
 								<h:outputLabel
 									styleClass="rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3 #{chalet.postStatus == 'ACCEPTED'? 'bg-primary' :'bg-danger'}"
-									value="#{languageController.locale=='en'?chalet.postStatus.status:chalet.postStatus.status_ar}" />
+									value="#{languageController.locale eq 'en'?chalet.postStatus.status:chalet.postStatus.status_ar}" />
 							</div>
 							<div class="p-4 pb-0">
 
@@ -90,7 +90,7 @@
 									</h:commandLink>
 									<h:outputLabel
 									styleClass="rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3 #{chalet.postStatus == 'ACCEPTED'? 'bg-primary' :'bg-danger'}"
-									value="#{chalet.postStatus.status} " />
+									value="#{languageController.locale eq 'en'?chalet.postStatus.status:chalet.postStatus.status_ar}" />
 								</div>
 							</div>
 							<div class="col-md-8 ">

@@ -100,34 +100,57 @@
 						<img class="img-fluid" src="/resources/images/logoIkarPlus/fullsize.png"
 							alt="Icon" style="width: 60px; height: 60px;" />
 					</div>
-					<h2 class="m-0 text-primary">#{makanTemplateController.showRealEstateTitle()}</h2>
+					<h2 class="m-0 text-primary">#{bundle.house_and_land}</h2>
 				</h:link>
 				<button type="button" class="navbar-toggler"
 					data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div  class="collapse navbar-collapse" id="navbarCollapse">
-					
+					<div class="navbar-nav flex-grow-1">
+				       <h:link outcome="index-page" value="#{bundle.real_estates}"
+							  styleClass="nav-item nav-link">
+							<f:param name="property" value="REALESTATE" />
+						</h:link>
+				      
+				       <h:link outcome="index-page" value="#{bundle.chalets}"
+							  styleClass="nav-item nav-link">
+							<f:param name="property" value="CHALET" />
+						</h:link>
+				      
+				       <h:link outcome="userpost-card" value="#{bundle.add_new}"
+							  styleClass="nav-item nav-link">
+						</h:link>
+				  
+				        <h:link outcome="userpost-list" value="#{bundle.my_posts}"
+							  styleClass="nav-item nav-link">
+						</h:link>
+						
+						 <h:panelGroup rendered="#{makanTemplateController.user != null}">
+							 <h:link outcome="user-information-front-end" value="#{bundle.user_information}"
+								  styleClass="nav-item nav-link">
+						   </h:link>
+						</h:panelGroup>
+						
+						<h:link outcome="contact-us" value="#{bundle.contact_us}"
+								  styleClass="nav-item nav-link">
+						</h:link>
+					</div>
 					<div class="navbar-nav ">
-						<ui:repeat var="item"
-							value="#{makanTemplateController.fillMenuItems()}">
-							<h:link outcome="#{item.url}" value="#{item.itemLabel}"
-								onclick="updateActiveMenu();" styleClass="#{item.styleClass}">
-								<f:param name="property" value="#{item.kindEnum}" />
+					    <h:panelGroup rendered="#{makanTemplateController.user eq null}">
+							 <h:link outcome="login-user" value="#{bundle.login}"
+								  styleClass="nav-item nav-link btn btn-outline-primary ">
+								<f:param name="property" value="login" />
 							</h:link>
-						</ui:repeat>
-
-
-
-						<h:panelGroup rendered="#{makanTemplateController.user != null}">
+						</h:panelGroup>
+					   <h:panelGroup rendered="#{makanTemplateController.user != null}">
 							<h:commandLink
 								actionListener="#{makanTemplateController.logout()}"
-								class=" nav-item nav-link" value="#{bundle.logout}">
+								class=" nav-item nav-link btn btn-outline-primary" value="#{bundle.logout}">
 								<f:ajax />
 							</h:commandLink>
 						</h:panelGroup>
-
-
+						
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle"
 								data-bs-toggle="dropdown">#{bundle.lang}</a>

@@ -14,19 +14,6 @@
 	</ui:define>
 
 	<ui:define name="customOutputScript">
-		<!-- Use noConflict to release control of the $ variable -->
-		<script>
- 			 jQuery.noConflict();
-		</script>
-
-		<!-- Use jQuery with the "jQuery" variable instead of "$" -->
-		<script>
-			  jQuery(document).ready(function() {
-			    jQuery('p').click(function() {
-			      jQuery(this).hide();
-			    });
-			  });
-			</script>
 	</ui:define>
 
 	<ui:define name="property-content">

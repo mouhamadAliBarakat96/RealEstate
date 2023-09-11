@@ -96,7 +96,7 @@
 
 .navbar-light .navbar-nav .nav-link {
 	margin-right: 20px;
-	padding: 25px 0;
+	/*padding: 25px 0;*/
 	color: #FFFFFF;
 	font-size: 15px;
 	text-transform: uppercase;
@@ -153,7 +153,7 @@
 		display: flex !important;
 		flex-basis: auto;
 		align-items: center;
-		flex-direction: column;
+		 
 	}
 }
 
@@ -592,4 +592,9 @@ body .ui-selectbooleanbutton, body .ui-selectonebutton>.ui-button, body .ui-sele
 	.nav-item.nav-link {
 		font-size: 14px !important;
 	}
+}
+
+
+a.btn.btn-outline-primary.nav-item.nav-link:hover {
+    color: white;
 }

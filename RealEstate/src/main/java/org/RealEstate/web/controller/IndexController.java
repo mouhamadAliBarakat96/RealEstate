@@ -21,6 +21,7 @@ import org.RealEstate.dto.RealEstateLazyDataModel;
 import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
+import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.enumerator.YesNoEnum;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.DistrictFacade;
@@ -103,6 +104,8 @@ public class IndexController implements Serializable {
 
 	@Inject
 	private  AppSinglton appSinglton ;
+	
+	private RealEstateTypeEnum realEstateTypeEnum=RealEstateTypeEnum.ALL;
 	
 	@PostConstruct
 	public void init() {
@@ -624,4 +627,13 @@ public class IndexController implements Serializable {
 			return fullUrl.concat(NO_PHOTO);
 		}
 	}
+
+	public RealEstateTypeEnum getRealEstateTypeEnum() {
+		return realEstateTypeEnum;
+	}
+
+	public void setRealEstateTypeEnum(RealEstateTypeEnum realEstateTypeEnum) {
+		this.realEstateTypeEnum = realEstateTypeEnum;
+	}
+	
 }
