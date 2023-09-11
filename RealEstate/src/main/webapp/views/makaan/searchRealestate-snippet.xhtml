@@ -12,7 +12,7 @@
 				<h:selectOneMenu
 					styleClass="border-0  form-select"
 					converter="omnifaces.SelectItemsConverter"
-					value="#{index.realEstateTypeEnum}">
+					value="#{actionBean.realEstateTypeEnum}">
 					<f:selectItems value="#{RealEstateTypeEnum.values()}" var="option"
 						itemLabel="#{bundle[option]}" itemValue="#{option}" />
 					<f:ajax execute="myForm:searchBarPanel" />
@@ -24,7 +24,7 @@
 				<h:outputLabel value="#{bundle.property_type}" style="color:white" />
 				<h:selectOneMenu styleClass="form-select border-0  "
 					converter="omnifaces.SelectItemsConverter"
-					value="#{index.selectPostType}">
+					value="#{actionBean.selectPostType}">
 					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 					<f:selectItems value="#{PostType.values()}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.name_ar}"
@@ -39,14 +39,14 @@
 				<h:selectOneMenu id="governateSelectId"
 					styleClass="form-select border-0 "
 					converter="omnifaces.SelectItemsConverter"
-					value="#{index.selecteGovernorate}">
+					value="#{actionBean.selecteGovernorate}">
 					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-					<f:selectItems value="#{index.governorates}" var="option"
+					<f:selectItems value="#{actionBean.governorates}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
 						itemValue="#{option}" />
 					<f:ajax execute="@this"
 						render="myForm:districtSelectId myForm:villageSelectId"
-						listener="#{index.listenerSelectGovernate()}" />
+						listener="#{actionBean.listenerSelectGovernate()}" />
 				</h:selectOneMenu>
 			</div>
 
@@ -55,13 +55,13 @@
 				<h:selectOneMenu id="districtSelectId"
 					converter="omnifaces.SelectItemsConverter"
 					styleClass="form-select border-0  "
-					value="#{index.selecteDistrict}">
+					value="#{actionBean.selecteDistrict}">
 					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-					<f:selectItems value="#{index.districts}" var="option"
+					<f:selectItems value="#{actionBean.districts}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
 						itemValue="#{option}" />
 					<f:ajax execute="@this"
-						listener="#{index.listenerSelectDistrict()}"
+						listener="#{actionBean.listenerSelectDistrict()}"
 						render="myForm:villageSelectId" />
 				</h:selectOneMenu>
 			</div>
@@ -70,23 +70,23 @@
 				<h:selectOneMenu id="villageSelectId"
 					converter="omnifaces.SelectItemsConverter"
 					styleClass="form-select border-0  "
-					value="#{index.selecteVillage}">
+					value="#{actionBean.selecteVillage}">
 					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-					<f:selectItems value="#{index.villages}" var="option"
+					<f:selectItems value="#{actionBean.villages}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
 						itemValue="#{option}" />
 					<f:ajax execute="@this" />
 				</h:selectOneMenu>
 			</div>
 			<h:panelGroup id="realSatatebathBedRoomsId">
-				<h:panelGroup rendered="#{index.hasRoomsAndBathRooms(index.selectPostType)}">
+				<h:panelGroup rendered="#{actionBean.hasRoomsAndBathRooms(actionBean.selectPostType)}">
 					<div class="row  ">
 						<div class="col-md-3 mt-1 col-sm-12 ">
 							<h:outputLabel value="#{bundle.beds_count}" style="color:white" />
 							<p:inputNumber decimalPlaces="0" thousandSeparator=","
 								minValue="0" maxValue="99" id="bedsId" emptyValue="0"
 								label="#{bundle.beds_count}" styleClass="form-control"
-								value="#{index.bedRoom}">
+								value="#{actionBean.bedRoom}">
 								<f:ajax/>
 							</p:inputNumber>
 						</div>
@@ -95,7 +95,7 @@
 							<h:outputLabel value="#{bundle.exact_value}" style="color:white" />
 							<h:selectOneMenu styleClass="form-select border-0  "
 								converter="omnifaces.SelectItemsConverter"
-								value="#{index.roomsEqualsEnum}">
+								value="#{actionBean.roomsEqualsEnum}">
 								<f:selectItem itemLabel="#{bundle.exact_value}" itemValue="" />
 								<f:selectItems value="#{YesNoEnum.values()}" var="option"
 									itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}"
@@ -109,7 +109,7 @@
 							<p:inputNumber decimalPlaces="0" thousandSeparator="," emptyValue="0"
 								minValue="0" maxValue="99" id="bathsId"
 								label="#{bundle.baths_count}" styleClass="form-control"
-								value="#{index.bathRoom}">
+								value="#{actionBean.bathRoom}">
 								<f:ajax/>
 							</p:inputNumber>
 						</div>
@@ -118,7 +118,7 @@
 							<h:outputLabel value="#{bundle.exact_value}" style="color:white" />
 							<h:selectOneMenu styleClass="form-select border-0  "
 								converter="omnifaces.SelectItemsConverter"
-								value="#{index.bathsEqualsEnum}">
+								value="#{actionBean.bathsEqualsEnum}">
 								<f:selectItem itemLabel="#{bundle.exact_value}" itemValue="" />
 								<f:selectItems value="#{YesNoEnum.values()}" var="option"
 									itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}"
@@ -135,7 +135,7 @@
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
 					emptyValue="0" maxValue="9999999999" id="minPriceId"
 					label="#{bundle.min_price}" styleClass="form-control"
-					value="#{index.minPrice}">
+					value="#{actionBean.minPrice}">
 					<f:ajax />
 				</p:inputNumber>
 			</div>
@@ -144,13 +144,13 @@
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
 					emptyValue="0" maxValue="9999999999" id="maxPriceId"
 					label="#{bundle.max_price}" styleClass="form-control"
-					value="#{index.maxPrice}">
+					value="#{actionBean.maxPrice}">
 					<f:ajax />
 				</p:inputNumber>
 			</div>
 
 			<div class="col-md-3 col-sm-12 d-flex flex-column-reverse flex-wrap  mt-2 align-content-start">
-				<h:commandButton action="#{index.search()}"
+				<h:commandButton action="#{actionBean.search()}"
 					value="#{bundle.search}"
 					style=" background-color: #007ad9;color:white"
 					styleClass="btn">
