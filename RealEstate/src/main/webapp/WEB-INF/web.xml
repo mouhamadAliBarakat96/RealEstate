@@ -34,6 +34,11 @@
 		<param-value>nova-light</param-value>
 	</context-param>
 
+	<context-param>
+		<param-name>javax.faces.DEFAULT_LOCALE</param-name>
+		<param-value>en</param-value>
+	</context-param>
+
 
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>

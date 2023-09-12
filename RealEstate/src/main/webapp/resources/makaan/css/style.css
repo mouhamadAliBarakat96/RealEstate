@@ -103,10 +103,6 @@
 	outline: none;
 }
 
-.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link.active
-	{
-	color: #00b98e;;
-}
 
 @media ( max-width : 991.98px) {
 	.nav-bar {
@@ -130,7 +126,7 @@
 .navbar-light .navbar-nav .nav-link {
 	color: black;
 	font-weight: 500;
-	border-radius: 20px;
+	border-radius: 10px;
 }
 
 @media ( min-width : 992px) {
@@ -595,6 +591,10 @@ body .ui-selectbooleanbutton, body .ui-selectonebutton>.ui-button, body .ui-sele
 	}
 }
 
+.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link.active
+	{
+		color: #00b98e;
+}
 
 a.btn.btn-outline-primary.nav-item.nav-link:hover {
     color: white;
@@ -602,7 +602,14 @@ a.btn.btn-outline-primary.nav-item.nav-link:hover {
 
 a.nav-item.nav-link:hover {
 	background-color: #00b98e;
-    border-radius: 19px;
+    border-radius: 10px;
     color: white !important;
 	
+}
+
+
+.add-new.nav-item.nav-link  {
+	background-color: #00b98e;
+    color: white !important; 
+    width: fit-content;
 }

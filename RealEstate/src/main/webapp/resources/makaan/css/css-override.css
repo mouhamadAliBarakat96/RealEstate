@@ -77,5 +77,19 @@
 }
 
 
+.ui-paginator.ui-paginator-bottom {
+    border-top: 0 none;
+    direction: ltr;
+    background-color: white;
+}
 
+ .ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, .ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev {
+    cursor: pointer;
+    font-weight: 500;
+}
 
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-hover {
+	background: #00B98E;
+	color: white;
+	border-color: transparent;
+}

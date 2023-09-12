@@ -127,7 +127,8 @@
 						
 						
 						<h:link outcome="userpost-card" value="#{bundle.add_new}"
-							  styleClass="nav-item nav-link">
+							  styleClass="add-new nav-item nav-link ps-2 pe-2">
+							  <i class="fa fa-plus ps-1 pe-1"/>
 						</h:link>
 						
 						<h:link outcome="userpost-list" value="#{bundle.my_posts}"
@@ -141,14 +142,14 @@
 					<div class="navbar-nav ">
 					    <h:panelGroup rendered="#{makanTemplateController.user eq null}">
 							 <h:link outcome="login-user" value="#{bundle.login}"
-								  styleClass="nav-item nav-link btn btn-outline-primary ">
+								  styleClass="nav-item nav-link   ">
 								<f:param name="property" value="login" />
 							</h:link>
 						</h:panelGroup>
 					   <h:panelGroup rendered="#{makanTemplateController.user != null}">
 							<h:commandLink
 								actionListener="#{makanTemplateController.logout()}"
-								class=" nav-item nav-link btn btn-outline-primary ps-1 pe-1" value="#{bundle.logout}">
+								class=" nav-item nav-link   " value="#{bundle.logout}">
 								<f:ajax />
 							</h:commandLink>
 						</h:panelGroup>

@@ -154,7 +154,10 @@ $(document).ready(function() {
 			navLinks[i].classList.add('active');
 		}
 	}
+	
+	 
 });
+
 
 // Use noConflict to release control of the $ variable
 jQuery.noConflict();
