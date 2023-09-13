@@ -6,159 +6,125 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:component>
-	<div class="container-fluid bg-primary mb-5 wow p-2" data-wow-delay="0.1s" >
-		<div class="row">
-			<div class="col-md-3 col-sm-12 col-xs-12 ">
-				<h:selectOneMenu
-					styleClass="border-0  form-select"
-					converter="omnifaces.SelectItemsConverter"
-					value="#{actionBean.realEstateTypeEnum}">
-					<f:selectItems value="#{RealEstateTypeEnum.values()}" var="option"
-						itemLabel="#{bundle[option]}" itemValue="#{option}" />
-					<f:ajax execute="myForm:searchBarPanel" />
-				</h:selectOneMenu>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-3 col-sm-12">
-				<h:outputLabel value="#{bundle.property_type}" style="color:white" />
-				<h:selectOneMenu styleClass="form-select border-0  "
-					converter="omnifaces.SelectItemsConverter"
-					value="#{actionBean.selectPostType}">
-					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-					<f:selectItems value="#{PostType.values()}" var="option"
-						itemLabel="#{languageController.locale=='en'? option.name : option.name_ar}"
-						itemValue="#{option}" />
-					<f:ajax execute="myForm:searchBarPanel"
-						render="myForm:realSatatebathBedRoomsId" />
-				</h:selectOneMenu>
-			</div>
-
-			<div class="col-md-3 col-sm-12 mt-1  ">
-				<h:outputLabel value="#{bundle.governate}" style="color:white" />
-				<h:selectOneMenu id="governateSelectId"
-					styleClass="form-select border-0 "
-					converter="omnifaces.SelectItemsConverter"
-					value="#{actionBean.selecteGovernorate}">
-					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-					<f:selectItems value="#{actionBean.governorates}" var="option"
-						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
-						itemValue="#{option}" />
-					<f:ajax execute="@this"
-						render="myForm:districtSelectId myForm:villageSelectId"
-						listener="#{actionBean.listenerSelectGovernate()}" />
-				</h:selectOneMenu>
-			</div>
-
-			<div class="col-md-3 col-sm-12  mt-1">
-				<h:outputLabel value="#{bundle.discrit}" style="color:white" />
-				<h:selectOneMenu id="districtSelectId"
-					converter="omnifaces.SelectItemsConverter"
-					styleClass="form-select border-0  "
-					value="#{actionBean.selecteDistrict}">
-					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-					<f:selectItems value="#{actionBean.districts}" var="option"
-						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
-						itemValue="#{option}" />
-					<f:ajax execute="@this"
-						listener="#{actionBean.listenerSelectDistrict()}"
-						render="myForm:villageSelectId" />
-				</h:selectOneMenu>
-			</div>
-			<div class="col-md-3 col-sm-12  mt-1">
-				<h:outputLabel value="#{bundle.village}" style="color:white" />
-				<h:selectOneMenu id="villageSelectId"
-					converter="omnifaces.SelectItemsConverter"
-					styleClass="form-select border-0  "
-					value="#{actionBean.selecteVillage}">
-					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-					<f:selectItems value="#{actionBean.villages}" var="option"
-						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
-						itemValue="#{option}" />
-					<f:ajax execute="@this" />
-				</h:selectOneMenu>
-			</div>
-			<h:panelGroup id="realSatatebathBedRoomsId">
-				<h:panelGroup rendered="#{actionBean.hasRoomsAndBathRooms(actionBean.selectPostType)}">
-					<div class="row  ">
-						<div class="col-md-3 mt-1 col-sm-12 ">
-							<h:outputLabel value="#{bundle.beds_count}" style="color:white" />
-							<p:inputNumber decimalPlaces="0" thousandSeparator=","
-								minValue="0" maxValue="99" id="bedsId" emptyValue="0"
-								label="#{bundle.beds_count}" styleClass="form-control"
-								value="#{actionBean.bedRoom}">
-								<f:ajax/>
-							</p:inputNumber>
-						</div>
-
-						<div class="col-md-3 mt-1 col-sm-12 ">
-							<h:outputLabel value="#{bundle.exact_value}" style="color:white" />
-							<h:selectOneMenu styleClass="form-select border-0  "
-								converter="omnifaces.SelectItemsConverter"
-								value="#{actionBean.roomsEqualsEnum}">
-								<f:selectItem itemLabel="#{bundle.exact_value}" itemValue="" />
-								<f:selectItems value="#{YesNoEnum.values()}" var="option"
-									itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}"
-									itemValue="#{option}" />
-							</h:selectOneMenu>
-						</div>
-
-
-						<div class="col-md-3 mt-1 col-sm-12 ">
-							<h:outputLabel value="#{bundle.baths_count}" style="color:white" />
-							<p:inputNumber decimalPlaces="0" thousandSeparator="," emptyValue="0"
-								minValue="0" maxValue="99" id="bathsId"
-								label="#{bundle.baths_count}" styleClass="form-control"
-								value="#{actionBean.bathRoom}">
-								<f:ajax/>
-							</p:inputNumber>
-						</div>
-
-						<div class="col-md-3 mt-1 col-sm-12 ">
-							<h:outputLabel value="#{bundle.exact_value}" style="color:white" />
-							<h:selectOneMenu styleClass="form-select border-0  "
-								converter="omnifaces.SelectItemsConverter"
-								value="#{actionBean.bathsEqualsEnum}">
-								<f:selectItem itemLabel="#{bundle.exact_value}" itemValue="" />
-								<f:selectItems value="#{YesNoEnum.values()}" var="option"
-									itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}"
-									itemValue="#{option}" />
-							</h:selectOneMenu>
+	<div class="container-fluid bg-primary mb-5 wow p-2"
+		data-wow-delay="0.1s">
+		<h:panelGroup id="realSatatebathBedRoomsId">
+			<div class="row">
+				<div class="col-md-3 col-sm-12">
+					<h:outputLabel value="#{bundle.property_type}" style="color:white" />
+					<h:selectOneMenu styleClass="form-select border-0  "
+						converter="omnifaces.SelectItemsConverter"
+						value="#{actionBean.propertyTypeEnum}">
+						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
+						<f:selectItems value="#{PropertyTypeEnum.values()}" var="option"
+							itemLabel="#{bundle[option]}"
+							itemValue="#{option}" />
+						<f:ajax execute="myForm:searchBarPanel"
+							render="myForm:realSatatebathBedRoomsId" />
+					</h:selectOneMenu>
+				</div>
+				<div class="col-md-3 col-sm-12 mt-1  ">
+					<h:outputLabel value="#{bundle.governate}" style="color:white" />
+					<h:selectOneMenu id="governateSelectId"
+						styleClass="form-select border-0 "
+						converter="omnifaces.SelectItemsConverter"
+						value="#{actionBean.selecteGovernorate}">
+						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
+						<f:selectItems value="#{actionBean.governorates}" var="option"
+							itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
+							itemValue="#{option}" />
+						<f:ajax execute="@this"
+							render="myForm:districtSelectId myForm:villageSelectId"
+							listener="#{actionBean.listenerSelectGovernate()}" />
+					</h:selectOneMenu>
+				</div>
+				<div class="col-md-3 col-sm-12  mt-1">
+					<h:outputLabel value="#{bundle.discrit}" style="color:white" />
+					<h:selectOneMenu id="districtSelectId"
+						converter="omnifaces.SelectItemsConverter"
+						styleClass="form-select border-0  "
+						value="#{actionBean.selecteDistrict}">
+						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
+						<f:selectItems value="#{actionBean.districts}" var="option"
+							itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
+							itemValue="#{option}" />
+						<f:ajax execute="@this"
+							listener="#{actionBean.listenerSelectDistrict()}"
+							render="myForm:villageSelectId" />
+					</h:selectOneMenu>
+				</div>
+				<div class="col-md-3 col-sm-12  mt-1">
+					<h:outputLabel value="#{bundle.village}" style="color:white" />
+					<h:selectOneMenu id="villageSelectId"
+						converter="omnifaces.SelectItemsConverter"
+						styleClass="form-select border-0  "
+						value="#{actionBean.selecteVillage}">
+						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
+						<f:selectItems value="#{actionBean.villages}" var="option"
+							itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
+							itemValue="#{option}" />
+						<f:ajax execute="@this" />
+					</h:selectOneMenu>
+				</div>
+				<h:panelGroup
+					rendered="#{actionBean.hasRoomsAndBathRooms(actionBean.selectPostType)}">
+					<div class="col-md-3 mt-1 col-sm-12 ">
+						<h:outputLabel value="#{bundle.beds_count}" style="color:white" />
+						<p:selectCheckboxMenu id="bedRoomsId" filter="true"
+							converter="omnifaces.SelectItemsConverter" style="border-radius: 10px;direction:ltr;"
+							styleClass="form-select p-0" filterMatchMode="startsWith"
+							label="#{bundle.beds_count}" multiple="true"
+							emptyLabel="Please select..." updateLabel="true"
+							value="#{actionBean.bedRooms}">
+							<f:selectItems value="#{CountEnum.values()}" var="option"
+								itemLabel="#{option.value}" itemValue="#{option.value}" />
+							<f:ajax execute="@this" />
+						</p:selectCheckboxMenu>
+					</div>
+					<div class="col-md-3 mt-1 col-sm-12 ">
+						<h:outputLabel value="#{bundle.baths_count}" style="color:white" />
+						<p:selectCheckboxMenu id="bathRoomsId" filter="true"
+							converter="omnifaces.SelectItemsConverter" style="border-radius: 10px;direction:ltr;"
+							styleClass="form-select p-0" filterMatchMode="startsWith"
+							label="#{bundle.baths_count}" multiple="true"
+							emptyLabel="Please select..." updateLabel="true"
 							
-						</div>
+							value="#{actionBean.bathRooms}">
+							<f:selectItems value="#{CountEnum.values()}" var="option"
+								itemLabel="#{option.value}" itemValue="#{option.value}" />
+							<f:ajax execute="@this" />
+						</p:selectCheckboxMenu>
 					</div>
 				</h:panelGroup>
-			</h:panelGroup>
-
-			<div class="col-md-3 mt-1 col-sm-12 ">
-				<h:outputLabel value="#{bundle.min_price}" style="color:white" />
-				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
-					emptyValue="0" maxValue="9999999999" id="minPriceId"
-					label="#{bundle.min_price}" styleClass="form-control"
-					value="#{actionBean.minPrice}">
-					<f:ajax />
-				</p:inputNumber>
+				<div class="col-md-3 mt-1 col-sm-12 ">
+					<h:outputLabel value="#{bundle.min_price}" style="color:white" />
+					<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
+						emptyValue="0" maxValue="9999999999" id="minPriceId"
+						label="#{bundle.min_price}" styleClass="form-control"
+						value="#{actionBean.minPrice}">
+						<f:ajax />
+					</p:inputNumber>
+				</div>
+				<div class="col-md-3 mt-1 col-sm-12 ">
+					<h:outputLabel value="#{bundle.max_price}" style="color:white" />
+					<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
+						emptyValue="0" maxValue="9999999999" id="maxPriceId"
+						label="#{bundle.max_price}" styleClass="form-control"
+						value="#{actionBean.maxPrice}">
+						<f:ajax />
+					</p:inputNumber>
+				</div>
+				<div
+					class="col-md-3 col-sm-12 d-flex flex-column-reverse flex-wrap  mt-2 align-content-start">
+					<h:commandButton action="#{actionBean.search()}"
+						value="#{bundle.search}"
+						style=" background-color: #007ad9;color:white" styleClass="btn">
+						<f:ajax execute="myForm:panelSearchBar"
+							render="myForm:RealEstatePanelId :messageScript" />
+					</h:commandButton>
+				</div>
 			</div>
-			<div class="col-md-3 mt-1 col-sm-12 ">
-				<h:outputLabel value="#{bundle.max_price}" style="color:white" />
-				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
-					emptyValue="0" maxValue="9999999999" id="maxPriceId"
-					label="#{bundle.max_price}" styleClass="form-control"
-					value="#{actionBean.maxPrice}">
-					<f:ajax />
-				</p:inputNumber>
-			</div>
-
-			<div class="col-md-3 col-sm-12 d-flex flex-column-reverse flex-wrap  mt-2 align-content-start">
-				<h:commandButton action="#{actionBean.search()}"
-					value="#{bundle.search}"
-					style=" background-color: #007ad9;color:white"
-					styleClass="btn">
-					<f:ajax execute="myForm:panelSearchBar"
-						render="myForm:RealEstatePanelId :messageScript" />
-				</h:commandButton>
-			</div>
-		</div>
+		</h:panelGroup>
 	</div>
 </ui:component>
 </html>

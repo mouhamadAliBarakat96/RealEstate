@@ -21,6 +21,7 @@ import org.RealEstate.dto.RealEstateLazyDataModel;
 import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
+import org.RealEstate.enumerator.PropertyTypeEnum;
 import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.enumerator.YesNoEnum;
 import org.RealEstate.facade.ChaletFacade;
@@ -82,10 +83,10 @@ public class IndexController implements Serializable {
 	private int minPrice;
 	private int maxPrice;
 	private AtomicLong totalCount = new AtomicLong();
-	private int bedRoom;
-	private boolean bedRoomEq;
-	private int bathRoom;
+	private List<Integer> bedRooms;
+	private List<Integer> bathRooms;
 	private boolean bathRoomEq;
+	private boolean bedRoomEq;
 	private Governorate selecteGovernorate = new Governorate();
 	private District selecteDistrict = new District();
 	private Village selecteVillage = new Village();
@@ -106,6 +107,7 @@ public class IndexController implements Serializable {
 	private  AppSinglton appSinglton ;
 	
 	private RealEstateTypeEnum realEstateTypeEnum=RealEstateTypeEnum.ALL;
+	private PropertyTypeEnum propertyTypeEnum=null;
 	
 	@PostConstruct
 	public void init() {
@@ -266,14 +268,14 @@ public class IndexController implements Serializable {
 			return;
 		}
 
-		realLazyModel.setBathRoom(bathRoom);
+//		realLazyModel.setBathRoom(bathRoom);
 		realLazyModel.setUser(user != null ? user : null);
 		realLazyModel.setBathRoomEq(exactValueBaths());
 		realLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
 		realLazyModel.setGovernorate(
 				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
 		realLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
-		realLazyModel.setBedRoom(bedRoom);
+//		realLazyModel.setBedRoom(bedRoom);
 		realLazyModel.setBedRoomEq(exactValueRooms());
 		realLazyModel.setMaxPrice(maxPrice);
 		realLazyModel.setMinPrice(minPrice);
@@ -284,6 +286,11 @@ public class IndexController implements Serializable {
 		Utility.addSuccessMessage("search_complete",sessionLanguage.getLocale());
 	}
 
+	
+	public void changeValue(ExchangeRealEstateType value) {
+		this.estateTypeEnum = value;
+	}
+	
 	public void chaletSearch() {
 		if (maxPrice != 0 && minPrice > maxPrice) {
 			Utility.addErrorMessage("min_price_mut_be _less_than_max",sessionLanguage.getLocale());
@@ -496,13 +503,7 @@ public class IndexController implements Serializable {
 		this.totalCount = totalCount;
 	}
 
-	public int getBedRoom() {
-		return bedRoom;
-	}
-
-	public void setBedRoom(int bedRoom) {
-		this.bedRoom = bedRoom;
-	}
+	 
 
 	public boolean isBedRoomEq() {
 		return bedRoomEq;
@@ -512,13 +513,6 @@ public class IndexController implements Serializable {
 		this.bedRoomEq = bedRoomEq;
 	}
 
-	public int getBathRoom() {
-		return bathRoom;
-	}
-
-	public void setBathRoom(int bathRoom) {
-		this.bathRoom = bathRoom;
-	}
 
 	public boolean isBathRoomEq() {
 		return bathRoomEq;
@@ -634,6 +628,30 @@ public class IndexController implements Serializable {
 
 	public void setRealEstateTypeEnum(RealEstateTypeEnum realEstateTypeEnum) {
 		this.realEstateTypeEnum = realEstateTypeEnum;
+	}
+
+	public List<Integer> getBedRooms() {
+		return bedRooms;
+	}
+
+	public void setBedRooms(List<Integer> bedRooms) {
+		this.bedRooms = bedRooms;
+	}
+
+	public List<Integer> getBathRooms() {
+		return bathRooms;
+	}
+
+	public void setBathRooms(List<Integer> bathRooms) {
+		this.bathRooms = bathRooms;
+	}
+
+	public PropertyTypeEnum getPropertyTypeEnum() {
+		return propertyTypeEnum;
+	}
+
+	public void setPropertyTypeEnum(PropertyTypeEnum propertyTypeEnum) {
+		this.propertyTypeEnum = propertyTypeEnum;
 	}
 	
 }

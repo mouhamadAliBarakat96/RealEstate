@@ -11,51 +11,109 @@
 	<ui:define name="customStylesheet">
 		<link href="/resources/makaan/css/index.css" rel="stylesheet" />
 		<style>
-		.ui-galleria-items{
-		width: 100%;
-		}
-		</style>
-		
+.ui-galleria-items {
+	width: 100%;
+}
+</style>
+
 	</ui:define>
 
 	<ui:define name="header-start">
 		<o:importConstants type="org.RealEstate.enumerator.PostType" />
 		<o:importConstants type="org.RealEstate.enumerator.YesNoEnum" />
 		<o:importConstants type="org.RealEstate.enumerator.RealEstateTypeEnum" />
+		<o:importConstants type="org.RealEstate.enumerator.CountEnum" />
+		<o:importConstants type="org.RealEstate.enumerator.PropertyTypeEnum" />
 
 		<div class="header-container container-fluid header bg-white p-0">
-			<div class="row" style="height: 300px"></div>
+			<div class="row" style="height: 30rem;"></div>
 		</div>
+	</ui:define>
+
+	<ui:define name="adspanel">
+		<p:galleria value="#{makanTemplateController.adsList}" var="photo"
+			circular="true" autoPlay="true" numVisible="5"
+			styleClass="galleria-arabic-fix mt-2 mb-2" transitionInterval="5000"
+			style="height:275px;width: 100%;">
+			<p:graphicImage
+				url="#{makanTemplateController.fullUrlAdsImage}#{photo.url}"
+				style="height:275px ;width: 70%; display: block;object-fit:contain;" />
+		</p:galleria>
 	</ui:define>
 
 	<ui:define name="searchBar">
 		<h:panelGroup id="searchBarPanel">
 			<h:panelGroup
 				rendered="#{indexController.propertyKind == 'REALESTATE'}">
+				<div class="container-xxl">
+					<div class="container">
+						<div class="tab-content">
+							<div id="tab-1" class="tab-pane fade show p-0 active">
+								<div class="row g-0 gx-5 align-items-end">
+									<div class="col-lg-6">
+										<div class="  mx-auto mb-5 wow " data-wow-delay="0.1s">
+											<h1 class="mb-3">#{bundle.properties_title}</h1>
+											<p>#{bundle.properties_description}</p>
+										</div>
+									</div>
+									<div class="col-lg-6 d-flex flex-row-reverse "
+										style="visibility: visible;">
+										<ul
+											class="nav nav-pills d-inline-flex justify-content-end mb-5">
+											<li class="nav-item me-2">
+											      <h:commandLink id="buyBtn"
+													action="#{indexController.changeValue('BUY')}"
+													styleClass="btn btn-outline-primary #{indexController.estateTypeEnum eq 'BUY'? 'active' : ''}" data-bs-toggle="pill"
+													value="#{bundle.for_sale}">
+													<f:ajax execute="@this" render="@this myForm:rentBtn"/>
+												</h:commandLink></li>
+											<li class="nav-item me-2">
+											      <h:commandLink id="rentBtn"
+													action="#{indexController.changeValue('RENT')}"
+													styleClass="btn btn-outline-primary #{indexController.estateTypeEnum eq 'RENT'? 'active' : ''}" data-bs-toggle="pill"
+													value="#{bundle.for_rent}">
+													<f:ajax execute="@this" render="@this myForm:buyBtn"/>
+												</h:commandLink>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<ui:include src="/views/makaan/searchRealestate-snippet.xhtml">
 					<ui:param name="actionBean" value="#{indexController}" />
 				</ui:include>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{indexController.propertyKind == 'CHALET'}">
+				<div class="container-xxl ">
+					<div class="container">
+						<div class="tab-content">
+							<div id="tab-1" class="tab-pane fade show p-0 active">
+								<div class="row g-4">
+									<div class="row g-0 gx-5 align-items-end">
+										<div class="col-lg-6">
+											<div class="  mx-auto mb-5 wow " data-wow-delay="0.1s">
+												<h1 class="mb-3">#{bundle.chalets}</h1>
+												<p>#{bundle.properties_description}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<ui:include src="/views/makaan/searchChalet-snippet.xhtml">
 					<ui:param name="actionBean" value="#{indexController}" />
 				</ui:include>
 			</h:panelGroup>
 		</h:panelGroup>
-
-
-		<p:galleria value="#{makanTemplateController.adsList}" var="photo"
-			circular="true" autoPlay="true" numVisible="5" styleClass="galleria-arabic-fix"
-			transitionInterval="5000" style="height:275px;width: 100%;">
-			<p:graphicImage 
-				url="#{makanTemplateController.fullUrlAdsImage}#{photo.url}"
-				style="height:275px ;width: 70%; display: block;object-fit:contain;" />
-		</p:galleria>
-
 	</ui:define>
 
 	<ui:define name="property-content">
-	<div style="margin-top:3%"></div>
+		<div style="margin-top: 3%"></div>
 		<h:panelGroup id="RealEstatePanelId"
 			rendered="#{indexController.propertyKind == 'REALESTATE'}">
 			<ui:include src="/views/makaan/realestate-snippet.xhtml">
