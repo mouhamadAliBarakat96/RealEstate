@@ -47,176 +47,162 @@
 		<o:importConstants type="org.RealEstate.enumerator.PostType"
 			var="postType" />
 
-		<div class="col-md-12 " style="display: flex; margin-top: 2%;">
 
-			<!-- Nav tabs -->
 
-			<ul class="nav nav-tabs" role="tablist"
-				style="width: 100%; display: flex;">
 
 
 
 
-				<li class="nav-item"><a class="nav-link active "
-					data-toggle="tab" href="#realEstate" role="tab">Real Estate
-						Posts </a></li>
 
 
-				<li class="nav-item"><a class="nav-link  " data-toggle="tab"
-					href="#chaletPosts" role="tab">Chalet Posts </a></li>
 
-			</ul>
-		</div>
 
-		<div class="tab-content">
 
 
 
 
+		<p:tabView>
+			<f:facet name="actions">
+                Global actions
+            </f:facet>
+			<p:tab title="   Real Estate">
+				<f:facet name="actions">
+                
+                </f:facet>
+				<p:dataTable var="entity" paginator="true" rows="10"
+					paginatorPosition="bottom" style="margin-top: 2%"
+					rowKey="#{item.id}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+					rowsPerPageTemplate="5,10,15" styleClass="border-none"
+					value="#{postUserListController.realEstateList}"
+					widgetVar="tableRealEstateWidget"
+					emptyMessage="No RealEstate was added"
+					filteredValue="#{postUserListController.realEstateFilters}">
 
-			<div class="tab-pane active p-3" id="realEstate" f5:role="tabpanel">
-				<div
-					style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
 
 
+					<p:column headerText="Id" sortBy="#{entity.id}"
+						filterBy="#{entity.id}">
+						<h:link value="#{entity.id}" outcome="post">
+							<f:param name="id" value="#{entity.id}" />
+						</h:link>
 
-					<p:dataTable var="entity" paginator="true" rows="10"
-						paginatorPosition="bottom" style="margin-top: 2%"
-						rowKey="#{item.id}"
-						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-						rowsPerPageTemplate="5,10,15" styleClass="border-none"
-						value="#{postUserListController.realEstateList}"
-						widgetVar="tableRealEstateWidget"
-						emptyMessage="No RealEstate was added"
-						filteredValue="#{postUserListController.realEstateFilters}">
+					</p:column>
 
 
+					<p:column filterBy="#{entity.postType}" filterMatchMode="exact"
+						headerText="postType" sortBy="#{entity.postType}">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
+								style="width:100% ;   " styleClass="inputtext-filter">
+								<f:selectItem itemLabel="postType" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{postType.values()}" entity="entity"
+									itemLabel="#{entity}" itemValue="#{entity}" />
+							</p:selectOneMenu>
+						</f:facet>
 
-						<p:column headerText="Id" sortBy="#{entity.id}"
-							filterBy="#{entity.id}">
-							<h:link value="#{entity.id}" outcome="post">
-								<f:param name="id" value="#{entity.id}" />
-							</h:link>
 
-						</p:column>
 
+						<h:outputText value="#{entity.postType}" />
+					</p:column>
 
-						<p:column filterBy="#{entity.postType}" filterMatchMode="exact"
-							headerText="postType" sortBy="#{entity.postType}">
-							<f:facet name="filter">
-								<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
-									style="width:100% ;   " styleClass="inputtext-filter">
-									<f:selectItem itemLabel="postType" itemValue="#{null}"
-										noSelectionOption="true" />
-									<f:selectItems value="#{postType.values()}" entity="entity"
-										itemLabel="#{entity}" itemValue="#{entity}" />
-								</p:selectOneMenu>
-							</f:facet>
 
 
 
-							<h:outputText value="#{entity.postType}" />
-						</p:column>
+					<p:column filterBy="#{entity.postStatus}" filterMatchMode="exact"
+						headerText="postStatus" sortBy="#{entity.postStatus}">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
+								style="width:100% ;   " styleClass="inputtext-filter">
+								<f:selectItem itemLabel="postType" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{postStatus.values()}" entity="entity"
+									itemLabel="#{entity}" itemValue="#{entity}" />
+							</p:selectOneMenu>
+						</f:facet>
 
+						<h:outputText value="#{entity.postStatus}" />
+					</p:column>
 
 
+					<p:column headerText="Reffuse Cause ">
+						<h:outputText value="#{entity.reffuseCause}" />
+					</p:column>
 
-						<p:column filterBy="#{entity.postStatus}" filterMatchMode="exact"
-							headerText="postStatus" sortBy="#{entity.postStatus}">
-							<f:facet name="filter">
-								<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
-									style="width:100% ;   " styleClass="inputtext-filter">
-									<f:selectItem itemLabel="postType" itemValue="#{null}"
-										noSelectionOption="true" />
-									<f:selectItems value="#{postStatus.values()}" entity="entity"
-										itemLabel="#{entity}" itemValue="#{entity}" />
-								</p:selectOneMenu>
-							</f:facet>
 
-							<h:outputText value="#{entity.postStatus}" />
-						</p:column>
+					<p:column headerText="location ">
+						<h:outputText
+							value="#{entity.village.district.governorate.name} /  #{entity.village.district.name} / #{entity.village.name }" />
+					</p:column>
 
 
-						<p:column headerText="Reffuse Cause ">
-							<h:outputText value="#{entity.reffuseCause}" />
-						</p:column>
 
+					<p:column headerText="user ">
+						<h:outputText
+							value="#{entity.user.firstName} / #{entity.user.middleName} / #{entity.user.lastName}" />
+					</p:column>
 
-						<p:column headerText="location ">
-							<h:outputText
-								value="#{entity.village.district.governorate.name} /  #{entity.village.district.name} / #{entity.village.name }" />
-						</p:column>
 
 
 
-						<p:column headerText="user ">
-							<h:outputText
-								value="#{entity.user.firstName} / #{entity.user.middleName} / #{entity.user.lastName}" />
-						</p:column>
+					<p:column filterStyleClass="filterNumbersOnly" headerText="space"
+						sortBy="#{entity.space}" filterBy="#{entity.space}">
+						<h:outputText value="#{entity.space}" />
+					</p:column>
 
 
+					<p:column filterStyleClass="filterNumbersOnly" headerText="price"
+						sortBy="#{entity.price}" filterBy="#{entity.price}">
 
 
-						<p:column filterStyleClass="filterNumbersOnly" headerText="space"
-							sortBy="#{entity.space}" filterBy="#{entity.space}">
-							<h:outputText value="#{entity.space}" />
-						</p:column>
+						<h:outputText value="#{entity.price}" />
+					</p:column>
 
+					<p:column headerText="Post Date" sortBy="#{entity.postDate}"
+						width="100" style="padding-bottom: 45px;">
+						<h:outputText id="postDate" styleClass="text-ellipsis"
+							title="#{entity.postDate}" value="#{entity.postDate}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
 
-						<p:column filterStyleClass="filterNumbersOnly" headerText="price"
-							sortBy="#{entity.price}" filterBy="#{entity.price}">
 
+					<p:column filterBy="#{entity.pricePublic}" filterMatchMode="exact"
+						headerText="price public" sortBy="#{entity.pricePublic}"
+						width="180">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
+								converter="javax.faces.Boolean" style="width:100% ;   "
+								styleClass="inputtext-filter">
+								<f:selectItem itemLabel="All" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="No" itemValue="false" />
+								<f:selectItem itemLabel="Yes" itemValue="true" />
+								<f:ajax></f:ajax>
+							</p:selectOneMenu>
+						</f:facet>
 
-							<h:outputText value="#{entity.price}" />
-						</p:column>
 
-						<p:column headerText="Post Date" sortBy="#{entity.postDate}"
-							width="100" style="padding-bottom: 45px;">
-							<h:outputText id="postDate" styleClass="text-ellipsis"
-								title="#{entity.postDate}" value="#{entity.postDate}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</p:column>
+						<em
+							class="   #{entity.pricePublic  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
 
 
-						<p:column filterBy="#{entity.pricePublic}" filterMatchMode="exact"
-							headerText="price public" sortBy="#{entity.pricePublic}"
-							width="180">
-							<f:facet name="filter">
-								<p:selectOneMenu onchange="PF('tableRealEstateWidget').filter()"
-									converter="javax.faces.Boolean" style="width:100% ;   "
-									styleClass="inputtext-filter">
-									<f:selectItem itemLabel="All" itemValue="#{null}"
-										noSelectionOption="true" />
-									<f:selectItem itemLabel="No" itemValue="false" />
-									<f:selectItem itemLabel="Yes" itemValue="true" />
-									<f:ajax></f:ajax>
-								</p:selectOneMenu>
-							</f:facet>
+					</p:column>
 
 
-							<em
-								class="   #{entity.pricePublic  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
 
 
-						</p:column>
 
+				</p:dataTable>
+			</p:tab>
+			<p:tab title=" Chaltes">
+				<f:facet name="actions">
+                  
+                </f:facet>
+				<p class="m-0">
 
-
-
-
-					</p:dataTable>
-				</div>
-			</div>
-
-
-
-
-			<div class="tab-pane  p-3" id="chaletPosts" f5:role="tabpanel">
-
-				<div
-					style="margin-top: 1.2%; box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;">
 
 
 
@@ -265,8 +251,8 @@
 
 
 						</p:column>
-						
-						
+
+
 						<p:column filterBy="#{entity.chimney}" filterMatchMode="exact"
 							headerText="chimney " sortBy="#{entity.pool}" width="100">
 							<f:facet name="filter">
@@ -361,12 +347,13 @@
 
 
 
-				</div>
+
+				</p>
+			</p:tab>
+
+		</p:tabView>
 
 
-
-			</div>
-		</div>
 	</ui:define>
 
 </ui:decorate>

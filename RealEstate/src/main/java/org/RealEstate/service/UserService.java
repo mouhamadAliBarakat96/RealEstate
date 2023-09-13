@@ -93,8 +93,7 @@ public class UserService implements Serializable {
 			// check fb id nt null
 
 			/**
-			 * This Code is not used now
-			 * TODO ACTIVE IT LATER
+			 * This Code is not used now TODO ACTIVE IT LATER
 			 */
 			/*
 			 * if (user.getFbId() == null || StringUtils.isBlank(user.getFbId())) { return
@@ -103,9 +102,8 @@ public class UserService implements Serializable {
 			 * 
 			 * }
 			 */
-			
+
 			user.setFbId(Utils.generateRandomStringBasedOnTime());
-			
 
 			// validite phone number
 
@@ -234,9 +232,18 @@ public class UserService implements Serializable {
 
 		// find user
 		User user = userFacade.findWithExcption(userId);
+// yaane hayde mana awal mara  w 3am yaaml update
+
+		if (user.getProfileImageUrl() != null) {
+			user.setShowProfilePicture(false);
+		} else {
+			// hayde yaane awal mara
+			user.setShowProfilePicture(true);
+
+		}
 
 		String imageUrl = uploadImagesMultiPart.uploadImageUserProfile(inputPart);
-		user.setShowProfilePicture(false);
+
 		user.setProfileImageUrl(imageUrl);
 		userFacade.save(user);
 		return true;
