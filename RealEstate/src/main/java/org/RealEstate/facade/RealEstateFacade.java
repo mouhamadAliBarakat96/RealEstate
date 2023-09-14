@@ -88,9 +88,9 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	}
 
 	public List<RealEstate> findAllRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice,
-			Village village, int page, int size, AtomicLong totalCount, int bedRoom, boolean bedRoomEq, int bathRoom,
-			boolean bathRoomEq, District district, Governorate governorate,
-			ExchangeRealEstateType exchangeRealEstateType) throws Exception {
+			Village village, int page, int size, AtomicLong totalCount, List<Integer> bedRoom, List<Integer> bathRoom,
+			District district, Governorate governorate, ExchangeRealEstateType exchangeRealEstateType)
+			throws Exception {
 
 		List<? extends RealEstate> realEstatesWithoutAddvertise;
 		List<? extends RealEstate> realEstatesWithAddvertise;
@@ -126,14 +126,12 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		// Create a list of predicates based on your runtime conditions
 
 		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, postType, minPrice, maxPrice,
-				village, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate,
-				exchangeRealEstateType);
+				village, totalCount, bedRoom, bathRoom, district, governorate, exchangeRealEstateType);
 
 		Predicate predicateBoostFalse = criteriaBuilder.equal(root.get("isBoosted"), false);
 		Predicate finalPredicateWithoutAdd = criteriaBuilderWithAdd.and(finalPredicate, predicateBoostFalse);
 		criteriaQuery.where(finalPredicateWithoutAdd);
 		countQuery.select(criteriaBuilder.count(root)).where(finalPredicateWithoutAdd);
-	
 
 		Predicate predicateBoostTrue = criteriaBuilder.equal(root.get("isBoosted"), true);
 
@@ -147,8 +145,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		// used
 		long totalCountWithadd = getEntityManager().createQuery(countQueryWithAdd).getSingleResult();
 
-		long totalCountWithoutadd  =getEntityManager().createQuery(countQuery).getSingleResult() ;
-		
+		long totalCountWithoutadd = getEntityManager().createQuery(countQuery).getSingleResult();
+
 		totalCount.set(totalCountWithoutadd + totalCountWithadd);
 
 		criteriaQuery.multiselect(root).where(finalPredicateWithoutAdd);
@@ -163,15 +161,14 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		int withoutAdCount = (int) (size * 0.6);
 		int withAdCount = size - withoutAdCount;
 
-		if (withAdCount > totalCountWithadd   ) {
-			
-			int lifinZidon = (int) (withAdCount - totalCountWithadd) ;
-			if(totalCountWithoutadd < (withoutAdCount + (withAdCount - totalCountWithadd) ))  {
-				// check if total sho wad3o iza bikafo 
-				 lifinZidon = (int) (totalCountWithoutadd  - (withAdCount - totalCountWithadd));	
+		if (withAdCount > totalCountWithadd) {
+
+			int lifinZidon = (int) (withAdCount - totalCountWithadd);
+			if (totalCountWithoutadd < (withoutAdCount + (withAdCount - totalCountWithadd))) {
+				// check if total sho wad3o iza bikafo
+				lifinZidon = (int) (totalCountWithoutadd - (withAdCount - totalCountWithadd));
 			}
-			
-			
+
 			withoutAdCount = (int) (withoutAdCount + lifinZidon);
 
 		}
@@ -202,8 +199,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	}
 
 	private Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<? extends RealEstate> root, Class classType,
-			User user, String postType, int minPrice, int maxPrice, Village village, AtomicLong totalCount, int bedRoom,
-			boolean bedRoomEq, int bathRoom, boolean bathRoomEq, District district, Governorate governorate,
+			User user, String postType, int minPrice, int maxPrice, Village village, AtomicLong totalCount,
+			List<Integer> bedRoomList, List<Integer> bathRoomList, District district, Governorate governorate,
 			ExchangeRealEstateType exchangeRealEstateType) throws Exception {
 
 		List<Predicate> predicates = new ArrayList<>();
@@ -266,29 +263,26 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		}
 
 		// asln el land ma ha yje 3aded 8oraf bas ehtyat
-		if (!classType.equals(Land.class) && !classType.equals(ShopSell.class) && !classType.equals(ShopRent.class)
+		if (!classType.equals(Land.class) && !classType.equals(RealEstate.class)  &&  !classType.equals(ShopSell.class) && !classType.equals(ShopRent.class)
 
 		) {
 
-			if (bedRoom > 0) {
-				if (bedRoomEq) {
-					Predicate maxPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("nbRoom"), bedRoom);
-					predicates.add(maxPricePredicate);
-				} else {
-					Predicate maxPricePredicate = criteriaBuilder.equal(root.get("nbRoom"), bedRoom);
+			if (bedRoomList != null && !bedRoomList.isEmpty()) {
+
+				for (Integer var : bedRoomList) {
+					Predicate maxPricePredicate = criteriaBuilder.equal(root.get("nbRoom"), var);
 					predicates.add(maxPricePredicate);
 				}
+
 			}
 
-			if (bathRoom > 0) {
-				if (bathRoomEq) {
-					Predicate maxPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("nbBathRoom"),
-							bathRoom);
-					predicates.add(maxPricePredicate);
-				} else {
-					Predicate maxPricePredicate = criteriaBuilder.equal(root.get("nbBathRoom"), bathRoom);
+			if (bathRoomList != null && !bathRoomList.isEmpty()) {
+
+				for (Integer var : bathRoomList) {
+					Predicate maxPricePredicate = criteriaBuilder.equal(root.get("nbBathRoom"), var);
 					predicates.add(maxPricePredicate);
 				}
+
 			}
 
 		}
@@ -305,7 +299,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	// start here create predict
 	// to use by kasssem
 	public Long countRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice, Village village,
-			AtomicLong totalCount, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, District district,
+			AtomicLong totalCount, List<Integer> bedRoom, List<Integer> bathRoom, District district,
 			Governorate governorate, ExchangeRealEstateType exchangeRealEstateType) throws Exception {
 
 		CriteriaQuery<? extends RealEstate> criteriaQuery;
@@ -330,8 +324,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		root = countQuery.from(classType);
 
 		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, postType, minPrice, maxPrice,
-				village, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate,
-				exchangeRealEstateType);
+				village, totalCount, bedRoom, bathRoom, district, governorate, exchangeRealEstateType);
 
 		criteriaQuery.where(finalPredicate);
 

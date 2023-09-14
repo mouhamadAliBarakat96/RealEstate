@@ -115,17 +115,28 @@ public class PostMangment {
 	@Path("/v1")
 	@Produces(MediaType.APPLICATION_JSON)
 
+	/*
+	 * remove
+	 * bedRoomEq 
+	 * 
+	 * remove
+	 * bathRoomEq
+	 * 
+	 * bedRoom String as 1,2,3
+	 * 
+	 * bathRoom 1,2,3
+	 */
 	public Response findAllPostByUser(@QueryParam("userId") Long userId, @QueryParam("postType") String postType,
 			@QueryParam("minPrice") int minPrice, @QueryParam("maxPrice") int maxPrice,
 			@QueryParam("villageId") Long villageId, @QueryParam("page") int page, @QueryParam("size") int size,
-			@QueryParam("bedRoom") int bedRoom, @QueryParam("bedRoomEq") boolean bedRoomEq,
-			@QueryParam("bathRoom") int bathRoom, @QueryParam("bathRoomEq") boolean bathRoomEq,
+			@QueryParam("bedRoom") String bedRoom,
+			@QueryParam("bathRoom") String bathRoom,
 			@QueryParam("districtId") Long districtId, @QueryParam("governorateId") Long governorateId , @QueryParam("exchangeRealEstateType")  String exchangeRealEstateType
 
 	) {
 		
-		return postService.findPosts(userId, postType, minPrice, maxPrice, villageId, page, size, bedRoom, bedRoomEq,
-				bathRoom, bathRoomEq, districtId, governorateId , exchangeRealEstateType);
+		return postService.findPosts(userId, postType, minPrice, maxPrice, villageId, page, size, bedRoom, 
+				bathRoom, districtId, governorateId , exchangeRealEstateType);
 
 	}
 

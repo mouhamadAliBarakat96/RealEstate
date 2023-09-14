@@ -1,10 +1,12 @@
 package org.RealEstate.service;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -737,7 +739,6 @@ public class PostService implements Serializable {
 
 		Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId())
 				+ chaletFacade.findUserCountPostPendingOrActive(user.getId());
-		
 
 		// nb of post allowed ;
 		// krml is broker bytla3lo zyde
@@ -825,13 +826,10 @@ public class PostService implements Serializable {
 
 	private void checkChaletConstraintFields(Chalet chalet) throws Exception {
 
-		
-		if(StringUtils.isBlank( chalet.getName() ) || StringUtils.isBlank(chalet.getDescrption())  ) {
+		if (StringUtils.isBlank(chalet.getName()) || StringUtils.isBlank(chalet.getDescrption())) {
 			throw new Exception("CHALET_NAME_AND_DESCRPTION_SHOULD_NOT_BE_EMPTY");
 		}
-		
-		
-	
+
 	}
 	/*
 	 *
@@ -1243,27 +1241,27 @@ public class PostService implements Serializable {
 	}
 
 	public Response findPosts(Long userId, String postType, int minPrice, int maxPrice, Long villageId, int page,
-			int size, int bedRoom, boolean bedRoomEq, int bathRoom, boolean bathRoomEq, Long districtId,
-			Long governorateId , String exchangeRealEstateTypeString ) {
+			int size, String bedRoom, String bathRoom, Long districtId, Long governorateId,
+			String exchangeRealEstateTypeString) {
 
 		try {
 			Village village = null;
 			User user = null;
 			District district = null;
 			Governorate governorate = null;
-			ExchangeRealEstateType exchangeRealEstateType = null ;
+			ExchangeRealEstateType exchangeRealEstateType = null;
 			if (userId != null && userId > 0) {
 				user = userFacade.findWithExcption(userId);
 			}
-			
-			if(exchangeRealEstateTypeString!=null) {
-				if(exchangeRealEstateTypeString.equals(ExchangeRealEstateType.BUY.toString())) {
+
+			if (exchangeRealEstateTypeString != null) {
+				if (exchangeRealEstateTypeString.equals(ExchangeRealEstateType.BUY.toString())) {
 					exchangeRealEstateType = ExchangeRealEstateType.BUY;
-				}else {
-					if(exchangeRealEstateTypeString.equals(ExchangeRealEstateType.RENT.toString())) {
+				} else {
+					if (exchangeRealEstateTypeString.equals(ExchangeRealEstateType.RENT.toString())) {
 						exchangeRealEstateType = ExchangeRealEstateType.RENT;
+					}
 				}
-			}
 			}
 			// check priority
 			// villageId
@@ -1279,11 +1277,22 @@ public class PostService implements Serializable {
 				governorate = governorateFacade.findWithExcption(governorateId);
 
 			}
-			
+
+			List<Integer> bedRoomList = null;
+			List<Integer> bathRoomList = null;
+			if (StringUtils.isNoneBlank(bedRoom)) {
+				bedRoomList = Arrays.stream(bedRoom.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+
+			}
+			if (StringUtils.isNoneBlank(bathRoom)) {
+				bathRoomList = Arrays.stream(bathRoom.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+
+			}
 
 			AtomicLong totalResults = new AtomicLong();
 			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice,
-					village, page, size, totalResults, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate , exchangeRealEstateType);
+					village, page, size, totalResults, bedRoomList, bathRoomList, district, governorate,
+					exchangeRealEstateType);
 
 			PaginationResponse<RealEstate> response = new PaginationResponse<>();
 			response.setPage(page);
