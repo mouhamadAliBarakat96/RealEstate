@@ -41,9 +41,9 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 	private int maxPrice;
 	private Village village;
 	private AtomicLong totalCount = new AtomicLong();
-	private int bedRoom;
+	private List<Integer> bedRooms;
 	private boolean bedRoomEq;
-	private int bathRoom;
+	private List<Integer> bathRooms;
 	private boolean bathRoomEq;
 	private District district;
 	private Governorate governorate;
@@ -59,7 +59,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 
 		try {
 			return Math.toIntExact(facade.countRealSatateWithFilter(user, postType, minPrice, maxPrice, village,
-					totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district, governorate , exchangeRealEstateType));
+					totalCount, bedRooms, bathRooms, district, governorate, exchangeRealEstateType));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -71,8 +71,8 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 			Map<String, FilterMeta> filterMap) {
 		try {
 			pageItems = facade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice, village,
-					(first / pageSize) + 1, pageSize, totalCount, bedRoom, bedRoomEq, bathRoom, bathRoomEq, district,
-					governorate , exchangeRealEstateType);
+					(first / pageSize) + 1, pageSize, totalCount, bedRooms, bathRooms, district, governorate,
+					exchangeRealEstateType);
 			setRowCount(Math.toIntExact(totalCount.get()));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -137,28 +137,12 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 		this.totalCount = totalCount;
 	}
 
-	public int getBedRoom() {
-		return bedRoom;
-	}
-
-	public void setBedRoom(int bedRoom) {
-		this.bedRoom = bedRoom;
-	}
-
 	public boolean isBedRoomEq() {
 		return bedRoomEq;
 	}
 
 	public void setBedRoomEq(boolean bedRoomEq) {
 		this.bedRoomEq = bedRoomEq;
-	}
-
-	public int getBathRoom() {
-		return bathRoom;
-	}
-
-	public void setBathRoom(int bathRoom) {
-		this.bathRoom = bathRoom;
 	}
 
 	public boolean isBathRoomEq() {
@@ -184,8 +168,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 	public void setGovernorate(Governorate governorate) {
 		this.governorate = governorate;
 	}
-	
-	
+
 	public void listenerSelect(RealEstateTypeEnum type) {
 
 		if (type == RealEstateTypeEnum.FORRENT) {
@@ -211,6 +194,22 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 
 	public void setExchangeRealEstateType(ExchangeRealEstateType exchangeRealEstateType) {
 		this.exchangeRealEstateType = exchangeRealEstateType;
+	}
+
+	public List<Integer> getBedRooms() {
+		return bedRooms;
+	}
+
+	public void setBedRooms(List<Integer> bedRooms) {
+		this.bedRooms = bedRooms;
+	}
+
+	public List<Integer> getBathRooms() {
+		return bathRooms;
+	}
+
+	public void setBathRooms(List<Integer> bathRooms) {
+		this.bathRooms = bathRooms;
 	}
 
 }

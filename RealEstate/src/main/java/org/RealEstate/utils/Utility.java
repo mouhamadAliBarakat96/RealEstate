@@ -200,42 +200,42 @@ public class Utility {
 		}
 	}
 
-	public static PostType findRealEstateClassType(ExchangeRealEstateType exchangeType,
+	public static String findRealEstateClassType(ExchangeRealEstateType exchangeType,
 			PropertyTypeEnum realTypeEnum) {
 
 		if (realTypeEnum == PropertyTypeEnum.LAND) {
-			return PostType.LAND;
+			return PostType.LAND.toString();
 		}
 
 		if (realTypeEnum == PropertyTypeEnum.APPRATMENT) {
 			if (exchangeType == ExchangeRealEstateType.BUY) {
-				return PostType.APPRATMENT_SELL;
+				return PostType.APPRATMENT_SELL.toString();
 			} else {
-				return PostType.APPRATMENT_RENT;
+				return PostType.APPRATMENT_RENT.toString();
 			}
 		}
 
 		if (realTypeEnum == PropertyTypeEnum.OFFICE) {
 			if (exchangeType == ExchangeRealEstateType.BUY) {
-				return PostType.OFFICE_SELL;
+				return PostType.OFFICE_SELL.toString();
 			} else {
-				return PostType.OFFICE_RENT;
+				return PostType.OFFICE_RENT.toString();
 			}
 		}
 
 		if (realTypeEnum == PropertyTypeEnum.SHOP) {
 			if (exchangeType == ExchangeRealEstateType.BUY) {
-				return PostType.SHOP_SELL;
+				return PostType.SHOP_SELL.toString();
 			} else {
-				return PostType.SHOP_RENT;
+				return PostType.SHOP_RENT.toString();
 			}
 		}
 
 		if (realTypeEnum == PropertyTypeEnum.STORE) {
 			if (exchangeType == ExchangeRealEstateType.BUY) {
-				return PostType.STORE_HOUSE_SELL;
+				return PostType.STORE_HOUSE_SELL.toString();
 			} else {
-				return PostType.STORE_HOUSE_RENT;
+				return PostType.STORE_HOUSE_RENT.toString();
 			}
 		}
 		return null;

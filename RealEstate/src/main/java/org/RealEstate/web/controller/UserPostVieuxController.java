@@ -21,6 +21,7 @@ import org.RealEstate.dto.RealEstateLazyDataModel;
 import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
+import org.RealEstate.enumerator.PropertyTypeEnum;
 import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.enumerator.YesNoEnum;
 import org.RealEstate.facade.DistrictFacade;
@@ -41,7 +42,7 @@ import org.omnifaces.cdi.Param;
 
 @Named
 @ViewScoped
-public class UserPostVieuxController implements Serializable{
+public class UserPostVieuxController implements Serializable {
 	/**
 	 * 
 	 */
@@ -76,10 +77,8 @@ public class UserPostVieuxController implements Serializable{
 	private int minPrice;
 	private int maxPrice;
 	private AtomicLong totalCount = new AtomicLong();
-	private int bedRoom;
-	private boolean bedRoomEq;
-	private int bathRoom;
-	private boolean bathRoomEq;
+	private List<Integer> bedRooms;
+	private List<Integer> bathRooms;
 	private Governorate selecteGovernorate = new Governorate();
 	private District selecteDistrict = new District();
 	private Village selecteVillage = new Village();
@@ -92,7 +91,6 @@ public class UserPostVieuxController implements Serializable{
 
 	private String fullUrl = "";
 	private String ipAddressWithPort;
-	private ExchangeRealEstateType estateTypeEnum = null;
 	private String fullUrlProfilePicture = "";
 
 	@Inject
@@ -100,14 +98,17 @@ public class UserPostVieuxController implements Serializable{
 	private long id;
 
 	@Inject
-	private AppSinglton appSinglton ;
-	
+	private AppSinglton appSinglton;
+
 	@EJB
 	private UserFacade userFacade;
 
 	private User user;
 
-	private RealEstateTypeEnum realEstateTypeEnum=RealEstateTypeEnum.ALL;
+	private RealEstateTypeEnum realEstateTypeEnum = RealEstateTypeEnum.ALL;
+	/*use these two filter to get info about real estate type rent or sale*/
+	private PropertyTypeEnum propertyTypeEnum=null;
+	private ExchangeRealEstateType estateTypeEnum = ExchangeRealEstateType.BUY;
 	
 	@PostConstruct
 	public void init() {
@@ -118,10 +119,9 @@ public class UserPostVieuxController implements Serializable{
 
 		realLazyModel = new RealEstateLazyDataModel(realEstateFacade);
 
-		fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
-				.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
+		fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
+				.concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
-	
 		fullUrlProfilePicture = fullUrlProfilePicture.concat("http://").concat(getIpAddressWithPort()).concat("/")
 				.concat(Constants.IMAGES).concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
 		if (id > 0) {
@@ -136,7 +136,6 @@ public class UserPostVieuxController implements Serializable{
 	}
 
 	private PropertyKindEnum parameterPropertyKind() {
-	
 
 		return PropertyKindEnum.REALESTATE;
 	}
@@ -144,13 +143,13 @@ public class UserPostVieuxController implements Serializable{
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
-		
+
 		String ipAddress = request.getRemoteAddr();
 
 		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
-			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+			ipAddressWithPort = "http://" + ipAddress + ":" + request.getLocalPort();
 		} else {
-			ipAddressWithPort = "https://" +  appSinglton.getRealDns() ;
+			ipAddressWithPort = "https://" + appSinglton.getRealDns();
 		}
 
 		return ipAddressWithPort;
@@ -198,6 +197,7 @@ public class UserPostVieuxController implements Serializable{
 			// Handle the exception appropriately
 		}
 	}
+
 	private final String NO_PHOTO = "nophoto.jpg";
 
 	public String displayFirstImageReal(RealEstate item) {
@@ -229,26 +229,26 @@ public class UserPostVieuxController implements Serializable{
 		// boolean searchFeildsError=false;
 
 		if (maxPrice != 0 && minPrice > maxPrice) {
-			Utility.addErrorMessage("min_price_mut_be _less_than_max",sessionLanguage.getLocale());
+			Utility.addErrorMessage("min_price_mut_be _less_than_max", sessionLanguage.getLocale());
 			return;
 		}
 
-		realLazyModel.setBathRoom(bathRoom);
+		realLazyModel.setBathRooms(bathRooms);
 		realLazyModel.setUser(user != null ? user : null);
 		realLazyModel.setBathRoomEq(exactValueBaths());
 		realLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
 		realLazyModel.setGovernorate(
 				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
 		realLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
-		realLazyModel.setBedRoom(bedRoom);
+		realLazyModel.setBedRooms(bedRooms);
 		realLazyModel.setBedRoomEq(exactValueRooms());
 		realLazyModel.setMaxPrice(maxPrice);
 		realLazyModel.setMinPrice(minPrice);
-		realLazyModel.setPostType(selectPostType == null ? null : selectPostType.toString());
+		realLazyModel.setPostType(Utility.findRealEstateClassType(estateTypeEnum, propertyTypeEnum).toString());
 		realLazyModel.setExchangeRealEstateType(estateTypeEnum);
 		// RealLazyModel.setTotalCount(totalCount);
 
-		Utility.addSuccessMessage("search_complete",sessionLanguage.getLocale());
+		Utility.addSuccessMessage("search_complete", sessionLanguage.getLocale());
 	}
 
 	public boolean hasRoomsAndBathRooms(PostType type) {
@@ -419,38 +419,6 @@ public class UserPostVieuxController implements Serializable{
 		this.totalCount = totalCount;
 	}
 
-	public int getBedRoom() {
-		return bedRoom;
-	}
-
-	public void setBedRoom(int bedRoom) {
-		this.bedRoom = bedRoom;
-	}
-
-	public boolean isBedRoomEq() {
-		return bedRoomEq;
-	}
-
-	public void setBedRoomEq(boolean bedRoomEq) {
-		this.bedRoomEq = bedRoomEq;
-	}
-
-	public int getBathRoom() {
-		return bathRoom;
-	}
-
-	public void setBathRoom(int bathRoom) {
-		this.bathRoom = bathRoom;
-	}
-
-	public boolean isBathRoomEq() {
-		return bathRoomEq;
-	}
-
-	public void setBathRoomEq(boolean bathRoomEq) {
-		this.bathRoomEq = bathRoomEq;
-	}
-
 	public String getFullUrl() {
 		return fullUrl;
 	}
@@ -545,6 +513,22 @@ public class UserPostVieuxController implements Serializable{
 
 	public void setRealEstateTypeEnum(RealEstateTypeEnum realEstateTypeEnum) {
 		this.realEstateTypeEnum = realEstateTypeEnum;
+	}
+
+	public List<Integer> getBedRooms() {
+		return bedRooms;
+	}
+
+	public void setBedRooms(List<Integer> bedRooms) {
+		this.bedRooms = bedRooms;
+	}
+
+	public List<Integer> getBathRooms() {
+		return bathRooms;
+	}
+
+	public void setBathRooms(List<Integer> bathRooms) {
+		this.bathRooms = bathRooms;
 	}
 
 }

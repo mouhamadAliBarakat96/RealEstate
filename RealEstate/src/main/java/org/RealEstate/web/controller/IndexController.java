@@ -271,18 +271,18 @@ public class IndexController implements Serializable {
 			return;
 		}
 
-//		realLazyModel.setBathRoom(bathRoom);
+		realLazyModel.setBathRooms(bathRooms);
 		realLazyModel.setUser(user != null ? user : null);
 		realLazyModel.setBathRoomEq(exactValueBaths());
 		realLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
 		realLazyModel.setGovernorate(
 				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
 		realLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
-//		realLazyModel.setBedRoom(bedRoom);
+		realLazyModel.setBedRooms(bedRooms);
 		realLazyModel.setBedRoomEq(exactValueRooms());
 		realLazyModel.setMaxPrice(maxPrice);
 		realLazyModel.setMinPrice(minPrice);
-		realLazyModel.setPostType(Utility.findRealEstateClassType(estateTypeEnum, propertyTypeEnum).toString());
+		realLazyModel.setPostType(Utility.findRealEstateClassType(estateTypeEnum, propertyTypeEnum));
 		realLazyModel.setExchangeRealEstateType(estateTypeEnum);
 		// RealLazyModel.setTotalCount(totalCount);
 
