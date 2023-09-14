@@ -101,13 +101,16 @@ public class IndexController implements Serializable {
 
 	private String fullUrl = "";
 	private String ipAddressWithPort;
-	private ExchangeRealEstateType estateTypeEnum = null;
+	
 
 	@Inject
 	private  AppSinglton appSinglton ;
 	
 	private RealEstateTypeEnum realEstateTypeEnum=RealEstateTypeEnum.ALL;
+	
+	/*use these two filter to get info about real estate type rent or sale*/
 	private PropertyTypeEnum propertyTypeEnum=null;
+	private ExchangeRealEstateType estateTypeEnum = ExchangeRealEstateType.BUY;
 	
 	@PostConstruct
 	public void init() {
@@ -279,7 +282,7 @@ public class IndexController implements Serializable {
 		realLazyModel.setBedRoomEq(exactValueRooms());
 		realLazyModel.setMaxPrice(maxPrice);
 		realLazyModel.setMinPrice(minPrice);
-		realLazyModel.setPostType(selectPostType == null ? null : selectPostType.toString());
+		realLazyModel.setPostType(Utility.findRealEstateClassType(estateTypeEnum, propertyTypeEnum).toString());
 		realLazyModel.setExchangeRealEstateType(estateTypeEnum);
 		// RealLazyModel.setTotalCount(totalCount);
 

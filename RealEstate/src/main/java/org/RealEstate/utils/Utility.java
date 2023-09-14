@@ -12,7 +12,10 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
+import org.RealEstate.enumerator.PropertyTypeEnum;
+import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.model.AppratmentRent;
 import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.Land;
@@ -21,6 +24,7 @@ import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
+import org.RealEstate.model.StoreHouseRent;
 import org.RealEstate.model.StoreHouseSell;
 
 public class Utility {
@@ -196,5 +200,45 @@ public class Utility {
 		}
 	}
 
+	public static PostType findRealEstateClassType(ExchangeRealEstateType exchangeType,
+			PropertyTypeEnum realTypeEnum) {
+
+		if (realTypeEnum == PropertyTypeEnum.LAND) {
+			return PostType.LAND;
+		}
+
+		if (realTypeEnum == PropertyTypeEnum.APPRATMENT) {
+			if (exchangeType == ExchangeRealEstateType.BUY) {
+				return PostType.APPRATMENT_SELL;
+			} else {
+				return PostType.APPRATMENT_RENT;
+			}
+		}
+
+		if (realTypeEnum == PropertyTypeEnum.OFFICE) {
+			if (exchangeType == ExchangeRealEstateType.BUY) {
+				return PostType.OFFICE_SELL;
+			} else {
+				return PostType.OFFICE_RENT;
+			}
+		}
+
+		if (realTypeEnum == PropertyTypeEnum.SHOP) {
+			if (exchangeType == ExchangeRealEstateType.BUY) {
+				return PostType.SHOP_SELL;
+			} else {
+				return PostType.SHOP_RENT;
+			}
+		}
+
+		if (realTypeEnum == PropertyTypeEnum.STORE) {
+			if (exchangeType == ExchangeRealEstateType.BUY) {
+				return PostType.STORE_HOUSE_SELL;
+			} else {
+				return PostType.STORE_HOUSE_RENT;
+			}
+		}
+		return null;
+	}
 
 }
