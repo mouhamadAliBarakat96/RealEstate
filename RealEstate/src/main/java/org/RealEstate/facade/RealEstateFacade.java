@@ -262,6 +262,9 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 		}
 
+		
+		List<Predicate> predicatesNbRoom = new ArrayList<>();
+		
 		// asln el land ma ha yje 3aded 8oraf bas ehtyat
 		if (!classType.equals(Land.class) && !classType.equals(RealEstate.class)  &&  !classType.equals(ShopSell.class) && !classType.equals(ShopRent.class)
 
@@ -271,7 +274,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 				for (Integer var : bedRoomList) {
 					Predicate maxPricePredicate = criteriaBuilder.equal(root.get("nbRoom"), var);
-					predicates.add(maxPricePredicate);
+					
+					predicatesNbRoom.add(maxPricePredicate);
 				}
 
 			}
@@ -280,7 +284,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 				for (Integer var : bathRoomList) {
 					Predicate maxPricePredicate = criteriaBuilder.equal(root.get("nbBathRoom"), var);
-					predicates.add(maxPricePredicate);
+					predicatesNbRoom.add(maxPricePredicate);
 				}
 
 			}
@@ -291,9 +295,11 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		predicates.add(postActive);
 
 		// Combine the predicates using conjunction (AND) or disjunction (OR)
-		Predicate finalPredicate = criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+		Predicate finalPredicateAnd = criteriaBuilder.and(predicates.toArray(new Predicate[0]))  ;
+		Predicate finalPredicateOr = criteriaBuilder.or(predicatesNbRoom.toArray(new Predicate[0]))  ;
+		return criteriaBuilder.and(finalPredicateAnd , finalPredicateOr)  ;
 
-		return finalPredicate;
+	
 	}
 
 	// start here create predict
