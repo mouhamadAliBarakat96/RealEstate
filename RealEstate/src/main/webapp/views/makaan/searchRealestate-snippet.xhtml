@@ -67,7 +67,7 @@
 					</h:selectOneMenu>
 				</div>
 				<h:panelGroup
-					rendered="#{actionBean.hasRoomsAndBathRooms(actionBean.selectPostType)}">
+					rendered="#{actionBean.apperBathsAndRoomsInSearch(actionBean.propertyTypeEnum)}">
 					<div class="col-md-3 mt-1 col-sm-12 ">
 						<h:outputLabel value="#{bundle.beds_count}" style="color:white" />
 						<p:selectCheckboxMenu id="bedRoomsId" filter="true"

@@ -331,6 +331,13 @@ public class IndexController implements Serializable {
 			return false;
 	}
 
+	public boolean apperBathsAndRoomsInSearch(PropertyTypeEnum type) {
+		if (type == null) {
+			return true;
+		} else
+			return (type == PropertyTypeEnum.APPRATMENT || type == PropertyTypeEnum.OFFICE);
+	}
+	
 	public boolean hasRoomsAndBathRooms(PostType type) {
 		if (type == null) {
 			return true;
@@ -338,6 +345,7 @@ public class IndexController implements Serializable {
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
+	
 	public boolean aLand(PostType type) {
 		return (type.equals(PostType.LAND));
 	}

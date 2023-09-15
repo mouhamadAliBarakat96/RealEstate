@@ -244,7 +244,7 @@ public class UserPostVieuxController implements Serializable {
 		realLazyModel.setBedRoomEq(exactValueRooms());
 		realLazyModel.setMaxPrice(maxPrice);
 		realLazyModel.setMinPrice(minPrice);
-		realLazyModel.setPostType(Utility.findRealEstateClassType(estateTypeEnum, propertyTypeEnum).toString());
+		realLazyModel.setPostType(Utility.findRealEstateClassType(estateTypeEnum, propertyTypeEnum));
 		realLazyModel.setExchangeRealEstateType(estateTypeEnum);
 		// RealLazyModel.setTotalCount(totalCount);
 
@@ -257,6 +257,13 @@ public class UserPostVieuxController implements Serializable {
 		} else
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
+	}
+	
+	public boolean apperBathsAndRoomsInSearch(PropertyTypeEnum type) {
+		if (type == null) {
+			return true;
+		} else
+			return (type == PropertyTypeEnum.APPRATMENT || type == PropertyTypeEnum.OFFICE);
 	}
 
 	public boolean aLand(PostType type) {
@@ -531,4 +538,16 @@ public class UserPostVieuxController implements Serializable {
 		this.bathRooms = bathRooms;
 	}
 
+	public PropertyTypeEnum getPropertyTypeEnum() {
+		return propertyTypeEnum;
+	}
+
+	public void setPropertyTypeEnum(PropertyTypeEnum propertyTypeEnum) {
+		this.propertyTypeEnum = propertyTypeEnum;
+	}
+	
+	public void changeValue(ExchangeRealEstateType value) {
+		this.estateTypeEnum = value;
+		search();
+	}
 }
