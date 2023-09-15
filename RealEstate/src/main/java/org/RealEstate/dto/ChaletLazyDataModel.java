@@ -44,23 +44,6 @@ public class ChaletLazyDataModel extends LazyDataModel<Chalet> implements Serial
 		this.facade = facade;
 	}
 
-	public void genrateFakeData() {
-		pageItems = new ArrayList<>();
-		Governorate governorate = new Governorate("Janoub");
-		District district = new District("Tyre");
-		district.setGovernorate(governorate);
-
-		Village vill = new Village("Chehour");
-		vill.setDistrict(district);
-		addToChalet(new Chalet("Joulie", true, false, "for couples", vill, 100, 150));
-		addToChalet(new Chalet("Corner", true, false, "over 10 person", vill, 100, 150));
-		addToChalet(new Chalet("Zoz", true, false, "for families", vill, 100, 150));
-	}
-
-	private void addToChalet(Chalet chalet) {
-		pageItems.add(chalet);
-	}
-
 	@Override
 	public int count(Map<String, FilterMeta> arg0) {
 		try {

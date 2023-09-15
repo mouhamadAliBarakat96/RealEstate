@@ -95,6 +95,7 @@
 					value="#{bundle.search}"
 					style=" background-color: #007ad9;color:white"
 					styleClass="btn btn-primary ">
+					<f:ajax execute="myForm:searchBarPanel" render="myForm:ChaletPanelId :messageScript"/>
 				</h:commandButton>
 			</div>
 		</div>

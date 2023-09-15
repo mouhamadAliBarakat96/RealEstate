@@ -28,63 +28,45 @@
 				<ui:include src="/views/makaan/searchChalet-snippet.xhtml">
 					<ui:param name="actionBean" value="#{chaletPostVieuxController}" />
 				</ui:include>
-
 			</h:panelGroup>
-
 		</h:panelGroup>
 	</ui:define>
 
 	<ui:define name="property-content">
-
 		<!-- User infomarmation -->
-
-
 		<div class="col-md-6">
-
 			<span
 				style="margin-left: 45px; display: block;; color: #2d383f; font-size: 20px; font-weight: 700">Agent</span>
 			<div style="display: flex;">
 				<div style="width: 30%; display: inline-block;">
 					<h:panelGroup
 						rendered="#{chaletPostVieuxController.user.showProfilePicture}">
-
-
 						<p:graphicImage style="margin-top:4%;border-radius:50%"
 							url="#{chaletPostVieuxController.fullUrlProfilePicture}"
 							width="150px" height="150px" />
 					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{!chaletPostVieuxController.user.showProfilePicture}">
-
 						<img class="img-fluid" width="150px" height="150px"
 							style="margin-top: 4%; border-radius: 50%"
 							src="/resources/makaan/img/profile.png" alt="Icon" />
-
 					</h:panelGroup>
-
 				</div>
 				<div style="margin-left: 50px; width: 60%; display: inline-block">
-
 					<h:link outcome="userpost-search"
-						value="#{chaletPostVieuxController.user.firstName}
-															#{chaletPostVieuxController.user.lastName} "
+						value="#{chaletPostVieuxController.user.firstName} #{chaletPostVieuxController.user.lastName} "
 						style=" color:#666565 ; font-size: 15px; font-weight: 600">
-
-
-
 						<f:param name="id" value="#{chaletPostVieuxController.user.id}" />
 					</h:link>
-					<small class="flex-fill   "> <h:commandLink
+					<small class="flex-fill">
+					 <h:commandLink
 							style=" display:block ; font-weight: bold;"
 							action="#{chaletPostVieuxController.navigateToWhatsApp(real)}"
 							target="_blank"
 							value="#{bundle.whatsapp} #{chaletPostVieuxController.user.phoneNumber}">
-
 							<i class="fab fa-whatsapp text-primary me-2"></i>
-
 						</h:commandLink>
 					</small>
-
 					<h:panelGroup rendered="#{chaletPostVieuxController.user.broker}">
 						<span
 							style="display: block; margin-top: 0.9%; width: 60px; background-color: #00B98E; color: #FFFFFF; padding: 5px; border-radius: 5px;">broker</span>
@@ -92,19 +74,29 @@
 				</div>
 			</div>
 		</div>
-
-		<div style="margin-top: 5%"></div>
-
-		<h:panelGroup id="RealEstatePanelId">
+		<h:panelGroup id="ChaletPanelId">
+			<div class="container-xxl ">
+				<div class="container">
+					<div class="tab-content">
+						<div id="tab-1" class="tab-pane fade show p-0 active">
+							<div class="row mt-2">
+								<div class="row g-0 gx-5 align-items-end">
+									<div class="col-lg-6">
+										<div class="  mx-auto mb-5 wow " data-wow-delay="0.1s">
+											<h1 class="mb-3">#{bundle.chalets}</h1>
+											<p>#{bundle.properties_description}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<ui:include src="/views/makaan/chalet-snippet.xhtml">
 				<ui:param name="actionBean" value="#{chaletPostVieuxController}" />
-
 			</ui:include>
 		</h:panelGroup>
-
-
 	</ui:define>
-
-
 </ui:composition>
 </html>
