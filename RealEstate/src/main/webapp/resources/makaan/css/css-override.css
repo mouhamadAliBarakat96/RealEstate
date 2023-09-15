@@ -93,3 +93,12 @@ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-hover {
 	color: white;
 	border-color: transparent;
 }
+
+
+body .ui-selectcheckboxmenu .ui-selectcheckboxmenu-multiple-container .ui-selectcheckboxmenu-token {
+    padding: 1px 0;
+    margin: 0 0.5rem 0 0;
+    background: #00B98E;
+    color: white;
+    border-radius: 3px;
+}

@@ -7,26 +7,46 @@
 	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
 
 <ui:component>
-	
-	<div class="row p-3">
-		<div class="form-group ">
-			<p:outputLabel class="control-label" for="titleId"
-				value="#{bundle.property_type}">
-			</p:outputLabel>
-			<h:selectOneMenu   value="#{userPostCardController.postType}"
-				disabled="#{userPostCardController.disableSelectOneButton()}"
-				styleClass="white form-control" converter="omnifaces.SelectItemsConverter">
-				<f:selectItems value="#{PostType.values()}" var="option"
-					itemLabel="#{languageController.locale=='en'? option.name : option.name_ar}"
-					itemValue="#{option}" />
-				<f:ajax execute="@this" render="myForm:tabView:inputPanel"
-					listener="#{userPostCardController.listenerSelectItemType()}" />
-			</h:selectOneMenu>
+	<h:panelGroup layout="block" styleClass="row ps-3 pe-3 pt-3" id="conditionPanel"
+		rendered="#{userPostCardController.disableSelectOneButton() eq false}">
+		<div class="col-md-3 col-xs-12 col-12">
+			<div class="form-group">
+				<p:outputLabel class="control-label" for="titleId"
+					value="#{bundle.property_exchange_type}">
+				</p:outputLabel>
+				<h:selectOneMenu styleClass="white form-control"
+					converter="omnifaces.SelectItemsConverter"
+					value="#{userPostCardController.exchangeRealEstateType}">
+					<f:selectItems value="#{ExchangeRealEstateType.values()}"
+						var="option" itemLabel="#{bundle[option]}" itemValue="#{option}" />
+					<f:ajax
+						listener="#{userPostCardController.listenerSelectProperty()}"
+						execute="@this" render="myForm:tabView:inputPanel" />
+				</h:selectOneMenu>
+			</div>
 		</div>
+		<div class="col-md-3 col-xs-12 col-12">
+			<div class="form-group">
+				<p:outputLabel class="control-label" for="titleId"
+					value="#{bundle.property_type}">
+				</p:outputLabel>
+				<h:selectOneMenu styleClass="white form-control"
+					converter="omnifaces.SelectItemsConverter"
+					value="#{userPostCardController.propertyTypeEnum}">
+					<f:selectItems value="#{PropertyTypeEnum.values()}" var="option"
+						itemLabel="#{bundle[option]}" itemValue="#{option}" />
+					<f:ajax
+						listener="#{userPostCardController.listenerSelectProperty()}"
+						execute="@this" render="myForm:tabView:inputPanel" />
+				</h:selectOneMenu>
+			</div>
+		</div>
+	</h:panelGroup>
+	<div class="row ps-3 pe-3 pb-3">
 		<h:panelGroup id="inputPanel">
 			<h:panelGroup rendered="#{userPostCardController.postType != null}">
 				<div class="row">
-					<div class="col-md-12  col-md-4">
+					<div class="col-12">
 						<p:staticMessage severity="warn" summary="WARN"
 							rendered="#{userPostCardController.item.postStatus == 'REFFUSED'}"
 							detail="#{userPostCardController.item.reffuseCause}"
@@ -84,7 +104,9 @@
 							value="#{userPostCardController.item.village}">
 							<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
 							<f:selectItems value="#{userPostCardController.villages}"
-								var="option" itemLabel="#{languageController.locale eq 'en' ? option.name :option.nameAr}" itemValue="#{option}" />
+								var="option"
+								itemLabel="#{languageController.locale eq 'en' ? option.name :option.nameAr}"
+								itemValue="#{option}" />
 							<f:ajax execute="@this" />
 						</h:selectOneMenu>
 					</div>
@@ -181,11 +203,23 @@
 								<p:outputLabel class="control-label" for="nbOfSharesId"
 									value="#{bundle.real_estate_nb_of_shares}">
 								</p:outputLabel>
-								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="99" id="nbOfSharesId" emptyValue="0"
+								<p:inputNumber decimalPlaces="0" thousandSeparator=","  
+									minValue="0" maxValue="99999" id="nbOfSharesId" emptyValue="0"
 									label="#{bundle.real_estate_nb_of_shares}"
 									styleClass="form-control"
 									value="#{userPostCardController.item.nbOfShares}">
+								</p:inputNumber>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<h:outputLabel value="#{bundle.land_block_no}"
+									styleClass="control-label" for="myForm:blockNbId" />
+								<p:inputNumber decimalPlaces="0" thousandSeparator=","
+									minValue="0" maxValue="999999999" id="blockNbId" emptyValue="0"
+									label="#{bundle.land_block_no}"
+									styleClass="form-control"
+									value="#{userPostCardController.item.blockNb}">
 								</p:inputNumber>
 							</div>
 						</div>
@@ -225,6 +259,7 @@
 								</div>
 							</div>
 						</div>
+						
 					</h:panelGroup>
 					<h:panelGroup rendered="#{userPostCardController.aShop()}">
 						<div class="col-md-3">
@@ -270,7 +305,6 @@
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-
 							<p:outputLabel class="control-label" for="subTitleId"
 								value="#{bundle.real_estate_subtitle}">
 							</p:outputLabel>
@@ -281,36 +315,40 @@
 							</h:inputTextarea>
 						</div>
 					</div>
-					
+
 					<div class="col-md-12">
 						<p:remoteCommand name="rc"
 							actionListener="#{userPostCardController.changeActiveIndex}"
 							oncomplete="PF('galleria1').show()" />
-						<p:galleria  styleClass="galleria-arabic-fix" widgetVar="galleria1" rendered="#{userPostCardController.item.images.size() >0}"
+						<p:galleria styleClass="galleria-arabic-fix" widgetVar="galleria1"
+							rendered="#{userPostCardController.item.images.size() >0}"
 							value="#{userPostCardController.item.images}" var="photo"
-							numVisible="4" id="realGalleria"  
+							numVisible="4" id="realGalleria"
 							responsiveOptions="#{userPostCardController.responsiveOptions1}"
 							circular="true" fullScreen="true" showItemNavigators="true"
 							showThumbnails="false" style="max-width: 40%">
-							<p:graphicImage styleClass="gallery-item mt-2"   
-								url="#{userPostCardController.fullUrl}#{photo}"
-								alt="the photos" style="width: 100%; display: block" />
-							<p:commandButton process="@this" value="#{bundle.delete}" onclick="closeGalleria();"   
-								action="#{userPostCardController.deleteRealPhoto(photo)}"  update="myForm:tabView:imagesPhotos  myForm:tabView:realGalleria" />
+							<p:graphicImage styleClass="gallery-item mt-2"
+								url="#{userPostCardController.fullUrl}#{photo}" alt="the photos"
+								style="width: 100%; display: block" />
+							<p:commandButton process="@this" value="#{bundle.delete}"
+								onclick="closeGalleria();"
+								action="#{userPostCardController.deleteRealPhoto(photo)}"
+								update="myForm:tabView:imagesPhotos  myForm:tabView:realGalleria" />
 						</p:galleria>
 
 						<h:panelGroup id="imagesPhotos">
-							<p:commandButton rendered="#{userPostCardController.item.images.size() >0}" value="#{bundle.show_photos}"
-								partialSubmit="true" styleClass="col-12"
-								icon="pi pi-external-link"
-								onclick="PF('galleria1').show();"
-								process="@this" />
+							<p:commandButton
+								rendered="#{userPostCardController.item.images.size() >0}"
+								value="#{bundle.show_photos}" partialSubmit="true"
+								styleClass="col-12" icon="pi pi-external-link"
+								onclick="PF('galleria1').show();" process="@this" />
 						</h:panelGroup>
 					</div>
 
 					<div class="col-md-12 mt-3">
 
-						<p:fileUpload id="uploadImageRealEstate" label="#{bundle.choose_photos}"
+						<p:fileUpload id="uploadImageRealEstate"
+							label="#{bundle.choose_photos}"
 							listener="#{userPostCardController.handleFileUploadReal}"
 							mode="advanced" dragDropSupport="false" multiple="true"
 							sizeLimit="3000000" fileLimit="5"

@@ -23,9 +23,11 @@ import javax.servlet.http.HttpSession;
 
 import org.RealEstate.controller.AbstractController;
 import org.RealEstate.dto.ImageDto;
+import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
+import org.RealEstate.enumerator.PropertyTypeEnum;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
@@ -65,6 +67,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	private PostType postType=PostType.APPRATMENT_RENT;
 	private PropertyKindEnum kindEnum = PropertyKindEnum.REALESTATE;
+	
 	@Inject
 	private LanguageController sessionLanguage;
 	@Inject
@@ -106,6 +109,10 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private String fullUrl = "";
 	private String ipAddressWithPort;
 
+	
+	private PropertyTypeEnum propertyTypeEnum=PropertyTypeEnum.APPRATMENT;
+	private ExchangeRealEstateType exchangeRealEstateType=ExchangeRealEstateType.BUY;
+	
 	@PostConstruct
 	public void init() {
 
@@ -808,4 +815,30 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	public void deleteChaletPhoto(String image) {
 		this.chalet.removeFromPhotos(image);
 	}
+
+	public PropertyTypeEnum getPropertyTypeEnum() {
+		return propertyTypeEnum;
+	}
+
+	public void setPropertyTypeEnum(PropertyTypeEnum propertyTypeEnum) {
+		this.propertyTypeEnum = propertyTypeEnum;
+	}
+	
+	
+	
+	public ExchangeRealEstateType getExchangeRealEstateType() {
+		return exchangeRealEstateType;
+	}
+
+	public void setExchangeRealEstateType(ExchangeRealEstateType exchangeRealEstateType) {
+		this.exchangeRealEstateType = exchangeRealEstateType;
+	}
+
+	public void listenerSelectProperty() {
+		postType = Utility.findRealEstateType(exchangeRealEstateType, propertyTypeEnum);
+		if (postType != null) {
+			item = Utility.initializeRealEstate(postType);
+		}
+	}
+	
 }
