@@ -838,6 +838,9 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		postType = Utility.findRealEstateType(exchangeRealEstateType, propertyTypeEnum);
 		if (postType != null) {
 			item = Utility.initializeRealEstate(postType);
+			if(postType ==PostType.LAND) {
+				exchangeRealEstateType=ExchangeRealEstateType.BUY;
+			}
 		}
 	}
 	

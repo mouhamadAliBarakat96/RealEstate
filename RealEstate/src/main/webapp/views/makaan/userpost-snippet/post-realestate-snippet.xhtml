@@ -14,7 +14,7 @@
 				<p:outputLabel class="control-label" for="titleId"
 					value="#{bundle.property_exchange_type}">
 				</p:outputLabel>
-				<h:selectOneMenu styleClass="white form-control"
+				<h:selectOneMenu id="exchangeId" styleClass="white form-control" disabled="#{userPostCardController.propertyTypeEnum eq 'LAND'}"
 					converter="omnifaces.SelectItemsConverter"
 					value="#{userPostCardController.exchangeRealEstateType}">
 					<f:selectItems value="#{ExchangeRealEstateType.values()}"
@@ -37,7 +37,7 @@
 						itemLabel="#{bundle[option]}" itemValue="#{option}" />
 					<f:ajax
 						listener="#{userPostCardController.listenerSelectProperty()}"
-						execute="@this" render="myForm:tabView:inputPanel" />
+						execute="@this" render="myForm:tabView:inputPanel myForm:tabView:exchangeId" />
 				</h:selectOneMenu>
 			</div>
 		</div>
