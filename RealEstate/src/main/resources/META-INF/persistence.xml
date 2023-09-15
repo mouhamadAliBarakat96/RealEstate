@@ -25,6 +25,7 @@
 		<class>org.RealEstate.model.Ads</class>
 		<class>org.RealEstate.model.StoreHouseSell</class>
 		<class>org.RealEstate.model.StoreHouseRent</class>
+		<class>org.RealEstate.model.ContactUs</class>
 
   
 		<properties>
