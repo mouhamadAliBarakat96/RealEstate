@@ -448,9 +448,6 @@
 	border-radius: 1px;
 }
 
-.ui-selectonemenu .ui-selectonemenu-label {
-	text-align: center !important;
-}
 
 .select2-container--default .select2-selection--single {
 	border: 1px solid #e8ebf3 !important;
@@ -612,4 +609,22 @@ a.nav-item.nav-link:hover {
 	background-color: #00b98e;
     color: white !important; 
     width: fit-content;
+}
+
+
+
+
+.img-data-list {
+    position: relative;
+    z-index: 0;
+}
+
+.verified-img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    object-fit: contain !important; 
+    max-height: 50%;
+    width: 100%;
 }

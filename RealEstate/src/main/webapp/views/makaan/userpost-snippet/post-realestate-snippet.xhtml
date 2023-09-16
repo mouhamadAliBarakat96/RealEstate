@@ -98,7 +98,7 @@
 					<div class="col-md-3 ">
 						<h:outputLabel value="#{bundle.village}"
 							styleClass="control-label" />
-						<h:selectOneMenu id="villageSelectId"
+						<p:selectOneMenu id="villageSelectId" filter="true" filterMatchMode="contains" filterNormalize="true"
 							converter="omnifaces.SelectItemsConverter"
 							styleClass="form-select"
 							value="#{userPostCardController.item.village}">
@@ -108,7 +108,7 @@
 								itemLabel="#{languageController.locale eq 'en' ? option.name :option.nameAr}"
 								itemValue="#{option}" />
 							<f:ajax execute="@this" />
-						</h:selectOneMenu>
+						</p:selectOneMenu>
 					</div>
 					<h:panelGroup rendered="#{userPostCardController.hasPark()}">
 						<div class="col-md-3">
@@ -214,7 +214,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<h:outputLabel value="#{bundle.land_block_no}"
-									styleClass="control-label" for="myForm:blockNbId" />
+									styleClass="control-label"  />
 								<p:inputNumber decimalPlaces="0" thousandSeparator=","
 									minValue="0" maxValue="999999999" id="blockNbId" emptyValue="0"
 									label="#{bundle.land_block_no}"

@@ -102,3 +102,23 @@ body .ui-selectcheckboxmenu .ui-selectcheckboxmenu-multiple-container .ui-select
     color: white;
     border-radius: 3px;
 }
+
+
+.ui-selectonemenu .ui-selectonemenu-label {
+	text-align: inherit !important;
+}
+
+body .ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-state-hover {
+    background: #eaeaea;
+    color: #333333;
+    text-align: inherit;
+}
+
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item {
+    border: 0 none;
+    margin: 1px 0;
+    padding: 3px 5px;
+    text-align: inherit;
+    white-space: nowrap;
+}

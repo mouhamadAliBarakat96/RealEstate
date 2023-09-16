@@ -25,7 +25,7 @@
 				</div>
 				<div class="col-md-3 col-sm-12 mt-1  ">
 					<h:outputLabel value="#{bundle.governate}" style="color:white" />
-					<h:selectOneMenu id="governateSelectId"
+					<p:selectOneMenu id="governateSelectId"
 						styleClass="form-select border-0 "
 						converter="omnifaces.SelectItemsConverter"
 						value="#{actionBean.selecteGovernorate}">
@@ -36,11 +36,11 @@
 						<f:ajax execute="@this"
 							render="myForm:districtSelectId myForm:villageSelectId"
 							listener="#{actionBean.listenerSelectGovernate()}" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 				</div>
 				<div class="col-md-3 col-sm-12  mt-1">
 					<h:outputLabel value="#{bundle.discrit}" style="color:white" />
-					<h:selectOneMenu id="districtSelectId"
+					<p:selectOneMenu id="districtSelectId"
 						converter="omnifaces.SelectItemsConverter"
 						styleClass="form-select border-0  "
 						value="#{actionBean.selecteDistrict}">
@@ -51,11 +51,11 @@
 						<f:ajax execute="@this"
 							listener="#{actionBean.listenerSelectDistrict()}"
 							render="myForm:villageSelectId" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 				</div>
 				<div class="col-md-3 col-sm-12  mt-1">
 					<h:outputLabel value="#{bundle.village}" style="color:white" />
-					<h:selectOneMenu id="villageSelectId"
+					<p:selectOneMenu id="villageSelectId"  filter="true" filterMatchMode="contains" filterNormalize="true"
 						converter="omnifaces.SelectItemsConverter"
 						styleClass="form-select border-0  "
 						value="#{actionBean.selecteVillage}">
@@ -64,7 +64,7 @@
 							itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
 							itemValue="#{option}" />
 						<f:ajax execute="@this" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 				</div>
 				<h:panelGroup
 					rendered="#{actionBean.apperBathsAndRoomsInSearch(actionBean.propertyTypeEnum)}">

@@ -37,14 +37,14 @@
 			</div>
 			<div class="col-md-3 col-sm-12 mt-1 ">
 				<h:outputLabel value="#{bundle.village}" style="color:white" />
-				<h:selectOneMenu converter="omnifaces.SelectItemsConverter" id="chaletVillage"
+				<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="chaletVillage" filter="true" filterMatchMode="contains" filterNormalize="true"
 					styleClass="form-select border-0  "
 					value="#{actionBean.selecteVillage}">
 					<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
 					<f:selectItems value="#{actionBean.villages}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 			</div>
 		
 			<div class="col-md-3 mt-2 col-sm-12 ">

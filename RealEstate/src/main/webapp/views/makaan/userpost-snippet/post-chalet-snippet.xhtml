@@ -33,14 +33,14 @@
 		</div>
 		<div class="col-md-3 ">
 			<h:outputLabel value="#{bundle.village}" styleClass="control-label" />
-			<h:selectOneMenu id="villagechaletId"
+			<p:selectOneMenu id="villagechaletId" filter="true" filterMatchMode="contains" filterNormalize="true"
 				converter="omnifaces.SelectItemsConverter" styleClass="form-select"
 				value="#{userPostCardController.chalet.village}">
 				<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
 				<f:selectItems value="#{userPostCardController.villages}"
 					var="option" itemLabel="#{languageController.locale eq 'en' ? option.name :option.nameAr}" itemValue="#{option}" />
 				<f:ajax execute="@this" />
-			</h:selectOneMenu>
+			</p:selectOneMenu>
 		</div>
 		<div class="col-md-3">
 			<div class="form-group">

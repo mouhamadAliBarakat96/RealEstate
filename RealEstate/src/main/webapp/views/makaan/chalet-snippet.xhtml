@@ -107,9 +107,14 @@
 											<h:commandLink action="#{actionBean.navigate_chalet(chalet)}"
 												  styleClass="d-block img-fluid"
 												target="_blank">
-												<p:graphicImage alt="no photos" styleClass="img-fluid"
+												<p:graphicImage alt="no photos" styleClass="img-fluid img-data-list" 
 													url="#{actionBean.displayFirstImageChalet(chalet)}">
 												</p:graphicImage>
+												<h:panelGroup rendered="#{chalet.verfied}">
+													<p:graphicImage alt="verified" styleClass="verified-img"
+														url="#{actionBean.fullUrl}/verified.png">
+													</p:graphicImage>
+												</h:panelGroup>
 												<f:actionListener
 													binding="#{actionBean.addViewsAfterClick_chalet(chalet)}" />
 											</h:commandLink>
@@ -121,8 +126,8 @@
 															<i class="fa fa-certificate"></i>
 													</h:panelGroup>
 													<h:panelGroup rendered="#{chalet.verfied}" layout="block"
-														styleClass="bg-primary rounded text-white py-1 px-3  ms-2">
-															#{bundle.post_verified}
+														styleClass="bg-primary rounded text-white py-1 px-3  ms-2 hidden">
+															verified
 															<i class="fa fa-check"></i>
 													</h:panelGroup>
 												</div>
