@@ -12,7 +12,7 @@
 			<div class="row">
 				<div class="col-md-3 col-sm-12">
 					<h:outputLabel value="#{bundle.property_type}" style="color:white" />
-					<h:selectOneMenu styleClass="form-select border-0  "
+					<p:selectOneMenu styleClass="form-select border-0  "
 						converter="omnifaces.SelectItemsConverter"
 						value="#{actionBean.propertyTypeEnum}">
 						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
@@ -21,7 +21,7 @@
 							itemValue="#{option}" />
 						<f:ajax execute="myForm:searchBarPanel"
 							render="myForm:realSatatebathBedRoomsId" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 				</div>
 				<div class="col-md-3 col-sm-12 mt-1  ">
 					<h:outputLabel value="#{bundle.governate}" style="color:white" />
@@ -55,7 +55,8 @@
 				</div>
 				<div class="col-md-3 col-sm-12  mt-1">
 					<h:outputLabel value="#{bundle.village}" style="color:white" />
-					<p:selectOneMenu id="villageSelectId"  filter="true" filterMatchMode="contains" filterNormalize="true"
+					<p:selectOneMenu id="villageSelectId" filter="true"
+						filterMatchMode="contains" filterNormalize="true"
 						converter="omnifaces.SelectItemsConverter"
 						styleClass="form-select border-0  "
 						value="#{actionBean.selecteVillage}">
@@ -63,7 +64,7 @@
 						<f:selectItems value="#{actionBean.villages}" var="option"
 							itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
 							itemValue="#{option}" />
-						<f:ajax execute="@this" />
+						<f:ajax execute="@this"/>
 					</p:selectOneMenu>
 				</div>
 				<h:panelGroup

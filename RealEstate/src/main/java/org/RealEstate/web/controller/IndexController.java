@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
@@ -75,6 +76,8 @@ public class IndexController implements Serializable {
 
 	private List<District> districts = new ArrayList<>();
 
+	private List<Village> allVillages = new ArrayList<>();
+	
 	// lazy model
 	private RealEstateLazyDataModel realLazyModel;
 	// Search Bar Filters
@@ -115,7 +118,8 @@ public class IndexController implements Serializable {
 	@PostConstruct
 	public void init() {
 		governorates = governorateFacade.findAll();
-
+		allVillages=villageFacade.findAll();
+		villages=allVillages;
 		// realEstates = realEstateFacade.findAll();// GET RECOMMEND PROPERTIES LATER
 		// totalCount.set(realEstates.size());
 
@@ -247,20 +251,37 @@ public class IndexController implements Serializable {
 	}
 
 	public void listenerSelectGovernate() {
-		villages = new ArrayList<>();
-		districts = new ArrayList<>();
+		selecteDistrict = null;
+		selecteVillage = null;
+		
 		if (selecteGovernorate != null) {
+			villages = new ArrayList<>();
 			districts = districtFacade.findByGovernorate(selecteGovernorate.getId());
+		}else {
+			districts = new ArrayList<>();
+			villages = allVillages;
 		}
 
 	}
 
 	public void listenerSelectDistrict() {
-		villages = new ArrayList<>();
+		selecteVillage = null;
 		if (selecteDistrict != null) {
-			villages = villageFacade.findByDisctrict(selecteDistrict.getId());
+			//villageFacade.findByDisctrict(selecteDistrict.getId());
+			villages = allVillages.stream().filter(x->x.getDistrict().equals(selecteDistrict)).collect(Collectors.toList());
+		}else {
+			villages = allVillages;
 		}
 	}
+	
+	public void listenerSelectVillages() {
+		if (selecteVillage != null) {
+			 selecteDistrict=selecteVillage.getDistrict();
+			 selecteGovernorate=selecteDistrict.getGovernorate();
+		}
+	}
+	
+	
 
 	public void search() {
 

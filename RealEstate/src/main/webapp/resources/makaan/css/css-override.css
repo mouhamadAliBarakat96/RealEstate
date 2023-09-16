@@ -86,6 +86,7 @@
  .ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, .ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev {
     cursor: pointer;
     font-weight: 500;
+  	color:  #00B98E;
 }
 
 body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-hover {
@@ -94,6 +95,9 @@ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-hover {
 	border-color: transparent;
 }
 
+body .ui-paginator .ui-paginator-pages .ui-paginator-page {
+     color: #00B98E;  
+}
 
 body .ui-selectcheckboxmenu .ui-selectcheckboxmenu-multiple-container .ui-selectcheckboxmenu-token {
     padding: 1px 0;

@@ -9,11 +9,11 @@
 	<div class="container-fluid bg-primary mb-5 wow pb-1 " data-wow-delay="0.1s" >
 		<div class="row">
 			<div class="col-md-3 col-sm-12   ">
-				<h:outputLabel value="#{bundle.property_type}" style="color:white" />
+				<h:outputLabel value="#{bundle.governate}" style="color:white" />
 				<h:selectOneMenu styleClass="form-select border-0 "
 					converter="omnifaces.SelectItemsConverter" id="chaletGovernate"
 					value="#{actionBean.selecteGovernorate}">
-					<f:selectItem itemLabel="#{bundle.governate}" itemValue="" />
+					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 					<f:selectItems value="#{actionBean.governorates}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this"
@@ -23,11 +23,11 @@
 			</div>
 
 			<div class="col-md-3 col-sm-12 mt-1 ">
-				<h:outputLabel value="#{bundle.governate}" style="color:white" />
+				<h:outputLabel value="#{bundle.discrit}" style="color:white" />
 				<h:selectOneMenu converter="omnifaces.SelectItemsConverter"
 					styleClass="form-select border-0  " id="chaletDistrict"
 					value="#{actionBean.selecteDistrict}">
-					<f:selectItem itemLabel="#{bundle.discrit}" itemValue="" />
+					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 					<f:selectItems value="#{actionBean.districts}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
 					<f:ajax execute="@this"
@@ -40,10 +40,10 @@
 				<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="chaletVillage" filter="true" filterMatchMode="contains" filterNormalize="true"
 					styleClass="form-select border-0  "
 					value="#{actionBean.selecteVillage}">
-					<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
+					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 					<f:selectItems value="#{actionBean.villages}" var="option"
 						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
-					<f:ajax execute="@this" />
+					<f:ajax execute="@this"/>
 				</p:selectOneMenu>
 			</div>
 		
