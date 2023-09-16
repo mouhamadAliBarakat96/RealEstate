@@ -12,10 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
+
 import com.google.gson.annotations.Expose;
 
 @Entity
-@Table(name="tbl_contact_us")
+@Table(name = "tbl_contact_us")
 public class ContactUs extends MainEntity implements Serializable {
 
 	/**
@@ -28,15 +31,14 @@ public class ContactUs extends MainEntity implements Serializable {
 	@Expose
 	protected long id;
 
-	@Column( name = "message_"  , length = 3000)
+	@Column(name = "message_", length = 3000)
 	@Expose
 	private String message;
 
-	
-
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "user_id")
-
+	@BatchFetch(value = BatchFetchType.IN)
+	@Expose
 	private User user;
 
 	@Override
@@ -77,6 +79,12 @@ public class ContactUs extends MainEntity implements Serializable {
 		this.message = message;
 	}
 
+	public User getUser() {
+		return user;
+	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 }

@@ -126,6 +126,20 @@
 	</navigation-rule>
 
 
+
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>contact-list</from-outcome>
+			<to-view-id>/views/contact-us/contact-us.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+
+
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>village</from-outcome>

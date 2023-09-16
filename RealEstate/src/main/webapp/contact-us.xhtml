@@ -13,7 +13,7 @@
 				<div class="text-center mx-auto mb-5 wow fadeInUp"
 					data-wow-delay="0.1s" style="max-width: 600px;">
 					<h1 class="mb-3">#{bundle.contact_us}</h1>
-					<p>#{bundle.contact_us_subtitle}</p>
+					<p style="font-size: 20px">#{bundle.contact_us_subtitle}</p>
 				</div>
 
 
@@ -31,9 +31,39 @@
 						actionListener="#{contactUsController.save()}"
 						value="#{bundle.contact_us_send}">
 
-						<f:ajax execute="msg"></f:ajax>
+						<f:ajax render="messagePanel" execute="msg"></f:ajax>
 
 					</h:commandLink>
+
+
+
+					<h:panelGroup id="messagePanel">
+
+						<div
+							style="margin-top: 2%; display: flex; justify-content: center; align-items: center">
+							<h:outputLabel rendered="#{contactUsController.showErrorMessage}"
+								value="#{bundle.need_login_to_send_message}"
+								style="font-size: 16px; font-weight: 400; margin-right: 10px; color: #af0a0a">
+							</h:outputLabel>
+
+						</div>
+
+
+						<div
+							style="margin-top: 2%; display: flex; justify-content: center; align-items: center">
+							<h:outputLabel rendered="#{contactUsController.showMessageSuccess}"
+								value="#{bundle.yourFeedbakMeansLots}"
+								style="font-size: 20px; font-weight: 600; margin-right: 10px;color:#50649c " >
+							</h:outputLabel>
+
+						</div>
+
+
+
+
+
+					</h:panelGroup>
+
 
 
 
@@ -66,7 +96,7 @@
 										</div>
 
 										<div class="col-md-10 mt-2">
-											<span>mahdikhashab95@gmail.com</span>
+											<span>ekarplus.lb@gmail.com</span>
 										</div>
 
 									</div>

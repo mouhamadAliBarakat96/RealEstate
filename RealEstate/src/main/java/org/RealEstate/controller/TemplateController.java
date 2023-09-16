@@ -66,11 +66,15 @@ public class TemplateController implements Serializable {
 		m2 = new MenuItem("", "", "village", true, "display: none;");
 		m1.addChild(m2);
 
-		//--//
-		
+		// --//
+
 		m2 = new MenuItem("Ads List", "       mdi mdi-tag       ", "ads-list", true, "addButton");
 		m1.addChild(m2);
-		
+
+		m2 = new MenuItem("contact Us Message List", "       mdi mdi-message-bulleted    ", "contact-list", true,
+				"addButton");
+		m1.addChild(m2);
+
 		// --//
 
 		m2 = new MenuItem("", "", "village", true, "display: none;");
@@ -89,33 +93,27 @@ public class TemplateController implements Serializable {
 
 		m2 = new MenuItem("Chalet List", "        mdi mdi-hospital-building      ", "chalet-list", true, "addButton");
 		m1.addChild(m2);
-		
-		m2 = new MenuItem("", "", "chalet", true, "display: none;");		m1.addChild(m2);
+
+		m2 = new MenuItem("", "", "chalet", true, "display: none;");
 		m1.addChild(m2);
-		
-		
+		m1.addChild(m2);
+
 		m2 = new MenuItem("User List", "       dripicons-user-group     ", "user-list", true, "addButton");
 		m1.addChild(m2);
-		
+
 		m2 = new MenuItem("", "", "user-post", true, "display: none;");
 		m1.addChild(m2);
-		
-		m2 = new MenuItem("User Profile Picture", "       dripicons-user-group     ", "user-profile-picture-list", true, "addButton");
+
+		m2 = new MenuItem("User Profile Picture", "       dripicons-user-group     ", "user-profile-picture-list", true,
+				"addButton");
 		m1.addChild(m2);
-	
-		
-		
-		
-		
+
 		m2 = new MenuItem("", "", "user-information", true, "display: none;");
 		m1.addChild(m2);
-		
-		
+
 		m2 = new MenuItem("", "", "user-profile-picture", true, "display: none;");
 		m1.addChild(m2);
-		
-	
-		
+
 		menu.add(m1);
 
 		return menu;

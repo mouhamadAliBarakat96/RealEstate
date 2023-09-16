@@ -21,7 +21,10 @@ public class RestApplication extends Application {
 		classes.add(GeneralConfigurationMangment.class);
 
 		classes.add(AdsMangment.class);
+		
+		classes.add(ContactUsMangment.class);
 
+		
 		return classes;
 	}
 }
