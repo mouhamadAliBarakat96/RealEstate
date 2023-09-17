@@ -93,7 +93,20 @@ public class LazyChalelModel extends LazyDataModel<Chalet> {
 					predicates.add(cb.equal(root.get("postStatus"), postStatus));
 
 				}
+				else if ("pendingBoost".equals(field)) {
+					
+					predicates.add(cb.equal(root.get("pendingBoost"), filterValue));
+					
+					
+			
 
+				}
+
+				
+				
+				
+				
+				
 				
 			}
 

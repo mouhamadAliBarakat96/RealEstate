@@ -132,6 +132,9 @@ public class Chalet extends MainEntity implements Serializable {
 	@Transient
 	private BoostEnum boostEnum;
 
+	@Expose
+	private boolean pendingBoost;
+
 	public Chalet() {
 		// TODO Auto-generated constructor stub
 	}
@@ -361,4 +364,13 @@ public class Chalet extends MainEntity implements Serializable {
 	public void removeFromPhotos(String image) {
 		this.images.remove(image);
 	}
+
+	public boolean isPendingBoost() {
+		return pendingBoost;
+	}
+
+	public void setPendingBoost(boolean pendingBoost) {
+		this.pendingBoost = pendingBoost;
+	}
+
 }

@@ -113,6 +113,11 @@ public class LazyPostModel extends LazyDataModel<RealEstate> {
 					predicates.add(cb.equal(root.get("pricePublic"), filterValue));
 
 				}
+			 else if ("pendingBoost".equals(field)) {
+
+				predicates.add(cb.equal(root.get("pendingBoost"), filterValue));
+
+			}
 
 				// Add more conditions for other fields as needed
 			}

@@ -44,8 +44,6 @@ import com.google.gson.annotations.Expose;
 		@NamedQuery(name = RealEstate.UPDATE_POST_TO_EXPIRY_DATE, query = "UPDATE RealEstate realEstate SET realEstate.postStatus = org.RealEstate.enumerator.PostStatus.EXPIRED WHERE realEstate.postDate < :thresholdDate"),
 		@NamedQuery(name = RealEstate.UPDATE_POST_BOOST, query = "UPDATE RealEstate realEstate SET realEstate.boostedUntil = null , realEstate.isBoosted = true  WHERE realEstate.boostedUntil < :todayDate"),
 
-		
-		
 		@NamedQuery(name = RealEstate.FING_NB_POST_FOR_USER_ACTIVE_OR_PENDING, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE realEstate.user.id =:userId and  (realEstate.postStatus = org.RealEstate.enumerator.PostStatus.ACCEPTED or realEstate.postStatus = org.RealEstate.enumerator.PostStatus.PENDING ) "),
 		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_STATUS, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postStatus= :postStatus "),
 		@NamedQuery(name = RealEstate.FIND_COUNT_POST_BY_TYPE, query = "SELECT COUNT(realEstate.id) FROM RealEstate realEstate WHERE  realEstate.postType= :postType "),
@@ -66,8 +64,8 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	public static final String UPDATE_POST_TO_EXPIRY_DATE = "RealEstate.UPDATE_POST_TO_EXPIRY_DATE";
 
-	public static final String UPDATE_POST_BOOST = "RealEstate.UPDATE_POST_BOOST" ;
-	
+	public static final String UPDATE_POST_BOOST = "RealEstate.UPDATE_POST_BOOST";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Expose
@@ -117,7 +115,6 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@Expose
 	private int numberOfCall;
 
-	
 	// this date used when the post is transfer to accpeted
 	@Temporal(TemporalType.TIMESTAMP)
 	@Expose
@@ -150,6 +147,12 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	@Transient
 	private BoostEnum boostEnum;
+
+	/*
+	 * this is for boost
+	 */
+	@Expose
+	private boolean pendingBoost;
 
 	public RealEstate() {
 		// TODO Auto-generated constructor stub
@@ -347,4 +350,13 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	public void removeFromPhotos(String image) {
 		this.images.remove(image);
 	}
+
+	public boolean isPendingBoost() {
+		return pendingBoost;
+	}
+
+	public void setPendingBoost(boolean pendingBoost) {
+		this.pendingBoost = pendingBoost;
+	}
+
 }
