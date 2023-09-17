@@ -29,3 +29,9 @@ TABLESPACE pg_default;
 ALTER TABLE public.tbl_contact_us
     OWNER to postgres;
 
+
+
+/***
+//
+new 
+pendingBoost boolean on realestate and chalet table
