@@ -126,3 +126,17 @@ body .ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-s
     text-align: inherit;
     white-space: nowrap;
 }
+
+
+.ui-message.ui-message-info.tagClassType  {
+    background: #00B98E;
+    border: 1px solid transparent;
+    border-width: 0 0 0 3px;
+    color: white;
+    width: auto;
+}
+
+.tagClassType .ui-message-info-icon {
+    color: white !important;
+}
+

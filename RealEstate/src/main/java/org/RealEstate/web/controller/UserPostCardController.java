@@ -388,7 +388,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				hasErrorEntries = true;
 			}
 
-			if (item.getSpace() * 100 < item.getPrice()) {
+			if (item.getSpace() * 100 > item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
@@ -414,7 +414,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			}
 		} else if (postType == PostType.SHOP_SELL) {
 
-			if (item.getSpace() * 100 < item.getPrice()) {
+			if (item.getSpace() * 100 > item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
@@ -435,7 +435,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 		} else if (postType == PostType.OFFICE_SELL) {
 
-			if (item.getSpace() * 100 < item.getPrice()) {
+			if (item.getSpace() * 100 > item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}

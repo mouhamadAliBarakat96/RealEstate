@@ -206,8 +206,9 @@ public class IndexController implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
 			String phoneNumber = chalet.getUser().getPhoneNumber();
+			String message = getIpAddressWithPort() + "/chalet-card.xhtml?id=" + chalet.getId();
 			// Construct the WhatsApp URL
-			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
+			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "")+ "&text=" + message;
 			// Navigate to the URL
 			externalContext.redirect(url);
 		}
@@ -219,8 +220,9 @@ public class IndexController implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
 			String phoneNumber = item.getUser().getPhoneNumber();
+			String message = getIpAddressWithPort() + "/realEstate-card.xhtml?id=" + item.getId();
 			// Construct the WhatsApp URL
-			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
+			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "")+"&text=" + message;
 			// Navigate to the URL
 			externalContext.redirect(url);
 		}
@@ -686,4 +688,7 @@ public class IndexController implements Serializable {
 		this.propertyTypeEnum = propertyTypeEnum;
 	}
 	
+	public String currentUrl(ExternalContext externalContext) {
+		return externalContext.getRequestContextPath() + externalContext.getRequestServletPath();
+	}
 }

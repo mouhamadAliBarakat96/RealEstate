@@ -159,6 +159,18 @@ $(document).ready(function() {
 });
 
 
+function copyCurrentURL() {
+	event.preventDefault();
+    var tempInput = document.createElement("input");
+    tempInput.value = document.location.href;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+    alert("URL: " + document.location.href);
+}
+
+
 // Use noConflict to release control of the $ variable
 jQuery.noConflict();
 

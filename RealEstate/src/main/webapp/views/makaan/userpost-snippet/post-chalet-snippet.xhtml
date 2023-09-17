@@ -47,7 +47,7 @@
 				<p:outputLabel class="control-label" for="weekdayId"
 					value="#{bundle.chalet_weekdays}">
 				</p:outputLabel>
-				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
+				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0" symbol="$"  symbolPosition="s"
 					maxValue="9999" id="weekdayId" label="#{bundle.chalet_weekdays}"
 					required="true" styleClass="form-control" emptyValue="0"
 					value="#{userPostCardController.chalet.weekdays}">
@@ -60,7 +60,7 @@
 				<p:outputLabel class="control-label" for="weekendId"
 					value="#{bundle.chalet_weekenddays}">
 				</p:outputLabel>
-				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
+				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0" symbol="$"  symbolPosition="s"
 					maxValue="9999" id="weekendId" label="#{bundle.chalet_weekenddays}"
 					required="true" styleClass="form-control" emptyValue="0"
 					value="#{userPostCardController.chalet.weekenddays}">

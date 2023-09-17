@@ -112,8 +112,9 @@ public class ChaletCardController implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
 			String phoneNumber = item.getUser().getPhoneNumber();
+			String message = getIpAddressWithPort() + "/chalet-card.xhtml?id=" + item.getId();
 			// Construct the WhatsApp URL
-			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
+			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "")+ "&text=" + message;
 			// Navigate to the URL
 			externalContext.redirect(url);
 		}

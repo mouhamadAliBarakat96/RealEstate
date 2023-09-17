@@ -1,5 +1,7 @@
 package org.RealEstate.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -243,6 +245,15 @@ public class Utility {
 		return null;
 	
 	 
+	}
+	
+	public static String urlEncode(String value) {
+		try {
+			return URLEncoder.encode(value, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return value;
+		}
 	}
 
 	public static String findRealEstateClassType(ExchangeRealEstateType exchangeType, PropertyTypeEnum realTypeEnum) {

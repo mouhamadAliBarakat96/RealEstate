@@ -33,7 +33,7 @@
 										<p:graphicImage
 											url="#{chaletCardController.displayFirstImage()}"
 											alt="the photos"
-											style="width: 100%;height: 23rem; display: block;object-fit:cover;">
+											style="width: 100%;max-height: 16rem; display: block;object-fit:cover;">
 										</p:graphicImage>
 										<p:galleria widgetVar="chaletGallerie" styleClass="galleria-arabic-fix"
 											value="#{chaletCardController.item.images}" var="photo"
@@ -65,15 +65,20 @@
 												<i class="fa fa-check"></i>
 											</h:panelGroup>
 										</div>
-										<span class="border-top row mt-2"
+										<div class="d-flex justify-content-between mt-2">
+										     <span 
 												style="color: #00B98E; font-size: 22px; font-weight: 700">
 												#{chaletCardController.item.name}</span>
+											  
+											  <button class="btn btn-outline-primary"
+												style="display: contents;" onclick="copyCurrentURL()">#{bundle.copy}</button>
+										</div>
+										
 										<span class="border-bottom row mt-2"
-											style="margin-top: 0.5%; display: block; color: #2d383f; font-size: 18px; font-weight: 600">
+											style="margin-top: 0.5%; display: block; color: #2d383f; ">
 											#{chaletCardController.item.descrption}</span>
 										
 										<div class="row">
-
 											<div class="col-md-6">
 												<div class="col-md-3">
 													<span
@@ -81,8 +86,6 @@
 												</div>
 												<div style="display: flex;">
 													<div style="width: 30%; display: inline-block;">
-
-
 														<img class="img-fluid" width="150px" height="150px"
 															style="margin-top: 4%; border-radius: 50%"
 															src="/resources/makaan/img/mapImage.png" alt="Icon" />
@@ -99,7 +102,6 @@
 																</c:otherwise>
 														 </c:choose>
 														 </span>
-
 													</div>
 												</div>
 											</div>
@@ -107,42 +109,31 @@
 												<div class="col-md-3">
 													<span
 														style="display: flex !important; justify-content: center !important; color: #2d383f; font-size: 20px; font-weight: 700">Agent</span>
-
 												</div>
 												<div style="display: flex;">
 													<div style="width: 30%; display: inline-block;">
 														<h:panelGroup
 															rendered="#{chaletCardController.item.user.showProfilePicture}">
-
-
 															<p:graphicImage style="margin-top:4%;border-radius:50%"
 																url="#{chaletCardController.fullUrlProfilePicture}"
 																width="150px" height="150px" />
 														</h:panelGroup>
 														<h:panelGroup
 															rendered="#{!chaletCardController.item.user.showProfilePicture}">
-
 															<img class="img-fluid" width="150px" height="150px"
 																style="margin-top: 4%; border-radius: 50%"
 																src="/resources/makaan/img/profile.png" alt="Icon" />
-
 														</h:panelGroup>
-
 													</div>
-													<div
-														style="margin-left: 50px; width: 60%; display: inline-block">
-
+													<div style="margin-left: 50px; width: 60%; display: inline-block">
 														<h:link outcome="userchalet-search"
 															value="#{chaletCardController.item.user.firstName}
 															#{chaletCardController.item.user.lastName} "
 															style=" color:#666565 ; font-size: 15px; font-weight: 600">
-
-
-
 															<f:param name="id"
 																value="#{chaletCardController.item.user.id}" />
 														</h:link>
-														<small class="flex-fill   "> <h:commandLink
+														<small class="flex-fill"> <h:commandLink
 																style=" display:block ; font-weight: bold;"
 																actionListener="#{chaletCardController.navigateToWhatsApp_chalet()}"
 																target="_blank"
@@ -151,11 +142,8 @@
 																<i class="fab fa-whatsapp text-primary me-2"></i>
 																<f:actionListener
 																	binding="#{chaletCardController.addCallNumber_chalet()}" />
-
-
 															</h:commandLink>
 														</small>
-
 														<h:panelGroup
 															rendered="#{chaletCardController.item.user.broker}">
 															<span
@@ -165,15 +153,9 @@
 												</div>
 											</div>
 										</div>
-
-
-
 									</div>
-
-
 									<div style="margin: 0%;"
 										class="row col-md-12 border-top border-end border-start mt-2">
-
 										<small
 											class="col-md-3  border-end py-2 border-bottom">
 											<h:outputLabel value="#{bundle.chalet_weekdays}: " />

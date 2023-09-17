@@ -42,20 +42,28 @@
 			</div>
 		</div>
 	</h:panelGroup>
+
+	<h:panelGroup layout="block" styleClass="row ps-3 pe-3 pt-3 justify-content-center"
+		rendered="#{userPostCardController.disableSelectOneButton()}">
+		<p:staticMessage styleClass="tagClassType col-12" severity="info"
+			detail="#{bundle[userPostCardController.item.postType]}"
+			style="overflow: overlay;" />
+	</h:panelGroup>
+	
 	<div class="row ps-3 pe-3 pb-3">
 		<h:panelGroup id="inputPanel">
 			<h:panelGroup rendered="#{userPostCardController.postType != null}">
 				<div class="row">
-					<div class="col-12">
-						<p:staticMessage severity="warn" summary="WARN"
+					<div class="col-12 ps-3 pe-3">
+						<p:staticMessage styleClass="col-12" severity="warn" summary="WARN"
 							rendered="#{userPostCardController.item.postStatus == 'REFFUSED'}"
 							detail="#{userPostCardController.item.reffuseCause}"
-							style="width: 100%" />
+							style="overflow: overlay;" />
 
-						<p:staticMessage severity="warn" summary="WARN"
-							rendered="#{userPostCardController.item.postStatus} == 'TO_REVIEUX_BY_USER'}"
+						<p:staticMessage styleClass="col-12" severity="warn" summary="WARN"
+							rendered="#{userPostCardController.item.postStatus == 'TO_REVIEUX_BY_USER'}"
 							detail="#{userPostCardController.item.reffuseCause}"
-							style="width: 100%" />
+							style="overflow: overlay;" />
 					</div>
 
 
@@ -76,7 +84,7 @@
 							<p:outputLabel class="control-label" for="priceId"
 								value="#{bundle.real_estate_price}">
 							</p:outputLabel>
-							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							<p:inputNumber decimalPlaces="0" thousandSeparator="," symbol="$"  symbolPosition="s"
 								minValue="0" maxValue="9999999999" id="priceId" emptyValue="0"
 								label="#{bundle.real_estate_price}" styleClass="form-control"
 								value="#{userPostCardController.item.price}">
@@ -85,10 +93,10 @@
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<p:outputLabel class="control-label" for="priceId"
+							<p:outputLabel class="control-label" for="spaceId"
 								value="#{bundle.real_estate_space}">
 							</p:outputLabel>
-							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							<p:inputNumber decimalPlaces="0" thousandSeparator="," 
 								minValue="0" maxValue="9999999999" id="spaceId" emptyValue="0"
 								label="#{bundle.real_estate_space}" styleClass="form-control"
 								value="#{userPostCardController.item.space}">
