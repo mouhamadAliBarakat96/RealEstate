@@ -54,11 +54,6 @@ public class ContactUsMangment implements Serializable {
 
 		User user = userFacade.findWithExcption(contactUs.getUser().getId());
 
-		if (user == null) {
-			return Response.status(Status.BAD_REQUEST).entity(Constants.USER_NOT_EXISTS).build();
-
-		}
-
 		contactUs.setUser(user);
 		contactUs = contactUsFacade.save(contactUs);
 
