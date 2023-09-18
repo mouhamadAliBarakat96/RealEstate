@@ -140,3 +140,26 @@ body .ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-s
     color: white !important;
 }
 
+.ui-dataview .ui-dataview-header .ui-dataview-layout-options {
+    float: right;
+    background-color: white;
+}
+
+.ui-button.ui-button-icon-only.ui-state-default.ui-state-active{
+	background-color: #00b98e;
+	border-color: aquamarine;
+}
+
+body .ui-tabs .ui-tabs-nav li.ui-tabs-header.ui-state-active {
+    background: #00b98e !important;
+}
+
+
+body .ui-selectbooleanbutton.ui-state-active:not(.ui-state-disabled):hover, body .ui-selectonebutton > .ui-button.ui-state-active:not(.ui-state-disabled):hover, body .ui-selectmanybutton > .ui-button.ui-state-active:not(.ui-state-disabled):hover {
+    background: #00b98e;
+    border-color: #00b98e;
+    color: white;
+}
+
+ 
+

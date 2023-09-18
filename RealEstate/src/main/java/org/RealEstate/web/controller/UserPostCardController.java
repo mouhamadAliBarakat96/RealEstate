@@ -111,7 +111,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	
 	private PropertyTypeEnum propertyTypeEnum=PropertyTypeEnum.APPRATMENT;
-	private ExchangeRealEstateType exchangeRealEstateType=ExchangeRealEstateType.BUY;
+	private ExchangeRealEstateType exchangeRealEstateType=ExchangeRealEstateType.RENT;
 	
 	@PostConstruct
 	public void init() {
