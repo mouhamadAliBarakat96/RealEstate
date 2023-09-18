@@ -162,4 +162,8 @@ body .ui-selectbooleanbutton.ui-state-active:not(.ui-state-disabled):hover, body
 }
 
  
-
+.empty-row.ui-dataview .ui-dataview-content{
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}

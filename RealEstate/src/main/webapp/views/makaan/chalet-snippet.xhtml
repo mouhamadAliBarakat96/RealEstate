@@ -10,8 +10,8 @@
 	<div class="tab-content">
 		<div id="tab-1" class="tab-pane fade show p-2 active">
 			<div class="row g-4">
-				<p:dataView var="chalet" value="#{actionBean.chaletLazyModel}"
-					rows="6" lazy="true" paginator="true"  	
+				<p:dataView var="chalet" value="#{actionBean.chaletLazyModel}"  styleClass="#{empty actionBean.chaletLazyModel.pageItems ? 'empty-row' : ''}"
+					rows="6" lazy="true" paginator="true"  	 emptyMessage="#{bundle.no_records}"
 					paginatorPosition="bottom" widgetVar="chaletDataView"
 					paginatorTemplate="    {PreviousPageLink} {PageLinks} {NextPageLink}  "
 					gridIcon="pi pi-th-large" listIcon="pi pi-bars">

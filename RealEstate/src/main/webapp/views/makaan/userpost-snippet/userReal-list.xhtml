@@ -8,7 +8,7 @@
 
 <ui:component>
 	<div class="row">
-		<p:dataView var="real" value="#{userPostListController.realEstates}"
+		<p:dataView var="real" value="#{userPostListController.realEstates}" emptyMessage="#{bundle.no_records}"
 			rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
 			paginatorPosition="bottom" widgetVar="realEstatesDataView"
 			paginatorTemplate="  {PreviousPageLink} {PageLinks} {NextPageLink}"
