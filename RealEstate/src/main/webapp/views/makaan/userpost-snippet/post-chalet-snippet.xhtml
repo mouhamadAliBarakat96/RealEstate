@@ -91,6 +91,20 @@
 				</div>
 			</div>
 		</div>
+			<div class="col-md-3">
+						<div class="form-group">
+							<h:outputLabel value="#{bundle.need_boost}"
+								styleClass="control-label" />
+							<div class="skin mt-2">
+								<h:selectBooleanCheckbox style="height:20px;width:25px"
+									label="#{bundle.need_boost}" 
+									value="#{userPostCardController.chalet.pendingBoost}">
+									<f:ajax></f:ajax>
+								</h:selectBooleanCheckbox>
+							</div>
+						</div>
+					</div>
+					
 		<div class="col-md-12">
 			<div class="form-group">
 
