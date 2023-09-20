@@ -342,7 +342,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12">
+					<div class="col-md-12 mt-2">
 						<p:remoteCommand name="rc"
 							actionListener="#{userPostCardController.changeActiveIndex}"
 							oncomplete="PF('galleria1').show()" />
@@ -366,7 +366,7 @@
 							<p:commandButton
 								rendered="#{userPostCardController.item.images.size() >0}"
 								value="#{bundle.show_photos}" partialSubmit="true"
-								styleClass="col-12" icon="pi pi-external-link"
+								styleClass="col-md-4 col-12" icon="pi pi-external-link"
 								onclick="PF('galleria1').show();" process="@this" />
 						</h:panelGroup>
 					</div>

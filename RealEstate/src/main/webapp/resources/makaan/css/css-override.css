@@ -167,3 +167,50 @@ body .ui-selectbooleanbutton.ui-state-active:not(.ui-state-disabled):hover, body
 	display: flex;
 	justify-content: center;
 }
+
+body .ui-dataview .ui-dataview-header {
+    background: #00b98e;
+    color: #333333;
+    padding: 0.857rem 1rem;
+    font-weight: 700;
+    border: none;
+    border-width: 1px 1px 0 1px;
+}
+
+body .ui-tabs .ui-tabs-panels {
+    border: none;
+    background: #ffffff;
+    color: #333333;
+    padding: 0;
+    margin: 0;
+    position: static;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+body .ui-paginator {
+    background: #f4f4f4;
+    border: none;
+    border-width: 1px;
+    padding: 1rem;
+}
+
+
+.ui-dataview-column.ui-g-12.ui-md-4{
+	padding: 10px 10px 0px 0px; 
+}
+
+.ui-dataview-list-container{
+	padding: 10px 0px 0px 0px !important;
+	
+}
+
+body .ui-dataview.ui-dataview-list .ui-dataview-row {
+    border: none;
+}
+
+@media screen and (max-width: 40.063em) {
+	.ui-dataview-column.ui-g-12.ui-md-4 {
+		padding: 10px 0px 0px 0px;
+	}
+}
