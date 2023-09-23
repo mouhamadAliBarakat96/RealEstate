@@ -8,6 +8,7 @@
 
 <ui:component>
 	<div class="row p-3">
+		
 		<div class="col-12">
 			<p:staticMessage severity="warn" summary="WARN"
 				rendered="#{userPostCardController.chalet.postStatus == 'REFFUSED'}"
@@ -20,109 +21,20 @@
 				style="width: 100%" />
 		</div>
 
-		<div class="col-md-3">
-			<div class="form-group">
-				<p:outputLabel class="control-label" for="nameId"
-					value="#{bundle.chalet_name}">
-				</p:outputLabel>
-				<h:inputText id="nameId" label="#{bundle.chalet_name}"
-					styleClass="form-control"
-					value="#{userPostCardController.chalet.name}">
-				</h:inputText>
-			</div>
-		</div>
-		<div class="col-md-3 ">
-			<h:outputLabel value="#{bundle.village}" styleClass="control-label" />
-			<p:selectOneMenu id="villagechaletId" filter="true" filterMatchMode="contains" filterNormalize="true"
-				converter="omnifaces.SelectItemsConverter" styleClass="form-select"
-				value="#{userPostCardController.chalet.village}">
-				<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
-				<f:selectItems value="#{userPostCardController.villages}"
-					var="option" itemLabel="#{languageController.locale eq 'en' ? option.name :option.nameAr}" itemValue="#{option}" />
-				<f:ajax execute="@this" />
-			</p:selectOneMenu>
-		</div>
-		<div class="col-md-3">
-			<div class="form-group">
-				<p:outputLabel class="control-label" for="weekdayId"
-					value="#{bundle.chalet_weekdays}">
-				</p:outputLabel>
-				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0" symbol="$"  symbolPosition="s"
-					maxValue="9999" id="weekdayId" label="#{bundle.chalet_weekdays}"
-					required="true" styleClass="form-control" emptyValue="0"
-					value="#{userPostCardController.chalet.weekdays}">
-				</p:inputNumber>
-				 
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="form-group">
-				<p:outputLabel class="control-label" for="weekendId"
-					value="#{bundle.chalet_weekenddays}">
-				</p:outputLabel>
-				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0" symbol="$"  symbolPosition="s"
-					maxValue="9999" id="weekendId" label="#{bundle.chalet_weekenddays}"
-					required="true" styleClass="form-control" emptyValue="0"
-					value="#{userPostCardController.chalet.weekenddays}">
-				</p:inputNumber>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="form-group">
-				<h:outputLabel value="#{bundle.chalet_chimney}"
-					styleClass="control-label" for="chimneyId" />
-				<div class="skin mt-2">
-					<h:selectBooleanCheckbox style="height:20px;width:25px"
-						label="#{bundle.chalet_chimney}" id="chimneyId"
-						value="#{userPostCardController.chalet.chimney}">
-					</h:selectBooleanCheckbox>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="form-group">
-				<h:outputLabel value="#{bundle.chalet_pool}"
-					styleClass="control-label" for="poolId" />
-				<div class="skin mt-2">
-					<h:selectBooleanCheckbox style="height:20px;width:25px"
-						label="#{bundle.chalet_pool}" id="poolId"
-						value="#{userPostCardController.chalet.pool}">
-					</h:selectBooleanCheckbox>
-				</div>
-			</div>
-		</div>
-			<div class="col-md-3">
-						<div class="form-group">
-							<h:outputLabel value="#{bundle.need_boost}"
-								styleClass="control-label" />
-							<div class="skin mt-2">
-								<h:selectBooleanCheckbox style="height:20px;width:25px"
-									label="#{bundle.need_boost}" 
-									value="#{userPostCardController.chalet.pendingBoost}">
-									<f:ajax></f:ajax>
-								</h:selectBooleanCheckbox>
-							</div>
-						</div>
-					</div>
-					
-		<div class="col-md-12">
-			<div class="form-group">
 
-				<p:outputLabel class="control-label" for="descrptionId"
-					value="#{bundle.chalet_description}">
-				</p:outputLabel>
-				<h:inputTextarea id="descrptionId" rows="10"
-					label="#{bundle.chalet_description}" styleClass="form-control"
-					h5:placeHolder="#{bundle.chalet_description}"
-					value="#{userPostCardController.chalet.descrption}">
-				</h:inputTextarea>
-			</div>
-		</div>
-		<div class="col-md-12 mt-2">
+		<h:panelGroup id="chaletphotos" styleClass="col-md-4 pt-3"
+			layout="block">
 			<p:remoteCommand name="rc"
 				actionListener="#{userPostCardController.changeActiveIndex}"
 				oncomplete="PF('chaletgalleriawgvar').show()" />
-			<p:galleria styleClass="galleria-arabic-fix" widgetVar="chaletgalleriawgvar" rendered="#{userPostCardController.chalet.images.size() >0}"
+
+			<p:graphicImage
+				url="#{userPostCardController.fullUrl}#{userPostCardController.chalet.images[0]}"
+				alt="#{bundle.no_photos}"
+				style="width: 100%;max-height: 16rem;display: block;object-fit:cover;" />
+
+			<p:galleria styleClass="galleria-arabic-fix"
+				widgetVar="chaletgalleriawgvar"
 				value="#{userPostCardController.chalet.images}" var="photo"
 				numVisible="4" id="chaletGalleria"
 				responsiveOptions="#{userPostCardController.responsiveOptions1}"
@@ -134,32 +46,133 @@
 				<p:commandButton process="@this" value="#{bundle.delete}"
 					onclick="closeGalleria();"
 					action="#{userPostCardController.deleteChaletPhoto(photo)}"
-					update="myForm:tabView:imagesChaletPhotos  myForm:tabView:chaletGalleria" />
+					update="myForm:tabView:chalet" />
 			</p:galleria>
 
-			<h:panelGroup id="imagesChaletPhotos">
-				<p:commandButton
-					rendered="#{userPostCardController.chalet.images.size() >0}"
-					value="#{bundle.show_photos}" partialSubmit="true"
-					styleClass="col-md-4 col-12" icon="pi pi-external-link"
-					onclick="PF('chaletgalleriawgvar').show();"
-					process="@this" />
-			</h:panelGroup>
+			<p:commandButton value="#{bundle.show_photos}" partialSubmit="true"
+				styleClass=" col-12" icon="pi pi-external-link"
+				rendered="#{not empty userPostCardController.chalet.images}"
+				onclick="PF('chaletgalleriawgvar').show();" process="@this" />
+		</h:panelGroup>
+
+		<div class="row p-3 col-md-8">
+			<div class="col-md-3">
+				<div class="form-group">
+					<p:outputLabel class="control-label" for="nameId"
+						value="#{bundle.chalet_name}">
+					</p:outputLabel>
+					<h:inputText id="nameId" label="#{bundle.chalet_name}"
+						styleClass="form-control"
+						value="#{userPostCardController.chalet.name}">
+					</h:inputText>
+				</div>
+			</div>
+			<div class="col-md-3 ">
+				<h:outputLabel value="#{bundle.village}" styleClass="control-label" />
+				<p:selectOneMenu id="villagechaletId" filter="true"
+					filterMatchMode="contains" filterNormalize="true"
+					converter="omnifaces.SelectItemsConverter" styleClass="form-select"
+					value="#{userPostCardController.chalet.village}">
+					<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
+					<f:selectItems value="#{userPostCardController.villages}"
+						var="option"
+						itemLabel="#{languageController.locale eq 'en' ? option.name :option.nameAr}"
+						itemValue="#{option}" />
+					<f:ajax execute="@this" />
+				</p:selectOneMenu>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<p:outputLabel class="control-label" for="weekdayId"
+						value="#{bundle.chalet_weekdays}">
+					</p:outputLabel>
+					<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
+						symbol="$" symbolPosition="s" maxValue="9999" id="weekdayId"
+						label="#{bundle.chalet_weekdays}" required="true"
+						styleClass="form-control" emptyValue="0"
+						value="#{userPostCardController.chalet.weekdays}">
+					</p:inputNumber>
+
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<p:outputLabel class="control-label" for="weekendId"
+						value="#{bundle.chalet_weekenddays}">
+					</p:outputLabel>
+					<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
+						symbol="$" symbolPosition="s" maxValue="9999" id="weekendId"
+						label="#{bundle.chalet_weekenddays}" required="true"
+						styleClass="form-control" emptyValue="0"
+						value="#{userPostCardController.chalet.weekenddays}">
+					</p:inputNumber>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<h:outputLabel value="#{bundle.chalet_chimney}"
+						styleClass="control-label" for="chimneyId" />
+					<div class="skin mt-2">
+						<h:selectBooleanCheckbox style="height:20px;width:25px"
+							label="#{bundle.chalet_chimney}" id="chimneyId"
+							value="#{userPostCardController.chalet.chimney}">
+						</h:selectBooleanCheckbox>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<h:outputLabel value="#{bundle.chalet_pool}"
+						styleClass="control-label" for="poolId" />
+					<div class="skin mt-2">
+						<h:selectBooleanCheckbox style="height:20px;width:25px"
+							label="#{bundle.chalet_pool}" id="poolId"
+							value="#{userPostCardController.chalet.pool}">
+						</h:selectBooleanCheckbox>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<h:outputLabel value="#{bundle.need_boost}"
+						styleClass="control-label" />
+					<div class="skin mt-2">
+						<h:selectBooleanCheckbox style="height:20px;width:25px"
+							label="#{bundle.need_boost}"
+							value="#{userPostCardController.chalet.pendingBoost}">
+							<f:ajax></f:ajax>
+						</h:selectBooleanCheckbox>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+
+					<p:outputLabel class="control-label" for="descrptionId"
+						value="#{bundle.chalet_description}">
+					</p:outputLabel>
+					<h:inputTextarea id="descrptionId" rows="10"
+						label="#{bundle.chalet_description}" styleClass="form-control"
+						h5:placeHolder="#{bundle.chalet_description}"
+						value="#{userPostCardController.chalet.descrption}">
+					</h:inputTextarea>
+				</div>
+			</div>
+			<div class="col-md-12 mt-3">
+				<h:form>
+					<p:fileUpload id="uploadImageChalet"
+						label="#{bundle.choose_photos}"
+						listener="#{userPostCardController.handleFileUploadChalet}"
+						mode="advanced" dragDropSupport="false" multiple="true"
+						sizeLimit="3000000" fileLimit="10"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+					</p:fileUpload>
+				</h:form>
+			</div>
 		</div>
-		<div class="col-md-12 mt-3">
-			<h:form>
-				<p:fileUpload id="uploadImageChalet" label="#{bundle.choose_photos}"
-					listener="#{userPostCardController.handleFileUploadChalet}"
-					mode="advanced" dragDropSupport="false" multiple="true"
-					sizeLimit="3000000" fileLimit="10"
-					allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-				</p:fileUpload>
-			</h:form>
-		</div>
-	</div>
-	<div class="row p-3">
-		<div class="col-md-12 mt-3">
-			<div class="form-group">
+		<div class="d-flex  flex-row-reverse">
+			<div class="form-group p-3">
 				<h:commandLink value='#{bundle.save}' id="save_btn"
 					action='#{userPostCardController.save()}'
 					styleClass="btn btn-primary btn-save">

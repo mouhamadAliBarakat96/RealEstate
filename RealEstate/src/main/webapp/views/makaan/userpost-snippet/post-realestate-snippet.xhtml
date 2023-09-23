@@ -7,393 +7,389 @@
 	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
 
 <ui:component>
-	<h:panelGroup layout="block" styleClass="row ps-3 pe-3 pt-3" id="conditionPanel"
-		rendered="#{userPostCardController.disableSelectOneButton() eq false}">
-		<div class="col-md-3 col-xs-12 col-12">
-			<div class="form-group">
-				<p:outputLabel class="control-label" for="titleId"
-					value="#{bundle.property_exchange_type}">
-				</p:outputLabel>
-				<h:selectOneMenu id="exchangeId" styleClass="white form-control" disabled="#{userPostCardController.propertyTypeEnum eq 'LAND'}"
-					converter="omnifaces.SelectItemsConverter"
-					value="#{userPostCardController.exchangeRealEstateType}">
-					<f:selectItems value="#{ExchangeRealEstateType.values()}"
-						var="option" itemLabel="#{bundle[option]}" itemValue="#{option}" />
-					<f:ajax
-						listener="#{userPostCardController.listenerSelectProperty()}"
-						execute="@this" render="myForm:tabView:inputPanel" />
-				</h:selectOneMenu>
-			</div>
+	<div class="row p-3 ">
+		
+		<div class="col-12">
+			<p:staticMessage styleClass="col-12" severity="warn" summary="WARN"
+				rendered="#{userPostCardController.item.postStatus == 'REFFUSED'}"
+				detail="#{userPostCardController.item.reffuseCause}"
+				style="overflow: overlay;" />
+
+			<p:staticMessage styleClass="col-12" severity="warn" summary="WARN"
+				rendered="#{userPostCardController.item.postStatus == 'TO_REVIEUX_BY_USER'}"
+				detail="#{userPostCardController.item.reffuseCause}"
+				style="overflow: overlay;" />
 		</div>
-		<div class="col-md-3 col-xs-12 col-12">
-			<div class="form-group">
-				<p:outputLabel class="control-label" for="titleId"
-					value="#{bundle.property_type}">
-				</p:outputLabel>
-				<h:selectOneMenu styleClass="white form-control"
-					converter="omnifaces.SelectItemsConverter"
-					value="#{userPostCardController.propertyTypeEnum}">
-					<f:selectItems value="#{PropertyTypeEnum.values()}" var="option"
-						itemLabel="#{bundle[option]}" itemValue="#{option}" />
-					<f:ajax
-						listener="#{userPostCardController.listenerSelectProperty()}"
-						execute="@this" render="myForm:tabView:inputPanel myForm:tabView:exchangeId" />
-				</h:selectOneMenu>
-			</div>
-		</div>
-	</h:panelGroup>
 
-	<h:panelGroup layout="block" styleClass="row ps-3 pe-3 pt-3 justify-content-center"
-		rendered="#{userPostCardController.disableSelectOneButton()}">
-		<p:staticMessage styleClass="tagClassType col-12" severity="info"
-			detail="#{bundle[userPostCardController.item.postType]}"
-			style="overflow: overlay;" />
-	</h:panelGroup>
-	
-	<div class="row ps-3 pe-3 pb-3">
-		<h:panelGroup id="inputPanel">
-			<h:panelGroup rendered="#{userPostCardController.postType != null}">
-				<div class="row">
-					<div class="col-12 ps-3 pe-3">
-						<p:staticMessage styleClass="col-12" severity="warn" summary="WARN"
-							rendered="#{userPostCardController.item.postStatus == 'REFFUSED'}"
-							detail="#{userPostCardController.item.reffuseCause}"
-							style="overflow: overlay;" />
+		<h:panelGroup id="realphotos" styleClass="col-md-4 pt-3" layout="block">
+			<p:remoteCommand name="rc"
+				actionListener="#{userPostCardController.changeActiveIndex}"
+				oncomplete="PF('galleria1').show()" />
 
-						<p:staticMessage styleClass="col-12" severity="warn" summary="WARN"
-							rendered="#{userPostCardController.item.postStatus == 'TO_REVIEUX_BY_USER'}"
-							detail="#{userPostCardController.item.reffuseCause}"
-							style="overflow: overlay;" />
-					</div>
+			<p:graphicImage
+				url="#{userPostCardController.fullUrl}#{userPostCardController.item.images[0]}"
+				alt="#{bundle.no_photos}"
+				style="width: 100%;max-height: 16rem;display: block;object-fit:cover;" />
 
+			<p:galleria styleClass="galleria-arabic-fix" widgetVar="galleria1"
+				value="#{userPostCardController.item.images}" var="photo"
+				numVisible="4" id="realGalleria"
+				responsiveOptions="#{userPostCardController.responsiveOptions1}"
+				circular="true" fullScreen="true" showItemNavigators="true"
+				showThumbnails="false" style="max-width: 40%">
+				<p:graphicImage styleClass="gallery-item mt-2"
+					url="#{userPostCardController.fullUrl}#{photo}" alt="the photos"
+					style="width: 100%; display: block" />
+				<p:commandButton process="@this" value="#{bundle.delete}"
+					onclick="closeGalleria();"
+					action="#{userPostCardController.deleteRealPhoto(photo)}"
+					update="myForm:tabView:realestate" />
+			</p:galleria>
 
-					<div class="col-md-3">
-						<div class="form-group">
-							<p:outputLabel class="control-label" for="titleId"
-								value="#{bundle.real_estate_title}">
-							</p:outputLabel>
-							<h:inputText id="titleId" label="#{bundle.real_estate_title}"
-								styleClass="form-control"
-								h5:placeHolder="#{bundle.real_estate_title}"
-								value="#{userPostCardController.item.tittle}">
-							</h:inputText>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<p:outputLabel class="control-label" for="priceId"
-								value="#{bundle.real_estate_price}">
-							</p:outputLabel>
-							<p:inputNumber decimalPlaces="0" thousandSeparator="," symbol="$"  symbolPosition="s"
-								minValue="0" maxValue="9999999999" id="priceId" emptyValue="0"
-								label="#{bundle.real_estate_price}" styleClass="form-control"
-								value="#{userPostCardController.item.price}">
-							</p:inputNumber>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<p:outputLabel class="control-label" for="spaceId"
-								value="#{bundle.real_estate_space}">
-							</p:outputLabel>
-							<p:inputNumber decimalPlaces="0" thousandSeparator="," 
-								minValue="0" maxValue="9999999999" id="spaceId" emptyValue="0"
-								label="#{bundle.real_estate_space}" styleClass="form-control"
-								value="#{userPostCardController.item.space}">
-							</p:inputNumber>
-						</div>
-					</div>
-					<div class="col-md-3 ">
-						<h:outputLabel value="#{bundle.village}"
-							styleClass="control-label" />
-						<p:selectOneMenu id="villageSelectId" filter="true" filterMatchMode="contains" filterNormalize="true"
+			<p:commandButton value="#{bundle.show_photos}" partialSubmit="true"
+				styleClass=" col-12" icon="pi pi-external-link" rendered="#{not empty userPostCardController.item.images}"
+				onclick="PF('galleria1').show();" process="@this" />
+		</h:panelGroup>
+		<h:panelGroup id="inputPanel" layout="block" styleClass="col-md-8 row">
+			<h:panelGroup layout="block" id="conditionPanel" styleClass="row"
+				rendered="#{userPostCardController.disableSelectOneButton() eq false}">
+				<div class="col-md-3 col-xs-12 col-12">
+					<div class="form-group">
+						<p:outputLabel class="control-label" for="titleId"
+							value="#{bundle.property_exchange_type}">
+						</p:outputLabel>
+						<h:selectOneMenu id="exchangeId" styleClass="white form-control"
+							disabled="#{userPostCardController.propertyTypeEnum eq 'LAND'}"
 							converter="omnifaces.SelectItemsConverter"
-							styleClass="form-select"
-							value="#{userPostCardController.item.village}">
-							<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
-							<f:selectItems value="#{userPostCardController.villages}"
-								var="option"
-								itemLabel="#{languageController.locale eq 'en' ? option.name :option.nameAr}"
-								itemValue="#{option}" />
-							<f:ajax execute="@this" />
-						</p:selectOneMenu>
-					</div>
-					<h:panelGroup rendered="#{userPostCardController.hasPark()}">
-						<div class="col-md-3">
-							<div class="form-group">
-								<p:outputLabel class="control-label" for="parkId"
-									value="#{bundle.real_estate_nb_of_car_park}">
-								</p:outputLabel>
-								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="99" id="parkId" emptyValue="0"
-									label="#{bundle.real_estate_nb_of_car_park}"
-									styleClass="form-control"
-									value="#{userPostCardController.item.nbOfCarPark}">
-								</p:inputNumber>
-							</div>
-						</div>
-					</h:panelGroup>
-					<h:panelGroup
-						rendered="#{userPostCardController.hasRoomsBathFloorElevator()}">
-						<div class="col-md-3">
-							<div class="form-group">
-								<p:outputLabel class="control-label" for="roomId"
-									value="#{bundle.real_estate_rooms}">
-								</p:outputLabel>
-								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									emptyValue="0" minValue="0" maxValue="99" id="roomId"
-									label="#{bundle.real_estate_rooms}" styleClass="form-control"
-									value="#{userPostCardController.item.nbRoom}">
-								</p:inputNumber>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<p:outputLabel class="control-label" for="bathId"
-									value="#{bundle.real_estate_bathrooms}">
-								</p:outputLabel>
-								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="99" id="bathId" emptyValue="0"
-									label="#{bundle.real_estate_bathrooms}"
-									styleClass="form-control"
-									value="#{userPostCardController.item.nbBathRoom}">
-								</p:inputNumber>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<p:outputLabel class="control-label" for="floorId"
-									value="#{bundle.real_estate_floor}">
-								</p:outputLabel>
-								<h:selectOneMenu id="floorId"
-									converter="omnifaces.SelectItemsConverter"
-									styleClass="form-select"
-									value="#{userPostCardController.item.floor}">
-									<f:selectItems value="#{FloorEnum.values()}" var="floor"
-										itemValue="#{floor.floor}" itemLabel="#{bundle[floor]}" />
-									<f:ajax execute="@this" />
-								</h:selectOneMenu>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<h:outputLabel value="#{bundle.real_estate_electric_elevator}"
-									styleClass="control-label" />
-								<div class="skin mt-2">
-									<h:selectBooleanCheckbox style="height:20px;width:25px"
-										label="#{bundle.real_estate_electric_elevator}"
-										id="elevatorId"
-										value="#{userPostCardController.item.electricElevator}">
-										<f:ajax></f:ajax>
-									</h:selectBooleanCheckbox>
-								</div>
-							</div>
-						</div>
-					</h:panelGroup>
-
-					<h:panelGroup rendered="#{userPostCardController.hasGarden()}">
-						<div class="col-md-3">
-							<div class="form-group">
-								<h:outputLabel value="#{bundle.real_estate_garden}"
-									styleClass="control-label" />
-								<div class="skin mt-2">
-									<h:selectBooleanCheckbox style="height:20px;width:25px"
-										label="#{bundle.real_estate_garden}" id="gardenId"
-										value="#{userPostCardController.item.garden}">
-									</h:selectBooleanCheckbox>
-								</div>
-							</div>
-						</div>
-					</h:panelGroup>
-					<h:panelGroup rendered="#{userPostCardController.aLand()}">
-						<div class="col-md-3">
-							<div class="form-group">
-								<p:outputLabel class="control-label" for="nbOfSharesId"
-									value="#{bundle.real_estate_nb_of_shares}">
-								</p:outputLabel>
-								<p:inputNumber decimalPlaces="0" thousandSeparator=","  
-									minValue="0" maxValue="99999" id="nbOfSharesId" emptyValue="0"
-									label="#{bundle.real_estate_nb_of_shares}"
-									styleClass="form-control"
-									value="#{userPostCardController.item.nbOfShares}">
-								</p:inputNumber>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<h:outputLabel value="#{bundle.land_block_no}"
-									styleClass="control-label"  />
-								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="999999999" id="blockNbId" emptyValue="0"
-									label="#{bundle.land_block_no}"
-									styleClass="form-control"
-									value="#{userPostCardController.item.blockNb}">
-								</p:inputNumber>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<h:outputLabel value="#{bundle.real_estate_road}"
-									styleClass="control-label" />
-								<div class="skin mt-2">
-									<h:selectBooleanCheckbox style="height:20px;width:25px"
-										label="#{bundle.real_estate_road}" id="roadId"
-										value="#{userPostCardController.item.road}">
-									</h:selectBooleanCheckbox>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<h:outputLabel value="#{bundle.real_estate_water}"
-									styleClass="control-label" />
-								<div class="skin mt-2">
-									<h:selectBooleanCheckbox style="height:20px;width:25px"
-										label="#{bundle.real_estate_water}" id="waterId"
-										value="#{userPostCardController.item.water}">
-									</h:selectBooleanCheckbox>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<h:outputLabel value="#{bundle.real_estate_electricity}"
-									styleClass="control-label" />
-								<div class="skin mt-2">
-									<h:selectBooleanCheckbox style="height:20px;width:25px"
-										label="#{bundle.real_estate_electricity}" id="electricityId"
-										value="#{userPostCardController.item.electricity}">
-									</h:selectBooleanCheckbox>
-								</div>
-							</div>
-						</div>
-						
-					</h:panelGroup>
-					<h:panelGroup rendered="#{userPostCardController.aShop()}">
-						<div class="col-md-3">
-							<div class="form-group">
-								<p:outputLabel class="control-label" for="storefrontsId"
-									value="#{bundle.real_estate_store_fronts}">
-								</p:outputLabel>
-								<p:inputNumber decimalPlaces="0" thousandSeparator=","
-									minValue="0" maxValue="99" id="storefrontsId" emptyValue="0"
-									label="#{bundle.real_estate_store_fronts}"
-									styleClass="form-control"
-									value="#{userPostCardController.item.storefronts}">
-								</p:inputNumber>
-							</div>
-						</div>
-					</h:panelGroup>
-					<h:panelGroup rendered="#{userPostCardController.hasGreenBand()}">
-						<div class="col-md-3">
-							<div class="form-group">
-								<h:outputLabel value="#{bundle.real_estate_green_band}"
-									styleClass="control-label" />
-								<div class="skin mt-2">
-									<h:selectBooleanCheckbox style="height:20px;width:25px"
-										label="#{bundle.real_estate_green_band}" id="greenBondId"
-										value="#{userPostCardController.item.greenBond}">
-									</h:selectBooleanCheckbox>
-								</div>
-							</div>
-						</div>
-					</h:panelGroup>
-					<div class="col-md-3">
-						<div class="form-group">
-							<h:outputLabel value="#{bundle.real_estate_negotiable}"
-								styleClass="control-label" />
-							<div class="skin mt-2">
-								<h:selectBooleanCheckbox style="height:20px;width:25px"
-									label="#{bundle.real_estate_negotiable}" id="negotiableId"
-									value="#{userPostCardController.item.negotiable}">
-									<f:ajax></f:ajax>
-								</h:selectBooleanCheckbox>
-							</div>
-						</div>
-					</div>
-					
-					
-					
-					<div class="col-md-3">
-						<div class="form-group">
-							<h:outputLabel value="#{bundle.need_boost}"
-								styleClass="control-label" />
-							<div class="skin mt-2">
-								<h:selectBooleanCheckbox style="height:20px;width:25px"
-									label="#{bundle.need_boost}" 
-									value="#{userPostCardController.item.pendingBoost}">
-									<f:ajax></f:ajax>
-								</h:selectBooleanCheckbox>
-							</div>
-						</div>
-					</div>
-					
-					
-					<div class="col-md-12">
-						<div class="form-group">
-							<p:outputLabel class="control-label" for="subTitleId"
-								value="#{bundle.real_estate_subtitle}">
-							</p:outputLabel>
-							<h:inputTextarea id="subTitleId" rows="10"
-								label="#{bundle.real_estate_subtitle}" styleClass="form-control"
-								h5:placeHolder="#{bundle.real_estate_subtitle}"
-								value="#{userPostCardController.item.subTittle}">
-							</h:inputTextarea>
-						</div>
-					</div>
-
-					<div class="col-md-12 mt-2">
-						<p:remoteCommand name="rc"
-							actionListener="#{userPostCardController.changeActiveIndex}"
-							oncomplete="PF('galleria1').show()" />
-						<p:galleria styleClass="galleria-arabic-fix" widgetVar="galleria1"
-							rendered="#{userPostCardController.item.images.size() >0}"
-							value="#{userPostCardController.item.images}" var="photo"
-							numVisible="4" id="realGalleria"
-							responsiveOptions="#{userPostCardController.responsiveOptions1}"
-							circular="true" fullScreen="true" showItemNavigators="true"
-							showThumbnails="false" style="max-width: 40%">
-							<p:graphicImage styleClass="gallery-item mt-2"
-								url="#{userPostCardController.fullUrl}#{photo}" alt="the photos"
-								style="width: 100%; display: block" />
-							<p:commandButton process="@this" value="#{bundle.delete}"
-								onclick="closeGalleria();"
-								action="#{userPostCardController.deleteRealPhoto(photo)}"
-								update="myForm:tabView:imagesPhotos  myForm:tabView:realGalleria" />
-						</p:galleria>
-
-						<h:panelGroup id="imagesPhotos">
-							<p:commandButton
-								rendered="#{userPostCardController.item.images.size() >0}"
-								value="#{bundle.show_photos}" partialSubmit="true"
-								styleClass="col-md-4 col-12" icon="pi pi-external-link"
-								onclick="PF('galleria1').show();" process="@this" />
-						</h:panelGroup>
-					</div>
-
-					<div class="col-md-12 mt-3">
-
-						<p:fileUpload id="uploadImageRealEstate"
-							label="#{bundle.choose_photos}"
-							listener="#{userPostCardController.handleFileUploadReal}"
-							mode="advanced" dragDropSupport="false" multiple="true"
-							sizeLimit="3000000" fileLimit="5"
-							allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-						</p:fileUpload>
-
+							value="#{userPostCardController.exchangeRealEstateType}">
+							<f:selectItems value="#{ExchangeRealEstateType.values()}"
+								var="option" itemLabel="#{bundle[option]}" itemValue="#{option}" />
+							<f:ajax
+								listener="#{userPostCardController.listenerSelectProperty()}"
+								execute="@this" render="myForm:tabView:inputPanel" />
+						</h:selectOneMenu>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-3 mt-3">
+				<div class="col-md-3 col-xs-12 col-12">
+					<div class="form-group">
+						<p:outputLabel class="control-label" for="titleId"
+							value="#{bundle.property_type}">
+						</p:outputLabel>
+						<h:selectOneMenu styleClass="white form-control"
+							converter="omnifaces.SelectItemsConverter"
+							value="#{userPostCardController.propertyTypeEnum}">
+							<f:selectItems value="#{PropertyTypeEnum.values()}" var="option"
+								itemLabel="#{bundle[option]}" itemValue="#{option}" />
+							<f:ajax
+								listener="#{userPostCardController.listenerSelectProperty()}"
+								execute="@this"
+								render="myForm:tabView:inputPanel myForm:tabView:exchangeId" />
+						</h:selectOneMenu>
+					</div>
+				</div>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{userPostCardController.postType != null}">
+				<h:panelGroup layout="block"
+					styleClass="row p-3 justify-content-start"
+					rendered="#{userPostCardController.disableSelectOneButton()}">
+					<p:staticMessage styleClass="tagClassType col-12" severity="info"
+						detail="#{bundle[userPostCardController.item.postType]}"
+						style="overflow: overlay;" />
+				</h:panelGroup>
+				<div class="col-md-3">
+					<div class="form-group">
+						<p:outputLabel class="control-label" for="titleId"
+							value="#{bundle.real_estate_title}">
+						</p:outputLabel>
+						<h:inputText id="titleId" label="#{bundle.real_estate_title}"
+							styleClass="form-control"
+							h5:placeHolder="#{bundle.real_estate_title}"
+							value="#{userPostCardController.item.tittle}">
+						</h:inputText>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<p:outputLabel class="control-label" for="priceId"
+							value="#{bundle.real_estate_price}">
+						</p:outputLabel>
+						<p:inputNumber decimalPlaces="0" thousandSeparator="," symbol="$"
+							symbolPosition="s" minValue="0" maxValue="9999999999"
+							id="priceId" emptyValue="0" label="#{bundle.real_estate_price}"
+							styleClass="form-control"
+							value="#{userPostCardController.item.price}">
+						</p:inputNumber>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<p:outputLabel class="control-label" for="spaceId"
+							value="#{bundle.real_estate_space}">
+						</p:outputLabel>
+						<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							minValue="0" maxValue="9999999999" id="spaceId" emptyValue="0"
+							label="#{bundle.real_estate_space}" styleClass="form-control"
+							value="#{userPostCardController.item.space}">
+						</p:inputNumber>
+					</div>
+				</div>
+				<div class="col-md-3 ">
+					<h:outputLabel value="#{bundle.village}" styleClass="control-label" />
+					<p:selectOneMenu id="villageSelectId" filter="true"
+						filterMatchMode="contains" filterNormalize="true"
+						converter="omnifaces.SelectItemsConverter"
+						styleClass="form-select"
+						value="#{userPostCardController.item.village}">
+						<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
+						<f:selectItems value="#{userPostCardController.villages}"
+							var="option"
+							itemLabel="#{languageController.locale eq 'en' ? option.name :option.nameAr}"
+							itemValue="#{option}" />
+						<f:ajax execute="@this" />
+					</p:selectOneMenu>
+				</div>
+				<h:panelGroup rendered="#{userPostCardController.hasPark()}">
+					<div class="col-md-3">
 						<div class="form-group">
-							<h:commandLink value='#{bundle.save}' id="realSaveBtn"
-								action='#{userPostCardController.save()}'
-								styleClass="btn btn-primary btn-save">
-								<f:ajax render=":messageScript "
-									execute="myForm:tabView:realestate myForm:tabView:uploadImageRealEstate" />
-								<i class="fa fa-save" />
-							</h:commandLink>
+							<p:outputLabel class="control-label" for="parkId"
+								value="#{bundle.real_estate_nb_of_car_park}">
+							</p:outputLabel>
+							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+								minValue="0" maxValue="99" id="parkId" emptyValue="0"
+								label="#{bundle.real_estate_nb_of_car_park}"
+								styleClass="form-control"
+								value="#{userPostCardController.item.nbOfCarPark}">
+							</p:inputNumber>
 						</div>
+					</div>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userPostCardController.hasRoomsBathFloorElevator()}">
+					<div class="col-md-3">
+						<div class="form-group">
+							<p:outputLabel class="control-label" for="roomId"
+								value="#{bundle.real_estate_rooms}">
+							</p:outputLabel>
+							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+								emptyValue="0" minValue="0" maxValue="99" id="roomId"
+								label="#{bundle.real_estate_rooms}" styleClass="form-control"
+								value="#{userPostCardController.item.nbRoom}">
+							</p:inputNumber>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<p:outputLabel class="control-label" for="bathId"
+								value="#{bundle.real_estate_bathrooms}">
+							</p:outputLabel>
+							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+								minValue="0" maxValue="99" id="bathId" emptyValue="0"
+								label="#{bundle.real_estate_bathrooms}"
+								styleClass="form-control"
+								value="#{userPostCardController.item.nbBathRoom}">
+							</p:inputNumber>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<p:outputLabel class="control-label" for="floorId"
+								value="#{bundle.real_estate_floor}">
+							</p:outputLabel>
+							<h:selectOneMenu id="floorId"
+								converter="omnifaces.SelectItemsConverter"
+								styleClass="form-select"
+								value="#{userPostCardController.item.floor}">
+								<f:selectItems value="#{FloorEnum.values()}" var="floor"
+									itemValue="#{floor.floor}" itemLabel="#{bundle[floor]}" />
+								<f:ajax execute="@this" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<h:outputLabel value="#{bundle.real_estate_electric_elevator}"
+								styleClass="control-label" />
+							<div class="skin mt-2">
+								<h:selectBooleanCheckbox style="height:20px;width:25px"
+									label="#{bundle.real_estate_electric_elevator}" id="elevatorId"
+									value="#{userPostCardController.item.electricElevator}">
+									<f:ajax></f:ajax>
+								</h:selectBooleanCheckbox>
+							</div>
+						</div>
+					</div>
+				</h:panelGroup>
+
+				<h:panelGroup rendered="#{userPostCardController.hasGarden()}">
+					<div class="col-md-3">
+						<div class="form-group">
+							<h:outputLabel value="#{bundle.real_estate_garden}"
+								styleClass="control-label" />
+							<div class="skin mt-2">
+								<h:selectBooleanCheckbox style="height:20px;width:25px"
+									label="#{bundle.real_estate_garden}" id="gardenId"
+									value="#{userPostCardController.item.garden}">
+								</h:selectBooleanCheckbox>
+							</div>
+						</div>
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{userPostCardController.aLand()}">
+					<div class="col-md-3">
+						<div class="form-group">
+							<p:outputLabel class="control-label" for="nbOfSharesId"
+								value="#{bundle.real_estate_nb_of_shares}">
+							</p:outputLabel>
+							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+								minValue="0" maxValue="99999" id="nbOfSharesId" emptyValue="0"
+								label="#{bundle.real_estate_nb_of_shares}"
+								styleClass="form-control"
+								value="#{userPostCardController.item.nbOfShares}">
+							</p:inputNumber>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<h:outputLabel value="#{bundle.land_block_no}"
+								styleClass="control-label" />
+							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+								minValue="0" maxValue="999999999" id="blockNbId" emptyValue="0"
+								label="#{bundle.land_block_no}" styleClass="form-control"
+								value="#{userPostCardController.item.blockNb}">
+							</p:inputNumber>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<h:outputLabel value="#{bundle.real_estate_road}"
+								styleClass="control-label" />
+							<div class="skin mt-2">
+								<h:selectBooleanCheckbox style="height:20px;width:25px"
+									label="#{bundle.real_estate_road}" id="roadId"
+									value="#{userPostCardController.item.road}">
+								</h:selectBooleanCheckbox>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<h:outputLabel value="#{bundle.real_estate_water}"
+								styleClass="control-label" />
+							<div class="skin mt-2">
+								<h:selectBooleanCheckbox style="height:20px;width:25px"
+									label="#{bundle.real_estate_water}" id="waterId"
+									value="#{userPostCardController.item.water}">
+								</h:selectBooleanCheckbox>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<h:outputLabel value="#{bundle.real_estate_electricity}"
+								styleClass="control-label" />
+							<div class="skin mt-2">
+								<h:selectBooleanCheckbox style="height:20px;width:25px"
+									label="#{bundle.real_estate_electricity}" id="electricityId"
+									value="#{userPostCardController.item.electricity}">
+								</h:selectBooleanCheckbox>
+							</div>
+						</div>
+					</div>
+
+				</h:panelGroup>
+				<h:panelGroup rendered="#{userPostCardController.aShop()}">
+					<div class="col-md-3">
+						<div class="form-group">
+							<p:outputLabel class="control-label" for="storefrontsId"
+								value="#{bundle.real_estate_store_fronts}">
+							</p:outputLabel>
+							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+								minValue="0" maxValue="99" id="storefrontsId" emptyValue="0"
+								label="#{bundle.real_estate_store_fronts}"
+								styleClass="form-control"
+								value="#{userPostCardController.item.storefronts}">
+							</p:inputNumber>
+						</div>
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{userPostCardController.hasGreenBand()}">
+					<div class="col-md-3">
+						<div class="form-group">
+							<h:outputLabel value="#{bundle.real_estate_green_band}"
+								styleClass="control-label" />
+							<div class="skin mt-2">
+								<h:selectBooleanCheckbox style="height:20px;width:25px"
+									label="#{bundle.real_estate_green_band}" id="greenBondId"
+									value="#{userPostCardController.item.greenBond}">
+								</h:selectBooleanCheckbox>
+							</div>
+						</div>
+					</div>
+				</h:panelGroup>
+				<div class="col-md-3">
+					<div class="form-group">
+						<h:outputLabel value="#{bundle.real_estate_negotiable}"
+							styleClass="control-label" />
+						<div class="skin mt-2">
+							<h:selectBooleanCheckbox style="height:20px;width:25px"
+								label="#{bundle.real_estate_negotiable}" id="negotiableId"
+								value="#{userPostCardController.item.negotiable}">
+								<f:ajax></f:ajax>
+							</h:selectBooleanCheckbox>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="col-md-3">
+					<div class="form-group">
+						<h:outputLabel value="#{bundle.need_boost}"
+							styleClass="control-label" />
+						<div class="skin mt-2">
+							<h:selectBooleanCheckbox style="height:20px;width:25px"
+								label="#{bundle.need_boost}"
+								value="#{userPostCardController.item.pendingBoost}">
+								<f:ajax></f:ajax>
+							</h:selectBooleanCheckbox>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-12">
+					<div class="form-group">
+						<p:outputLabel class="control-label" for="subTitleId"
+							value="#{bundle.real_estate_subtitle}">
+						</p:outputLabel>
+						<h:inputTextarea id="subTitleId" rows="10"
+							label="#{bundle.real_estate_subtitle}" styleClass="form-control"
+							h5:placeHolder="#{bundle.real_estate_subtitle}"
+							value="#{userPostCardController.item.subTittle}">
+						</h:inputTextarea>
+					</div>
+				</div>
+
+				<div class="col-md-12 mt-3">
+
+					<p:fileUpload id="uploadImageRealEstate"
+						label="#{bundle.choose_photos}"
+						listener="#{userPostCardController.handleFileUploadReal}"
+						mode="advanced" dragDropSupport="false" multiple="true"
+						sizeLimit="3000000" fileLimit="5"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+					</p:fileUpload>
+
+				</div>
+				<div class="d-flex  flex-row-reverse">
+					<div class="form-group mt-2">
+						<h:commandLink value='#{bundle.save}' id="realSaveBtn"
+							action='#{userPostCardController.save()}'
+							styleClass="btn btn-primary btn-save">
+							<f:ajax render=":messageScript "
+								execute="myForm:tabView:realestate myForm:tabView:uploadImageRealEstate" />
+							<i class="fa fa-save" />
+						</h:commandLink>
 					</div>
 				</div>
 			</h:panelGroup>
