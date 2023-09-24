@@ -72,8 +72,8 @@ public class PostController implements Serializable {
 				nbOfActivePostByThisUser -= 1;
 			}
 
-			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
-					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
+			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
+					.concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			postStatus = realEstate.getPostStatus();
@@ -102,13 +102,13 @@ public class PostController implements Serializable {
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
-		
+
 		String ipAddress = request.getRemoteAddr();
 
 		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
-			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+			ipAddressWithPort = "http://" + ipAddress + ":" + request.getLocalPort();
 		} else {
-			ipAddressWithPort = "https://" +  appSinglton.getRealDns() ;
+			ipAddressWithPort = "https://" + appSinglton.getRealDns();
 		}
 
 		return ipAddressWithPort;
@@ -116,43 +116,45 @@ public class PostController implements Serializable {
 
 	public void mangmentPoostStatus() throws Exception {
 
-		if ((realEstate.getPostStatus().equals(PostStatus.REFFUSED)
-				|| realEstate.getPostStatus().equals(PostStatus.TO_REVIEUX_BY_USER))
-				&& realEstate.getReffuseCause().isEmpty()) {
+		if (realEstate.getPostStatus() != null) {
+			if ((realEstate.getPostStatus().equals(PostStatus.REFFUSED)
+					|| realEstate.getPostStatus().equals(PostStatus.TO_REVIEUX_BY_USER))
+					&& realEstate.getReffuseCause().isEmpty()) {
 
-			CommonUtility.addMessageToFacesContext("refuse cause  should not be empty  ", "error");
-			throw new Exception("refuse cause  should not be empty");
-		} else if (realEstate.getPostStatus().equals(PostStatus.ACCEPTED)) {
+				CommonUtility.addMessageToFacesContext("refuse cause  should not be empty  ", "error");
+				throw new Exception("refuse cause  should not be empty");
+			} else if (realEstate.getPostStatus().equals(PostStatus.ACCEPTED)) {
 
-			int nbOfPostAllowed = 0;
-			if (user.isBroker()) {
-				nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
+				int nbOfPostAllowed = 0;
+				if (user.isBroker()) {
+					nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
+				}
+
+				if (user.getUserCategory() == UserCategory.REGULAR) {
+					nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
+
+				} else if (user.getUserCategory() == UserCategory.MEDUIM) {
+
+					nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
+
+				} else if (user.getUserCategory() == UserCategory.PREMIUM) {
+					nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
+				}
+
+				if (nbOfActivePostByThisUser >= nbOfPostAllowed) {
+					// realEstateFacade.getEm().detach(realEstate);
+					CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER, "error");
+					throw new Exception(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER);
+
+				}
+
+				// hon if mshe halo
+				if (postStatus != PostStatus.ACCEPTED) {
+					realEstate.setPostDate(new Date());
+
+				}
+
 			}
-
-			if (user.getUserCategory() == UserCategory.REGULAR) {
-				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
-
-			} else if (user.getUserCategory() == UserCategory.MEDUIM) {
-
-				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
-
-			} else if (user.getUserCategory() == UserCategory.PREMIUM) {
-				nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
-			}
-
-			if (nbOfActivePostByThisUser >= nbOfPostAllowed) {
-				// realEstateFacade.getEm().detach(realEstate);
-				CommonUtility.addMessageToFacesContext(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER, "error");
-				throw new Exception(Constants.EXCEEDED_POST_LIMIT_FOR_THIS_USER);
-
-			}
-
-			// hon if mshe halo
-			if (postStatus != PostStatus.ACCEPTED) {
-				realEstate.setPostDate(new Date());
-
-			}
-
 		}
 
 	}
@@ -205,8 +207,8 @@ public class PostController implements Serializable {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			
-			url = Utils.replaceHost(url, appSinglton.getRealDns() ,  appSinglton.getMode());
+
+			url = Utils.replaceHost(url, appSinglton.getRealDns(), appSinglton.getMode());
 
 			Faces.redirect(url + "?" + REQUEST_PARAM + "=%s", id + "");
 

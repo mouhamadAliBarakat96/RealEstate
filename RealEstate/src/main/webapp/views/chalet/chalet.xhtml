@@ -204,6 +204,11 @@ body .ui-panelgrid .ui-panelgrid-cell {
 									</h:outputText>
 
 
+									<h:outputText styleClass="key" value="Pending Boost " />
+									<h:outputText styleClass="value"
+										class=" #{chaletController.chalet.pendingBoost  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
+
+
 									<h:outputText value="boosted Until:" />
 
 
@@ -278,6 +283,33 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 
 										</div>
+											</div>
+											
+													<div class="row">
+										<div class="col-md-4">
+
+											<h:outputText style=" font-size:16px; "
+												value="Boost Pending :" />
+
+
+
+											<p:selectBooleanButton onLabel="Pending Boost  "
+												id="boostPending" offLabel="Pending Boost "
+												value="#{chaletController.chalet.pendingBoost}"
+												onIcon="pi pi-check" offIcon="pi pi-times"
+												style="width:12rem ; display:block" />
+
+
+
+										</div>
+											</div>
+											
+											
+											
+											
+											<div class="row">
+											
+											
 										<div class=" col-md-12">
 
 
@@ -357,7 +389,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 													action='#{chaletController.save()}'
 													styleClass="btn btn-primary btn-save">
 													<f:ajax render=":messageScript "
-														execute="  postStatus reffuseCause  postVerfied boostType " />
+														execute="  postStatus reffuseCause boostPending  postVerfied boostType " />
 													<i class="fa fa-save" />
 													<span>Save</span>
 
