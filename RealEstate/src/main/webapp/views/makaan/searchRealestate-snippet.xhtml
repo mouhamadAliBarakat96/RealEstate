@@ -10,7 +10,7 @@
 		data-wow-delay="0.1s">
 		<h:panelGroup id="realSatatebathBedRoomsId">
 			<div class="row">
-				<div class="col-md-3 col-sm-12">
+				 <div class="col-md-3 col-sm-12">
 					<h:outputLabel value="#{bundle.property_type}" style="color:white" />
 					<p:selectOneMenu styleClass="form-select border-0  "
 						converter="omnifaces.SelectItemsConverter"
@@ -23,7 +23,7 @@
 							render="myForm:realSatatebathBedRoomsId" />
 					</p:selectOneMenu>
 				</div>
-				<div class="col-md-3 col-sm-12 mt-1  ">
+			<!--	<div class="col-md-3 col-sm-12 mt-1  ">
 					<h:outputLabel value="#{bundle.governate}" style="color:white" />
 					<p:selectOneMenu id="governateSelectId"
 						styleClass="form-select border-0 "
@@ -37,7 +37,7 @@
 							render="myForm:districtSelectId myForm:villageSelectId"
 							listener="#{actionBean.listenerSelectGovernate()}" />
 					</p:selectOneMenu>
-				</div>
+				</div> 
 				<div class="col-md-3 col-sm-12  mt-1">
 					<h:outputLabel value="#{bundle.discrit}" style="color:white" />
 					<p:selectOneMenu id="districtSelectId"
@@ -46,13 +46,15 @@
 						value="#{actionBean.selecteDistrict}">
 						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 						<f:selectItems value="#{actionBean.districts}" var="option"
-							itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
+							itemLabel="#{languageController.locale=='en'?  option.fullAddress() : option.fullAddress_ar()}"
 							itemValue="#{option}" />
-						<f:ajax execute="@this"
+							<f:ajax execute="@this"/>
+						  <f:ajax execute="@this"
 							listener="#{actionBean.listenerSelectDistrict()}"
-							render="myForm:villageSelectId" />
+							render="myForm:villageSelectId" />  
 					</p:selectOneMenu>
 				</div>
+				-->
 				<div class="col-md-3 col-sm-12  mt-1">
 					<h:outputLabel value="#{bundle.village}" style="color:white" />
 					<p:selectOneMenu id="villageSelectId" filter="true"
@@ -62,7 +64,7 @@
 						value="#{actionBean.selecteVillage}">
 						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 						<f:selectItems value="#{actionBean.villages}" var="option"
-							itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
+						    itemLabel="#{languageController.locale=='en'?  option.fullAddress() : option.fullAddress_ar()}"
 							itemValue="#{option}" />
 						<f:ajax execute="@this"/>
 					</p:selectOneMenu>
@@ -118,8 +120,7 @@
 				<div
 					class="col-12 d-flex flex-row-reverse flex-wrap  mt-2  ">
 					<h:commandButton action="#{actionBean.search()}"
-						value="#{bundle.search}"
-						style=" background-color: #00d996;color:white;border: 2px solid;" styleClass="btn"  >
+						value="#{bundle.search}" styleClass="btn btn-search">
 						<f:ajax execute="myForm:searchBarPanel"
 							render="myForm:RealEstatePanelId :messageScript" />
 					</h:commandButton>

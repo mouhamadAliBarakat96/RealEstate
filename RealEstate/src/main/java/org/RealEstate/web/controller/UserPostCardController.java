@@ -28,6 +28,7 @@ import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.enumerator.PropertyTypeEnum;
+import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
@@ -64,6 +65,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private static final long serialVersionUID = 1L;
 	private final String REQUEST_PARAM_ID = "id";
 	private final String REQUEST_PARAM_KIND = "kind";
+	private final String NO_PHOTO = "nophoto.jpg";
 
 	private PostType postType=PostType.APPRATMENT_RENT;
 	private PropertyKindEnum kindEnum = PropertyKindEnum.REALESTATE;
@@ -842,6 +844,46 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				exchangeRealEstateType=ExchangeRealEstateType.BUY;
 			}
 		}
+	}
+	
+	public String displayFirstImageReal() {
+		if(item!=null && !item.getImages().isEmpty()) {
+			return fullUrl.concat(item.getImages().get(0));
+		}else {
+			return fullUrl.concat(NO_PHOTO);
+		}
+	}
+	
+	public String displayFirstImageChalet() {
+		if(chalet!=null && !chalet.getImages().isEmpty()) {
+			return fullUrl.concat(chalet.getImages().get(0));
+		}else {
+			return fullUrl.concat(NO_PHOTO);
+		}
+	}
+	
+	public boolean checkUserAccountPosts() {
+
+		int nbOfCreatedPost = 0;// get it by query
+
+		int nbOfPermitPost=0;
+
+		if (user.getUserCategory() == UserCategory.REGULAR) {
+			nbOfPermitPost = appSinglton.getFreeNbOfPost();
+
+		} else if (user.getUserCategory() == UserCategory.MEDUIM) {
+			nbOfPermitPost = appSinglton.getMeduimAccountNbOfPost();
+
+		} else if (user.getUserCategory() == UserCategory.PREMIUM) {
+			nbOfPermitPost = appSinglton.getPremuimAccountNbOfPost();
+		}
+
+		if (nbOfCreatedPost >= nbOfPermitPost) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 	
 }

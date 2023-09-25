@@ -8,7 +8,7 @@
 <ui:component>
 	<div class="container-fluid bg-primary mb-5 wow pb-1 " data-wow-delay="0.1s" >
 		<div class="row">
-			<div class="col-md-3 col-sm-12   ">
+			<!-- <div class="col-md-3 col-sm-12   ">
 				<h:outputLabel value="#{bundle.governate}" style="color:white" />
 				<h:selectOneMenu styleClass="form-select border-0 "
 					converter="omnifaces.SelectItemsConverter" id="chaletGovernate"
@@ -34,7 +34,7 @@
 						listener="#{actionBean.listenerSelectDistrict()}"
 						render="myForm:chaletVillage" />
 				</h:selectOneMenu>
-			</div>
+			</div> -->
 			<div class="col-md-3 col-sm-12 mt-1 ">
 				<h:outputLabel value="#{bundle.village}" style="color:white" />
 				<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="chaletVillage" filter="true" filterMatchMode="contains" filterNormalize="true"
@@ -42,7 +42,7 @@
 					value="#{actionBean.selecteVillage}">
 					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 					<f:selectItems value="#{actionBean.villages}" var="option"
-						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'?  option.fullAddress() : option.fullAddress_ar()}" itemValue="#{option}" />
 					<f:ajax execute="@this"/>
 				</p:selectOneMenu>
 			</div>
@@ -93,8 +93,7 @@
 			<div class="col-md-3 col-sm-12 d-flex flex-column-reverse flex-wrap  mt-2 align-content-start" >
 				<h:commandButton action="#{actionBean.chaletSearch()}"
 					value="#{bundle.search}"
-					style=" background-color: #007ad9;color:white"
-					styleClass="btn btn-primary ">
+					styleClass="btn btn-search ">
 					<f:ajax execute="myForm:searchBarPanel" render="myForm:ChaletPanelId :messageScript"/>
 				</h:commandButton>
 			</div>
