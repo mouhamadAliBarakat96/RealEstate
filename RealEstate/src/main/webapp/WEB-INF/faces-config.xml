@@ -124,10 +124,6 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-
-
-
-
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>contact-list</from-outcome>
@@ -135,11 +131,6 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-
-
-
-
-
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>village</from-outcome>
@@ -225,8 +216,6 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-
-
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>userpost-list</from-outcome>
@@ -234,30 +223,20 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-		<navigation-rule>
-		
-		
+	<navigation-rule>
 		<navigation-case>
 			<from-outcome>userpost-search</from-outcome>
 			<to-view-id>/user-post.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
-		<navigation-rule>
-		
-		
+	<navigation-rule>
 		<navigation-case>
 			<from-outcome>userchalet-search</from-outcome>
 			<to-view-id>/user-chalet.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
-
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>login-user</from-outcome>
@@ -265,7 +244,6 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>signup</from-outcome>
@@ -273,7 +251,6 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>user-information-front-end</from-outcome>
@@ -281,19 +258,23 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
-	
-	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>about-us</from-outcome>
+			<to-view-id>/about-us.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
 	<application>
 		<locale-config>
 			<default-locale>en</default-locale>
 			<supported-locale>ar</supported-locale>
 		</locale-config>
 		<resource-bundle>
-            <base-name>resources.bundle</base-name>
-            <var>bundle</var>
-        </resource-bundle>
+			<base-name>resources.bundle</base-name>
+			<var>bundle</var>
+		</resource-bundle>
 		<message-bundle>resources.bundle</message-bundle>
 		<message-bundle>resources.bundle_ar</message-bundle>
 	</application>

@@ -55,7 +55,8 @@ public class MakanTemplateController implements Serializable {
 
 	@Inject
 	private AppSinglton appSinglton;
-
+	private String phoneNumber;
+	private String address;
 	private Locale locale;
 
 	@PostConstruct
@@ -67,6 +68,7 @@ public class MakanTemplateController implements Serializable {
 		adsList = adsFacade.findAll();
 		fullUrlAdsImage = fullUrlAdsImage.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 				.concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/");
+		phoneNumber=appSinglton.getPhoneNumber();
 
 	}
 
@@ -200,6 +202,22 @@ public class MakanTemplateController implements Serializable {
 
 	public void setFullUrlAdsImage(String fullUrlAdsImage) {
 		this.fullUrlAdsImage = fullUrlAdsImage;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }

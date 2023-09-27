@@ -13,7 +13,7 @@
 
 	<title>Ekar+</title>
 
-		<link rel="shortcut icon" 
+	<link rel="shortcut icon"
 		href=" #{resource['images/logoIkarPlus:25.png'] }" />
 
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -74,7 +74,7 @@
 		<h:outputScript library="primefaces" name="jquery/jquery.js" />
 		<h:outputScript library="primefaces" name="jquery/jquery-plugins.js"></h:outputScript>
 	</f:facet>
-	
+
 	<h:form id="myForm">
 		<o:importConstants type="org.RealEstate.enumerator.LanguageEnum" />
 
@@ -97,8 +97,9 @@
 				<h:link outcome="index-page" id="titleId"
 					class="navbar-brand d-flex align-items-center text-center">
 					<div class="icon p-2 me-2">
-						<img class="img-fluid" src="/resources/images/logoIkarPlus/fullsize.png"
-							alt="Icon" style="width: 60px; height: 60px;" />
+						<img class="img-fluid"
+							src="/resources/images/logoIkarPlus/fullsize.png" alt="Icon"
+							style="width: 60px; height: 60px;" />
 					</div>
 					<h2 class="m-0 text-primary">#{makanTemplateController.showRealEstateTitle()}</h2>
 				</h:link>
@@ -106,54 +107,50 @@
 					data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<div  class="collapse navbar-collapse" id="navbarCollapse">
+				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<div class="navbar-nav flex-grow-1">
-						
-						<h:panelGroup rendered="#{makanTemplateController.user != null}">
-							 <h:link outcome="user-information-front-end" value="#{bundle.user_information}"
-								  styleClass="nav-item nav-link">
-						   </h:link>
-						</h:panelGroup>
-						
-						 <h:link outcome="index-page" value="#{bundle.real_estates}"
-							  styleClass="nav-item nav-link  ">
+						<h:link rendered="#{makanTemplateController.user != null}"
+							outcome="user-information-front-end"
+							value="#{bundle.user_information}" styleClass="nav-item nav-link">
+						</h:link>
+
+						<h:link outcome="index-page" value="#{bundle.real_estates}"
+							styleClass="nav-item nav-link  ">
 							<f:param name="property" value="REALESTATE" />
 						</h:link>
-						
-						 <h:link outcome="index-page" value="#{bundle.chalets}"
-							  styleClass="nav-item nav-link">
+
+						<h:link outcome="index-page" value="#{bundle.chalets}"
+							styleClass="nav-item nav-link">
 							<f:param name="property" value="CHALET" />
 						</h:link>
-						
-						
+
+
 						<h:link outcome="userpost-card" value="#{bundle.add_new}"
-							  styleClass="add-new nav-item nav-link ps-2 pe-2">
-							  <i class="fa fa-plus ps-1 pe-1"/>
+							styleClass="add-new nav-item nav-link ps-2 pe-2">
+							<i class="fa fa-plus ps-1 pe-1" />
 						</h:link>
-						
+
 						<h:link outcome="userpost-list" value="#{bundle.my_posts}"
-							  styleClass="nav-item nav-link">
+							styleClass="nav-item nav-link">
 						</h:link>
-						
+
 						<h:link outcome="contact-us" value="#{bundle.contact_us}"
-								  styleClass="nav-item nav-link">
+							styleClass="nav-item nav-link">
 						</h:link>
 					</div>
 					<div class="navbar-nav ">
-					    <h:panelGroup rendered="#{makanTemplateController.user eq null}">
-							 <h:link outcome="login-user" value="#{bundle.login}"
-								  styleClass="nav-item nav-link   ">
-								<f:param name="property" value="login" />
-							</h:link>
-						</h:panelGroup>
-					   <h:panelGroup rendered="#{makanTemplateController.user != null}">
-							<h:commandLink
-								actionListener="#{makanTemplateController.logout()}"
-								class=" nav-item nav-link   " value="#{bundle.logout}">
-								<f:ajax />
-							</h:commandLink>
-						</h:panelGroup>
-						
+						<h:link rendered="#{makanTemplateController.user eq null}"
+							outcome="login-user" value="#{bundle.login}"
+							styleClass="nav-item nav-link   ">
+							<f:param name="property" value="login" />
+						</h:link>
+
+						<h:commandLink rendered="#{makanTemplateController.user != null}"
+							actionListener="#{makanTemplateController.logout()}"
+							class=" nav-item nav-link   " value="#{bundle.logout}">
+							<f:ajax />
+						</h:commandLink>
+
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle"
 								data-bs-toggle="dropdown">#{bundle.lang}</a>
@@ -171,14 +168,15 @@
 							</div>
 						</div>
 					</div>
-				</div> </nav>
+				</div>
+				</nav>
 			</div>
 			<!-- Navbar End -->
 
 			<!-- Header Start -->
 			<ui:insert name="header-start" />
 			<!-- Header End -->
-			
+
 			<!-- adspanel Start -->
 			<ui:insert name="adspanel" />
 			<!-- adspanel End -->
@@ -199,34 +197,80 @@
 
 
 			<ui:insert name="footer">
-				<div
-					class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn"
-					data-wow-delay="0.1s">
+				<div class="container-fluid bg-dark text-white-50 footer">
+					<div class="container py-2">
+						<div class="row">
+							<div class="col-md-6 mt-2">
+								<h5 class="text-white mb-2">#{bundle.get_in_touch}</h5>
+								<p class="mb-2">
+									<i class="fa fa-map-marker-alt mx-3"></i>#{bundle.ekar_loaction}
+								</p>
+								<p class="mb-2">
+									<i class="fa fa-phone mx-3"></i>#{makanTemplateController.phoneNumber}
+								</p>
+								<p class="mb-2">
+									<i class="fa fa-envelope mx-3"></i>ekarplus.lb@gmail.com
+								</p>
+								<div class="d-flex pt-2">
+									<a class="btn btn-outline-light btn-social" href=""> <i
+										class="fab fa-twitter" />
+									</a> <a class="btn btn-outline-light btn-social" href=""> <i
+										class="fab fa-facebook-f" />
+									</a> <a class="btn btn-outline-light btn-social" href=""> <i
+										class="fab fa-youtube" />
+									</a> <a class="btn btn-outline-light btn-social" href=""> <i
+										class="fab fa-linkedin-in" />
+									</a>
+								</div>
+							</div>
+							<div class="col-md-6 mt-2 flex-row-reverse">
+								<h5 class="text-white mb-2">#{bundle.quick_links}</h5>
+								<div class="d-flex flex-column">
+									<h:link value="#{bundle.home}" outcome="index.xhtml"
+										styleClass="px-1 text-white-50 mb-3" />
+									<h:link value="#{bundle.about_us}" outcome="about-us.xhtml"
+										styleClass="px-1 text-white-50 mb-3" />
+									<h:link value="#{bundle.contact_us}" outcome="contact-us.xhtml"
+										styleClass="px-1 text-white-50 mb-3" />
+								</div>
+
+							</div>
+						</div>
+					</div>
+
 					<div class="container">
 						<div class="copyright">
 							<div class="row">
 								<div class="col-md-6  mb-3 mb-md-0">
-									<a class="border-bottom" href="#">#{bundle.house_and_land}</a>
+									<a class="border-bottom text-white" href="#">#{bundle.house_and_land}</a>
 									#{bundle.all_right_reserved}
 								</div>
-								<div class="col-md-6 text-center text-md-end">
-									<div class=" d-flex justify-content-end">
-										<div class="col-md-2 text-center ">
-											<h:link value="#{bundle.home}" outcome="index.xhtml"
-												styleClass="ps-1" />
-										</div>
+								<ui:remove>
+									<div class="col-md-6 text-center text-md-end">
+										<div class=" d-flex justify-content-end">
+											<div class="col-md-2 text-center mb-4">
+												<h:link value="#{bundle.home}" outcome="index.xhtml"
+													styleClass="ps-1" />
+											</div>
 
-										<div class="col-md-2 text-center ">
-											<h:link value="#{bundle.contact_us}"
-												outcome="contact-us.xhtml" styleClass="ps-1" />
-										</div>
+											<div class="col-md-2 text-center mb-4">
+												<h:link value="#{bundle.contact_us}"
+													outcome="contact-us.xhtml" styleClass="ps-1" />
+											</div>
 
-										<div class="col-md-2 text-center ">
-											<h:link value="#{bundle.login}" outcome="user-login.xhtml"
-												styleClass="ps-1" />
+											<div class="col-md-2 text-center mb-4">
+												<h:link value="#{bundle.about_us}" outcome="about-us.xhtml"
+													styleClass="ps-1" />
+											</div>
+
+											<div class="col-md-2 text-center mb-4">
+												<h:link value="#{bundle.login}"
+													rendered="#{makanTemplateController.user eq null}"
+													outcome="user-login.xhtml" styleClass="ps-1" />
+											</div>
 										</div>
 									</div>
-								</div>
+								</ui:remove>
 							</div>
 						</div>
 					</div>
@@ -235,16 +279,16 @@
 
 		</div>
 	</h:form>
-	
-	
-	
+
+
+
 	<!-- JavaScript Libraries -->
 	<script src="/resources/makaan/js/jquery-3.4.1.min.js"></script>
-    <script src="/resources/makaan/js/bootstrap.min.js"></script>
-		
-		
+	<script src="/resources/makaan/js/bootstrap.min.js"></script>
 
-	 
+
+
+
 	<script src="/resources/makaan/lib/wow/wow.min.js"></script>
 	<script src="/resources/makaan/lib/easing/easing.min.js"></script>
 	<script src="/resources/makaan/lib/waypoints/waypoints.min.js"></script>
