@@ -170,9 +170,8 @@ body .ui-panelgrid .ui-panelgrid-cell {
 									</h:outputText>
 
 
-	<h:outputText value=" User Id : " />
-									<h:outputText
-										value="#{postController.realEstate.user.id} " />
+									<h:outputText value=" User Id : " />
+									<h:outputText value="#{postController.realEstate.user.id} " />
 
 
 
@@ -229,6 +228,16 @@ body .ui-panelgrid .ui-panelgrid-cell {
 									<h:outputText styleClass="key" value="Pending Boost " />
 									<h:outputText styleClass="value"
 										class=" #{postController.realEstate.pendingBoost  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
+
+
+
+
+									<h:outputText styleClass="key" value="need verfied   " />
+									<h:outputText styleClass="value"
+										class=" #{postController.realEstate.needVerfied  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
+
+
+
 
 									<h:outputText value="boosted Until:" />
 
@@ -439,13 +448,13 @@ body .ui-panelgrid .ui-panelgrid-cell {
 										<div class="col-4" style="display: block">
 
 											<h:outputText style=" font-size:16px; "
-												value="Pending Boost :" />
+												value="Need verfied ? :" />
 
 
 
-											<p:selectBooleanButton onLabel="pending Boost "
-												id="pendingPost" offLabel="pending Boost "
-												value="#{postController.realEstate.pendingBoost}"
+											<p:selectBooleanButton onLabel="Need verfied "
+												id="needVerfied" offLabel="Need verfied   "
+												value="#{postController.realEstate.needVerfied}"
 												onIcon="pi pi-check" offIcon="pi pi-times"
 												style="width:12rem ; display:block" />
 
@@ -453,6 +462,9 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 										</div>
 									</div>
+
+
+
 
 									<div class="row">
 
@@ -508,6 +520,27 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 
 
+											<div class="row">
+
+												<div class="col-4" style="display: block">
+
+													<h:outputText style=" font-size:16px; "
+														value="Pending Boost :" />
+
+
+
+													<p:selectBooleanButton onLabel="pending Boost "
+														id="pendingPost" offLabel="pending Boost "
+														value="#{postController.realEstate.pendingBoost}"
+														onIcon="pi pi-check" offIcon="pi pi-times"
+														style="width:12rem ; display:block" />
+
+
+
+												</div>
+											</div>
+
+
 
 											<div class="col-md-10">
 												<p:outputLabel class="control-label" for="boostType"
@@ -544,7 +577,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 													action='#{postController.save()}'
 													styleClass="btn btn-primary btn-save">
 													<f:ajax render=":messageScript "
-														execute="  postStatus reffuseCause  pendingPost  postVerfied boostType " />
+														execute="  postStatus reffuseCause  needVerfied  pendingPost  postVerfied boostType " />
 													<i class="fa fa-save" />
 													<span>Save</span>
 

@@ -154,6 +154,9 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@Expose
 	private boolean pendingBoost;
 
+	@Expose
+	private boolean needVerfied;
+
 	public RealEstate() {
 		// TODO Auto-generated constructor stub
 	}
@@ -357,6 +360,14 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	public void setPendingBoost(boolean pendingBoost) {
 		this.pendingBoost = pendingBoost;
+	}
+
+	public boolean isNeedVerfied() {
+		return needVerfied;
+	}
+
+	public void setNeedVerfied(boolean needVerfied) {
+		this.needVerfied = needVerfied;
 	}
 
 }
