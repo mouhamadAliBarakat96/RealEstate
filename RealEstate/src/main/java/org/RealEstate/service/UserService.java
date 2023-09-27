@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.dto.PaginationResponse;
 import org.RealEstate.enumerator.UserCategory;
+import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
@@ -34,6 +35,12 @@ public class UserService implements Serializable {
 	private RealEstateFacade restateFacade;
 	@EJB
 	private UploadImagesMultiPart uploadImagesMultiPart;
+
+	@EJB
+	private ChaletFacade chaletFacade;
+
+	@EJB
+	private AppSinglton appSinglton;
 
 	public Response updateUserInforamtion(User user) {
 
@@ -265,6 +272,60 @@ public class UserService implements Serializable {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 
 		}
+	}
+
+	public Response findNumberOfPostForUserApi(Long id) {
+		try {
+			if (id == null || id <= 0) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.USER_ID_SHOULD_BE_GREATER_THAN_ZERO)
+						.build();
+			} else {
+				User user = userFacade.find(id);
+				Long nbOfPost;
+
+				nbOfPost = findNumberOfPostForUser(user);
+
+				return Response.status(Status.OK).entity(nbOfPost).build();
+
+			}
+
+		}
+
+		catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+
+	}
+
+	public Long findNumberOfPostForUser(User user) throws Exception {
+
+		if (user == null) {
+			throw new Exception(Constants.USER_NOT_EXISTS);
+		}
+
+		Long nbOfPost = restateFacade.findUserCountPostPendingOrActive(user.getId())
+				+ chaletFacade.findUserCountPostPendingOrActive(user.getId());
+		// nb of post allowed ;
+		// krml is broker bytla3lo zyde
+		int nbOfPostAllowed = 0;
+		if (user.isBroker()) {
+			nbOfPostAllowed = appSinglton.getBrokerNbOfPost();
+		}
+
+		if (user.getUserCategory() == UserCategory.REGULAR) {
+			nbOfPostAllowed = nbOfPostAllowed + appSinglton.getFreeNbOfPost();
+
+		} else if (user.getUserCategory() == UserCategory.MEDUIM) {
+
+			nbOfPostAllowed = nbOfPostAllowed + appSinglton.getMeduimAccountNbOfPost();
+
+		} else if (user.getUserCategory() == UserCategory.PREMIUM) {
+			nbOfPostAllowed = nbOfPostAllowed + appSinglton.getPremuimAccountNbOfPost();
+		}
+		Long nbOfPostForCurrentUser = nbOfPostAllowed - nbOfPost;
+		return nbOfPostForCurrentUser < 0 ? 0 : nbOfPostForCurrentUser;
+
 	}
 
 }

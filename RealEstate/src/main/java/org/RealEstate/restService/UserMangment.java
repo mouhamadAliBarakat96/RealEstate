@@ -38,7 +38,7 @@ public class UserMangment implements Serializable {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 
-	public Response savePost(User user) {
+	public Response saveUser(User user) {
 		try {
 			return userService.createUser(user);
 		} catch (Exception e) {
@@ -58,7 +58,15 @@ public class UserMangment implements Serializable {
 
 	}
 
-	
+	@GET
+	@Path("/v1/nb-post-alllowed/{id}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response findNumberOfPostForUser( @PathParam("id") Long id) {
+
+		return userService.findNumberOfPostForUserApi(id);
+
+	}
+
 	@PUT
 	@Path("/v1")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -69,7 +77,6 @@ public class UserMangment implements Serializable {
 
 	}
 
-	
 	/*
 	 * @GET
 	 * 
@@ -100,8 +107,6 @@ public class UserMangment implements Serializable {
 	 * }
 	 */
 
-
-	
 	@GET
 	@Path("/login/v1")
 
@@ -118,17 +123,16 @@ public class UserMangment implements Serializable {
 	@GET
 	@Path("/login-fb/v1")
 
-	public Response loginFb(@QueryParam("fbId") String fbId ) {
+	public Response loginFb(@QueryParam("fbId") String fbId) {
 		try {
-			return userService.loginFb(fbId );
+			return userService.loginFb(fbId);
 		} catch (Exception e) {
 			return analyzeException(e);
 
 		}
 
 	}
-	
-	
+
 	private Response analyzeException(Exception e) {
 		e.printStackTrace();
 		if (e instanceof EJBException)
