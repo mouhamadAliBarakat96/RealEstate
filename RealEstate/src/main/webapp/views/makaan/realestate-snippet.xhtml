@@ -10,14 +10,15 @@
 	<div class="tab-content">
 		<div id="tab-1" class="tab-pane fade show p-2 active">
 			<div class="row g-4">
-				<p:dataView var="real" value="#{actionBean.realLazyModel}" rows="6" emptyMessage="#{bundle.no_records}"
-					lazy="true" paginator="true"    styleClass="#{empty actionBean.realLazyModel.pageItems ? 'empty-row' : ''}"
+				<p:dataView var="real" value="#{actionBean.realLazyModel}" rows="6"
+					emptyMessage="#{bundle.no_records}" lazy="true" paginator="true"
+					styleClass="px-0 #{empty actionBean.realLazyModel.pageItems ? 'empty-row' : ''}"
 					paginatorPosition="bottom" widgetVar="realEstatesDataView"
 					paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} "
 					gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 					<p:dataViewGridItem>
 						<div class="card flex justify-content-center">
-							<div class="col-md-12 wow  "  >
+							<div class="col-md-12 wow  ">
 								<div class="property-item rounded overflow-hidden">
 									<div class="position-relative overflow-hidden">
 
@@ -33,15 +34,17 @@
 										<div class="col-md-12 top-0 start-0 position-absolute">
 											<div class="d-flex justify-content-between">
 												<h:panelGroup layout="block" rendered="#{real.boosted}"
-													styleClass="bg-primary rounded text-white py-1 px-3">
-															#{bundle.post_boosted}
-															<i class="fa fa-certificate"></i>
+													styleClass="tag-new tag-new--verified px-2">
+													#{bundle.post_boosted}
+													<p:graphicImage alt="boosted" width="24" height="24"
+														url="/resources/images/sponsor.png">
+													</p:graphicImage>
 												</h:panelGroup>
-
 												<h:panelGroup rendered="#{real.verfied}" layout="block"
-													styleClass="bg-primary rounded text-white py-1 px-3  ms-2">
-															#{bundle.post_verified}
-															<i class="fa fa-check"></i>
+													styleClass="tag-new tag-new--verified px-2">
+															 #{bundle.post_verified}
+													  <p:graphicImage alt="verified" width="24" height="24"
+														url="/resources/images/icon-verfied.png" />
 												</h:panelGroup>
 											</div>
 										</div>
@@ -88,8 +91,8 @@
 										<h:panelGroup
 											rendered="#{actionBean.hasRoomsAndBathRooms(real.postType)}">
 											<small class="flex-fill text-center border-end py-2">
-												<i class="fa fa-bed text-primary me-2" /> 
-												#{real.nbRoom ==0? bundle.no_value: real.nbRoom} 
+												<i class="fa fa-bed text-primary me-2" /> #{real.nbRoom
+												==0? bundle.no_value: real.nbRoom}
 												#{bundle.real_estate_rooms}
 											</small>
 										</h:panelGroup>
@@ -127,18 +130,20 @@
 													binding="#{actionBean.addViewsAfterClick(real)}" />
 											</h:commandLink>
 
-											<div class="col-md-12 top-0 start-0 position-absolute">
+											<div class="col-12 top-0 start-0 position-absolute">
 												<div class="d-flex justify-content-between">
 													<h:panelGroup layout="block" rendered="#{real.boosted}"
-														styleClass="bg-primary rounded text-white py-1 px-3">
-															#{bundle.post_boosted}
-															<i class="fa fa-certificate"></i>
+														styleClass="tag-new tag-new--verified px-2">
+														#{bundle.post_boosted}
+														<p:graphicImage alt="boosted" width="24" height="24"
+																url="/resources/images/sponsor.png">
+														 </p:graphicImage>
 													</h:panelGroup>
-
 													<h:panelGroup rendered="#{real.verfied}" layout="block"
-														styleClass="bg-primary rounded text-white py-1 px-3  ms-2">
-															#{bundle.post_verified}
-															<i class="fa fa-check"></i>
+														styleClass="tag-new tag-new--verified px-2">
+															 #{bundle.post_verified}
+													  <p:graphicImage alt="verified" width="24" height="24"
+															url="/resources/images/icon-verfied.png" />
 													</h:panelGroup>
 												</div>
 											</div>
@@ -192,14 +197,14 @@
 											<h:panelGroup
 												rendered="#{actionBean.hasRoomsAndBathRooms(real.postType)}">
 												<small class="flex-fill text-center border-end py-2">
-													<i class="fa fa-bed text-primary me-2" />
-													#{real.nbRoom ==0? bundle.no_value: real.nbRoom} 
+													<i class="fa fa-bed text-primary me-2" /> #{real.nbRoom
+													==0? bundle.no_value: real.nbRoom}
 													#{bundle.real_estate_rooms}
 												</small>
 
 												<small class="flex-fill text-center py-2"> <i
-													class="fa fa-bath text-primary me-2" />
-													#{real.nbBathRoom ==0? bundle.no_value: real.nbBathRoom} 
+													class="fa fa-bath text-primary me-2" /> #{real.nbBathRoom
+													==0? bundle.no_value: real.nbBathRoom}
 													#{bundle.real_estate_bathrooms}
 												</small>
 											</h:panelGroup>

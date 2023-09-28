@@ -35,7 +35,8 @@
 											alt="the photos"
 											style="width: 100%;max-height: 16rem; display: block;object-fit:cover;">
 										</p:graphicImage>
-										<p:galleria widgetVar="chaletGallerie" styleClass="galleria-arabic-fix"
+										<p:galleria widgetVar="chaletGallerie"
+											styleClass="galleria-arabic-fix"
 											value="#{chaletCardController.item.images}" var="photo"
 											numVisible="4" circular="true" fullScreen="true"
 											showItemNavigators="true" showThumbnails="false"
@@ -44,7 +45,7 @@
 											<p:graphicImage url="#{chaletCardController.fullUrl}#{photo}"
 												alt="the photos" style="width: 100%; display: block" />
 										</p:galleria>
-										<p:commandButton value="#{bundle.show_photos}"  
+										<p:commandButton value="#{bundle.show_photos}"
 											icon="pi pi-external-link" styleClass="col-12"
 											onclick="PF('chaletGallerie').show();" process="@this">
 										</p:commandButton>
@@ -53,31 +54,35 @@
 								<div class="col-md-8 ">
 									<div class="pt-2 px-3 pb-0">
 										<div class="d-flex justify-content-between">
+
 											<h:panelGroup layout="block"
 												rendered="#{chaletCardController.item.boosted}"
-												styleClass="bg-primary rounded text-white px-3 py-1">
-												#{bundle.post_boosted}
-												<i class="fa fa-certificate"></i>
+												styleClass="tag-new tag-new--verified px-2">
+														#{bundle.post_boosted}
+														<p:graphicImage alt="boosted" width="24" height="24"
+													url="/resources/images/sponsor.png">
+												</p:graphicImage>
 											</h:panelGroup>
 											<h:panelGroup rendered="#{chaletCardController.item.verfied}"
-												styleClass="bg-primary rounded text-white px-3 py-1 ">
-												#{bundle.post_verified}
-												<i class="fa fa-check"></i>
+												layout="block" styleClass="tag-new tag-new--verified px-2">
+															 #{bundle.post_verified}
+													  <p:graphicImage alt="verified" width="24" height="24"
+													url="/resources/images/icon-verfied.png" />
 											</h:panelGroup>
 										</div>
 										<div class="d-flex justify-content-between mt-2">
-										     <span 
+											<span
 												style="color: #00B98E; font-size: 22px; font-weight: 700">
 												#{chaletCardController.item.name}</span>
-											  
-											  <button class="btn btn-outline-primary"
+
+											<button class="btn btn-outline-primary"
 												style="display: contents;" onclick="copyCurrentURL()">#{bundle.copy}</button>
 										</div>
-										
+
 										<span class="border-bottom row mt-2"
-											style="margin-top: 0.5%; display: block; color: #2d383f; ">
+											style="margin-top: 0.5%; display: block; color: #2d383f;">
 											#{chaletCardController.item.descrption}</span>
-										
+
 										<div class="row">
 											<div class="col-md-6">
 												<div class="col-md-3">
@@ -92,16 +97,15 @@
 													</div>
 													<div
 														style="font-weight: 600;; margin-left: 50px; width: 60%; display: inline-block">
-														<span style="display: block; margin-top: 1%">
-														 <c:choose>
+														<span style="display: block; margin-top: 1%"> <c:choose>
 																<c:when test="#{languageController.locale eq 'en'}">
 																	#{chaletCardController.item.village.fullAddress()}
 																</c:when>
 																<c:otherwise>
 																	 #{chaletCardController.item.village.fullAddress_ar()}
 																</c:otherwise>
-														 </c:choose>
-														 </span>
+															</c:choose>
+														</span>
 													</div>
 												</div>
 											</div>
@@ -125,7 +129,8 @@
 																src="/resources/makaan/img/profile.png" alt="Icon" />
 														</h:panelGroup>
 													</div>
-													<div style="margin-left: 50px; width: 60%; display: inline-block">
+													<div
+														style="margin-left: 50px; width: 60%; display: inline-block">
 														<h:link outcome="userchalet-search"
 															value="#{chaletCardController.item.user.firstName}
 															#{chaletCardController.item.user.lastName} "
@@ -156,62 +161,50 @@
 									</div>
 									<div style="margin: 0%;"
 										class="row col-md-12 border-top border-end border-start mt-2">
-										<small
-											class="col-md-3  border-end py-2 border-bottom">
-											<h:outputLabel value="#{bundle.chalet_weekdays}: " />
-											 <h:outputLabel styleClass="me-2 ms-2"
+										<small class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel value="#{bundle.chalet_weekdays}: " /> <h:outputLabel
+												styleClass="me-2 ms-2"
 												value="#{chaletCardController.item.weekdays}">
 												<f:convertNumber pattern="#,###" />
 												<i class="fa fa-ligth fa-dollar-sign text-primary me-2 ms-2" />
 											</h:outputLabel>
-										</small>
-										 <small
-											class="col-md-3  border-end py-2 border-bottom">
-											<h:outputLabel value="#{bundle.chalet_weekenddays}: " />
-											 <h:outputLabel styleClass="me-2 ms-2"
+										</small> <small class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel value="#{bundle.chalet_weekenddays}: " /> <h:outputLabel
+												styleClass="me-2 ms-2"
 												value="#{chaletCardController.item.weekenddays}">
 												<f:convertNumber pattern="#,###" />
 												<i class="fa fa-ligth fa-dollar-sign text-primary me-2 ms-2" />
 											</h:outputLabel>
-										</small>
-										 <small
-											class="col-md-3  border-end py-2 border-bottom">
-											 <h:outputLabel value="#{bundle.real_estate_space}: " />
-											 <h:outputLabel styleClass="me-2 ms-2"
+										</small> <small class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel value="#{bundle.real_estate_space}: " /> <h:outputLabel
+												styleClass="me-2 ms-2"
 												value="#{chaletCardController.item.space}">
 												<f:convertNumber pattern="#,###" />
 												<i class="fa fa-ruler-combined text-primary me-2 ms-2" />
 											</h:outputLabel>
-											
-										</small>
-										 <small
-											class="col-md-3  py-2 border-bottom border-end">
-											<h:outputLabel value="#{bundle.chalet_pool}" />
-											 <i class="text-primary #{chaletCardController.item.pool ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
-										</small>
-										 <small class="col-md-3  py-2 border-bottom border-end">
-											<h:outputLabel value="#{bundle.chalet_chimney}" /> 
-											<i class="text-primary #{chaletCardController.item.chimney ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
-										</small>
-										 <small class="col-md-3  border-end py-2 border-bottom">
-											<h:outputLabel value="#{bundle.real_estate_views}:" /> 
-											<h:outputLabel 
-												value="#{chaletCardController.item.views}" styleClass="me-2 ms-2">
+
+										</small> <small class="col-md-3  py-2 border-bottom border-end">
+											<h:outputLabel value="#{bundle.chalet_pool}" /> <i
+											class="text-primary #{chaletCardController.item.pool ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
+										</small> <small class="col-md-3  py-2 border-bottom border-end">
+											<h:outputLabel value="#{bundle.chalet_chimney}" /> <i
+											class="text-primary #{chaletCardController.item.chimney ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
+										</small> <small class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel value="#{bundle.real_estate_views}:" /> <h:outputLabel
+												value="#{chaletCardController.item.views}"
+												styleClass="me-2 ms-2">
 												<f:convertNumber pattern="#,###" />
 												<i class=" fa fa-regular fa-eye text-primary me-2 ms-2" />
 											</h:outputLabel>
-										</small> <small
-											class="col-md-3  border-end border-bottom py-2">
-											<h:outputLabel value="#{bundle.real_estate_calls}:" /> 
-											<h:outputLabel  
+										</small> <small class="col-md-3  border-end border-bottom py-2">
+											<h:outputLabel value="#{bundle.real_estate_calls}:" /> <h:outputLabel
 												value="#{chaletCardController.item.numberOfCall}"
 												styleClass="ms-2 me-2">
 												<f:convertNumber pattern="#,###" />
 												<i class="fa fa-regular fa-phone text-primary me-2 ms-2" />
 											</h:outputLabel>
-										</small> <small
-											class="col-md-3  border-end py-2 border-bottom">
-											 <h:outputLabel styleClass=" me-2 ms-2"
+										</small> <small class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel styleClass=" me-2 ms-2"
 												value="#{chaletCardController.item.postDate}">
 												<f:convertDateTime pattern="yyyy-MM-dd" />
 												<i class="far fa-calendar text-primary me-2 ms-2" />

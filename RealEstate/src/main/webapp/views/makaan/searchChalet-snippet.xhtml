@@ -6,95 +6,105 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:component>
-	<div class="container-fluid bg-primary mb-5 wow pb-1 " data-wow-delay="0.1s" >
+	<div class="container-fluid bg-primary mb-4  pb-1">
 		<div class="row">
-			<!-- <div class="col-md-3 col-sm-12   ">
-				<h:outputLabel value="#{bundle.governate}" style="color:white" />
-				<h:selectOneMenu styleClass="form-select border-0 "
-					converter="omnifaces.SelectItemsConverter" id="chaletGovernate"
-					value="#{actionBean.selecteGovernorate}">
-					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-					<f:selectItems value="#{actionBean.governorates}" var="option"
-						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
-					<f:ajax execute="@this"
-						render="myForm:chaletDistrict myForm:chaletVillage"
-						listener="#{actionBean.listenerSelectGovernate()}" />
-				</h:selectOneMenu>
-			</div>
+			<ui:remove>
+				<div class="col-md-3 col-sm-12   ">
+					<h:outputLabel value="#{bundle.governate}" style="color:white" />
+					<h:selectOneMenu styleClass="form-select border-0 "
+						converter="omnifaces.SelectItemsConverter" id="chaletGovernate"
+						value="#{actionBean.selecteGovernorate}">
+						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
+						<f:selectItems value="#{actionBean.governorates}" var="option"
+							itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
+							itemValue="#{option}" />
+						<f:ajax execute="@this"
+							render="myForm:chaletDistrict myForm:chaletVillage"
+							listener="#{actionBean.listenerSelectGovernate()}" />
+					</h:selectOneMenu>
+				</div>
 
-			<div class="col-md-3 col-sm-12 mt-1 ">
-				<h:outputLabel value="#{bundle.discrit}" style="color:white" />
-				<h:selectOneMenu converter="omnifaces.SelectItemsConverter"
-					styleClass="form-select border-0  " id="chaletDistrict"
-					value="#{actionBean.selecteDistrict}">
-					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-					<f:selectItems value="#{actionBean.districts}" var="option"
-						itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}" itemValue="#{option}" />
-					<f:ajax execute="@this"
-						listener="#{actionBean.listenerSelectDistrict()}"
-						render="myForm:chaletVillage" />
-				</h:selectOneMenu>
-			</div> -->
+				<div class="col-md-3 col-sm-12 mt-1 ">
+					<h:outputLabel value="#{bundle.discrit}" style="color:white" />
+					<h:selectOneMenu converter="omnifaces.SelectItemsConverter"
+						styleClass="form-select border-0  " id="chaletDistrict"
+						value="#{actionBean.selecteDistrict}">
+						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
+						<f:selectItems value="#{actionBean.districts}" var="option"
+							itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
+							itemValue="#{option}" />
+						<f:ajax execute="@this"
+							listener="#{actionBean.listenerSelectDistrict()}"
+							render="myForm:chaletVillage" />
+					</h:selectOneMenu>
+				</div>
+			</ui:remove>
 			<div class="col-md-3 col-sm-12 mt-1 ">
 				<h:outputLabel value="#{bundle.village}" style="color:white" />
-				<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="chaletVillage" filter="true" filterMatchMode="contains" filterNormalize="true"
-					styleClass="form-select border-0  "
+				
+				<p:selectOneMenu converter="omnifaces.SelectItemsConverter" style="min-width:25px"
+					id="chaletVillage" filter="true" filterMatchMode="contains"
+					filterNormalize="true" styleClass="form-select border-0  "
 					value="#{actionBean.selecteVillage}">
 					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 					<f:selectItems value="#{actionBean.villages}" var="option"
-						itemLabel="#{languageController.locale=='en'?  option.fullAddress() : option.fullAddress_ar()}" itemValue="#{option}" />
-					<f:ajax execute="@this"/>
+						itemLabel="#{languageController.locale=='en'?  option.fullAddress() : option.fullAddress_ar()}"
+						itemValue="#{option}" />
+					<f:ajax execute="@this" />
 				</p:selectOneMenu>
 			</div>
-		
-			<div class="col-md-3 mt-2 col-sm-12 ">
+
+			<div class="col-md-3 mt-1 col-sm-12 ">
 				<h:outputLabel value="#{bundle.min_price}" style="color:white" />
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
 					maxValue="9999999999" id="chaletMinPriceId" emptyValue="0"
 					label="#{bundle.min_price}" required="true"
-					styleClass="form-control"
-					value="#{actionBean.minPrice}">
-					<f:ajax/>
+					styleClass="form-control" value="#{actionBean.minPrice}">
+					<f:ajax />
 				</p:inputNumber>
 			</div>
-			<div class="col-md-3 mt-2 col-sm-12 ">
+			<div class="col-md-3 mt-1 col-sm-12 ">
 				<h:outputLabel value="#{bundle.max_price}" style="color:white" />
 				<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
-					maxValue="9999999999" id="chaletMaxPriceId" label="#{bundle.max_price}"
-					required="true" styleClass="form-control" emptyValue="0"
+					maxValue="9999999999" id="chaletMaxPriceId"
+					label="#{bundle.max_price}" required="true"
+					styleClass="form-control" emptyValue="0"
 					value="#{actionBean.maxPrice}">
-					<f:ajax/>
+					<f:ajax />
 				</p:inputNumber>
-				
+
 			</div>
-			
-			<div class="col-md-3 col-sm-12 mt-2 ">
+
+			<div class="col-md-3 col-sm-12 mt-1 ">
 				<h:outputLabel value="#{bundle.chalet_chimney}" style="color:white" />
 				<h:selectOneMenu styleClass="form-select border-0  "
 					converter="omnifaces.SelectItemsConverter"
 					value="#{actionBean.chimneyYesNoEnum}">
 					<f:selectItem itemLabel="#{bundle.chalet_chimney}" itemValue="" />
 					<f:selectItems value="#{YesNoEnum.values()}" var="option"
-						itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}"
+						itemValue="#{option}" />
 				</h:selectOneMenu>
 			</div>
-			
-			<div class="col-md-3 col-sm-12 mt-2 ">
+
+			<div class="col-md-3 col-sm-12 mt-1 ">
 				<h:outputLabel value="#{bundle.chalet_pool}" style="color:white" />
 				<h:selectOneMenu styleClass="form-select border-0  "
 					converter="omnifaces.SelectItemsConverter"
 					value="#{actionBean.poolYesNoEnum}">
 					<f:selectItem itemLabel="#{bundle.chalet_pool}" itemValue="" />
 					<f:selectItems value="#{YesNoEnum.values()}" var="option"
-						itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}" itemValue="#{option}" />
+						itemLabel="#{languageController.locale=='en'? option.answer : option.answer_ar}"
+						itemValue="#{option}" />
 				</h:selectOneMenu>
 			</div>
-			
-			<div class="col-md-3 col-sm-12 d-flex flex-column-reverse flex-wrap  mt-2 align-content-start" >
+
+			<div
+				class="col-md-3 col-sm-12 d-flex flex-column-reverse flex-wrap  mt-2 align-content-start">
 				<h:commandButton action="#{actionBean.chaletSearch()}"
-					value="#{bundle.search}"
-					styleClass="btn btn-search ">
-					<f:ajax execute="myForm:searchBarPanel" render="myForm:ChaletPanelId :messageScript"/>
+					value="#{bundle.search}" styleClass="btn btn-search ">
+					<f:ajax execute="myForm:searchBarPanel"
+						render="myForm:ChaletPanelId :messageScript" />
 				</h:commandButton>
 			</div>
 		</div>

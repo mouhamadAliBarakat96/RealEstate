@@ -47,7 +47,7 @@
 										</p:galleria>
 										<p:commandButton value="#{bundle.show_photos}"
 											styleClass="col-12" icon="pi pi-external-link"
-											onclick="PF('galleria1').show()" process="@this" >
+											onclick="PF('galleria1').show()" process="@this">
 										</p:commandButton>
 
 									</div>
@@ -55,30 +55,31 @@
 								<div class="col-md-8 px-5">
 									<div class="row pt-2 pb-0">
 										<div class="d-flex justify-content-between p-0">
-											<h:panelGroup layout="block"
-												rendered="#{realEstateCardController.item.boosted}"
-												styleClass="bg-primary rounded text-white px-3 py-1">
-												#{bundle.post_boosted}
-												<i class="fa fa-certificate"></i>
+											<h:panelGroup layout="block" rendered="#{realEstateCardController.item.boosted}"
+												styleClass="tag-new tag-new--verified px-2">
+														#{bundle.post_boosted}
+														<p:graphicImage alt="boosted" width="24" height="24"
+													url="/resources/images/sponsor.png">
+												</p:graphicImage>
 											</h:panelGroup>
-											<h:panelGroup
-												rendered="#{realEstateCardController.item.verfied}"
-												styleClass="bg-primary rounded text-white px-3 py-1 ">
-												#{bundle.post_verified}
-												<i class="fa fa-check"></i>
+											<h:panelGroup rendered="#{realEstateCardController.item.verfied}" layout="block"
+												styleClass="tag-new tag-new--verified px-2">
+															 #{bundle.post_verified}
+													  <p:graphicImage alt="verified" width="24" height="24"
+													url="/resources/images/icon-verfied.png" />
 											</h:panelGroup>
 										</div>
-										
-										
+
+
 										<div class="d-flex justify-content-between mt-2">
-										     <span 
+											<span
 												style="color: #00B98E; font-size: 22px; font-weight: 700">
 												#{realEstateCardController.item.tittle}</span>
-											  
-											  <button class="btn btn-outline-primary"
+
+											<button class="btn btn-outline-primary"
 												style="display: contents;" onclick="copyCurrentURL()">#{bundle.copy}</button>
 										</div>
-										
+
 										<span class="mt-2   row border-bottom"
 											style="display: block; color: #2d383f;">
 											#{realEstateCardController.item.subTittle}</span>
@@ -97,17 +98,16 @@
 															src="/resources/makaan/img/mapImage.png" alt="Icon" />
 													</div>
 													<div class="ms-5"
-														style="font-weight: 600;width: 60%; display: inline-block">
-														<span style="display: block; margin-top: 1%">
-														 <c:choose>
+														style="font-weight: 600; width: 60%; display: inline-block">
+														<span style="display: block; margin-top: 1%"> <c:choose>
 																<c:when test="#{languageController.locale eq 'en'}">
 																	#{realEstateCardController.item.village.fullAddress()}
 																</c:when>
 																<c:otherwise>
 																	 #{realEstateCardController.item.village.fullAddress_ar()}
 																</c:otherwise>
-														 </c:choose>
-													   </span>
+															</c:choose>
+														</span>
 
 													</div>
 												</div>
@@ -137,8 +137,7 @@
 														</h:panelGroup>
 
 													</div>
-													<div class="ms-5"
-														style="width: 60%; display: inline-block">
+													<div class="ms-5" style="width: 60%; display: inline-block">
 
 														<h:link outcome="userpost-search"
 															value="#{realEstateCardController.item.user.firstName}
@@ -173,44 +172,45 @@
 										</div>
 									</div>
 
-									<div style="margin: 0%;" class="row col-md-12 border-top  border-start mt-2 small-flex">
+									<div style="margin: 0%;"
+										class="row col-md-12 border-top  border-start mt-2 small-flex">
 										<small class="col-md-3  border-end py-2 border-bottom">
 
-											<h:outputLabel value="#{bundle.real_estate_price}: "  />
-										    <h:outputLabel value="#{realEstateCardController.item.price}" styleClass="me-2  ms-2" >
+											<h:outputLabel value="#{bundle.real_estate_price}: " /> <h:outputLabel
+												value="#{realEstateCardController.item.price}"
+												styleClass="me-2  ms-2">
 												<f:convertNumber pattern="#,###" />
 												<i class="fa fa-ligth fa-dollar-sign text-primary me-2 ms-2" />
 											</h:outputLabel>
-										</small>
-									    <small
-											class="col-md-3  border-end py-2 border-bottom">
-											<h:outputLabel value="#{bundle.real_estate_space}: " />
-											 <h:outputLabel value="#{realEstateCardController.item.space}" styleClass="me-2  ms-2" >
+										</small> <small class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel value="#{bundle.real_estate_space}: " /> <h:outputLabel
+												value="#{realEstateCardController.item.space}"
+												styleClass="me-2  ms-2">
 												<f:convertNumber pattern="#,###" />
 											</h:outputLabel> <i class="fa fa-ruler-combined text-primary me-2" />
 										</small>
 
 										<h:panelGroup
 											rendered="#{realEstateCardController.hasRoomsAndBathRoomsAndFloor(realEstateCardController.item.postType)}">
-											<small
-												class="col-md-3  border-end py-2 border-bottom ">
-												<h:outputLabel value="#{bundle.real_estate_rooms}" />
-												<h:outputLabel styleClass="ms-1 me-1" value="#{realEstateCardController.item.nbRoom}" >
-												 	<i class="fa fa-bed text-primary me-2 ms-2" />
+											<small class="col-md-3  border-end py-2 border-bottom ">
+												<h:outputLabel value="#{bundle.real_estate_rooms}" /> <h:outputLabel
+													styleClass="ms-1 me-1"
+													value="#{realEstateCardController.item.nbRoom}">
+													<i class="fa fa-bed text-primary me-2 ms-2" />
 												</h:outputLabel>
 											</small>
-											<small
-												class="col-md-3  border-end py-2 border-bottom ">
-												<h:outputLabel value="#{bundle.real_estate_bathrooms}" />
-												<h:outputLabel value="#{realEstateCardController.item.nbBathRoom}" styleClass="me-2  ms-2" >
-												 	<i class="fa fa-bed text-primary me-2  m s-2" />
+											<small class="col-md-3  border-end py-2 border-bottom ">
+												<h:outputLabel value="#{bundle.real_estate_bathrooms}" /> <h:outputLabel
+													value="#{realEstateCardController.item.nbBathRoom}"
+													styleClass="me-2  ms-2">
+													<i class="fa fa-bed text-primary me-2  m s-2" />
 												</h:outputLabel>
 											</small>
-											<small
-												class="col-md-3  py-2 border-bottom border-end">
-												<h:outputLabel value="#{bundle.real_estate_floor}" />
-												<h:outputLabel value="#{bundle[realEstateCardController.floorValue(realEstateCardController.item.floor)]}" styleClass="me-2  ms-2" >
-												 	<i class="fas fa-layer-group text-primary me-2  ms-2" />
+											<small class="col-md-3  py-2 border-bottom border-end">
+												<h:outputLabel value="#{bundle.real_estate_floor}" /> <h:outputLabel
+													value="#{bundle[realEstateCardController.floorValue(realEstateCardController.item.floor)]}"
+													styleClass="me-2  ms-2">
+													<i class="fas fa-layer-group text-primary me-2  ms-2" />
 												</h:outputLabel>
 											</small>
 										</h:panelGroup>
@@ -218,9 +218,11 @@
 										<h:panelGroup
 											rendered="#{realEstateCardController.hasPark(realEstateCardController.item.postType)}">
 											<small class="col-md-3  py-2 border-bottom border-end">
-												<h:outputLabel value="#{bundle.real_estate_nb_of_car_park}: " />
-												<h:outputLabel value="#{realEstateCardController.item.nbOfCarPark}" styleClass="me-2  ms-2">
-												 	 <i class="fas fa-parking text-primary me-2  ms-2" />
+												<h:outputLabel
+													value="#{bundle.real_estate_nb_of_car_park}: " /> <h:outputLabel
+													value="#{realEstateCardController.item.nbOfCarPark}"
+													styleClass="me-2  ms-2">
+													<i class="fas fa-parking text-primary me-2  ms-2" />
 												</h:outputLabel>
 											</small>
 										</h:panelGroup>
@@ -228,15 +230,15 @@
 										<h:panelGroup
 											rendered="#{realEstateCardController.hasElevator(realEstateCardController.item.postType)}">
 											<small class="col-md-3  py-2 border-bottom border-end">
-												<h:outputLabel value="#{bundle.real_estate_electric_elevator}" />
-												 <i class="text-primary #{realEstateCardController.item.electricElevator ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
+												<h:outputLabel
+													value="#{bundle.real_estate_electric_elevator}" /> <i
+												class="text-primary #{realEstateCardController.item.electricElevator ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
 											</small>
 										</h:panelGroup>
 
 										<h:panelGroup
 											rendered="#{realEstateCardController.hasGarden(realEstateCardController.item.postType)}">
-											<small
-												class="col-md-3  py-2 border-bottom border-end">
+											<small class="col-md-3  py-2 border-bottom border-end">
 												<h:outputLabel value="#{bundle.real_estate_garden}" /> <i
 												class="text-primary #{realEstateCardController.item.garden ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
 											</small>
@@ -244,8 +246,7 @@
 
 										<h:panelGroup
 											rendered="#{realEstateCardController.hasGreenBand(realEstateCardController.item.postType)}">
-											<small
-												class="col-md-3  py-2 border-bottom border-end">
+											<small class="col-md-3  py-2 border-bottom border-end">
 												<h:outputLabel value="#{bundle.real_estate_green_band}" />
 												<i
 												class="text-primary #{realEstateCardController.item.greenBond ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
@@ -256,25 +257,24 @@
 
 										<h:panelGroup
 											rendered="#{realEstateCardController.aLand(realEstateCardController.item.postType)}">
-											<small
-												class="col-md-3  border-end py-2 border-bottom">
-												
-												 <h:outputLabel value="#{bundle.real_estate_road}" /> 
-												 <i class="text-primary #{realEstateCardController.item.road ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
-											</small>
-											<small class="col-md-3  py-2 border-bottom border-start border-end">
-												
-												 <h:outputLabel value="#{bundle.real_estate_water}" />
-												<i class="text-primary #{realEstateCardController.item.water ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
+											<small class="col-md-3  border-end py-2 border-bottom">
+
+												<h:outputLabel value="#{bundle.real_estate_road}" /> <i
+												class="text-primary #{realEstateCardController.item.road ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
 											</small>
 											<small
-												class="col-md-3  py-2 border-bottom border-end">
-												
-												 <h:outputLabel value="#{bundle.real_estate_electricity}" /> <i
+												class="col-md-3  py-2 border-bottom border-start border-end">
+
+												<h:outputLabel value="#{bundle.real_estate_water}" /> <i
+												class="text-primary #{realEstateCardController.item.water ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
+											</small>
+											<small class="col-md-3  py-2 border-bottom border-end">
+
+												<h:outputLabel value="#{bundle.real_estate_electricity}" />
+												<i
 												class="text-primary #{realEstateCardController.item.electricity ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
 											</small>
-											<small
-												class="col-md-3  border-end py-2 border-bottom">
+											<small class="col-md-3  border-end py-2 border-bottom">
 												<h:outputLabel value="#{bundle.real_estate_nb_of_shares}:" />
 												<h:outputLabel
 													value="#{realEstateCardController.item.nbOfShares}"
@@ -289,8 +289,7 @@
 
 										<h:panelGroup
 											rendered="#{realEstateCardController.aShop(realEstateCardController.item.postType)}">
-											<small
-												class="col-md-3  border-end py-2 border-bottom">
+											<small class="col-md-3  border-end py-2 border-bottom">
 												<h:outputLabel value="#{bundle.real_estate_store_fronts}" />
 												<h:outputLabel
 													value="#{realEstateCardController.item.storefronts}">
@@ -303,30 +302,27 @@
 
 
 										<!-- Abstract entity infos -->
-										<small
-											class="col-md-3  border-end py-2 border-bottom">
+										<small class="col-md-3  border-end py-2 border-bottom">
 											<h:outputLabel value="#{bundle.realestate_negotible}">
 												<i
 													class="text-primary #{realEstateCardController.item.negotiable ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
 											</h:outputLabel>
-										</small> <small
-											class="col-md-3  border-end py-2 border-bottom">
-											<h:outputLabel value="#{bundle.real_estate_views}:" />
-											 <h:outputLabel value="#{realEstateCardController.item.views}" styleClass="me-2  ms-2" >
+										</small> <small class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel value="#{bundle.real_estate_views}:" /> <h:outputLabel
+												value="#{realEstateCardController.item.views}"
+												styleClass="me-2  ms-2">
 												<f:convertNumber pattern="#,###" />
 												<i class=" fa fa-regular fa-eye text-primary me-2  ms-2" />
 											</h:outputLabel>
-										</small> <small
-											class="col-md-3  border-end border-bottom py-2">
-											<h:outputLabel value="#{bundle.real_estate_calls}:" />
-											 <h:outputLabel value="#{realEstateCardController.item.numberOfCall}" styleClass="me-2  ms-2">
+										</small> <small class="col-md-3  border-end border-bottom py-2">
+											<h:outputLabel value="#{bundle.real_estate_calls}:" /> <h:outputLabel
+												value="#{realEstateCardController.item.numberOfCall}"
+												styleClass="me-2  ms-2">
 												<f:convertNumber pattern="#,###" />
 												<i class="fa fa-regular fa-phone text-primary me-2  ms-2" />
 											</h:outputLabel>
-										</small>
-										 <small
-											class="col-md-3  border-end py-2 border-bottom">
-											 <h:outputLabel
+										</small> <small class="col-md-3  border-end py-2 border-bottom">
+											<h:outputLabel
 												value="#{realEstateCardController.item.postDate}">
 												<f:convertDateTime pattern="yyyy-MM-dd" />
 												<i class="far fa-calendar text-primary me-2  ms-2" />

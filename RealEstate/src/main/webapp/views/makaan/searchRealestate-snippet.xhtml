@@ -6,67 +6,66 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:component>
-	<div class="container-fluid bg-primary mb-5 wow p-2"
-		data-wow-delay="0.1s">
+	<div class="container-fluid bg-primary p-2">
 		<h:panelGroup id="realSatatebathBedRoomsId">
 			<div class="row">
-				 <div class="col-md-3 col-sm-12">
+				<div class="col-md-3 col-sm-12  mt-1">
 					<h:outputLabel value="#{bundle.property_type}" style="color:white" />
 					<p:selectOneMenu styleClass="form-select border-0  "
 						converter="omnifaces.SelectItemsConverter"
 						value="#{actionBean.propertyTypeEnum}">
 						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 						<f:selectItems value="#{PropertyTypeEnum.values()}" var="option"
-							itemLabel="#{bundle[option]}"
-							itemValue="#{option}" />
+							itemLabel="#{bundle[option]}" itemValue="#{option}" />
 						<f:ajax execute="myForm:searchBarPanel"
 							render="myForm:realSatatebathBedRoomsId" />
 					</p:selectOneMenu>
 				</div>
-			<!--	<div class="col-md-3 col-sm-12 mt-1  ">
-					<h:outputLabel value="#{bundle.governate}" style="color:white" />
-					<p:selectOneMenu id="governateSelectId"
-						styleClass="form-select border-0 "
-						converter="omnifaces.SelectItemsConverter"
-						value="#{actionBean.selecteGovernorate}">
-						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-						<f:selectItems value="#{actionBean.governorates}" var="option"
-							itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
-							itemValue="#{option}" />
-						<f:ajax execute="@this"
-							render="myForm:districtSelectId myForm:villageSelectId"
-							listener="#{actionBean.listenerSelectGovernate()}" />
-					</p:selectOneMenu>
-				</div> 
-				<div class="col-md-3 col-sm-12  mt-1">
-					<h:outputLabel value="#{bundle.discrit}" style="color:white" />
-					<p:selectOneMenu id="districtSelectId"
-						converter="omnifaces.SelectItemsConverter"
-						styleClass="form-select border-0  "
-						value="#{actionBean.selecteDistrict}">
-						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
-						<f:selectItems value="#{actionBean.districts}" var="option"
-							itemLabel="#{languageController.locale=='en'?  option.fullAddress() : option.fullAddress_ar()}"
-							itemValue="#{option}" />
-							<f:ajax execute="@this"/>
-						  <f:ajax execute="@this"
-							listener="#{actionBean.listenerSelectDistrict()}"
-							render="myForm:villageSelectId" />  
-					</p:selectOneMenu>
-				</div>
-				-->
+				<ui:remove>
+					<div class="col-md-3 col-sm-12 mt-1  ">
+						<h:outputLabel value="#{bundle.governate}" style="color:white" />
+						<p:selectOneMenu id="governateSelectId"
+							styleClass="form-select border-0 "
+							converter="omnifaces.SelectItemsConverter"
+							value="#{actionBean.selecteGovernorate}">
+							<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
+							<f:selectItems value="#{actionBean.governorates}" var="option"
+								itemLabel="#{languageController.locale=='en'? option.name : option.nameAr}"
+								itemValue="#{option}" />
+							<f:ajax execute="@this"
+								render="myForm:districtSelectId myForm:villageSelectId"
+								listener="#{actionBean.listenerSelectGovernate()}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="col-md-3 col-sm-12  mt-1">
+						<h:outputLabel value="#{bundle.discrit}" style="color:white" />
+						<p:selectOneMenu id="districtSelectId"
+							converter="omnifaces.SelectItemsConverter"
+							styleClass="form-select border-0  "
+							value="#{actionBean.selecteDistrict}">
+							<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
+							<f:selectItems value="#{actionBean.districts}" var="option"
+								itemLabel="#{languageController.locale=='en'?  option.fullAddress() : option.fullAddress_ar()}"
+								itemValue="#{option}" />
+							<f:ajax execute="@this" />
+							<f:ajax execute="@this"
+								listener="#{actionBean.listenerSelectDistrict()}"
+								render="myForm:villageSelectId" />
+						</p:selectOneMenu>
+					</div>
+				</ui:remove>
 				<div class="col-md-3 col-sm-12  mt-1">
 					<h:outputLabel value="#{bundle.village}" style="color:white" />
-					<p:selectOneMenu id="villageSelectId" filter="true"
+					<p:selectOneMenu id="villageSelectId" filter="true" style="min-width:25px"
 						filterMatchMode="contains" filterNormalize="true"
 						converter="omnifaces.SelectItemsConverter"
 						styleClass="form-select border-0  "
 						value="#{actionBean.selecteVillage}">
 						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 						<f:selectItems value="#{actionBean.villages}" var="option"
-						    itemLabel="#{languageController.locale=='en'?  option.fullAddress() : option.fullAddress_ar()}"
+							itemLabel="#{languageController.locale=='en'?  option.fullAddress() : option.fullAddress_ar()}"
 							itemValue="#{option}" />
-						<f:ajax execute="@this"/>
+						<f:ajax execute="@this" />
 					</p:selectOneMenu>
 				</div>
 				<h:panelGroup
@@ -74,7 +73,8 @@
 					<div class="col-md-3 mt-1 col-sm-12 ">
 						<h:outputLabel value="#{bundle.beds_count}" style="color:white" />
 						<p:selectCheckboxMenu id="bedRoomsId" filter="true"
-							converter="omnifaces.SelectItemsConverter" style="border-radius: 10px;direction:ltr;"
+							converter="omnifaces.SelectItemsConverter"
+							style="border-radius: 10px;direction:ltr;"
 							styleClass="form-select p-0" filterMatchMode="startsWith"
 							label="#{bundle.beds_count}" multiple="true"
 							emptyLabel="Please select..." updateLabel="true"
@@ -87,11 +87,11 @@
 					<div class="col-md-3 mt-1 col-sm-12 ">
 						<h:outputLabel value="#{bundle.baths_count}" style="color:white" />
 						<p:selectCheckboxMenu id="bathRoomsId" filter="true"
-							converter="omnifaces.SelectItemsConverter" style="border-radius: 10px;direction:ltr;"
+							converter="omnifaces.SelectItemsConverter"
+							style="border-radius: 10px;direction:ltr;"
 							styleClass="form-select p-0" filterMatchMode="startsWith"
 							label="#{bundle.baths_count}" multiple="true"
 							emptyLabel="Please select..." updateLabel="true"
-							
 							value="#{actionBean.bathRooms}">
 							<f:selectItems value="#{CountEnum.values()}" var="option"
 								itemLabel="#{option.value}" itemValue="#{option.value}" />
@@ -117,8 +117,7 @@
 						<f:ajax />
 					</p:inputNumber>
 				</div>
-				<div
-					class="col-12 d-flex flex-row-reverse flex-wrap  mt-2  ">
+				<div class="col-12 d-flex flex-row-reverse flex-wrap  mt-2  ">
 					<h:commandButton action="#{actionBean.search()}"
 						value="#{bundle.search}" styleClass="btn btn-search">
 						<f:ajax execute="myForm:searchBarPanel"
