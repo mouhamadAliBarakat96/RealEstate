@@ -198,13 +198,13 @@ public class UserPostVieuxController implements Serializable {
 		}
 	}
 
-	private final String NO_PHOTO = "nophoto.jpg";
+	 
 
 	public String displayFirstImageReal(RealEstate item) {
 		if (item != null && !item.getImages().isEmpty()) {
 			return fullUrl.concat(item.getImages().get(0));
 		} else {
-			return fullUrl.concat(NO_PHOTO);
+			return fullUrl.concat(Utility.NO_PHOTO);
 		}
 	}
 

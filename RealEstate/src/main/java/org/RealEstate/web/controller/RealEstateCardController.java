@@ -36,7 +36,6 @@ public class RealEstateCardController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final String REQUEST_PARAM = "id";
-	private final String NO_PHOTO = "nophoto.jpg";
 	private RealEstate item;
 	private List<ResponsiveOption> responsiveOptions1;
 	private int activeIndex = 0;
@@ -234,7 +233,7 @@ public class RealEstateCardController implements Serializable {
 		if(item!=null && !item.getImages().isEmpty()) {
 			return fullUrl.concat(item.getImages().get(0));
 		}else {
-			return fullUrl.concat(NO_PHOTO);
+			return fullUrl.concat(Utility.NO_PHOTO);
 		}
 	}
 	

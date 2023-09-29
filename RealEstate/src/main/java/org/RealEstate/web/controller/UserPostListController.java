@@ -24,6 +24,7 @@ import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utility;
 
 @Named
 @ViewScoped
@@ -33,7 +34,6 @@ public class UserPostListController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final String NO_PHOTO = "nophoto.jpg";
 	private final String RQUEST_FROM = "from";
 
 	@Inject
@@ -171,7 +171,7 @@ public class UserPostListController implements Serializable {
 		if (item != null && !item.getImages().isEmpty()) {
 			return fullUrl.concat(item.getImages().get(0));
 		} else {
-			return fullUrl.concat(NO_PHOTO);
+			return fullUrl.concat(Utility.NO_PHOTO);
 		}
 	}
 	
@@ -181,7 +181,7 @@ public class UserPostListController implements Serializable {
 		if (item != null && !item.getImages().isEmpty()) {
 			return fullUrl.concat(item.getImages().get(0));
 		} else {
-			return fullUrl.concat(NO_PHOTO);
+			return fullUrl.concat(Utility.NO_PHOTO);
 		}
 	}
 }

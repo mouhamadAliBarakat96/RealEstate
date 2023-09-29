@@ -65,7 +65,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private static final long serialVersionUID = 1L;
 	private final String REQUEST_PARAM_ID = "id";
 	private final String REQUEST_PARAM_KIND = "kind";
-	private final String NO_PHOTO = "nophoto.jpg";
+	 
 
 	private PostType postType=PostType.APPRATMENT_RENT;
 	private PropertyKindEnum kindEnum = PropertyKindEnum.REALESTATE;
@@ -850,7 +850,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		if(item!=null && !item.getImages().isEmpty()) {
 			return fullUrl.concat(item.getImages().get(0));
 		}else {
-			return fullUrl.concat(NO_PHOTO);
+			return fullUrl.concat(Utility.NO_PHOTO);
 		}
 	}
 	
@@ -858,7 +858,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		if(chalet!=null && !chalet.getImages().isEmpty()) {
 			return fullUrl.concat(chalet.getImages().get(0));
 		}else {
-			return fullUrl.concat(NO_PHOTO);
+			return fullUrl.concat(Utility.NO_PHOTO);
 		}
 	}
 	

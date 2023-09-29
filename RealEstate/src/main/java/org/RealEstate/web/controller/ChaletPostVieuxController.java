@@ -72,7 +72,6 @@ public class ChaletPostVieuxController implements Serializable {
 	private List<Village> villages = new ArrayList<>();
 
 	private List<District> districts = new ArrayList<>();
-	private final String NO_PHOTO = "nophoto.jpg";
 
 	private String postType;
 	private int minPrice;
@@ -135,7 +134,7 @@ public class ChaletPostVieuxController implements Serializable {
 		if (item != null && !item.getImages().isEmpty()) {
 			return fullUrl.concat(item.getImages().get(0));
 		} else {
-			return fullUrl.concat(NO_PHOTO);
+			return fullUrl.concat(Utility.NO_PHOTO);
 		}
 	}
 
