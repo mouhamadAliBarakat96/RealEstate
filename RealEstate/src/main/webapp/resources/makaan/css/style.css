@@ -633,17 +633,17 @@ a.nav-item.nav-link:hover {
 }
 
 .tag-new--verified {
-    background-color: #4bc3a7;
+    background-color: var(--bs-primary);
     color: white;
     border-radius: 0.4rem;
-    width: fit-content;
-    margin: 0.5rem;
+    width:fit-content;
+    margin: 0.2rem;
 }
 
 .tag-new {
     height: 1.5rem;
     font-weight: 500;
-    line-height: 1rem;
+    align-items: center
 }
 .tag-new__icon {
 	margin-right: .4rem;

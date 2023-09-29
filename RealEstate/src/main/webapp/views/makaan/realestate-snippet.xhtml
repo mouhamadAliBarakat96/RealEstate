@@ -32,19 +32,21 @@
 										</h:commandLink>
 
 										<div class="col-md-12 top-0 start-0 position-absolute">
-											<div class="d-flex justify-content-between">
+											<div class="d-flex justify-content-between flex-column">
 												<h:panelGroup layout="block" rendered="#{real.boosted}"
-													styleClass="tag-new tag-new--verified px-2">
-													#{bundle.post_boosted}
-													<p:graphicImage alt="boosted" width="24" height="24"
+													styleClass="tag-new tag-new--verified px-2 d-flex justify-content-between">
+													<p:graphicImage alt="boosted" width="18" height="18"
 														url="/resources/images/sponsor.png">
 													</p:graphicImage>
+													<label class="mx-2"> #{bundle.post_boosted}</label>
 												</h:panelGroup>
+
 												<h:panelGroup rendered="#{real.verfied}" layout="block"
-													styleClass="tag-new tag-new--verified px-2">
-															 #{bundle.post_verified}
-													  <p:graphicImage alt="verified" width="24" height="24"
-														url="/resources/images/icon-verfied.png" />
+													styleClass="tag-new tag-new--verified px-2 d-flex justify-content-between">
+													<p:graphicImage alt="verified" width="15" height="15"
+														url="/resources/images/icon-checked.png">
+													</p:graphicImage>
+													<label class="mx-2"> #{bundle.post_verified}</label>
 												</h:panelGroup>
 											</div>
 										</div>
@@ -131,19 +133,21 @@
 											</h:commandLink>
 
 											<div class="col-12 top-0 start-0 position-absolute">
-												<div class="d-flex justify-content-between">
+												<div class="d-flex justify-content-between flex-column">
 													<h:panelGroup layout="block" rendered="#{real.boosted}"
-														styleClass="tag-new tag-new--verified px-2">
-														#{bundle.post_boosted}
-														<p:graphicImage alt="boosted" width="24" height="24"
-																url="/resources/images/sponsor.png">
-														 </p:graphicImage>
+														styleClass="tag-new tag-new--verified px-2 d-flex justify-content-between">
+														<p:graphicImage alt="boosted" width="18" height="18"
+															url="/resources/images/sponsor.png">
+														</p:graphicImage>
+														<label class="mx-2"> #{bundle.post_boosted}</label>
 													</h:panelGroup>
+
 													<h:panelGroup rendered="#{real.verfied}" layout="block"
-														styleClass="tag-new tag-new--verified px-2">
-															 #{bundle.post_verified}
-													  <p:graphicImage alt="verified" width="24" height="24"
-															url="/resources/images/icon-verfied.png" />
+														styleClass="tag-new tag-new--verified px-2 d-flex justify-content-between">
+														<p:graphicImage alt="verified" width="15" height="15"
+															url="/resources/images/icon-checked.png">
+														</p:graphicImage>
+														<label class="mx-2"> #{bundle.post_verified}</label>
 													</h:panelGroup>
 												</div>
 											</div>
