@@ -2,11 +2,9 @@ package org.RealEstate.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
@@ -25,6 +23,8 @@ import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
+import org.RealEstate.web.controller.LanguageController;
+import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Faces;
 
 @ViewScoped
@@ -45,6 +45,9 @@ public class SignUpController implements Serializable {
 
 	@Inject
 	private  AppSinglton appSinglton ;
+	
+	@Inject
+	private LanguageController sessionLanguage;
 	
 	@PostConstruct
 	public void init() {
@@ -104,11 +107,8 @@ public class SignUpController implements Serializable {
 				ExternalContext externalContext = facesContext.getExternalContext();
 				externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
 			} else {
-				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-				flash.put("type", "error");
-				flash.put("message", r.getEntity().toString());
-
-				changeUrl();
+				 
+			 Utility.addErrorMessage(r.getEntity().toString(), sessionLanguage.getLocale());
 			}
 
 		} catch (Exception e) {
@@ -119,6 +119,16 @@ public class SignUpController implements Serializable {
 			e.printStackTrace();
 
 			changeUrl();
+		}
+
+	}
+	
+	public void validationEmtpyFields(User user) {
+		if (StringUtils.isBlank(user.getFirstName()) || StringUtils.isBlank(user.getLastName())
+				|| StringUtils.isBlank(user.getUserName()) || StringUtils.isBlank(user.getPassowrd())
+				|| StringUtils.isBlank(user.getPhoneNumber())) {
+			
+			Utility.addWarningMessage("user_info_requried", sessionLanguage.getLocale());
 		}
 
 	}

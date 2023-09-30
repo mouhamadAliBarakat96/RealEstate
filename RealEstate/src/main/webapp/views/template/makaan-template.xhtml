@@ -109,17 +109,12 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<div class="navbar-nav flex-grow-1">
-						<h:link rendered="#{makanTemplateController.user != null}"
-							outcome="user-information-front-end"
-							value="#{bundle.user_information}" styleClass="nav-item nav-link">
-						</h:link>
-
 						<h:link outcome="index-page" value="#{bundle.real_estates}"
 							styleClass="nav-item nav-link  ">
 							<f:param name="property" value="REALESTATE" />
 						</h:link>
 
-						<h:link outcome="index-page" value="#{bundle.chalets}"
+						<h:link rendered="false" outcome="index-page" value="#{bundle.chalets}"
 							styleClass="nav-item nav-link">
 							<f:param name="property" value="CHALET" />
 						</h:link>
@@ -143,6 +138,11 @@
 							outcome="login-user" value="#{bundle.login}"
 							styleClass="nav-item nav-link   ">
 							<f:param name="property" value="login" />
+						</h:link>
+						
+						<h:link rendered="#{makanTemplateController.user != null}"
+							outcome="user-information-front-end"
+							value="#{bundle.user_information}" styleClass="nav-item nav-link">
 						</h:link>
 
 						<h:commandLink rendered="#{makanTemplateController.user != null}"
