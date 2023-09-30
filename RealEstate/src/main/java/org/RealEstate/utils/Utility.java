@@ -34,7 +34,7 @@ public class Utility {
 	public final static String BUNDLE_FILE_NAME_AR = "resources.bundle_ar";
 	public final static String BUNDLE_FILE_NAME = "resources.bundle";
 	public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-	public static final String NO_PHOTO = "ekar_plus.jpg";
+	public static final String NO_PHOTO = "/resources/images/ekar_plus.jpg";
 
 
 	public static String getMessage(String key, String bundle) {

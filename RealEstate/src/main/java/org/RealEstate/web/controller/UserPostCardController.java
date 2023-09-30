@@ -838,7 +838,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		if(item!=null && !item.getImages().isEmpty()) {
 			return fullUrl.concat(item.getImages().get(0));
 		}else {
-			return fullUrl.concat(Utility.NO_PHOTO);
+			return Utility.NO_PHOTO;
 		}
 	}
 	
@@ -846,7 +846,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		if(chalet!=null && !chalet.getImages().isEmpty()) {
 			return fullUrl.concat(chalet.getImages().get(0));
 		}else {
-			return fullUrl.concat(Utility.NO_PHOTO);
+			return Utility.NO_PHOTO;
 		}
 	}
 	

@@ -171,7 +171,7 @@ public class UserPostListController implements Serializable {
 		if (item != null && !item.getImages().isEmpty()) {
 			return fullUrl.concat(item.getImages().get(0));
 		} else {
-			return fullUrl.concat(Utility.NO_PHOTO);
+			return Utility.NO_PHOTO;
 		}
 	}
 	
@@ -181,7 +181,7 @@ public class UserPostListController implements Serializable {
 		if (item != null && !item.getImages().isEmpty()) {
 			return fullUrl.concat(item.getImages().get(0));
 		} else {
-			return fullUrl.concat(Utility.NO_PHOTO);
+			return Utility.NO_PHOTO;
 		}
 	}
 }
