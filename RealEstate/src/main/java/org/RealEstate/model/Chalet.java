@@ -134,6 +134,9 @@ public class Chalet extends MainEntity implements Serializable {
 
 	@Expose
 	private boolean pendingBoost;
+	
+	@Expose
+	private boolean needVerified;
 
 	public Chalet() {
 		// TODO Auto-generated constructor stub
@@ -371,6 +374,14 @@ public class Chalet extends MainEntity implements Serializable {
 
 	public void setPendingBoost(boolean pendingBoost) {
 		this.pendingBoost = pendingBoost;
+	}
+
+	public boolean isNeedVerified() {
+		return needVerified;
+	}
+
+	public void setNeedVerified(boolean needVerified) {
+		this.needVerified = needVerified;
 	}
 
 }

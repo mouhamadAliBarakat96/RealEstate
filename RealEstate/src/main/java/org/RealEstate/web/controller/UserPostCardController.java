@@ -171,46 +171,29 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	
 	
 	public void handleFileUploadReal(FileUploadEvent event) {
-			/*if (item.getImages().isEmpty()) {
-				int targetwidth = 388;
-				int targetHeight = 259;
-				BufferedImage bufferedImage = ImageIO.read(event.getFile().getInputStream());
-				BufferedImage resizedIamge = new BufferedImage(targetwidth, targetHeight, BufferedImage.TYPE_INT_RGB);
-				Graphics2D g = resizedIamge.createGraphics();
-				g.drawImage(bufferedImage, 0, 0, targetwidth, targetHeight, null);
-				g.dispose();
-				String filename = event.getFile().getFileName();
-				list.add(new ImageDto(filename, getByteFromBufferedIamge(resizedIamge)));
-			} else {*/
-				list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
-			//}
-			
+		String fileName = event.getFile().getFileName();
+
+		if (list.stream().anyMatch(x -> x.getName().equals(fileName))) {
+			Utility.addWarningMessage("image_duplicated", sessionLanguage.getLocale());
+		} else {
+			list.add(new ImageDto(fileName, event.getFile().getContent()));
 			item.addToImages(uploadToReal(list));
-			FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
-			FacesContext.getCurrentInstance().addMessage(null, message);
-		 
+			Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
+		}
+
 	}
 
 	public void handleFileUploadChalet(FileUploadEvent event) {
-		 
-			/*if (chalet.getImages().isEmpty()) {
-				int targetwidth = 388;
-				int targetHeight = 259;
-				BufferedImage bufferedImage = ImageIO.read(event.getFile().getInputStream());
-				BufferedImage resizedIamge = new BufferedImage(targetwidth, targetHeight, BufferedImage.TYPE_INT_RGB);
-				Graphics2D g = resizedIamge.createGraphics();
-				g.drawImage(bufferedImage, 0, 0, targetwidth, targetHeight, null);
-				g.dispose();
-				String filename = event.getFile().getFileName();
-				list.add(new ImageDto(filename, getByteFromBufferedIamge(resizedIamge)));
-			} else {*/
-				list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
-			//}
-			
+		String fileName = event.getFile().getFileName();
+
+		if (list.stream().anyMatch(x -> x.getName().equals(fileName))) {
+			Utility.addWarningMessage("image_duplicated", sessionLanguage.getLocale());
+
+		} else {
+			list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
 			chalet.addToImages(uploadToReal(list));
-			FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
-			FacesContext.getCurrentInstance().addMessage(null, message);
-		 
+			Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
+		}
 
 	}
 
@@ -315,9 +298,11 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		switch (event.getTab().getId()) {
 		case "realestate":
 			kindEnum = PropertyKindEnum.REALESTATE;
+			list=new ArrayList<>();
 			break;
 		case "chalet":
 			kindEnum = PropertyKindEnum.CHALET;
+			list=new ArrayList<>();
 			break;
 		default:
 			break;
@@ -357,8 +342,11 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				item.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
 				item.setPostStatus(PostStatus.PENDING);
 				item = getAbstractFacade().save(item);
+				Utility.addSuccessMessage("save_success", sessionLanguage.getLocale());
 			}
+			
 			changeUrl(item);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

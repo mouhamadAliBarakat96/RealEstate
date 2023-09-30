@@ -8,7 +8,7 @@
 
 <ui:component>
 	<div class="row p-3">
-		
+
 		<div class="col-12">
 			<p:staticMessage severity="warn" summary="WARN"
 				rendered="#{userPostCardController.chalet.postStatus == 'REFFUSED'}"
@@ -46,7 +46,7 @@
 				<p:commandButton process="@this" value="#{bundle.delete}"
 					onclick="closeGalleria();"
 					action="#{userPostCardController.deleteChaletPhoto(photo)}"
-					update="myForm:tabView:chalet" />
+					update="myForm:tabView:chaletphotos" />
 			</p:galleria>
 
 			<p:commandButton value="#{bundle.show_photos}" partialSubmit="true"
@@ -55,7 +55,7 @@
 				onclick="PF('chaletgalleriawgvar').show();" process="@this" />
 		</h:panelGroup>
 
-		<div class="row p-3 col-md-8">
+		<h:panelGroup id="chaletInputPanel" styleClass="row p-3 col-md-8" layout="block">
 			<div class="col-md-3">
 				<div class="form-group">
 					<p:outputLabel class="control-label" for="nameId"
@@ -145,6 +145,19 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<h:outputLabel value="#{bundle.need_verfied}"
+						styleClass="control-label" />
+					<div class="skin mt-2">
+						<h:selectBooleanCheckbox style="height:20px;width:25px"
+							label="#{bundle.need_verfied}"
+							value="#{userPostCardController.chalet.needVerified}">
+							<f:ajax></f:ajax>
+						</h:selectBooleanCheckbox>
+					</div>
+				</div>
+			</div>
 
 			<div class="col-md-12">
 				<div class="form-group">
@@ -162,22 +175,22 @@
 			<div class="col-md-12 mt-3">
 				<h:form>
 					<p:fileUpload id="uploadImageChalet"
-						label="#{bundle.choose_photos}"
+						label="#{bundle.choose_photos}" uploadLabel="#{bundle.upload}"
+						cancelLabel="#{bundle.cancel}" update=":messageScript"
 						listener="#{userPostCardController.handleFileUploadChalet}"
-						mode="advanced" dragDropSupport="false" multiple="true"
+						mode="advanced" dragDropSupport="false" multiple="false"
 						sizeLimit="3000000" fileLimit="10"
 						allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
 					</p:fileUpload>
 				</h:form>
 			</div>
-		</div>
+		</h:panelGroup>
 		<div class="d-flex  flex-row-reverse">
 			<div class="form-group p-3">
 				<h:commandLink value='#{bundle.save}' id="save_btn"
 					action='#{userPostCardController.save()}'
 					styleClass="btn btn-primary btn-save">
-					<f:ajax render=":messageScript"
-						execute="myForm:tabView:chalet myForm:tabView:uploadImageChalet" />
+					<f:ajax render=":messageScript" execute="myForm:tabView:chaletInputPanel" />
 					<i class="fa fa-save" />
 				</h:commandLink>
 			</div>

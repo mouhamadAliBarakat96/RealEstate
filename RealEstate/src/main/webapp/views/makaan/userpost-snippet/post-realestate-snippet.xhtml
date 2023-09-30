@@ -26,7 +26,7 @@
 				actionListener="#{userPostCardController.changeActiveIndex}"
 				oncomplete="PF('galleria1').show()" />
 
-			<p:graphicImage
+			<p:graphicImage id="displayedImage"
 				url="#{userPostCardController.displayFirstImageReal()}"
 				alt="#{bundle.no_photos}"
 				style="width: 100%;max-height: 16rem;display: block;object-fit:cover;" />
@@ -43,10 +43,10 @@
 				<p:commandButton process="@this" value="#{bundle.delete}"
 					onclick="closeGalleria();"
 					action="#{userPostCardController.deleteRealPhoto(photo)}"
-					update="myForm:tabView:realestate" />
+					update="myForm:tabView:realphotos" />
 			</p:galleria>
 
-			<p:commandButton value="#{bundle.show_photos}" partialSubmit="true"
+			<p:commandButton value="#{bundle.show_photos}" partialSubmit="true" id="showRealImageBtn"
 				styleClass=" col-12" icon="pi pi-external-link" rendered="#{not empty userPostCardController.item.images}"
 				onclick="PF('galleria1').show();" process="@this" />
 		</h:panelGroup>
@@ -344,11 +344,11 @@
 
 				<div class="col-md-3">
 					<div class="form-group">
-						<h:outputLabel value="#{bundle.need_verfied}"
+						<h:outputLabel value="#{bundle.need_boost}"
 							styleClass="control-label" />
 						<div class="skin mt-2">
 							<h:selectBooleanCheckbox style="height:20px;width:25px"
-								label="#{bundle.need_boost}"
+								label="#{bundle.need_boost}" styleClass="custom-checkbox"
 								value="#{userPostCardController.item.pendingBoost}">
 								<f:ajax></f:ajax>
 							</h:selectBooleanCheckbox>
@@ -387,10 +387,11 @@
 				<div class="col-md-12 mt-3">
 
 					<p:fileUpload id="uploadImageRealEstate"
-						label="#{bundle.choose_photos}"
+						label="#{bundle.choose_photos}" uploadLabel="#{bundle.upload}"
+						cancelLabel="#{bundle.cancel}" update=":messageScript"
 						listener="#{userPostCardController.handleFileUploadReal}"
-						mode="advanced" dragDropSupport="false" multiple="true"
-						sizeLimit="3000000" fileLimit="5"
+						mode="advanced" dragDropSupport="false" multiple="false"
+						sizeLimit="90000000" fileLimit="5"
 						allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
 					</p:fileUpload>
 
@@ -400,8 +401,8 @@
 						<h:commandLink value='#{bundle.save}' id="realSaveBtn"
 							action='#{userPostCardController.save()}'
 							styleClass="btn btn-primary btn-save">
-							<f:ajax render=":messageScript "
-								execute="myForm:tabView:realestate myForm:tabView:uploadImageRealEstate" />
+							<f:ajax render=":messageScript" 
+								execute="myForm:tabView:inputPanel" />
 							<i class="fa fa-save" />
 						</h:commandLink>
 					</div>
