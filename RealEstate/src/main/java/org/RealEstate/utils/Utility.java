@@ -8,16 +8,15 @@ import java.security.NoSuchAlgorithmException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.RealEstate.enumerator.Country;
 import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyTypeEnum;
-import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.model.AppratmentRent;
 import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.Land;
@@ -26,7 +25,6 @@ import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
-import org.RealEstate.model.StoreHouseRent;
 import org.RealEstate.model.StoreHouseSell;
 
 public class Utility {
@@ -248,6 +246,17 @@ public class Utility {
 	
 	 
 	}
+	
+	public static String checkPhoneNumber(String number, Country country) {
+
+		if (number.startsWith(country.getCode())) {
+			return number;
+		} else {
+			return country.getCode().concat(number);
+		}
+	}
+	
+	 
 	
 	public static String urlEncode(String value) {
 		try {

@@ -102,7 +102,7 @@
 				<div class="col-md-3 mt-1 col-sm-12 ">
 					<h:outputLabel value="#{bundle.min_price}" style="color:white" />
 					<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
-						emptyValue="0" maxValue="9999999999" id="minPriceId"
+						emptyValue="0" maxValue="9999999999" id="minPriceId" placeholder="#{bundle.min_price}"
 						label="#{bundle.min_price}" styleClass="form-control"
 						value="#{actionBean.minPrice}">
 						<f:ajax />
@@ -111,7 +111,7 @@
 				<div class="col-md-3 mt-1 col-sm-12 ">
 					<h:outputLabel value="#{bundle.max_price}" style="color:white" />
 					<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
-						emptyValue="0" maxValue="9999999999" id="maxPriceId"
+						emptyValue="0" maxValue="9999999999" id="maxPriceId" placeholder="#{bundle.max_price}"
 						label="#{bundle.max_price}" styleClass="form-control"
 						value="#{actionBean.maxPrice}">
 						<f:ajax />

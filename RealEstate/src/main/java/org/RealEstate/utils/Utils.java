@@ -328,7 +328,7 @@ public class Utils {
 	}
 
 	public static boolean validatePhoneNumber(String input) {
-		String regex = "^(03|71|76|81)\\d{6}$";
+		String regex = "^(\\+?961)?(0)?[1-9]\\d{6}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
 

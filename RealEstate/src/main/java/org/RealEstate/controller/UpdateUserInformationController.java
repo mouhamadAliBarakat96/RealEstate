@@ -27,6 +27,7 @@ import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
+import org.RealEstate.web.controller.LanguageController;
 import org.omnifaces.util.Faces;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
@@ -56,7 +57,8 @@ public class UpdateUserInformationController implements Serializable {
 
 	private User user;
 
-
+	@Inject
+	private LanguageController sessionLanguage;
 
 	private String fullUrl = "";
 	private String ipAddressWithPort;
@@ -122,7 +124,6 @@ public class UpdateUserInformationController implements Serializable {
 	}
 
 	public void updateUserInformation() {
-
 		try {
 			if (imageDto != null) {
 				String imageDbName = uploadImagesMultiPart.uploadImageUserProfileFrontEnd(imageDto.getContent(),
@@ -134,23 +135,19 @@ public class UpdateUserInformationController implements Serializable {
 
 			Response r = userService.updateUserInforamtion(user);
 			if (r.getStatus() == Status.ACCEPTED.getStatusCode()) {
-				CommonUtility.addMessageToFacesContext(Utility.getMessage("update_sucess"), "success");
+				Utility.addSuccessMessage("update_sucess", sessionLanguage.getLocale());
+				changeUrl();
 			} else {
-				CommonUtility.addMessageToFacesContext(r.getEntity().toString(), "error");
-
+				 Utility.addErrorMessage(r.getEntity().toString(), sessionLanguage.getLocale());
 			}
-			
-			changeUrl();
 		}
-
 		catch (Exception e) {
 			CommonUtility.addMessageToFacesContext(e.getMessage(), "error");
 			e.printStackTrace();
 		}
 
 	}
-
-
+	
 	private void changeUrl() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();

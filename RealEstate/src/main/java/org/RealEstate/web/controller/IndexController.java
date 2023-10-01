@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 
 import org.RealEstate.dto.ChaletLazyDataModel;
 import org.RealEstate.dto.RealEstateLazyDataModel;
+import org.RealEstate.enumerator.Country;
 import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
@@ -204,7 +205,7 @@ public class IndexController implements Serializable {
 		if (chalet.getUser() != null && chalet.getUser().getPhoneNumber() != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
-			String phoneNumber = chalet.getUser().getPhoneNumber();
+			String phoneNumber = Utility.checkPhoneNumber(chalet.getUser().getPhoneNumber(), Country.LEBANON);
 			String message = getIpAddressWithPort() + "/chalet-card.xhtml?id=" + chalet.getId();
 			// Construct the WhatsApp URL
 			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "")+ "&text=" + message;
@@ -218,7 +219,7 @@ public class IndexController implements Serializable {
 		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
-			String phoneNumber = item.getUser().getPhoneNumber();
+			String phoneNumber = Utility.checkPhoneNumber(item.getUser().getPhoneNumber(), Country.LEBANON);
 			String message = getIpAddressWithPort() + "/realEstate-card.xhtml?id=" + item.getId();
 			// Construct the WhatsApp URL
 			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "")+"&text=" + message;

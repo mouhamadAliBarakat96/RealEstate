@@ -5,7 +5,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <ui:composition template="/views/template/makaan-template.xhtml">
 	<ui:define name="customStyleSheet">
 	</ui:define>
@@ -146,16 +147,11 @@
 											value="#{bundle.phoneNumber} ">
 											<span class="required">*</span>
 										</h:outputLabel>
-										<h:inputText id="phoneNumber"
-											f5:placeholder="#{bundle.phoneNumber} "
-											label="#{bundle.phoneNumber} " title="#{bundle.phoneNumber} "
+										<pe:inputPhone allowDropdown="false" id="phoneNumber"  
+											initialCountry="lb" lang="#{languageController.locale}"
 											value="#{signUpController.user.phoneNumber}"
-											styleClass="form-control">
-										</h:inputText>
-										<h:outputLabel class="control-label"
-											style="padding-left:1.5%;font-size:12px;"
-											value="#{bundle.phoneNumberFormat} ">
-										</h:outputLabel>
+											label="#{bundle.phoneNumber}" formatOnDisplay="true">
+										</pe:inputPhone>
 									</div>
 								</div>
 								<div class="col-md-4">

@@ -54,19 +54,23 @@
 										<h:commandLink action="#{actionBean.navigate(real)}"
 											target="_blank">
 											<div
-												class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{real.tittle}</div>
+												class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{bundle[real.postType]}</div>
 											<f:actionListener
 												binding="#{actionBean.addViewsAfterClick(real)}" />
 										</h:commandLink>
 									</div>
 									<div class="pt-2 px-1 pb-0">
-
 										<div class="d-flex justify-content-between">
-											<h5 class="text-primary py-1 ">$ #{real.price}</h5>
-											<div class="text-primary py-1 px-1">
-												#{languageController.locale=='en'? real.postType.name :
-												real.postType.name_ar}</div>
-										</div>
+											<h5 class="text-primary py-1 ">
+											   <h:outputLabel value="#{real.price}">
+														<f:convertNumber pattern="#,###,###" />
+													<i class="fas fa-solid fa-dollar-sign "></i>
+											   </h:outputLabel>
+											</h5>
+											<!-- <div class="text-primary py-1 px-1">
+												  #{bundle[real.postType]}
+											 </div>-->
+										</div> 
 										<p>
 											<i class="fa fa-map-marker-alt text-primary me-2"></i>
 											<c:choose>
@@ -158,16 +162,20 @@
 										<div class="pt-2 px-1 pb-0">
 
 											<div class="d-flex justify-content-between">
-												<h5 class="text-primary py-1 ">$ #{real.price}</h5>
-												<div class="text-primary py-1 px-1">
-													#{languageController.locale=='en'? real.postType.name :
-													real.postType.name_ar}</div>
-											</div>
+												<h5 class="text-primary py-1 ">
+													 <h:outputLabel value="#{real.price}">
+															<f:convertNumber pattern="#,###,###" />
+														<i class="fas fa-solid fa-dollar-sign "></i>
+												     </h:outputLabel>
+												</h5>
+												<!-- <div class="text-primary py-1 px-1">
+													 #{bundle[real.postType]}  </div>-->
+											</div> 
 
 
 
 											<h:commandLink action="#{actionBean.navigate(real)}"
-												target="_blank" value="#{real.tittle}"
+												target="_blank" value="#{bundle[real.postType]}"
 												styleClass="d-block h5 mb-2">
 												<f:actionListener
 													binding="#{actionBean.addViewsAfterClick(real)}" />
