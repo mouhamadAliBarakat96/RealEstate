@@ -78,7 +78,7 @@
 						<div class="text-center mx-auto mb-5 wow fadeInUp"
 							data-wow-delay="0.1s" style="max-width: 600px;">
 							<span style="font-size: 20px; font-weight: 700" class="mb-3">#{bundle.new_user}</span>
-							<br></br> <span> #{bundle.singup_with_facebook_required} </span>
+							<br></br> <span> #{bundle.sign_in_with_ekar_plus} </span>
 						</div>
 						<h:panelGroup id="userInfo">
 							<div class="row">
@@ -147,7 +147,7 @@
 											value="#{bundle.phoneNumber} ">
 											<span class="required">*</span>
 										</h:outputLabel>
-										<pe:inputPhone allowDropdown="false" id="phoneNumber"  
+										<pe:inputPhone allowDropdown="false" id="phoneNumber"  onkeyup="restrictToNumbers(this);"
 											initialCountry="lb" lang="#{languageController.locale}"
 											value="#{signUpController.user.phoneNumber}"
 											label="#{bundle.phoneNumber}" formatOnDisplay="true">
@@ -160,7 +160,7 @@
 											style="padding-left:1.5%" value="#{bundle.password} ">
 											<span class="required">*</span>
 										</h:outputLabel>
-										<h:inputText id="password"
+										<h:inputText id="password" 
 											f5:placeholder="#{bundle.password} "
 											label="#{bundle.password} " title="#{bundle.password} "
 											h5:type="password" value="#{signUpController.user.passowrd}"

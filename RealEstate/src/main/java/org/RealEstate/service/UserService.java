@@ -59,7 +59,7 @@ public class UserService implements Serializable {
 			}
 
 			if (StringUtils.isBlank(user.getLastName()) || StringUtils.isBlank(user.getFirstName())
-					|| StringUtils.isBlank(user.getMiddleName()) || StringUtils.isBlank(user.getUserName())) {
+					  || StringUtils.isBlank(user.getUserName())) {
 
 				return Response.status(Status.BAD_REQUEST)
 						.entity(Constants.USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_SHOULD_NOT_BE_EMPTY).build();

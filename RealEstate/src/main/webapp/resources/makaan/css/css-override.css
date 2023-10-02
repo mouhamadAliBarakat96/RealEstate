@@ -1,4 +1,4 @@
-@charset "ISO-8859-1";
+	@charset "ISO-8859-1";
 
 [dir="rtl"] {
 	font-family: 'DroidKufi', sans-serif;
@@ -279,8 +279,47 @@ body .ui-dataview.ui-dataview-list .ui-dataview-row {
 
 .iti,.iti.iti--allow-dropdown {
 	width: 100%;
+	direction: ltr;
 }
 
 .iti .ui-inputfield,.iti.iti--allow-dropdown .ui-inputfield {
 	border: 1px solid #ddd;
+}
+
+
+
+ /** overlay panel **/
+body .ui-overlaypanel {
+    background: #00b98e;
+    color: white;
+    padding: 0;
+    border: 1px solid cyan;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+    border-radius: 3px;
+}
+
+
+.ui-selectcheckboxmenu-items.ui-selectcheckboxmenu-list.ui-widget-content.ui-widget.ui-corner-all.ui-helper-reset{
+	overflow:auto;
+	display: flex;
+	max-width: 280px;
+}
+
+body .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-items .ui-selectcheckboxmenu-item>label
+	{
+	display: inline;
+	margin: 2px;
+	vertical-align: middle;
+}
+
+
+body .ui-avatar.ui-avatar-xl {
+    width: 6rem;
+    height: 6rem;
+    font-size: 5rem;
+}
+
+
+.ui-fileupload-content.ui-widget-content.ui-corner-bottom{
+	display: none;
 }

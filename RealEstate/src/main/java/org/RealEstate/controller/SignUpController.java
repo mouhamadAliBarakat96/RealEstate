@@ -69,6 +69,39 @@ public class SignUpController implements Serializable {
 			CommonUtility.addMessageToFacesContext(message, type);
 		}
 	}
+	
+	
+	
+	public boolean validate() {
+		boolean isValid = true;
+
+		if (StringUtils.isBlank(user.getFirstName())) {
+			Utility.addErrorMessage("first_name_equried", sessionLanguage.getLocale());
+			isValid = false;
+		}
+
+		if (StringUtils.isBlank(user.getLastName())) {
+			Utility.addErrorMessage("last_name_equried", sessionLanguage.getLocale());
+			isValid = false;
+		}
+
+		if (StringUtils.isBlank(user.getPhoneNumber())) {
+			Utility.addErrorMessage("phone_no_required", sessionLanguage.getLocale());
+			isValid = false;
+		}
+
+		if (StringUtils.isBlank(user.getUserName())) {
+			Utility.addErrorMessage("user_name_required", sessionLanguage.getLocale());
+			isValid = false;
+		}
+
+		if (!Utils.validatePassword(user.getPassowrd())) {
+			Utility.addErrorMessage("INVALID_PASSWORD", sessionLanguage.getLocale());
+			isValid = false;
+		}
+		return isValid;
+	}
+	
 
 	public void save() {
 		try {
@@ -91,8 +124,10 @@ public class SignUpController implements Serializable {
 			 * changeUrl(); return; }
 			 */
 			
-			
-		
+			if (!validate()) {
+				return;
+			}
+ 
 			user.setPassowrd(Utils.sha256(user.getPassowrd()));
 
 			Response r = userService.createUser(user);
@@ -122,7 +157,7 @@ public class SignUpController implements Serializable {
 		}
 
 	}
-	
+
 	public void validationEmtpyFields(User user) {
 		if (StringUtils.isBlank(user.getFirstName()) || StringUtils.isBlank(user.getLastName())
 				|| StringUtils.isBlank(user.getUserName()) || StringUtils.isBlank(user.getPassowrd())

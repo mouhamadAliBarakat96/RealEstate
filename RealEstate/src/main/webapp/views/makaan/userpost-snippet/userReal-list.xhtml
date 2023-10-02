@@ -10,12 +10,12 @@
 	<div class="row">
 		<p:dataView var="real" value="#{userPostListController.realEstates}" emptyMessage="#{bundle.no_records}"
 			rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
-			paginatorPosition="bottom" widgetVar="realEstatesDataView"
-			paginatorTemplate="  {PreviousPageLink} {PageLinks} {NextPageLink}"
+			paginatorPosition="bottom" widgetVar="realEstatesDataView" 
+			paginatorTemplate="  {PreviousPageLink} {PageLinks} {NextPageLink}" 
 			gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 			<p:dataViewGridItem>
 				<div class="card flex justify-content-center">
-					<div class="col-md-12 wow ">
+					<div class="col-md-12">
 						<div class="property-item rounded overflow-hidden">
 							<div class="position-relative overflow-hidden">
 								<h:commandLink
@@ -32,13 +32,18 @@
 									action="#{userPostListController.navigateToUserReal(real)}"
 									target="_blank">
 									<div
-										class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{real.tittle}</div>
+										class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{bundle[real.postType]}</div>
 								</h:commandLink>
 
 							</div>
 							<div class="p-3 pb-0">
 
-								<h5 class="text-primary mb-3">$ #{real.price}</h5>
+								<h5 class="text-primary mb-3">
+									<h:outputLabel value="#{real.price}">
+										<f:convertNumber pattern="#,###,###" />
+										<i class="fas fa-solid fa-dollar-sign "></i>
+									</h:outputLabel>
+								</h5>
 
 								<p>
 									<i class="fa fa-map-marker-alt text-primary me-2"></i>
@@ -101,11 +106,16 @@
 							</div>
 							<div class="col-md-8   border-bottom border-left	">
 								<div class="p-4 pb-0">
-									<h5 class="text-primary mb-3">$ #{real.price}</h5>
+									<h5 class="text-primary mb-3">
+									
+									<h:outputLabel value="#{real.price}">
+										<f:convertNumber pattern="#,###,###" />
+										<i class="fas fa-solid fa-dollar-sign "></i>
+									</h:outputLabel></h5>
 
 									<h:commandLink
 										action="#{userPostListController.navigateToUserReal(real)}"
-										target="_blank" value="#{real.tittle}"
+										target="_blank" value="#{bundle[real.postType]}"
 										styleClass="d-block h5 mb-2">
 									</h:commandLink>
 

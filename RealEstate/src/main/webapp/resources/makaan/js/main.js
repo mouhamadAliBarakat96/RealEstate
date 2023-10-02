@@ -155,7 +155,6 @@ $(document).ready(function() {
 		}
 	}
 	
-	 
 });
 
 
@@ -170,6 +169,21 @@ function copyCurrentURL() {
     alert("URL: " + document.location.href);
 }
 
+//dataView component
+$('.ui-paginator .ui-paginator-prev,.ui-paginator .ui-paginator-next,.ui-paginator .ui-paginator-pages').click(function() {
+	var element = document.getElementById('myForm:tabView');
+	element.scrollIntoView({
+		behavior : 'smooth',
+		block : 'start'
+	});
+});
+
+
+function restrictToNumbers(inputField) {
+    var input = inputField.value;
+    var numericInput = input.replace(/[^0-9]/g, "");
+    inputField.value = numericInput;
+}
 
 // Use noConflict to release control of the $ variable
 jQuery.noConflict();

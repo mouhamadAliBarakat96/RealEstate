@@ -28,6 +28,7 @@ import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
 import org.RealEstate.web.controller.LanguageController;
+import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Faces;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
@@ -56,7 +57,7 @@ public class UpdateUserInformationController implements Serializable {
 	private AppSinglton appSinglton;
 
 	private User user;
-
+	
 	@Inject
 	private LanguageController sessionLanguage;
 
@@ -64,9 +65,11 @@ public class UpdateUserInformationController implements Serializable {
 	private String ipAddressWithPort;
 
 	private boolean haveProfilePicture;
-	private ImageDto imageDto ;
+	private ImageDto imageDto;
 	@Inject
 	private UploadImagesMultiPart uploadImagesMultiPart;
+	
+	
 
 	@PostConstruct
 	public void init() {
@@ -84,18 +87,8 @@ public class UpdateUserInformationController implements Serializable {
 				e.printStackTrace();
 			}
 		} else {
-
-			if (user.getProfileImageUrl() == null) {
-				haveProfilePicture = false;
-			} else {
-				fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
-						.concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
-
-				fullUrl = fullUrl.concat(user.getProfileImageUrl());
-				haveProfilePicture = true;
-
-			}
-
+			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
+					.concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
 		}
 
 	}
@@ -123,14 +116,36 @@ public class UpdateUserInformationController implements Serializable {
 		return ipAddressWithPort;
 	}
 
+	public boolean validate() {
+		boolean isValid = true;
+
+		if (StringUtils.isBlank(user.getFirstName())) {
+			Utility.addErrorMessage("first_name_equried", sessionLanguage.getLocale());
+			isValid = false;
+		}
+
+		if (StringUtils.isBlank(user.getLastName())) {
+			Utility.addErrorMessage("last_name_equried", sessionLanguage.getLocale());
+			isValid = false;
+		}
+
+		if (StringUtils.isBlank(user.getPhoneNumber())) {
+			Utility.addErrorMessage("phone_no_required", sessionLanguage.getLocale());
+			isValid = false;
+		}
+
+		if (StringUtils.isBlank(user.getUserName())) {
+			Utility.addErrorMessage("user_name_required", sessionLanguage.getLocale());
+			isValid = false;
+		}
+
+		return isValid;
+	}
+
 	public void updateUserInformation() {
 		try {
-			if (imageDto != null) {
-				String imageDbName = uploadImagesMultiPart.uploadImageUserProfileFrontEnd(imageDto.getContent(),
-						imageDto.getName());
-
-				user.setShowProfilePicture(false);
-				user.setProfileImageUrl(imageDbName);
+			if (!validate()) {
+				return;
 			}
 
 			Response r = userService.updateUserInforamtion(user);
@@ -138,21 +153,20 @@ public class UpdateUserInformationController implements Serializable {
 				Utility.addSuccessMessage("update_sucess", sessionLanguage.getLocale());
 				changeUrl();
 			} else {
-				 Utility.addErrorMessage(r.getEntity().toString(), sessionLanguage.getLocale());
+				Utility.addErrorMessage(r.getEntity().toString(), sessionLanguage.getLocale());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			CommonUtility.addMessageToFacesContext(e.getMessage(), "error");
 			e.printStackTrace();
 		}
 
 	}
-	
+
 	private void changeUrl() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
-		url = Utils.replaceHost(url, appSinglton.getRealDns()  , appSinglton.getMode());
+		url = Utils.replaceHost(url, appSinglton.getRealDns(), appSinglton.getMode());
 
 		try {
 
@@ -162,16 +176,26 @@ public class UpdateUserInformationController implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public void importFile(FileUploadEvent event) {
-		imageDto = new ImageDto(event.getFile().getFileName(),  event.getFile().getContent());
-		
-	
-		 
+		imageDto = new ImageDto(event.getFile().getFileName(), event.getFile().getContent());
+		try {
+			String imageDbName = uploadImagesMultiPart.uploadImageUserProfileFrontEnd(imageDto.getContent(), imageDto.getName());
+			user.setShowProfilePicture(false);
+			user.setProfileImageUrl(imageDbName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	
+	public String displayProfileInforamtion() {
+		if (!StringUtils.isBlank(user.getProfileImageUrl())) {
+			return fullUrl.concat(user.getProfileImageUrl());
+		} else {
+			return "/resources/makaan/img/profile.png";
+		}
+	}
+
 	public User getUser() {
 		return user;
 	}

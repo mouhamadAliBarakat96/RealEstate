@@ -6,7 +6,7 @@
 	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 
 <ui:composition template="/views/template/makaan-template.xhtml">
@@ -34,44 +34,44 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 						</div>
 						<div class="text-center">
 							<h:panelGroup id="profilePicturePanel">
-								<h:panelGroup
-									rendered="#{updateUserInformationController.haveProfilePicture}">
+								<p:avatar styleClass="mr-2" size="xlarge" shape="circle">
 									<p:graphicImage
-										url="#{updateUserInformationController.fullUrl}" width="150px"
-										style="margin-top: 2%; margin: 0 auto ; border-radius: 50%"
-										height="150px" />
-								</h:panelGroup>
-								<h:panelGroup
-									rendered="#{!updateUserInformationController.haveProfilePicture}">
-
-									<img class="img-fluid" width="150px" height="150px"
-										style="margin-top: 4%; margin: 0 auto; border-radius: 50%"
-										src="/resources/makaan/img/profile.png" alt="Icon" />
-								</h:panelGroup>
+										url="#{updateUserInformationController.displayProfileInforamtion()}" />
+								</p:avatar>
 							</h:panelGroup>
 						</div>
 						<div class="row mt-2 text-center mb-1"
 							style="display: flex; justify-content: center;">
 							<p:fileUpload multiple="false" id="uploadId" auto="true"
 								listener="#{updateUserInformationController.importFile}"
-								process="@this" update=" :messageScript">
+								process="@this"
+								update=" :messageScript myForm:profilePicturePanel">
 							</p:fileUpload>
 						</div>
-						<div class="row" style="margin-top: 2%">
+						<h:panelGroup id="profileInfoPanel"  styleClass="row" style="margin-top: 2%" layout="block">
+							<div style="display: inline-block" class="col-md-4">
+								<div class="form-group">
+									<h:outputLabel class="control-label" for="id"
+										style="padding-left:1.5%" value="#{bundle.acount_id} ">
+									</h:outputLabel>
+									<h:outputLabel id="id"
+										value="#{updateUserInformationController.user.id}"
+										styleClass="form-control">
+									</h:outputLabel>
+								</div>
+							</div>
 							<div style="display: inline-block" class="col-md-4">
 								<div class="form-group">
 									<h:outputLabel class="control-label" for="firstName"
 										style="padding-left:1.5%" value="#{bundle.firstName} ">
 										<span class="required">*</span>
 									</h:outputLabel>
-									<h:inputText id="firstName" required="true"
+									<h:inputText id="firstName"
 										f5:placeholder="#{bundle.firstName}  "
 										label="#{bundle.firstName}  "
 										value="#{updateUserInformationController.user.firstName}"
 										styleClass="form-control">
-										<f:ajax render=":messageScript"></f:ajax>
 									</h:inputText>
-									<h:message for="firstName" styleClass="error-message" />
 								</div>
 							</div>
 							<div style="display: inline-block" class="col-md-4">
@@ -80,14 +80,12 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 										style="padding-left:1.5%" value="#{bundle.lastName} ">
 										<span class="required">*</span>
 									</h:outputLabel>
-									<h:inputText id="lastName" required="true"
+									<h:inputText id="lastName"  
 										f5:placeholder="#{bundle.lastName} "
 										label="#{bundle.lastName} " title="name "
 										value="#{updateUserInformationController.user.lastName}"
 										styleClass="form-control">
-										<f:ajax render=":messageScript"></f:ajax>
 									</h:inputText>
-									<h:message for="lastName" styleClass="error-message" />
 								</div>
 							</div>
 							<!-- <div style="display: inline-block" class="col-md-4">
@@ -111,15 +109,13 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 										style="padding-left:1.5%" value="#{bundle.userName} ">
 										<span class="required">*</span>
 									</h:outputLabel>
-									<h:inputText id="userName" required="true"
+									<h:inputText id="userName"  
 										disabled="#{updateUserInformationController.user.id gt 0 }"
 										f5:placeholder="#{bundle.userName} "
 										label="#{bundle.userName} " title="#{bundle.userName} "
 										value="#{updateUserInformationController.user.userName}"
 										styleClass="form-control">
-										<f:ajax render=":messageScript"></f:ajax>
 									</h:inputText>
-									<h:message for="userName" styleClass="error-message" />
 								</div>
 							</div>
 							<div style="display: inline-block" class="col-md-4">
@@ -129,7 +125,8 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 										<span class="required">*</span>
 									</h:outputLabel>
 									<pe:inputPhone allowDropdown="false" id="phoneNumber"
-										initialCountry="lb" lang="#{languageController.locale}"
+										onkeyup="restrictToNumbers(this);" initialCountry="lb"
+										lang="#{languageController.locale}"
 										value="#{updateUserInformationController.user.phoneNumber}"
 										label="#{bundle.phoneNumber}" formatOnDisplay="true">
 									</pe:inputPhone>
@@ -146,7 +143,7 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 										class=" #{updateUserInformationController.user.showProfilePicture  ? 'fa fa-check our-green '  : 'fa fa-times our-red'} " />
 								</div>
 							</div>
-						</div>
+						</h:panelGroup>
 					</div>
 					<div class="row mt-2 text-center mb-1"
 						style="display: flex; justify-content: center;">
@@ -154,7 +151,7 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 							styleClass="btn btn-success"
 							action="#{updateUserInformationController.updateUserInformation()}"
 							value="#{bundle.save}">
-							<f:ajax execute="myForm:phoneNumber" render=":messageScript"/>
+							<f:ajax execute="myForm:profileInfoPanel" render=":messageScript" />
 						</h:commandLink>
 					</div>
 				</div>

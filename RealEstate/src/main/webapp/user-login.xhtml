@@ -9,8 +9,8 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-<title>Ekar+</title>
-		<link rel="shortcut icon" 
+	<title>Ekar+</title>
+	<link rel="shortcut icon"
 		href=" #{resource['images/logoIkarPlus:25.png'] }" />
 
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -58,10 +58,10 @@
 .vh-100 {
 	height: 85vh !important;
 }
-.card{
-border-radius: 50px;
-}
 
+.card {
+	border-radius: 50px;
+}
 </style>
 
 
@@ -139,12 +139,8 @@ border-radius: 50px;
    }(document));
 </script>
 		</ui:define>
-
-
 		<ui:define name="property-content">
-
 			<div class="login-custom">
-
 				<div class="row vh-100 " style="margin-top: 0%">
 					<div class="col-12 align-self-center">
 						<div class="auth-page">
@@ -168,8 +164,7 @@ border-radius: 50px;
 															<span class="auth-form-icon"> <em
 																class="dripicons-user"></em>
 															</span>
-															<p:inputText type="text"
-															style="border-radius: 10px;"
+															<p:inputText type="text" style="border-radius: 10px;"
 																styleClass=" form-control #{component.valid ? '' :'error' } "
 																id="username" required="true"
 																value="#{loginController.userName}"
@@ -186,7 +181,7 @@ border-radius: 50px;
 															</span>
 
 															<p:inputText h5:type="password"
-															style="border-radius: 10px;"
+																style="border-radius: 10px;"
 																styleClass=" form-control #{component.valid ? '' :'error' } "
 																value="#{loginController.passowrd}" required="true"
 																id="userpassword" h5:placeholder="Enter password">
@@ -207,21 +202,17 @@ border-radius: 50px;
 											</h:panelGroup>
 											<div class="form-group mb-0 row  "
 												style="margin-top: 1%; display: flex; justify-content: center; align-items: center">
-												<div class="col-6 mt-2">
-													<h:commandLink actionListener="#{loginController.login()}"
-														style="width:100%"
-														styleClass="btn btn-primary  btn-block waves-effect waves-light">
-												#{bundle.log_in} <i class="fas fa-sign-in-alt ml-1"></i>
-														<f:ajax execute="login-form " render="messages login-form"></f:ajax>
-													</h:commandLink>
-
-
-
-
-
-
-
-
+												<div class="col-12 mt-2">
+													<div
+														style="display: flex; justify-content: center; align-items: center">
+														<h:commandLink actionListener="#{loginController.login()}"
+															value="#{bundle.log_in}"
+															styleClass="btn btn-primary  btn-block waves-effect waves-light">
+															<i class="fas fa-sign-in-alt ml-1"></i>
+															<f:ajax execute="login-form "
+																render="messages login-form"></f:ajax>
+														</h:commandLink>
+													</div>
 													<h:panelGroup id="error-message"
 														rendered="#{loginController.showErrorMessage}">
 														<div
@@ -229,38 +220,25 @@ border-radius: 50px;
 															<span
 																style="font-size: 14px; font-weight: 400; margin-right: 10px; color: #af0a0a">
 																#{loginController.errorMessage} </span>
-
 														</div>
-
-
 													</h:panelGroup>
 
 													<div
 														style="margin-top: 3%; display: flex; justify-content: center; align-items: center">
 														<span
-															style="font-size: 14px; font-weight: 400; margin-right: 10px;">#{bundle.not_registred_yet} </span>
+															style="font-size: 14px; font-weight: 400; margin-right: 10px;">#{bundle.not_registred_yet}
+														</span>
 														<h:link outcome="signup"
 															style=" text-decoration:underline !important;font-size:14px;color:rgb(0, 126, 168)">  #{bundle.create_account}</h:link>
-
 													</div>
-
-
 												</div>
 												<!--end col-->
 											</div>
-
-
-
-
-
-
 											<!--end form-group-->
 										</div>
 										<!--end form-->
 									</div>
 									<!--end /div-->
-
-
 								</div>
 								<!--end card-body-->
 							</div>
@@ -273,13 +251,7 @@ border-radius: 50px;
 				</div>
 			</div>
 		</ui:define>
-
-
 	</ui:composition>
-
-
-
-
 	<h:outputScript name="front-end-template/bootstrap.min.js" library="js" />
 	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 	<h:outputScript name="metisMenu.min.js" library="js" />

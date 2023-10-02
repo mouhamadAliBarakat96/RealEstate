@@ -56,9 +56,9 @@
 				</ui:remove>
 				<div class="col-md-3 col-sm-12  mt-1">
 					<h:outputLabel value="#{bundle.village}" style="color:white" />
-					<p:selectOneMenu id="villageSelectId" filter="true" style="min-width:25px"
-						filterMatchMode="contains" filterNormalize="true"
-						converter="omnifaces.SelectItemsConverter"
+					<p:selectOneMenu id="villageSelectId" filter="true"
+						style="min-width:25px" filterMatchMode="contains"
+						filterNormalize="true" converter="omnifaces.SelectItemsConverter"
 						styleClass="form-select border-0  "
 						value="#{actionBean.selecteVillage}">
 						<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
@@ -72,12 +72,12 @@
 					rendered="#{actionBean.apperBathsAndRoomsInSearch(actionBean.propertyTypeEnum)}">
 					<div class="col-md-3 mt-1 col-sm-12 ">
 						<h:outputLabel value="#{bundle.beds_count}" style="color:white" />
-						<p:selectCheckboxMenu id="bedRoomsId" filter="true"
+						<p:selectCheckboxMenu id="bedRoomsId"
 							converter="omnifaces.SelectItemsConverter"
+							panelStyle="max-height:10rem;overflow: auto;max-width:280px"
 							style="border-radius: 10px;direction:ltr;"
-							styleClass="form-select p-0" filterMatchMode="startsWith"
-							label="#{bundle.beds_count}" multiple="true"
-							emptyLabel="Please select..." updateLabel="true"
+							styleClass="form-select p-0" label="#{bundle.beds_count}"
+							multiple="true" emptyLabel="Please select..." updateLabel="true"
 							value="#{actionBean.bedRooms}">
 							<f:selectItems value="#{CountEnum.values()}" var="option"
 								itemLabel="#{option.value}" itemValue="#{option.value}" />
@@ -86,12 +86,12 @@
 					</div>
 					<div class="col-md-3 mt-1 col-sm-12 ">
 						<h:outputLabel value="#{bundle.baths_count}" style="color:white" />
-						<p:selectCheckboxMenu id="bathRoomsId" filter="true"
+						<p:selectCheckboxMenu id="bathRoomsId"
 							converter="omnifaces.SelectItemsConverter"
 							style="border-radius: 10px;direction:ltr;"
-							styleClass="form-select p-0" filterMatchMode="startsWith"
-							label="#{bundle.baths_count}" multiple="true"
-							emptyLabel="Please select..." updateLabel="true"
+							panelStyle="max-height:10rem;overflow: auto;max-width:280px"
+							styleClass="form-select p-0" label="#{bundle.baths_count}"
+							multiple="true" emptyLabel="Please select..." updateLabel="true"
 							value="#{actionBean.bathRooms}">
 							<f:selectItems value="#{CountEnum.values()}" var="option"
 								itemLabel="#{option.value}" itemValue="#{option.value}" />
@@ -99,23 +99,10 @@
 						</p:selectCheckboxMenu>
 					</div>
 				</h:panelGroup>
-				<div class="col-md-3 mt-1 col-sm-12 ">
-					<h:outputLabel value="#{bundle.min_price}" style="color:white" />
-					<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
-						emptyValue="0" maxValue="9999999999" id="minPriceId" placeholder="#{bundle.min_price}"
-						label="#{bundle.min_price}" styleClass="form-control"
-						value="#{actionBean.minPrice}">
-						<f:ajax />
-					</p:inputNumber>
-				</div>
-				<div class="col-md-3 mt-1 col-sm-12 ">
-					<h:outputLabel value="#{bundle.max_price}" style="color:white" />
-					<p:inputNumber decimalPlaces="0" thousandSeparator="," minValue="0"
-						emptyValue="0" maxValue="9999999999" id="maxPriceId" placeholder="#{bundle.max_price}"
-						label="#{bundle.max_price}" styleClass="form-control"
-						value="#{actionBean.maxPrice}">
-						<f:ajax />
-					</p:inputNumber>
+
+				<div class="col-md-3 mt-4 col-sm-12 d-flex flex-column-reverse">
+					<p:commandButton id="showButton" style="background:white;color:black" value="#{bundle.real_estate_price}" type="button"
+						onclick="overlayPanel.show();" />
 				</div>
 				<div class="col-12 d-flex flex-row-reverse flex-wrap  mt-2  ">
 					<h:commandButton action="#{actionBean.search()}"
@@ -125,6 +112,29 @@
 					</h:commandButton>
 				</div>
 			</div>
+			<p:overlayPanel id="overlayPanel" for="myForm:showButton" dynamic="true"
+				dismissable="true" >
+				<div class="d-flex">
+					<div class="col-6">
+						<h:outputLabel value="#{bundle.min_price}" />
+						<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							minValue="0" emptyValue="0" maxValue="9999999999" id="minPriceId"
+							placeholder="#{bundle.min_price}" label="#{bundle.min_price}"
+							styleClass="form-control" value="#{actionBean.minPrice}">
+							<f:ajax />
+						</p:inputNumber>
+					</div>
+					<div class="col-6 mx-2">
+						<h:outputLabel value="#{bundle.max_price}" />
+						<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							minValue="0" emptyValue="0" maxValue="9999999999" id="maxPriceId"
+							placeholder="#{bundle.max_price}" label="#{bundle.max_price}"
+							styleClass="form-control" value="#{actionBean.maxPrice}">
+							<f:ajax />
+						</p:inputNumber>
+					</div>
+				</div>
+			</p:overlayPanel>
 		</h:panelGroup>
 	</div>
 </ui:component>

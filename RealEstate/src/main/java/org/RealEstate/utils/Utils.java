@@ -327,10 +327,26 @@ public class Utils {
 		}
 	}
 
+	public static boolean validatePassword(String password) {
+		// Define a regular expression pattern for password validation
+		String result = password.replaceAll("\\s+", "");
+		String pattern = "^(?=.*[A-Z]).{8,}$";
+
+		// Create a Pattern object
+		Pattern regex = Pattern.compile(pattern);
+
+		// Create a Matcher object
+		Matcher matcher = regex.matcher(result);
+
+		// Check if the password matches the pattern
+		return matcher.matches();
+	}
+
 	public static boolean validatePhoneNumber(String input) {
+		String result = input.replaceAll("\\s+", "");
 		String regex = "^(\\+?961)?(0)?[1-9]\\d{6}$";
 		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(input);
+		Matcher matcher = pattern.matcher(result);
 
 		return matcher.matches();
 	}

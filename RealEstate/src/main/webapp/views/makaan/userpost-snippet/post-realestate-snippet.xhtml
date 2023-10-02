@@ -36,10 +36,10 @@
 				numVisible="4" id="realGalleria"
 				responsiveOptions="#{userPostCardController.responsiveOptions1}"
 				circular="true" fullScreen="true" showItemNavigators="true"
-				showThumbnails="false" style="max-width: 40%">
+				showThumbnails="false">
 				<p:graphicImage styleClass="gallery-item mt-2"
 					url="#{userPostCardController.fullUrl}#{photo}" alt="the photos"
-					style="width: 100%; display: block" />
+					style="display: block; object-fit: contain;" />
 				<p:commandButton process="@this" value="#{bundle.delete}"
 					onclick="closeGalleria();"
 					action="#{userPostCardController.deleteRealPhoto(photo)}"
@@ -386,7 +386,7 @@
 
 				<div class="col-md-12 mt-3">
 
-					<p:fileUpload id="uploadImageRealEstate"
+					<p:fileUpload id="uploadImageRealEstate" auto="true"
 						label="#{bundle.choose_photos}" uploadLabel="#{bundle.upload}"
 						cancelLabel="#{bundle.cancel}" update=":messageScript"
 						listener="#{userPostCardController.handleFileUploadReal}"
