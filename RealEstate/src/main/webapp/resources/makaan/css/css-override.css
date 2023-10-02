@@ -323,3 +323,9 @@ body .ui-avatar.ui-avatar-xl {
 .ui-fileupload-content.ui-widget-content.ui-corner-bottom{
 	display: none;
 }
+
+
+body .ui-galleria .ui-galleria-item-nav {
+    background: #000000c9;
+    color: white;
+}

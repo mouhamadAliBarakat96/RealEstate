@@ -37,13 +37,17 @@
 				responsiveOptions="#{userPostCardController.responsiveOptions1}"
 				circular="true" fullScreen="true" showItemNavigators="true"
 				showThumbnails="false">
-				<p:graphicImage styleClass="gallery-item mt-2"
-					url="#{userPostCardController.fullUrl}#{photo}" alt="the photos"
-					style="display: block; object-fit: contain;" />
-				<p:commandButton process="@this" value="#{bundle.delete}"
-					onclick="closeGalleria();"
-					action="#{userPostCardController.deleteRealPhoto(photo)}"
-					update="myForm:tabView:realphotos" />
+				<div class="d-flex flex-column">
+					<p:graphicImage width="350" height="350"
+						url="#{userPostCardController.fullUrl}#{photo}" alt="the photos"
+						style="display: block; object-fit: contain;">
+					</p:graphicImage>
+					<p:commandButton id="deletebtn" process="@this"
+						value="#{bundle.delete}" onclick="closeGalleria();"
+						action="#{userPostCardController.deleteRealPhoto(photo)}"
+						update="myForm:tabView:realphotos">
+					</p:commandButton>
+				</div>
 			</p:galleria>
 
 			<p:commandButton value="#{bundle.show_photos}" partialSubmit="true" id="showRealImageBtn"
@@ -114,7 +118,7 @@
 							value="#{bundle.real_estate_price}">
 						</p:outputLabel>
 						<p:inputNumber decimalPlaces="0" thousandSeparator="," symbol="$"
-							symbolPosition="s" minValue="0" maxValue="9999999999"
+							symbolPosition="s" minValue="1" maxValue="9999999999"
 							id="priceId" emptyValue="0" label="#{bundle.real_estate_price}"
 							styleClass="form-control"
 							value="#{userPostCardController.item.price}">
@@ -126,7 +130,7 @@
 						<p:outputLabel class="control-label" for="spaceId"
 							value="#{bundle.real_estate_space}">
 						</p:outputLabel>
-						<p:inputNumber decimalPlaces="0" thousandSeparator=","
+						<p:inputNumber decimalPlaces="1" thousandSeparator=","
 							minValue="0" maxValue="9999999999" id="spaceId" emptyValue="0"
 							label="#{bundle.real_estate_space}" styleClass="form-control"
 							value="#{userPostCardController.item.space}">

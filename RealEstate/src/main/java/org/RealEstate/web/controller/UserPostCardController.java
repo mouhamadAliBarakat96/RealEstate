@@ -34,8 +34,11 @@ import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.interfaces.ICRUDOperations;
 import org.RealEstate.model.AppratmentRent;
+import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.Chalet;
 import org.RealEstate.model.GoogleMapAttribute;
+import org.RealEstate.model.OfficeRent;
+import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
@@ -45,6 +48,7 @@ import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.core.IsInstanceOf;
 import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.component.tabview.TabView;
@@ -438,12 +442,31 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		return hasErrorEntries;
 	}
 
+	 
 	public boolean realEstatesHasEmptyFields() {
 		boolean hasEmptyField = false;
 
-		if (StringUtils.isBlank(item.getTittle())) {
+		/*if (StringUtils.isBlank(item.getTittle())) {
 			hasEmptyField = true;
 			Utility.addWarningMessage("title_is_required",sessionLanguage.getLocale());
+		}*/
+		
+		if (item instanceof AppratmentRent
+				&& (((AppratmentRent) item).getNbBathRoom() == 0 || ((AppratmentRent) item).getNbRoom() == 0)) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("bath_beds_required", sessionLanguage.getLocale());
+		} else if (item instanceof AppratmentSell
+				&& (((AppratmentSell) item).getNbBathRoom() == 0 || ((AppratmentSell) item).getNbRoom() == 0)) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("bath_beds_required", sessionLanguage.getLocale());
+		} else if (item instanceof OfficeRent
+				&& (((OfficeRent) item).getNbBathRoom() == 0 || ((OfficeRent) item).getNbRoom() == 0)) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("bath_beds_required", sessionLanguage.getLocale());
+		} else if (item instanceof OfficeSell
+				&& (((OfficeSell) item).getNbBathRoom() == 0 || ((OfficeSell) item).getNbRoom() == 0)) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("bath_beds_required", sessionLanguage.getLocale());
 		}
 		
 		if (item.getPrice() == 0) {
@@ -469,6 +492,8 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			hasEmptyField = true;
 			Utility.addWarningMessage("please_add_at_least_one_photo",sessionLanguage.getLocale());
 		}
+		
+		
 
 		return hasEmptyField;
 	}
