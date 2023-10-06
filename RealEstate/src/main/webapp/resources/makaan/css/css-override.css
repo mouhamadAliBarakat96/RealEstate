@@ -48,11 +48,14 @@
 .form-control:read-only {
 	background-color: white !important;
 	opacity: 1 !important;
-}
+}  
 
 .form-control:disabled {
 	background-color: #e9ecef !important;
 	opacity: 1 !important;
+}
+.ui-selectonemenu.ui-state-disabled{
+		background: #e9ecef !important;
 }
 
 .ui-paginator-prev.ui-state-default.ui-corner-all, .ui-paginator-prev.ui-state-default.ui-corner-all.ui-state-disabled
@@ -340,3 +343,6 @@ body .ui-galleria .ui-galleria-item-nav {
 	transition: background-color 0.2s, color 0.2s, border-color 0.2s,
 		box-shadow 0.2s;
 }
+
+
+ 
