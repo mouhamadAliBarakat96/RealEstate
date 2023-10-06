@@ -8,7 +8,7 @@
 
 <ui:component>
 	<div class="row p-3 ">
-		
+
 		<div class="col-12">
 			<p:staticMessage styleClass="col-12" severity="warn" summary="WARN"
 				rendered="#{userPostCardController.item.postStatus == 'REFFUSED'}"
@@ -21,11 +21,8 @@
 				style="overflow: overlay;" />
 		</div>
 
-		<h:panelGroup id="realphotos" styleClass="col-md-4 pt-3" layout="block">
-			<p:remoteCommand name="rc"
-				actionListener="#{userPostCardController.changeActiveIndex}"
-				oncomplete="PF('galleria1').show()" />
-
+		<h:panelGroup id="realphotos" styleClass="col-md-4 pt-3"
+			layout="block">
 			<p:graphicImage id="displayedImage"
 				url="#{userPostCardController.displayFirstImageReal()}"
 				alt="#{bundle.no_photos}"
@@ -33,33 +30,38 @@
 
 			<p:galleria styleClass="galleria-arabic-fix" widgetVar="galleria1"
 				value="#{userPostCardController.item.images}" var="photo"
-				numVisible="4" id="realGalleria"
+				varStatus="status" numVisible="4" id="realGalleria" activeIndex="0"
 				responsiveOptions="#{userPostCardController.responsiveOptions1}"
 				circular="true" fullScreen="true" showItemNavigators="true"
 				showThumbnails="false">
-				<div class="d-flex flex-column">
-					<p:graphicImage width="350" height="350"
+				<div class="d-flex flex-column align-items-center">
+					<p:graphicImage width="350" height="350" id="photoId"
 						url="#{userPostCardController.fullUrl}#{photo}" alt="the photos"
 						style="display: block; object-fit: contain;">
 					</p:graphicImage>
-					<p:commandButton id="deletebtn" process="@this"
-						value="#{bundle.delete}" onclick="closeGalleria();"
+					<p:commandButton id="btnDeleteId" process="@this"
+						icon="fa fa-trash" onclick="closeGalleria();"
+						styleClass="btn bn-danger p-0"
 						action="#{userPostCardController.deleteRealPhoto(photo)}"
-						update="myForm:tabView:realphotos">
+						update="myForm:realphotos">
 					</p:commandButton>
 				</div>
 			</p:galleria>
 
-			<p:commandButton value="#{bundle.show_photos}" partialSubmit="true" id="showRealImageBtn"
-				styleClass=" col-12" icon="pi pi-external-link" rendered="#{not empty userPostCardController.item.images}"
-				onclick="PF('galleria1').show();" process="@this" />
+			<h:panelGroup
+				rendered="#{not empty userPostCardController.item.images}">
+				<p:commandButton value="#{bundle.show_photos}" partialSubmit="true"
+					id="showRealImageBtn" styleClass=" col-12"
+					icon="pi pi-external-link" onclick="PF('galleria1').show();"
+					process="@this" />
+			</h:panelGroup>
+
 		</h:panelGroup>
 		<h:panelGroup id="inputPanel" layout="block" styleClass="col-md-8 row">
-			<h:panelGroup layout="block" id="conditionPanel" styleClass="row"
-				rendered="#{userPostCardController.disableSelectOneButton() eq false}">
+			<h:panelGroup layout="block" id="conditionPanel" styleClass="row p-0" style="margin-left:1px;margin-right:1px;" rendered="#{userPostCardController.disableSelectOneButton() eq false}">
 				<div class="col-md-3 col-xs-12 col-12">
 					<div class="form-group">
-						<p:outputLabel class="control-label" for="titleId"
+						<p:outputLabel class="control-label" for="exchangeId"
 							value="#{bundle.property_exchange_type}">
 						</p:outputLabel>
 						<h:selectOneMenu id="exchangeId" styleClass="white form-control"
@@ -70,13 +72,13 @@
 								var="option" itemLabel="#{bundle[option]}" itemValue="#{option}" />
 							<f:ajax
 								listener="#{userPostCardController.listenerSelectProperty()}"
-								execute="@this" render="myForm:tabView:inputPanel" />
+								execute="@this" render="myForm:inputPanel" />
 						</h:selectOneMenu>
 					</div>
 				</div>
 				<div class="col-md-3 col-xs-12 col-12">
 					<div class="form-group">
-						<p:outputLabel class="control-label" for="titleId"
+						<p:outputLabel class="control-label"
 							value="#{bundle.property_type}">
 						</p:outputLabel>
 						<h:selectOneMenu styleClass="white form-control"
@@ -86,8 +88,7 @@
 								itemLabel="#{bundle[option]}" itemValue="#{option}" />
 							<f:ajax
 								listener="#{userPostCardController.listenerSelectProperty()}"
-								execute="@this"
-								render="myForm:tabView:inputPanel myForm:tabView:exchangeId" />
+								execute="@this" render="myForm:inputPanel myForm:exchangeId" />
 						</h:selectOneMenu>
 					</div>
 				</div>
@@ -117,8 +118,9 @@
 						<p:outputLabel class="control-label" for="priceId"
 							value="#{bundle.real_estate_price}">
 						</p:outputLabel>
-						<p:inputNumber decimalPlaces="0" thousandSeparator="," symbol="$"
-							symbolPosition="s" minValue="1" maxValue="9999999999"
+						<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							leadingZero="deny" symbolPosition="p" minValue="0"
+							maxValue="9999999999" placeholder="#{bundle.real_estate_price}"
 							id="priceId" emptyValue="0" label="#{bundle.real_estate_price}"
 							styleClass="form-control"
 							value="#{userPostCardController.item.price}">
@@ -130,7 +132,8 @@
 						<p:outputLabel class="control-label" for="spaceId"
 							value="#{bundle.real_estate_space}">
 						</p:outputLabel>
-						<p:inputNumber decimalPlaces="1" thousandSeparator=","
+						<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							leadingZero="deny" placeholder="#{bundle.real_estate_space}"
 							minValue="0" maxValue="9999999999" id="spaceId" emptyValue="0"
 							label="#{bundle.real_estate_space}" styleClass="form-control"
 							value="#{userPostCardController.item.space}">
@@ -159,7 +162,9 @@
 								value="#{bundle.real_estate_nb_of_car_park}">
 							</p:outputLabel>
 							<p:inputNumber decimalPlaces="0" thousandSeparator=","
-								minValue="0" maxValue="99" id="parkId" emptyValue="0"
+								leadingZero="deny"
+								placeholder="#{bundle.real_estate_nb_of_car_park}" minValue="0"
+								maxValue="99" id="parkId" emptyValue="0"
 								label="#{bundle.real_estate_nb_of_car_park}"
 								styleClass="form-control"
 								value="#{userPostCardController.item.nbOfCarPark}">
@@ -175,6 +180,7 @@
 								value="#{bundle.real_estate_rooms}">
 							</p:outputLabel>
 							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+								leadingZero="deny" placeholder="#{bundle.real_estate_rooms}"
 								emptyValue="0" minValue="0" maxValue="99" id="roomId"
 								label="#{bundle.real_estate_rooms}" styleClass="form-control"
 								value="#{userPostCardController.item.nbRoom}">
@@ -187,6 +193,7 @@
 								value="#{bundle.real_estate_bathrooms}">
 							</p:outputLabel>
 							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+								leadingZero="deny" placeholder="#{bundle.real_estate_bathrooms}"
 								minValue="0" maxValue="99" id="bathId" emptyValue="0"
 								label="#{bundle.real_estate_bathrooms}"
 								styleClass="form-control"
@@ -359,8 +366,8 @@
 						</div>
 					</div>
 				</div>
-				
-					<div class="col-md-3">
+
+				<div class="col-md-3">
 					<div class="form-group">
 						<h:outputLabel value="#{bundle.need_verfied}"
 							styleClass="control-label" />
@@ -389,24 +396,21 @@
 				</div>
 
 				<div class="col-md-12 mt-3">
-
-					<p:fileUpload id="uploadImageRealEstate" auto="true"
+					<p:fileUpload id="uploadImageRealEstate" styleClass="  btn-upload"
 						label="#{bundle.choose_photos}" uploadLabel="#{bundle.upload}"
-						cancelLabel="#{bundle.cancel}" update=":messageScript"
+						cancelLabel="#{bundle.cancel}"  
+						update=":messageScript"
 						listener="#{userPostCardController.handleFileUploadReal}"
-						mode="advanced" dragDropSupport="false" multiple="false"
-						sizeLimit="90000000" fileLimit="5"
+						mode="advanced" dragDropSupport="false" multiple="true"
 						allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
 					</p:fileUpload>
-
 				</div>
 				<div class="d-flex  flex-row-reverse">
 					<div class="form-group mt-2">
 						<h:commandLink value='#{bundle.save}' id="realSaveBtn"
 							action='#{userPostCardController.save()}'
 							styleClass="btn btn-primary btn-save">
-							<f:ajax render=":messageScript" 
-								execute="myForm:tabView:inputPanel" />
+							<f:ajax render=":messageScript" execute="myForm:inputPanel" />
 							<i class="fa fa-save" />
 						</h:commandLink>
 					</div>

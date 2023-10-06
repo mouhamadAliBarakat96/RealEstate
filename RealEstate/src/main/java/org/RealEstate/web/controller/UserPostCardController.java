@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -48,13 +47,13 @@ import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
-import org.hamcrest.core.IsInstanceOf;
 import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.TabChangeEvent;
+import org.primefaces.event.FilesUploadEvent;
 import org.primefaces.model.ResponsiveOption;
+import org.primefaces.model.file.UploadedFile;
 import org.primefaces.model.file.UploadedFiles;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
@@ -93,7 +92,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private User user;
 
 	private TabView tabView;
-	private int activeIndex = 0;
+	private int activeTabIndex = 0;
 
 	@Inject
 	private HttpServletRequest request;
@@ -174,16 +173,22 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 	
 	
-	public void handleFileUploadReal(FileUploadEvent event) {
-		String fileName = event.getFile().getFileName();
-
-		if (list.stream().anyMatch(x -> x.getName().equals(fileName))) {
-			Utility.addWarningMessage("image_duplicated", sessionLanguage.getLocale());
-		} else {
-			list.add(new ImageDto(fileName, event.getFile().getContent()));
-			item.addToImages(uploadToReal(list));
-			Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
+	public void handleFileUploadReal(FilesUploadEvent event) {
+		list=new ArrayList<>();
+		for (UploadedFile f : event.getFiles().getFiles()) {
+			String fileName = f.getFileName();
+				list.add(new ImageDto(fileName, f.getContent()));
+				item.addToImages(uploadToReal(list));
 		}
+		Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
+	}
+
+	public void handleFileUploadReal(FileUploadEvent event) {
+		list = new ArrayList<>();
+		String fileName = event.getFile().getFileName();
+		list.add(new ImageDto(fileName, event.getFile().getContent()));
+		item.addToImages(uploadToReal(list));
+		Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
 
 	}
 
@@ -215,7 +220,8 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			return uploadImagesMultiPart.uploadImagePostFrontEnd(list);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			Utility.addErrorMessage("error_in_upload_images", sessionLanguage.getLocale());
+			return new ArrayList<>();
 		}
 	}
 
@@ -233,7 +239,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			if (StringUtils.isBlank(id) || Long.parseLong(id) <= 0) {
 				kindEnum = PropertyKindEnum.REALESTATE;
 				item = null;
-				setActiveIndex(0);
+				setActiveTabIndex(0);
 			} else {
 				kindEnum = PropertyKindEnum.REALESTATE;
 				item = findRealWithId(id);
@@ -245,7 +251,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 					}
 				}
 				postType = item.getPostType();
-				setActiveIndex(0);
+				setActiveTabIndex(0);
 				setCoordinates(item.getTittle(), item.getAddressEmbeddable().getLatitude(),
 						item.getAddressEmbeddable().getLongitude());
 			}
@@ -253,7 +259,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			if (StringUtils.isBlank(id) || Long.parseLong(id) <= 0) {
 				kindEnum = PropertyKindEnum.CHALET;
 				chalet = new Chalet();
-				setActiveIndex(1);
+				setActiveTabIndex(1);
 
 			} else {
 				kindEnum = PropertyKindEnum.CHALET;
@@ -265,7 +271,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 						e.printStackTrace();
 					}
 				}
-				setActiveIndex(0);
+				setActiveTabIndex(0);
 				setCoordinates(chalet.getName(), chalet.getAddressEmbeddable().getLatitude(),
 						chalet.getAddressEmbeddable().getLongitude());
 			}
@@ -298,7 +304,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		}
 	}
 
-	public void onTabChange(TabChangeEvent event) {
+/*	public void onTabChange(TabChangeEvent event) {
 		switch (event.getTab().getId()) {
 		case "realestate":
 			kindEnum = PropertyKindEnum.REALESTATE;
@@ -309,11 +315,13 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			list=new ArrayList<>();
 			break;
 		default:
+			kindEnum = PropertyKindEnum.REALESTATE;
+			list=new ArrayList<>();
 			break;
 		}
-		// Ajax.update("myForm:panelCoordinates");
+		 
 	}
-
+*/
 	public void save() {
 		if (kindEnum == PropertyKindEnum.REALESTATE) {
 			saveRealEstate();
@@ -690,16 +698,16 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		this.tabView = tabView;
 	}
 
-	public int getActiveIndex() {
-		return activeIndex;
+	public int getActiveTabIndex() {
+		return activeTabIndex;
 	}
 
-	public void setActiveIndex(int activeIndex) {
-		this.activeIndex = activeIndex;
+	public void setActiveTabIndex(int activeIndex) {
+		this.activeTabIndex = activeIndex;
 	}
 
 	public void setActiveTab(int index) {
-		setActiveIndex(index);
+		setActiveTabIndex(index);
 		tabView.setActiveIndex(index);
 	}
 
@@ -788,10 +796,11 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		Ajax.oncomplete("loadPointOnMap();");
 	}
 	
-	public void changeActiveIndex() {
+/*	public void changeActiveGalleriaIndex() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		this.galleriaIndex = Integer.valueOf(params.get("index"));
-	}
+	}*/
+	
 	public void addToResponsiveImages() {
 		responsiveOptions1 = new ArrayList<ResponsiveOption>();
 		responsiveOptions1.add(new ResponsiveOption("1024px", 5));

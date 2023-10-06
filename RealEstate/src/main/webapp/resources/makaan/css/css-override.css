@@ -321,11 +321,22 @@ body .ui-avatar.ui-avatar-xl {
 
 
 .ui-fileupload-content.ui-widget-content.ui-corner-bottom{
-	display: none;
+	 
 }
 
 
 body .ui-galleria .ui-galleria-item-nav {
     background: #000000c9;
     color: white;
+}
+
+.ui-button.bn-danger, .ui-button.ui-state-hover.bn-danger {
+	background: #dc3545;
+	color: #fff;
+	border: 1px solid #dc3545;
+	margin: 0;
+	outline: 0 none;
+	border-radius: 3px;
+	transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+		box-shadow 0.2s;
 }

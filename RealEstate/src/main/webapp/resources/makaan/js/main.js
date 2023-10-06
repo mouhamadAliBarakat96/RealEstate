@@ -188,3 +188,16 @@ function restrictToNumbers(inputField) {
 // Use noConflict to release control of the $ variable
 jQuery.noConflict();
 
+
+
+//try image views
+
+function openFullScreen(imgElement) {
+    document.getElementById('fullscreen-image').src = imgElement.src;
+    document.getElementById('fullscreen-overlay').style.display = 'block';
+  }
+  
+  function closeFullScreen() {
+    document.getElementById('fullscreen-overlay').style.display = 'none';
+  }
+//

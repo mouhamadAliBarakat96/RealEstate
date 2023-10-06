@@ -8,9 +8,11 @@
 
 <ui:composition template="/views/template/makaan-template.xhtml">
 	<ui:define name="customStylesheet">
-		<link href="/resources/makaan/css/user-post.css" rel="stylesheet" type="text/css" />
+		<link href="/resources/makaan/css/user-post.css" rel="stylesheet"
+			type="text/css" />
 		<script src="https://cdn.jsdelivr.net/npm/ol@v7.4.0/dist/ol.js" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" />
+		<link rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" />
 	</ui:define>
 	<ui:define name="customOutputScript">
 		<script src="resources/makaan/js/post-card.js" />
@@ -21,29 +23,12 @@
 		<o:importConstants type="org.RealEstate.enumerator.PostType" />
 		<o:importConstants type="org.RealEstate.enumerator.FloorEnum" />
 		<o:importConstants type="org.RealEstate.enumerator.PropertyTypeEnum" />
-		<o:importConstants type="org.RealEstate.enumerator.ExchangeRealEstateType" />
+		<o:importConstants
+			type="org.RealEstate.enumerator.ExchangeRealEstateType" />
 		<div class="container-xxl py-5">
 			<div class="container">
 				<div class="tab-content">
-					<p:tabView id="tabView" style="border:1px solid #ddd !important"
-						activeIndex="#{userPostCardController.activeIndex}"
-						binding="#{userPostCardController.tabView}">
-						<p:ajax event="tabChange"
-							listener="#{userPostCardController.onTabChange}"
-							oncomplete="showTheMap();" />
-
-						<p:tab id="realestate" title="#{bundle.real_estates}"
-							rendered="#{!userPostCardController.hideRealEsateTab()}">
-							<ui:include
-								src="/views/makaan/userpost-snippet/post-realestate-snippet.xhtml" />
-						</p:tab>
-
-						<p:tab id="chalet" title="#{bundle.chalets}"
-							rendered="false"><!-- #{!userPostCardController.hideChaletTab()} -->
-							<ui:include
-								src="/views/makaan/userpost-snippet/post-chalet-snippet.xhtml" />
-						</p:tab>
-					</p:tabView>
+					<ui:include src="/views/makaan/userpost-snippet/post-realestate-snippet.xhtml" />
 
 					<div class="row">
 						<div class="col-md-12">
