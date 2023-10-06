@@ -19,6 +19,14 @@
 				rendered="#{userPostCardController.item.postStatus == 'TO_REVIEUX_BY_USER'}"
 				detail="#{userPostCardController.item.reffuseCause}"
 				style="overflow: overlay;" />
+
+
+			<p:staticMessage
+				rendered="#{userPostCardController.showRealEstateStatus()}"
+				styleClass="col-12 #{userPostCardController.item.postStatus == 'ACCEPTED'? 'accepted' : ''}"
+				severity="warn"
+				detail="#{bundle[userPostCardController.item.postStatus]}"
+				style="overflow: overlay;" />
 		</div>
 
 		<h:panelGroup id="realphotos" styleClass="col-md-4 pt-3"
@@ -58,7 +66,9 @@
 
 		</h:panelGroup>
 		<h:panelGroup id="inputPanel" layout="block" styleClass="col-md-8 row">
-			<h:panelGroup layout="block" id="conditionPanel" styleClass="row p-0" style="margin-left:1px;margin-right:1px;" rendered="#{userPostCardController.disableSelectOneButton() eq false}">
+			<h:panelGroup layout="block" id="conditionPanel" styleClass="row p-0"
+				style="margin-left:1px;margin-right:1px;"
+				rendered="#{userPostCardController.disableSelectOneButton() eq false}">
 				<div class="col-md-3 col-xs-12 col-12">
 					<div class="form-group">
 						<p:outputLabel class="control-label" for="exchangeId"
@@ -398,8 +408,7 @@
 				<div class="col-md-12 mt-3">
 					<p:fileUpload id="uploadImageRealEstate" styleClass="  btn-upload"
 						label="#{bundle.choose_photos}" uploadLabel="#{bundle.upload}"
-						cancelLabel="#{bundle.cancel}"  
-						update=":messageScript"
+						cancelLabel="#{bundle.cancel}" update=":messageScript"
 						listener="#{userPostCardController.handleFileUploadReal}"
 						mode="advanced" dragDropSupport="false" multiple="true"
 						allowTypes="/(\.|\/)(gif|jpe?g|png)$/">

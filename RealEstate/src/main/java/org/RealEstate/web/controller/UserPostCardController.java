@@ -897,6 +897,11 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		}
 
 	}
+	
+	
+	public boolean showRealEstateStatus() {
+		 return item.getId() > 0 && item.getPostStatus()!=PostStatus.REFFUSED && item.getPostStatus()!=PostStatus.TO_REVIEUX_BY_USER;
+	}
 
 	public void unlcokPage() {
 		lockPage = false;
