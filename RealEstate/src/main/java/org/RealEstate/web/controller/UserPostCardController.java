@@ -53,6 +53,7 @@ import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FilesUploadEvent;
 import org.primefaces.model.ResponsiveOption;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 import org.primefaces.model.file.UploadedFiles;
 import org.primefaces.model.map.DefaultMapModel;
@@ -175,23 +176,11 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		return ipAddressWithPort;
 	}
 
-	public void handleFileUploadReal(FilesUploadEvent event) {
-		list = new ArrayList<>();
-		for (UploadedFile f : event.getFiles().getFiles()) {
-			String fileName = f.getFileName();
-			list.add(new ImageDto(fileName, f.getContent()));
-			item.addToImages(uploadToReal(list));
-		}
-		Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
-	}
-
 	public void handleFileUploadReal(FileUploadEvent event) {
-		list = new ArrayList<>();
 		String fileName = event.getFile().getFileName();
-		list.add(new ImageDto(fileName, event.getFile().getContent()));
-		item.addToImages(uploadToReal(list));
-		Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
-
+		if (list.stream().noneMatch(x -> x.getName().equals(fileName)))
+			list.add(new ImageDto(fileName, event.getFile().getContent()));
+		// Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
 	}
 
 	public void handleFileUploadChalet(FileUploadEvent event) {
@@ -202,7 +191,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 		} else {
 			list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
-			chalet.addToImages(uploadToReal(list));
+			chalet.addToImages(uploadToChalet(list));
 			Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
 		}
 
@@ -339,19 +328,15 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			if (getItem().getId() <= 0) {
 				item.setPostDate(new Date());
 				item.setUser(user);
-				item.setPostStatus(PostStatus.PENDING);
 				item.setPostType(postType);
-				item.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
-				item = getAbstractFacade().save(item);
-			} else {
-				item.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
-				item.setPostStatus(PostStatus.PENDING);
-				item = getAbstractFacade().save(item);
-				Utility.addSuccessMessage("save_success", sessionLanguage.getLocale());
 			}
 
-			changeUrl(item);
+			item.addToImages(uploadToReal(list));
+			item.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
+			item.setPostStatus(PostStatus.PENDING);
+			item = getAbstractFacade().save(item);
 
+			changeUrl(item);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -491,7 +476,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			Utility.addWarningMessage("subtitle_is_required", sessionLanguage.getLocale());
 		}
 
-		if (item.getImages().size() == 0) {
+		if (list.size()  + item.getImages().size() < 3) {
 			hasEmptyField = true;
 			Utility.addWarningMessage("please_add_at_least_one_photo", sessionLanguage.getLocale());
 		}
@@ -556,7 +541,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				emptyFields = true;
 			}
 
-			if (chalet.getImages().size() == 0) {
+			if (list.size() == 0 && chalet.getImages().size()==0) {
 				Utility.addWarningMessage("please_add_at_least_one_photo", sessionLanguage.getLocale());
 				emptyFields = true;
 			}
@@ -897,10 +882,10 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		}
 
 	}
-	
-	
+
 	public boolean showRealEstateStatus() {
-		 return item.getId() > 0 && item.getPostStatus()!=PostStatus.REFFUSED && item.getPostStatus()!=PostStatus.TO_REVIEUX_BY_USER;
+		return item.getId() > 0 && item.getPostStatus() != PostStatus.REFFUSED
+				&& item.getPostStatus() != PostStatus.TO_REVIEUX_BY_USER;
 	}
 
 	public void unlcokPage() {
@@ -913,6 +898,19 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	public void setLockPage(boolean lockPage) {
 		this.lockPage = lockPage;
+	}
+
+	public boolean photosRealAvailable() {
+		if (item.getImages().size() >= Constants.NB_IMAGE_IN_POST_ALLOWED) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+	
+	public int nbPhotosRealAvailable() {
+		return Constants.NB_IMAGE_IN_POST_ALLOWED - item.getImages().size();
 	}
 
 }

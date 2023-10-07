@@ -7,8 +7,7 @@
 	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
 
 <ui:component>
-	<div class="row p-3 ">
-
+	<div class="row p-0">
 		<div class="col-12">
 			<p:staticMessage styleClass="col-12" severity="warn" summary="WARN"
 				rendered="#{userPostCardController.item.postStatus == 'REFFUSED'}"
@@ -51,7 +50,7 @@
 						icon="fa fa-trash" onclick="closeGalleria();"
 						styleClass="btn bn-danger p-0"
 						action="#{userPostCardController.deleteRealPhoto(photo)}"
-						update="myForm:realphotos">
+						update="myForm:realphotos myForm:uploadPanelId">
 					</p:commandButton>
 				</div>
 			</p:galleria>
@@ -226,7 +225,7 @@
 							</h:selectOneMenu>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3 col-6">
 						<div class="form-group">
 							<h:outputLabel value="#{bundle.real_estate_electric_elevator}"
 								styleClass="control-label" />
@@ -242,7 +241,7 @@
 				</h:panelGroup>
 
 				<h:panelGroup rendered="#{userPostCardController.hasGarden()}">
-					<div class="col-md-3">
+					<div class="col-md-3 col-6">
 						<div class="form-group">
 							<h:outputLabel value="#{bundle.real_estate_garden}"
 								styleClass="control-label" />
@@ -280,7 +279,7 @@
 							</p:inputNumber>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3 col-6">
 						<div class="form-group">
 							<h:outputLabel value="#{bundle.real_estate_road}"
 								styleClass="control-label" />
@@ -292,7 +291,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3 col-6">
 						<div class="form-group">
 							<h:outputLabel value="#{bundle.real_estate_water}"
 								styleClass="control-label" />
@@ -304,7 +303,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3 col-6">
 						<div class="form-group">
 							<h:outputLabel value="#{bundle.real_estate_electricity}"
 								styleClass="control-label" />
@@ -334,7 +333,7 @@
 					</div>
 				</h:panelGroup>
 				<h:panelGroup rendered="#{userPostCardController.hasGreenBand()}">
-					<div class="col-md-3">
+					<div class="col-md-3 col-6">
 						<div class="form-group">
 							<h:outputLabel value="#{bundle.real_estate_green_band}"
 								styleClass="control-label" />
@@ -347,7 +346,7 @@
 						</div>
 					</div>
 				</h:panelGroup>
-				<div class="col-md-3">
+				<div class="col-md-3 col-6">
 					<div class="form-group">
 						<h:outputLabel value="#{bundle.real_estate_negotiable}"
 							styleClass="control-label" />
@@ -363,7 +362,7 @@
 
 
 
-				<div class="col-md-3">
+				<div class="col-md-3 col-6">
 					<div class="form-group">
 						<h:outputLabel value="#{bundle.need_boost}"
 							styleClass="control-label" />
@@ -377,7 +376,7 @@
 					</div>
 				</div>
 
-				<div class="col-md-3">
+				<div class="col-md-3 col-6">
 					<div class="form-group">
 						<h:outputLabel value="#{bundle.need_verfied}"
 							styleClass="control-label" />
@@ -404,16 +403,20 @@
 						</h:inputTextarea>
 					</div>
 				</div>
-
-				<div class="col-md-12 mt-3">
-					<p:fileUpload id="uploadImageRealEstate" styleClass="  btn-upload"
-						label="#{bundle.choose_photos}" uploadLabel="#{bundle.upload}"
-						cancelLabel="#{bundle.cancel}" update=":messageScript"
-						listener="#{userPostCardController.handleFileUploadReal}"
-						mode="advanced" dragDropSupport="false" multiple="true"
-						allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-					</p:fileUpload>
-				</div>
+				<h:panelGroup id="uploadPanelId">
+					<div class="col-md-12 mt-3">
+						<p:fileUpload id="uploadImageRealEstate" styleClass="  btn-upload"
+							rendered="#{userPostCardController.photosRealAvailable()}"
+							label="#{bundle.choose_photos}" uploadLabel="#{bundle.upload}"
+							cancelLabel="#{bundle.cancel}" update=":messageScript"
+							fileLimitMessage="#{bundle.YOU_EXCEED_THE_LIMIT_SIZE_OF_PHOTOS}"
+							fileLimit="#{userPostCardController.nbPhotosRealAvailable()}"
+							listener="#{userPostCardController.handleFileUploadReal}"
+							mode="advanced" dragDropSupport="false" multiple="true"
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+						</p:fileUpload>
+					</div>
+				</h:panelGroup>
 				<div class="d-flex  flex-row-reverse">
 					<div class="form-group mt-2">
 						<h:commandLink value='#{bundle.save}' id="realSaveBtn"
