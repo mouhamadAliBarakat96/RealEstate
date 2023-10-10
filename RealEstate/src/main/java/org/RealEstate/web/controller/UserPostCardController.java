@@ -433,12 +433,30 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	public boolean realEstatesHasEmptyFields() {
 		boolean hasEmptyField = false;
-
 		/*
 		 * if (StringUtils.isBlank(item.getTittle())) { hasEmptyField = true;
 		 * Utility.addWarningMessage("title_is_required",sessionLanguage.getLocale()); }
 		 */
 
+		if (item.getPrice() == 0) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("price_is_required", sessionLanguage.getLocale());
+		}
+		if (item.getSpace() == 0) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("space_is_required", sessionLanguage.getLocale());
+		}
+
+		if (item.getVillage() == null) {
+			Utility.addWarningMessage("village_is_required", sessionLanguage.getLocale());
+			hasEmptyField = true;
+		}
+
+		/*if (StringUtils.isBlank(item.getSubTittle())) {
+			hasEmptyField = true;
+			Utility.addWarningMessage("subtitle_is_required", sessionLanguage.getLocale());
+		}*/
+		
 		if (item instanceof AppratmentRent
 				&& (((AppratmentRent) item).getNbBathRoom() == 0 || ((AppratmentRent) item).getNbRoom() == 0)) {
 			hasEmptyField = true;
@@ -455,25 +473,6 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				&& (((OfficeSell) item).getNbBathRoom() == 0 || ((OfficeSell) item).getNbRoom() == 0)) {
 			hasEmptyField = true;
 			Utility.addWarningMessage("bath_beds_required", sessionLanguage.getLocale());
-		}
-
-		if (item.getPrice() == 0) {
-			hasEmptyField = true;
-			Utility.addWarningMessage("price_is_required", sessionLanguage.getLocale());
-		}
-		if (item.getSpace() == 0) {
-			hasEmptyField = true;
-			Utility.addWarningMessage("space_is_required", sessionLanguage.getLocale());
-		}
-
-		if (item.getVillage() == null) {
-			Utility.addWarningMessage("village_is_required", sessionLanguage.getLocale());
-			hasEmptyField = true;
-		}
-
-		if (StringUtils.isBlank(item.getSubTittle())) {
-			hasEmptyField = true;
-			Utility.addWarningMessage("subtitle_is_required", sessionLanguage.getLocale());
 		}
 
 		if (list.size()  + item.getImages().size() < 3) {
