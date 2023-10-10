@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -13,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -30,11 +28,7 @@ import org.RealEstate.utils.Utils;
 import org.RealEstate.web.controller.LanguageController;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Faces;
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.FilesUploadEvent;
-import org.primefaces.model.file.UploadedFile;
-import org.primefaces.util.EscapeUtils;
 
 @ViewScoped
 @Named
@@ -57,7 +51,7 @@ public class UpdateUserInformationController implements Serializable {
 	private AppSinglton appSinglton;
 
 	private User user;
-	
+
 	@Inject
 	private LanguageController sessionLanguage;
 
@@ -68,8 +62,11 @@ public class UpdateUserInformationController implements Serializable {
 	private ImageDto imageDto;
 	@Inject
 	private UploadImagesMultiPart uploadImagesMultiPart;
-	
-	
+
+	private String newPassword;
+	private String verNewPassword;
+
+	private String currentPassword;
 
 	@PostConstruct
 	public void init() {
@@ -162,6 +159,38 @@ public class UpdateUserInformationController implements Serializable {
 
 	}
 
+	public void changePassowrd() {
+
+		try {
+			if (StringUtils.isBlank(currentPassword)) {
+				//
+				Utility.addErrorMessage("please_fill_current_password", sessionLanguage.getLocale());
+				return;
+			}
+
+			else if (!Utils.validatePassword(newPassword)) {
+				Utility.addErrorMessage("INVALID_PASSWORD", sessionLanguage.getLocale());
+return ;
+			} else if (!Utils.sha256(currentPassword).equals(user.getPassowrd())) {
+				Utility.addErrorMessage("wrong_password", sessionLanguage.getLocale());
+				return;
+			} else if (!newPassword.equals(verNewPassword)) {
+				Utility.addErrorMessage("password_do_not_match", sessionLanguage.getLocale());
+				return;
+			}
+
+			user.setPassowrd(Utils.sha256(newPassword));
+			user = userFacade.save(user);
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Utility.addErrorMessage("user_name_required", sessionLanguage.getLocale());
+
+		}
+
+	}
+
 	private void changeUrl() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -180,7 +209,8 @@ public class UpdateUserInformationController implements Serializable {
 	public void importFile(FileUploadEvent event) {
 		imageDto = new ImageDto(event.getFile().getFileName(), event.getFile().getContent());
 		try {
-			String imageDbName = uploadImagesMultiPart.uploadImageUserProfileFrontEnd(imageDto.getContent(), imageDto.getName());
+			String imageDbName = uploadImagesMultiPart.uploadImageUserProfileFrontEnd(imageDto.getContent(),
+					imageDto.getName());
 			user.setShowProfilePicture(false);
 			user.setProfileImageUrl(imageDbName);
 		} catch (Exception e) {
@@ -210,6 +240,30 @@ public class UpdateUserInformationController implements Serializable {
 
 	public void setFullUrl(String fullUrl) {
 		this.fullUrl = fullUrl;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getVerNewPassword() {
+		return verNewPassword;
+	}
+
+	public void setVerNewPassword(String verNewPassword) {
+		this.verNewPassword = verNewPassword;
+	}
+
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
 	}
 
 }

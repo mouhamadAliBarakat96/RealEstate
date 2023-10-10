@@ -48,7 +48,8 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 								update=" :messageScript myForm:profilePicturePanel">
 							</p:fileUpload>
 						</div>
-						<h:panelGroup id="profileInfoPanel"  styleClass="row" style="margin-top: 2%" layout="block">
+						<h:panelGroup id="profileInfoPanel" styleClass="row"
+							style="margin-top: 2%" layout="block">
 							<div style="display: inline-block" class="col-md-4">
 								<div class="form-group">
 									<h:outputLabel class="control-label" for="id"
@@ -80,8 +81,7 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 										style="padding-left:1.5%" value="#{bundle.lastName} ">
 										<span class="required">*</span>
 									</h:outputLabel>
-									<h:inputText id="lastName"  
-										f5:placeholder="#{bundle.lastName} "
+									<h:inputText id="lastName" f5:placeholder="#{bundle.lastName} "
 										label="#{bundle.lastName} " title="name "
 										value="#{updateUserInformationController.user.lastName}"
 										styleClass="form-control">
@@ -109,7 +109,7 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 										style="padding-left:1.5%" value="#{bundle.userName} ">
 										<span class="required">*</span>
 									</h:outputLabel>
-									<h:inputText id="userName"  
+									<h:inputText id="userName"
 										disabled="#{updateUserInformationController.user.id gt 0 }"
 										f5:placeholder="#{bundle.userName} "
 										label="#{bundle.userName} " title="#{bundle.userName} "
@@ -156,7 +156,77 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 					</div>
 				</div>
 			</div>
+
+			<h:commandLink value=" change Passowrd">
+
+				<p:ajax update="pannel-group oldPassword newPassword  verfiedNewPassword  " oncomplete="PF('dlgChangePassword').show()"></p:ajax>
+
+			</h:commandLink>
+
 		</div>
+
+
+		<p:dialog header="#{bundle.change_password} " widgetVar="dlgChangePassword"
+			minHeight="40" width="500" showEffect="fade">
+
+			<h:panelGroup id="pannel-group">
+
+
+
+				<div class="form-group">
+					<h:outputLabel class="control-label" for="oldPassword"
+						style="padding-left:1.5%" value="#{bundle.current_password} ">
+						<span class="required">*</span>
+					</h:outputLabel>
+					<h:inputText id="oldPassword"
+					h5:type="password"
+						f5:placeholder="#{bundle.current_password} "
+						label="#{bundle.current_password} " title="name "
+						value="#{updateUserInformationController.currentPassword}"
+						styleClass="form-control">
+					</h:inputText>
+				</div>
+
+				<div class="form-group">
+					<h:outputLabel class="control-label" for="newPassword"
+						style="padding-left:1.5%" value="#{bundle.new_password} ">
+						<span class="required">*</span>
+					</h:outputLabel>
+					<h:inputText id="newPassword"
+						f5:placeholder="#{bundle.new_password} "
+						h5:type="password"
+						label="#{bundle.new_password} " title="name "
+						value="#{updateUserInformationController.newPassword}"
+						styleClass="form-control">
+					</h:inputText>
+				</div>
+
+				<div class="form-group">
+					<h:outputLabel class="control-label" for="verfiedNewPassword"
+						style="padding-left:1.5%"
+						value="#{bundle.verfied_current_password} ">
+						<span class="required">*</span>
+					</h:outputLabel>
+					<h:inputText id="verfiedNewPassword"
+					h5:type="password"
+						f5:placeholder="#{bundle.verfied_current_password} "
+						label="#{bundle.verfied_current_password} " title="name "
+						value="#{updateUserInformationController.verNewPassword}"
+						styleClass="form-control">
+					</h:inputText>
+				</div>
+			</h:panelGroup>
+
+			<p:commandLink
+			style="color:white; margin-top:3%"
+				styleClass="btn btn-success"
+				actionListener="#{updateUserInformationController.changePassowrd()}"
+				value="#{bundle.change_password} ">
+				<p:ajax update=" :messageScript" process="pannel-group"></p:ajax>
+
+			</p:commandLink>
+
+		</p:dialog>
 		<!-- Contact End -->
 	</ui:define>
 </ui:composition>
