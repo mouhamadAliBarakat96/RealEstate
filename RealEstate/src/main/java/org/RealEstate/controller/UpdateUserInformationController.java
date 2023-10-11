@@ -160,22 +160,28 @@ public class UpdateUserInformationController implements Serializable {
 	}
 
 	public void changePassowrd() {
-
 		try {
-			if (StringUtils.isBlank(currentPassword)) {
-				//
-				Utility.addErrorMessage("please_fill_current_password", sessionLanguage.getLocale());
-				return;
-			}
 
-			else if (!Utils.validatePassword(newPassword)) {
+			boolean hasEmpty = false;
+
+			if (StringUtils.isBlank(currentPassword)) {
+				Utility.addErrorMessage("please_fill_current_password", sessionLanguage.getLocale());
+				hasEmpty = true;
+			}
+			if (!Utils.validatePassword(newPassword)) {
 				Utility.addErrorMessage("INVALID_PASSWORD", sessionLanguage.getLocale());
-return ;
-			} else if (!Utils.sha256(currentPassword).equals(user.getPassowrd())) {
+				hasEmpty = true;
+			}
+			if (!Utils.sha256(currentPassword).equals(user.getPassowrd())) {
 				Utility.addErrorMessage("wrong_password", sessionLanguage.getLocale());
-				return;
-			} else if (!newPassword.equals(verNewPassword)) {
+				hasEmpty = true;
+			}
+			if (!newPassword.equals(verNewPassword)) {
 				Utility.addErrorMessage("password_do_not_match", sessionLanguage.getLocale());
+				hasEmpty = true;
+			}
+			
+			if(hasEmpty) {
 				return;
 			}
 

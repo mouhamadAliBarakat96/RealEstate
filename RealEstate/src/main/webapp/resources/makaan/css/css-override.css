@@ -350,4 +350,10 @@ body .ui-galleria .ui-galleria-item-nav {
     color: white;
 }
 
- 
+.ui-dialog .ui-dialog-titlebar {
+    background: #00b98e !important;
+    color: white !important;;
+}
+span.ui-icon.ui-icon-closethick {
+    color: white;
+}
