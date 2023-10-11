@@ -168,59 +168,58 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 		<p:dialog header="#{bundle.change_password}"
 			widgetVar="dlgChangePassword" showEffect="fade" draggable="false"
 			responsive="true">
-				<h:panelGroup id="pannel-group">
-					<div class="row">
-						<div class="col-md-12 form-group">
-							<h:outputLabel class="control-label" for="oldPassword"
-								style="padding-left:1.5%" value="#{bundle.current_password} ">
-								<span class="required">*</span>
-							</h:outputLabel>
-							<h:inputText id="oldPassword" h5:type="password"
-								f5:placeholder="#{bundle.current_password} "
-								label="#{bundle.current_password} "
-								title="#{bundle.current_password}"
-								value="#{updateUserInformationController.currentPassword}"
-								styleClass="form-control">
-							</h:inputText>
-						</div>
-
-						<div class="col-md-12 form-group">
-							<h:outputLabel class="control-label" for="newPassword"
-								style="padding-left:1.5%" value="#{bundle.new_password} ">
-								<span class="required">*</span>
-							</h:outputLabel>
-							<h:inputText id="newPassword"
-								f5:placeholder="#{bundle.new_password} " h5:type="password"
-								label="#{bundle.new_password} " title="#{bundle.new_password}"
-								value="#{updateUserInformationController.newPassword}"
-								styleClass="form-control">
-							</h:inputText>
-						</div>
-
-						<div class=" col-md-12 form-group">
-							<h:outputLabel class="control-label" for="verfiedNewPassword"
-								style="padding-left:1.5%"
-								value="#{bundle.verfied_current_password} ">
-								<span class="required">*</span>
-							</h:outputLabel>
-							<h:inputText id="verfiedNewPassword" h5:type="password"
-								f5:placeholder="#{bundle.verfied_current_password} "
-								label="#{bundle.verfied_current_password} "
-								title="#{bundle.verfied_current_password}"
-								value="#{updateUserInformationController.verNewPassword}"
-								styleClass="form-control">
-							</h:inputText>
-						</div>
+			<h:panelGroup id="pannel-group">
+				<div class="row">
+					<div class="col-md-12 form-group">
+						<h:outputLabel class="control-label" for="oldPassword"
+							style="padding-left:1.5%" value="#{bundle.current_password} ">
+							<span class="required">*</span>
+						</h:outputLabel>
+						<h:inputSecret id="oldPassword"
+							f5:placeholder="#{bundle.current_password} "
+							label="#{bundle.current_password} "
+							title="#{bundle.current_password}"
+							value="#{updateUserInformationController.currentPassword}"
+							styleClass="form-control">
+						</h:inputSecret>
 					</div>
-				</h:panelGroup>
-				<div class="d-flex justify-content-center">
-					<p:commandLink style="color:white; margin-top:3%"
-						styleClass="btn btn-success" update=":messageScript"
-						process="pannel-group"
-						action="#{updateUserInformationController.changePassowrd()}"
-						value="#{bundle.change_password} ">
-					</p:commandLink>
+
+					<div class="col-md-12 form-group">
+						<h:outputLabel class="control-label" for="newPassword"
+							style="padding-left:1.5%" value="#{bundle.new_password} ">
+							<span class="required">*</span>
+						</h:outputLabel>
+						<h:inputSecret id="newPassword"
+							f5:placeholder="#{bundle.new_password} "
+							label="#{bundle.new_password} " title="#{bundle.new_password}"
+							value="#{updateUserInformationController.newPassword}"
+							styleClass="form-control">
+						</h:inputSecret>
+					</div>
+
+					<div class=" col-md-12 form-group">
+						<h:outputLabel class="control-label" for="verfiedNewPassword"
+							style="padding-left:1.5%"
+							value="#{bundle.verfied_current_password} ">
+							<span class="required">*</span>
+						</h:outputLabel>
+						<h:inputSecret id="verfiedNewPassword"
+							f5:placeholder="#{bundle.verfied_current_password} "
+							label="#{bundle.verfied_current_password} "
+							title="#{bundle.verfied_current_password}"
+							value="#{updateUserInformationController.verNewPassword}"
+							styleClass="form-control">
+						</h:inputSecret>
+					</div>
 				</div>
+			</h:panelGroup>
+			<div class="d-flex justify-content-center">
+				<h:commandLink styleClass="btn btn-success" 
+					action="#{updateUserInformationController.changePassowrd()}"
+					value="#{bundle.change_password}">
+					<f:ajax execute="myForm:pannel-group" render=":messageScript" />
+				</h:commandLink>
+			</div>
 		</p:dialog>
 		<!-- Contact End -->
 	</ui:define>

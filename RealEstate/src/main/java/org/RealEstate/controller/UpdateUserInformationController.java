@@ -27,6 +27,7 @@ import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
 import org.RealEstate.web.controller.LanguageController;
 import org.apache.commons.lang3.StringUtils;
+import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 
@@ -180,19 +181,19 @@ public class UpdateUserInformationController implements Serializable {
 				Utility.addErrorMessage("password_do_not_match", sessionLanguage.getLocale());
 				hasEmpty = true;
 			}
-			
-			if(hasEmpty) {
+
+			if (hasEmpty) {
 				return;
 			}
 
 			user.setPassowrd(Utils.sha256(newPassword));
 			user = userFacade.save(user);
-		}
-
-		catch (Exception e) {
+			Ajax.oncomplete("PF('dlgChangePassword').hide();");
+			Utility.addSuccessMessage("change_success", sessionLanguage.getLocale());
+		
+		} catch (Exception e) {
 			e.printStackTrace();
 			Utility.addErrorMessage("user_name_required", sessionLanguage.getLocale());
-
 		}
 
 	}
