@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:component>
+
+<style>
+.message {
+  
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.contact-number {
+  font-weight: bold;
+  color: blue;
+}
+
+</style>
+
+
+	<div class="row p-3">
+	<h1>#{bundle.account_is} <span style="color: var(--bs-primary);">#{bundle[userPostCardController.user.userCategory]}</span> </h1>
+		<div class="message">
+			<p>#{bundle.you_reach_limit}</p>
+			
+			<p>#{bundle.you_can_upgrade}</p>
+			
+			<p>#{bundle.contact_us_at}
+			 <span class="contact-number"> <h:link outcome="contact-us" value="#{bundle.contact_us}"/>
+							  
+			 </span>. </p>
+		</div>
+	</div>
+</ui:component>
+</html>

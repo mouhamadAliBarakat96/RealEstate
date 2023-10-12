@@ -858,9 +858,9 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		}
 	}
 
-	public boolean checkUserAccountPosts() {
+	public boolean canAddNewPost() {
 
-		int nbOfCreatedPost = 0;// get it by query
+		int nbOfCreatedPost = 21;// get it by query
 
 		int nbOfPermitPost = 0;
 
@@ -874,7 +874,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			nbOfPermitPost = appSinglton.getPremuimAccountNbOfPost();
 		}
 
-		if (nbOfCreatedPost >= nbOfPermitPost) {
+		if (nbOfCreatedPost < nbOfPermitPost) {
 			return true;
 		} else {
 			return false;

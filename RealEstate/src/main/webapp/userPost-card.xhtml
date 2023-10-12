@@ -27,17 +27,29 @@
 			type="org.RealEstate.enumerator.ExchangeRealEstateType" />
 		<div class="container-xxl py-4 card mt-4 p-0">
 			<div class="container">
-				<div class="tab-content  ">
-					<ui:include src="/views/makaan/userpost-snippet/post-realestate-snippet.xhtml" />
+				<div class="tab-content">
+					
+					<h:panelGroup rendered="#{userPostCardController.canAddNewPost()}">
+						<!-- there is the place of chalet snippet included in p:tabView and every thing in backend ready with some changes in page -->
 
-					<div class="row">
-						<div class="col-md-12">
-							<div class="alert alert-info mt-2" role="alert">#{bundle.click_on_map}</div>
+						<!-- this is snippet of real estate  -->
+						<ui:include src="/views/makaan/userpost-snippet/post-realestate-snippet.xhtml" />
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="alert alert-info mt-2" role="alert">#{bundle.click_on_map}</div>
+							</div>
+							<div class="col-md-12">
+								<div id="map" style="width: 100%; height: 500px;" />
+							</div>
 						</div>
-						<div class="col-md-12">
-							<div id="map" style="width: 100%; height: 500px;" />
-						</div>
-					</div>
+					</h:panelGroup>
+					
+					<h:panelGroup
+						rendered="#{!userPostCardController.canAddNewPost()}">
+						<ui:include src="/views/makaan/userpost-snippet/prevent-add-new.xhtml" />
+					</h:panelGroup>
+				
 				</div>
 			</div>
 			<div id="marker" style="display: none;">
