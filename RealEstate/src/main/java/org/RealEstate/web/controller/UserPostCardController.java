@@ -356,10 +356,17 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				hasErrorEntries = true;
 
 			}
-			if (item.getPrice() < 60) {
-				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60", sessionLanguage.getLocale());
+			
+			if (item.getSpace() * 0.5 > item.getPrice()) {
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_05_DOLLARS",
+						sessionLanguage.getLocale());//edit
 				hasErrorEntries = true;
 			}
+			
+			/*if (item.getPrice() < 60) {
+				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60", sessionLanguage.getLocale());
+				hasErrorEntries = true;
+			}*/
 
 		} else if (postType == PostType.APPRATMENT_SELL) {
 
@@ -368,9 +375,9 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				hasErrorEntries = true;
 			}
 
-			if (item.getSpace() * 100 > item.getPrice()) {
-				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",
-						sessionLanguage.getLocale());
+			if (item.getSpace() * 50 > item.getPrice()) {
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS",
+						sessionLanguage.getLocale());//edit
 				hasErrorEntries = true;
 			}
 
@@ -395,9 +402,9 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			}
 		} else if (postType == PostType.SHOP_SELL) {
 
-			if (item.getSpace() * 100 > item.getPrice()) {
-				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",
-						sessionLanguage.getLocale());
+			if (item.getSpace() * 50 > item.getPrice()) {
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS",
+						sessionLanguage.getLocale());//edit
 				hasErrorEntries = true;
 			}
 			if (item.getSpace() < 40) {
@@ -405,21 +412,51 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				hasErrorEntries = true;
 			}
 		} else if (postType == PostType.OFFICE_RENT) {
-
-			if (item.getPrice() < 60) {
-				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60", sessionLanguage.getLocale());
-				hasErrorEntries = true;
-			}
+			
 			if (item.getSpace() < 40) {
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40", sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
+			
+			/*if (item.getPrice() < 60) {
+				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60", sessionLanguage.getLocale());
+				hasErrorEntries = true;
+			}*/
+			
+			if (item.getSpace() * 1 > item.getPrice()) {
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_1_DOLLARS",
+						sessionLanguage.getLocale());//edit
+				hasErrorEntries = true;
+			}
+			
 
 		} else if (postType == PostType.OFFICE_SELL) {
 
 			if (item.getSpace() * 100 > item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS",
 						sessionLanguage.getLocale());
+				hasErrorEntries = true;
+			}
+			if (item.getSpace() < 40) {
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40", sessionLanguage.getLocale());
+				hasErrorEntries = true;
+			}
+		}else if (postType == PostType.STORE_HOUSE_SELL) {
+
+			if (item.getSpace() * 50 > item.getPrice()) {
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS",
+						sessionLanguage.getLocale());//edit
+				hasErrorEntries = true;
+			}
+			if (item.getSpace() < 40) {
+				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40", sessionLanguage.getLocale());
+				hasErrorEntries = true;
+			}
+		}else if (postType == PostType.STORE_HOUSE_RENT) {
+
+			if (item.getSpace() * 0.5 > item.getPrice()) {
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_05_DOLLARS",
+						sessionLanguage.getLocale());//edit
 				hasErrorEntries = true;
 			}
 			if (item.getSpace() < 40) {
@@ -859,7 +896,10 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 
 	public boolean canAddNewPost() {
-
+		
+		if (item.getId() > 0)
+			return true;
+		
 		int nbOfCreatedPost = 21;// get it by query
 
 		int nbOfPermitPost = 0;
