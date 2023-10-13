@@ -43,6 +43,7 @@ import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.service.UploadImagesMultiPart;
+import org.RealEstate.service.UserService;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
@@ -73,6 +74,8 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	private PostType postType = PostType.APPRATMENT_RENT;
 	private PropertyKindEnum kindEnum = PropertyKindEnum.REALESTATE;
 
+	@Inject
+	private UserService userService;
 	@Inject
 	private LanguageController sessionLanguage;
 	@Inject
@@ -896,11 +899,17 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 
 	public boolean canAddNewPost() {
+		try {
+			if (item.getId() > 0)
+				return true;
+			else
+				return userService.findNumberOfPostForUser(user) > 0 ? true : false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 		
-		if (item.getId() > 0)
-			return true;
-		
-		int nbOfCreatedPost = 21;// get it by query
+	/*	int nbOfCreatedPost = 21;// get it by query
 
 		int nbOfPermitPost = 0;
 
@@ -918,7 +927,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			return true;
 		} else {
 			return false;
-		}
+		}*/
 
 	}
 
