@@ -180,7 +180,7 @@ public class UserPostVieuxController implements Serializable {
 		if (user != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
-			String phoneNumber = user.getPhoneNumber();
+			String phoneNumber =Utility.checkPhoneNumber(user.getPhoneNumber(), Country.LEBANON);
 			// Construct the WhatsApp URL
 			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
 			// Navigate to the URL
@@ -247,6 +247,11 @@ public class UserPostVieuxController implements Serializable {
 		if (maxPrice != 0 && minPrice > maxPrice) {
 			Utility.addErrorMessage("min_price_mut_be _less_than_max", sessionLanguage.getLocale());
 			return;
+		}
+		
+		if (!contaisRoomsFilter()) {
+			bathRooms = new ArrayList<>();
+			bedRooms = new ArrayList<>();
 		}
 
 		realLazyModel.setBathRooms(bathRooms);
@@ -565,5 +570,9 @@ public class UserPostVieuxController implements Serializable {
 	public void changeValue(ExchangeRealEstateType value) {
 		this.estateTypeEnum = value;
 		search();
+	}
+	
+	public boolean contaisRoomsFilter() {
+		return propertyTypeEnum == PropertyTypeEnum.APPRATMENT || propertyTypeEnum == PropertyTypeEnum.OFFICE;
 	}
 }

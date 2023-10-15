@@ -293,6 +293,11 @@ public class IndexController implements Serializable {
 			Utility.addErrorMessage("min_price_mut_be _less_than_max",sessionLanguage.getLocale());
 			return;
 		}
+		
+		if (!contaisRoomsFilter()) {
+			bathRooms = new ArrayList<>();
+			bedRooms = new ArrayList<>();
+		}
 
 		realLazyModel.setBathRooms(bathRooms);
 		realLazyModel.setUser(user != null ? user : null);
@@ -690,5 +695,9 @@ public class IndexController implements Serializable {
 	
 	public String currentUrl(ExternalContext externalContext) {
 		return externalContext.getRequestContextPath() + externalContext.getRequestServletPath();
+	}
+	
+	public boolean contaisRoomsFilter() {
+		return propertyTypeEnum == PropertyTypeEnum.APPRATMENT || propertyTypeEnum == PropertyTypeEnum.OFFICE;
 	}
 }
