@@ -52,10 +52,11 @@
 	height: 48px;
 }
 
-.btn.btn-search {
+.btn.btn-search, .btn.btn-search:hover{
 	background-color: #00d996;
 	color: white;
 	border: 2px solid;
+	padding:0px;
 }
 
 .btn-square, .btn-sm-square, .btn-lg-square {

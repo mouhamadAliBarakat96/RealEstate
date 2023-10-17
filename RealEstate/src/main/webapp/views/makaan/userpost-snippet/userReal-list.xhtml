@@ -10,7 +10,7 @@
 	<div class="row">
 		<p:dataView var="real" value="#{userPostListController.realEstates}" emptyMessage="#{bundle.no_records}"
 			rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
-			paginatorPosition="bottom" widgetVar="realEstatesDataView" 
+			paginatorPosition="bottom" widgetVar="realEstatesDataView"  id="realestateDataView"
 			paginatorTemplate="  {PreviousPageLink} {PageLinks} {NextPageLink}" 
 			gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 			<p:dataViewGridItem>

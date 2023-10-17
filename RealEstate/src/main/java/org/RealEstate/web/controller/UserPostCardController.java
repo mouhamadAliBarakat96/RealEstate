@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -27,7 +26,6 @@ import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.enumerator.PropertyTypeEnum;
-import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
@@ -52,10 +50,7 @@ import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.FilesUploadEvent;
 import org.primefaces.model.ResponsiveOption;
-import org.primefaces.model.StreamedContent;
-import org.primefaces.model.file.UploadedFile;
 import org.primefaces.model.file.UploadedFiles;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
@@ -180,24 +175,16 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 
 	public void handleFileUploadReal(FileUploadEvent event) {
-		String fileName = event.getFile().getFileName();
+		String fileName = event.getFile().getFileName().toLowerCase();
 		if (list.stream().noneMatch(x -> x.getName().equals(fileName)))
 			list.add(new ImageDto(fileName, event.getFile().getContent()));
 		// Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
 	}
 
 	public void handleFileUploadChalet(FileUploadEvent event) {
-		String fileName = event.getFile().getFileName();
-
-		if (list.stream().anyMatch(x -> x.getName().equals(fileName))) {
-			Utility.addWarningMessage("image_duplicated", sessionLanguage.getLocale());
-
-		} else {
-			list.add(new ImageDto(event.getFile().getFileName(), event.getFile().getContent()));
-			chalet.addToImages(uploadToChalet(list));
-			Utility.addSuccessMessage("success_upload", sessionLanguage.getLocale());
-		}
-
+		String fileName = event.getFile().getFileName().toLowerCase();
+		if (list.stream().noneMatch(x -> x.getName().equals(fileName)))
+			list.add(new ImageDto(fileName, event.getFile().getContent()));
 	}
 
 	public byte[] getByteFromBufferedIamge(BufferedImage image) throws IOException {
@@ -537,14 +524,13 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			if (chalet.getId() <= 0) {
 				chalet.setPostDate(new Date());
 				chalet.setUser(user);
-				chalet.setPostStatus(PostStatus.PENDING);
-				chalet.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
-				chalet = chaletFacade.save(chalet);
-			} else {
-				chalet.setPostStatus(PostStatus.PENDING);
-				chalet.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
-				chalet = chaletFacade.save(chalet);
-			}
+			}  
+			
+			chalet.addToImages(uploadToReal(list));
+			chalet.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
+			chalet.setPostStatus(PostStatus.PENDING);
+			chalet = chaletFacade.save(chalet);
+			
 			changeUrl(chalet);
 		} catch (Exception e) {
 			e.printStackTrace();

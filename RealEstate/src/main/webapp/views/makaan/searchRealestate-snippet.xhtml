@@ -105,11 +105,11 @@
 						onclick="overlayPanel.show();" />
 				</div>
 				<div class="col-12 d-flex flex-row-reverse flex-wrap  mt-2  ">
-					<h:commandButton action="#{actionBean.search()}"
-						value="#{bundle.search}" styleClass="btn btn-search">
-						<f:ajax execute="myForm:searchBarPanel"
-							render="myForm:RealEstatePanelId :messageScript" />
-					</h:commandButton>
+					<p:commandButton action="#{actionBean.search()}"
+						oncomplete="addScroll();" value="#{bundle.search}"
+						styleClass="btn btn-search" process="myForm:searchBarPanel"
+						update="myForm:RealEstatePanelId :messageScript">
+					</p:commandButton>
 				</div>
 			</div>
 			<p:overlayPanel id="overlayPanel" for="myForm:showButton" dynamic="true"

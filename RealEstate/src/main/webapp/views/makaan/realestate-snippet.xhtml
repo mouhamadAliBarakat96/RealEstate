@@ -10,7 +10,7 @@
 	<div class="tab-content">
 		<div id="tab-1" class="tab-pane fade show p-2 active">
 			<div class="row g-4">
-				<p:dataView  var="real" value="#{actionBean.realLazyModel}" rows="6" first="1"
+				<p:dataView id="realestateDataView"  var="real" value="#{actionBean.realLazyModel}" rows="6" first="1"
 					emptyMessage="#{bundle.no_records}" lazy="true" paginator="true"
 					styleClass="px-0 #{empty actionBean.realLazyModel.pageItems ? 'empty-row' : ''}"
 					paginatorPosition="bottom" widgetVar="realEstatesDataView"

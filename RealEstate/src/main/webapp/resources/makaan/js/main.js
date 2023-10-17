@@ -155,6 +155,8 @@ $(document).ready(function() {
 		}
 	}
 	
+	//scroll dataview in top
+	 addScroll();
 });
 
 
@@ -170,14 +172,21 @@ function copyCurrentURL() {
 }
 
 //dataView component
-$('.ui-paginator .ui-paginator-prev,.ui-paginator .ui-paginator-next,.ui-paginator .ui-paginator-pages').click(function() {
-	var element = document.getElementById('myForm:tabView');
-	element.scrollIntoView({
-		behavior : 'smooth',
-		block : 'start'
-	});
-});
 
+function addScroll() {
+     $('.ui-paginator .ui-paginator-prev,.ui-paginator .ui-paginator-next,.ui-paginator .ui-paginator-pages').click(function() {
+		var element = document.getElementById('myForm:tabView');
+				if (element) {
+					scrollTo(top);
+				} else {
+					var firstItem = $('.ui-dataview-row:first');
+					// Scroll to the first item
+					if (firstItem) {
+						scrollTo(firstItem.offset().top -200, firstItem .offset().top -200);
+					}
+				}
+			});
+}
 
 function restrictToNumbers(inputField) {
     var input = inputField.value;
@@ -187,17 +196,3 @@ function restrictToNumbers(inputField) {
 
 // Use noConflict to release control of the $ variable
 jQuery.noConflict();
-
-
-
-//try image views
-
-function openFullScreen(imgElement) {
-    document.getElementById('fullscreen-image').src = imgElement.src;
-    document.getElementById('fullscreen-overlay').style.display = 'block';
-  }
-  
-  function closeFullScreen() {
-    document.getElementById('fullscreen-overlay').style.display = 'none';
-  }
-//

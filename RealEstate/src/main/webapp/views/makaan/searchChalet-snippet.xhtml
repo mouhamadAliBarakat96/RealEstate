@@ -101,11 +101,11 @@
 
 			<div
 				class="col-md-3 col-sm-12 d-flex flex-column-reverse flex-wrap  mt-2 align-content-start">
-				<h:commandButton action="#{actionBean.chaletSearch()}"
-					value="#{bundle.search}" styleClass="btn btn-search ">
-					<f:ajax execute="myForm:searchBarPanel"
-						render="myForm:ChaletPanelId :messageScript" />
-				</h:commandButton>
+				<p:commandButton action="#{actionBean.chaletSearch()}"
+					oncomplete="addScroll();" value="#{bundle.search}"
+					styleClass="btn btn-search" process="myForm:searchBarPanel"
+					update="myForm:ChaletPanelId :messageScript">
+				</p:commandButton>
 			</div>
 		</div>
 	</div>
