@@ -35,7 +35,8 @@ public class SignUpController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	private final String RQUEST_FROM = "from";
+	
 	private User user = new User();
 	@EJB
 	private UserService userService;
@@ -49,8 +50,18 @@ public class SignUpController implements Serializable {
 	@Inject
 	private LanguageController sessionLanguage;
 	
+	private String from_url = "";
+	
 	@PostConstruct
 	public void init() {
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		if (!facesContext.isPostback()) {
+			from_url = externalContext.getRequestParameterMap().get(RQUEST_FROM);
+		}
+		
+		
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		if (flash.containsKey("type")) {
 			String type = (String) flash.get("type");
@@ -69,6 +80,28 @@ public class SignUpController implements Serializable {
 			CommonUtility.addMessageToFacesContext(message, type);
 		}
 	}
+	
+	
+	
+	private void requestFromUrl() {
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+			String url = request.getRequestURL().toString();
+			String requestUri = request.getRequestURI();
+			
+			if (!StringUtils.isEmpty(from_url)) {
+				url = url.replace(requestUri, from_url);
+			} else {
+				url = url.replace(requestUri, "/index.xhtml");
+			}
+			url = Utils.replaceHost(url, appSinglton.getRealDns()   , appSinglton.getMode());
+			Faces.redirect(url);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	
 	
 	
@@ -138,21 +171,21 @@ public class SignUpController implements Serializable {
 
 				HttpSession session = request.getSession(true);
 				session.setAttribute(Constants.USER_SESSION, user);
-				FacesContext facesContext = FacesContext.getCurrentInstance();
+			
+				/*FacesContext facesContext = FacesContext.getCurrentInstance();
 				ExternalContext externalContext = facesContext.getExternalContext();
-				externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
+				externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");*/
+				
+				requestFromUrl();
 			} else {
-				 
-			 Utility.addErrorMessage(r.getEntity().toString(), sessionLanguage.getLocale());
+				Utility.addErrorMessage(r.getEntity().toString(), sessionLanguage.getLocale());
 			}
 
 		} catch (Exception e) {
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			flash.put("type", "error");
 			flash.put("message", e);
-
 			e.printStackTrace();
-
 			changeUrl();
 		}
 

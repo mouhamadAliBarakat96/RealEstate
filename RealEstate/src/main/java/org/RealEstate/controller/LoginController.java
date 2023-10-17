@@ -168,6 +168,19 @@ public class LoginController implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void createAccount() {
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			if (!StringUtils.isBlank(from_url))
+				externalContext.redirect("/signup.xhtml?from=" + from_url);
+			else
+				externalContext.redirect("/signup.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public String getUserName() {
 		return userName;

@@ -228,8 +228,8 @@
 														<span
 															style="font-size: 14px; font-weight: 400; margin-right: 10px;">#{bundle.not_registred_yet}
 														</span>
-														<h:link outcome="signup"
-															style=" text-decoration:underline !important;font-size:14px;color:rgb(0, 126, 168)">  #{bundle.create_account}</h:link>
+														<h:commandLink action="#{loginController.createAccount()}" value=" #{bundle.create_account}"
+															style=" text-decoration:underline !important;font-size:14px;color:rgb(0, 126, 168)" />
 													</div>
 												</div>
 												<!--end col-->
