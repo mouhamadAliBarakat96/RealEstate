@@ -27,7 +27,7 @@
 						<div class="card">
 							<div class="row">
 								<div class="col-md-4">
-									<div class="col-md-12">
+									<div class="col-md-12" style="position: relative;">
 										<p:remoteCommand name="rc"
 											actionListener="#{realEstateCardController.changeActiveIndex}"
 											oncomplete="PF('galleria1').show()" />
@@ -49,12 +49,7 @@
 											styleClass="col-12" icon="pi pi-external-link"
 											onclick="PF('galleria1').show()" process="@this">
 										</p:commandButton>
-
-									</div>
-								</div>
-								<div class="col-md-8 px-5">
-									<div class="row pt-2 pb-0">
-										<div class="d-flex justify-content-between p-0">
+										<div class="d-flex justify-content-between px-2" style="position: absolute; top:0">
 											<h:panelGroup layout="block"
 												rendered="#{realEstateCardController.item.boosted}"
 												styleClass="tag-new tag-new--verified px-2">
@@ -71,20 +66,24 @@
 												<label class="mx-2"> #{bundle.post_verified}</label>
 											</h:panelGroup>
 										</div>
+									</div>
+								</div>
+								<div class="col-md-8  ">
+									<div class="  pt-2 pb-0">
 
-
-										<div class="d-flex justify-content-between mt-2">
-											<span
-												style="color: #00B98E; font-size: 22px; font-weight: 700">
-												#{realEstateCardController.item.tittle}</span>
-
-											<button class="btn btn-outline-primary"
-												style="display: contents;" onclick="copyCurrentURL()">#{bundle.copy}</button>
+										<div class="d-flex justify-content-between px-2">
+											<strong>#{bundle.real_estate_subtitle}</strong>
+											<div class="tag-new tag-new--verified px-2">
+												<button class="btn btn-outline-primary white"
+													style="display: contents; color: white;"
+													onclick="copyCurrentURL()">#{bundle.copy}</button>
+											</div>
 										</div>
 
-										<span class="mt-2   row border-bottom"
+										<p class="mt-2 form-control  card"
 											style="display: block; color: #2d383f;">
-											#{realEstateCardController.item.subTittle}</span>
+											#{realEstateCardController.item.subTittle}</p>
+
 										<div class="row">
 											<div class="col-md-6">
 												<div class="col-md-3">
