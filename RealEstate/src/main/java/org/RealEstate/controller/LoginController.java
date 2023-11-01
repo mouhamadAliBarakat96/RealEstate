@@ -21,8 +21,10 @@ import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
+import org.RealEstate.web.controller.LanguageController;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Faces;
+import org.primefaces.component.password.Password;
 
 @ViewScoped
 @Named
@@ -42,6 +44,8 @@ public class LoginController implements Serializable {
 	private UserFacade userFacade;
 	@Inject
 	private HttpServletRequest request;
+	@Inject
+	private LanguageController sessionLanguage;
 
 	private boolean showErrorMessage;
 	private String errorMessage;
@@ -146,6 +150,12 @@ public class LoginController implements Serializable {
 
 	public void login() {
 		try {
+			
+			if(StringUtils.isBlank(userName) ||StringUtils.isBlank(passowrd)) {
+				Utility.addErrorMessage("username_and_password_required",sessionLanguage.getLocale());
+				return;
+			}
+			
 			String hashPass = Utility.hashPassword(passowrd);
 			User user = userFacade.findUserByUserNameAndPassword(userName, hashPass);
 

@@ -166,11 +166,11 @@
 															</span>
 															<p:inputText type="text" style="border-radius: 10px;"
 																styleClass=" form-control #{component.valid ? '' :'error' } "
-																id="username" required="true"
+																id="username"  
 																value="#{loginController.userName}"
 																h5:placeholder="Enter username"></p:inputText>
 														</div>
-														<h:message for="username" styleClass="error-message" />
+
 													</div>
 													<!--end form-group-->
 													<div class="form-group">
@@ -183,11 +183,12 @@
 															<p:inputText h5:type="password"
 																style="border-radius: 10px;"
 																styleClass=" form-control #{component.valid ? '' :'error' } "
-																value="#{loginController.passowrd}" required="true"
+																value="#{loginController.passowrd}"  
 																id="userpassword" h5:placeholder="Enter password">
+																
 															</p:inputText>
 														</div>
-														<h:message for="userpassword" styleClass="error-message" />
+
 													</div>
 
 												</div>
@@ -228,8 +229,11 @@
 														<span
 															style="font-size: 14px; font-weight: 400; margin-right: 10px;">#{bundle.not_registred_yet}
 														</span>
-														<h:commandLink action="#{loginController.createAccount()}" value=" #{bundle.create_account}"
-															style=" text-decoration:underline !important;font-size:14px;color:rgb(0, 126, 168)" />
+														<h:commandLink action="#{loginController.createAccount()}"
+															value=" #{bundle.create_account}"
+															style=" text-decoration:underline !important;font-size:14px;color:rgb(0, 126, 168)">
+															<f:ajax />
+														</h:commandLink>
 													</div>
 												</div>
 												<!--end col-->
