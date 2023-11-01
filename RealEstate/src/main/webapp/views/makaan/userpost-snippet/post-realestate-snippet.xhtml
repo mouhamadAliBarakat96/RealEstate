@@ -127,7 +127,7 @@
 						<p:outputLabel class="control-label" for="priceId"
 							value="#{bundle.real_estate_price}">
 						</p:outputLabel>
-						<p:inputNumber decimalPlaces="0" thousandSeparator=","
+						<p:inputNumber decimalPlaces="0" thousandSeparator="," onfocus="selectAllContent(this)" 
 							leadingZero="deny" symbolPosition="p" minValue="0"
 							maxValue="9999999999" placeholder="#{bundle.real_estate_price}"
 							id="priceId" emptyValue="0" label="#{bundle.real_estate_price}"
@@ -141,7 +141,7 @@
 						<p:outputLabel class="control-label" for="spaceId"
 							value="#{bundle.real_estate_space}">
 						</p:outputLabel>
-						<p:inputNumber decimalPlaces="0" thousandSeparator=","
+						<p:inputNumber onfocus="selectAllContent(this)"  decimalPlaces="0" thousandSeparator=","
 							leadingZero="deny" placeholder="#{bundle.real_estate_space}"
 							minValue="0" maxValue="9999999999" id="spaceId" emptyValue="0"
 							label="#{bundle.real_estate_space}" styleClass="form-control"
@@ -170,7 +170,7 @@
 							<p:outputLabel class="control-label" for="parkId"
 								value="#{bundle.real_estate_nb_of_car_park}">
 							</p:outputLabel>
-							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							<p:inputNumber onfocus="selectAllContent(this)"  decimalPlaces="0" thousandSeparator=","
 								leadingZero="deny"
 								placeholder="#{bundle.real_estate_nb_of_car_park}" minValue="0"
 								maxValue="99" id="parkId" emptyValue="0"
@@ -188,7 +188,7 @@
 							<p:outputLabel class="control-label" for="roomId"
 								value="#{bundle.real_estate_rooms}">
 							</p:outputLabel>
-							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							<p:inputNumber onfocus="selectAllContent(this)"  decimalPlaces="0" thousandSeparator=","
 								leadingZero="deny" placeholder="#{bundle.real_estate_rooms}"
 								emptyValue="0" minValue="0" maxValue="99" id="roomId"
 								label="#{bundle.real_estate_rooms}" styleClass="form-control"
@@ -201,7 +201,7 @@
 							<p:outputLabel class="control-label" for="bathId"
 								value="#{bundle.real_estate_bathrooms}">
 							</p:outputLabel>
-							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							<p:inputNumber onfocus="selectAllContent(this)"  decimalPlaces="0" thousandSeparator=","
 								leadingZero="deny" placeholder="#{bundle.real_estate_bathrooms}"
 								minValue="0" maxValue="99" id="bathId" emptyValue="0"
 								label="#{bundle.real_estate_bathrooms}"
@@ -260,7 +260,7 @@
 							<p:outputLabel class="control-label" for="nbOfSharesId"
 								value="#{bundle.real_estate_nb_of_shares}">
 							</p:outputLabel>
-							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							<p:inputNumber onfocus="selectAllContent(this)"  decimalPlaces="0" thousandSeparator=","
 								minValue="0" maxValue="99999" id="nbOfSharesId" emptyValue="0"
 								label="#{bundle.real_estate_nb_of_shares}"
 								styleClass="form-control"
@@ -272,7 +272,7 @@
 						<div class="form-group">
 							<h:outputLabel value="#{bundle.land_block_no}"
 								styleClass="control-label" />
-							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							<p:inputNumber onfocus="selectAllContent(this)"  decimalPlaces="0" thousandSeparator=","
 								minValue="0" maxValue="999999999" id="blockNbId" emptyValue="0"
 								label="#{bundle.land_block_no}" styleClass="form-control"
 								value="#{userPostCardController.item.blockNb}">
@@ -323,7 +323,7 @@
 							<p:outputLabel class="control-label" for="storefrontsId"
 								value="#{bundle.real_estate_store_fronts}">
 							</p:outputLabel>
-							<p:inputNumber decimalPlaces="0" thousandSeparator=","
+							<p:inputNumber onfocus="selectAllContent(this)"  decimalPlaces="0" thousandSeparator=","
 								minValue="0" maxValue="99" id="storefrontsId" emptyValue="0"
 								label="#{bundle.real_estate_store_fronts}"
 								styleClass="form-control"

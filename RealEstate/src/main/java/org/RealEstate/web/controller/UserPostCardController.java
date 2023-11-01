@@ -26,6 +26,7 @@ import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
 import org.RealEstate.enumerator.PropertyTypeEnum;
+import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
@@ -894,9 +895,10 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			e.printStackTrace();
 			return false;
 		}
-		
-	/*	int nbOfCreatedPost = 21;// get it by query
 
+	}
+	
+	public int totalPermitPost() {
 		int nbOfPermitPost = 0;
 
 		if (user.getUserCategory() == UserCategory.REGULAR) {
@@ -908,13 +910,15 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		} else if (user.getUserCategory() == UserCategory.PREMIUM) {
 			nbOfPermitPost = appSinglton.getPremuimAccountNbOfPost();
 		}
-
-		if (nbOfCreatedPost < nbOfPermitPost) {
-			return true;
-		} else {
-			return false;
-		}*/
-
+		return nbOfPermitPost;
+	}
+	
+	public int userPermitPost() {
+		try {
+			return ((Number) userService.findNumberOfPostForUser(user)).intValue();
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	public boolean showRealEstateStatus() {
@@ -947,4 +951,5 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		return Constants.NB_IMAGE_IN_POST_ALLOWED - item.getImages().size();
 	}
 
+	
 }

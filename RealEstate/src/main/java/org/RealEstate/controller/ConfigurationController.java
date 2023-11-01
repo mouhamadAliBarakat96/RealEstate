@@ -222,7 +222,7 @@ public class ConfigurationController implements Serializable {
 
 			}
 			appSinglton.setPremuimAccountNbOfPost(premuimAccountNbOfPost);
-			configurationFacade.save(generalConfigurationPremuimAccountPay);
+			configurationFacade.save(generalConfigurationPremuimAccountNbOfPost);
 
 			if (generalConfigurationPhoneNumber == null) {
 				generalConfigurationPhoneNumber = new GeneralConfiguration();

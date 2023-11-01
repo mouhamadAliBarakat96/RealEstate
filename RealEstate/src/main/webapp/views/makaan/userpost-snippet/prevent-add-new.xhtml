@@ -21,10 +21,10 @@
 }
 
 </style>
-
-
 	<div class="row p-3">
-	<h1>#{bundle.account_is} <span style="color: var(--bs-primary);">#{bundle[userPostCardController.user.userCategory]}</span> </h1>
+	<h1>#{bundle.account_is} <span style="color: var(--bs-primary);">#{bundle[userPostCardController.user.userCategory]}  </span> </h1>
+		<h2>#{bundle.total_post_added} : #{userPostCardController.totalPermitPost()}</h2>
+		
 		<div class="message">
 			<p>#{bundle.you_reach_limit}</p>
 			

@@ -165,12 +165,12 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 			</div>
 		</div>
 
-		<p:dialog header="#{bundle.change_password}"
+		<p:dialog header="#{bundle.change_password}" styleClass="mx-3"
 			widgetVar="dlgChangePassword" showEffect="fade" draggable="false"
 			responsive="true">
 			<h:panelGroup id="pannel-group">
 				<div class="row">
-					<div class="col-md-12 form-group">
+					<div class="col-md-12 form-group position-relative">
 						<h:outputLabel class="control-label" for="oldPassword"
 							style="padding-left:1.5%" value="#{bundle.current_password} ">
 							<span class="required">*</span>
@@ -180,11 +180,14 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 							label="#{bundle.current_password} "
 							title="#{bundle.current_password}"
 							value="#{updateUserInformationController.currentPassword}"
-							styleClass="form-control">
+							styleClass="form-control position-relative">
+							<i id="oldIconId" class="fa fa-eye"
+								onclick="togglePasswordVisibility('myForm:oldPassword', 'oldIconId')"
+								style="position: absolute; top: 35px; right: 20px; z-index: 1;" />
 						</h:inputSecret>
 					</div>
 
-					<div class="col-md-12 form-group">
+					<div class="col-md-12 form-group position-relative">
 						<h:outputLabel class="control-label" for="newPassword"
 							style="padding-left:1.5%" value="#{bundle.new_password} ">
 							<span class="required">*</span>
@@ -193,11 +196,14 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 							f5:placeholder="#{bundle.new_password} "
 							label="#{bundle.new_password} " title="#{bundle.new_password}"
 							value="#{updateUserInformationController.newPassword}"
-							styleClass="form-control">
+							styleClass="form-control position-relative">
+							<i id="newIconId" class="fa fa-eye"
+								onclick="togglePasswordVisibility('myForm:newPassword', 'newIconId')"
+								style="position: absolute; top: 35px; right: 20px; z-index: 1;" />
 						</h:inputSecret>
 					</div>
 
-					<div class=" col-md-12 form-group">
+					<div class=" col-md-12 form-group position-relative">
 						<h:outputLabel class="control-label" for="verfiedNewPassword"
 							style="padding-left:1.5%"
 							value="#{bundle.verfied_current_password} ">
@@ -208,12 +214,15 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 							label="#{bundle.verfied_current_password} "
 							title="#{bundle.verfied_current_password}"
 							value="#{updateUserInformationController.verNewPassword}"
-							styleClass="form-control">
+							styleClass="form-control position-relative">
+							<i id="verfiedIconId" class="fa fa-eye"
+								onclick="togglePasswordVisibility('myForm:verfiedNewPassword', 'verfiedIconId')"
+								style="position: absolute; top: 35px; right: 20px; z-index: 1;" />
 						</h:inputSecret>
 					</div>
 				</div>
 			</h:panelGroup>
-			<div class="d-flex justify-content-center">
+			<div class="d-flex justify-content-center pt-2">
 				<h:commandLink styleClass="btn btn-success" 
 					action="#{updateUserInformationController.changePassowrd()}"
 					value="#{bundle.change_password}">

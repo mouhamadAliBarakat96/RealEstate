@@ -194,5 +194,27 @@ function restrictToNumbers(inputField) {
     inputField.value = numericInput;
 }
 
+function selectAllContent(input) {
+    input.select();
+  }
+
+  
+function togglePasswordVisibility(inputId,iconId) {
+	
+	var passwordInput = document.getElementById(inputId);
+	var icon = document.getElementById(iconId);
+
+	if (passwordInput.type === "password") {
+		passwordInput.type = "text";
+		icon.classList.remove("fa-eye");
+		icon.classList.add("fa-eye-slash");
+	} else {
+		passwordInput.type = "password";
+		icon.classList.remove("fa-eye-slash");
+		icon.classList.add("fa-eye");
+	}
+}
+ 
+
 // Use noConflict to release control of the $ variable
 jQuery.noConflict();

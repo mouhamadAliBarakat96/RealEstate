@@ -140,7 +140,7 @@
 											onkeypress="return isNumberKey(event)"
 											value="#{configurationController.premuimAccountNbOfPost}"
 											styleClass="form-control">
-											<f:ajax render=":messageScript"></f:ajax>
+											<f:ajax execute="@this" render=":messageScript"></f:ajax>
 										</h:inputText>
 										<h:message for="premiumNbOfPost" styleClass="error-message" />
 									</div>
