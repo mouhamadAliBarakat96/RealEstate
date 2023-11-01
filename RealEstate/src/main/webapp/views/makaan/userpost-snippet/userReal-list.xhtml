@@ -9,7 +9,7 @@
 <ui:component>
 	<div class="row">
 		<p:dataView var="real" value="#{userPostListController.realEstates}" emptyMessage="#{bundle.no_records}"
-			rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
+			rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"  
 			paginatorPosition="bottom" widgetVar="realEstatesDataView"  id="realestateDataView"
 			paginatorTemplate="  {PreviousPageLink} {PageLinks} {NextPageLink}" 
 			gridIcon="pi pi-th-large" listIcon="pi pi-bars">
@@ -106,6 +106,15 @@
 							</div>
 							<div class="col-md-8   border-bottom border-left	">
 								<div class="p-4 pb-0">
+
+									<div
+										class="d-flex flex-row-reverse justify-content-between align-center">
+										<h:commandButton value="#{bundle.delete_post}" styleClass="btn btn-danger"
+											action="#{userPostListController.deleteRealEstate(real)}">
+											<f:ajax execute="@this"  render="myForm:tabView:realestateDataView :messageScript"/>
+										</h:commandButton>
+									</div>
+
 									<h5 class="text-primary mb-3">
 									
 									<h:outputLabel value="#{real.price}">

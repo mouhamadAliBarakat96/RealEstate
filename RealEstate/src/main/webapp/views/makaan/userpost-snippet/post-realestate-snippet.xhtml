@@ -9,12 +9,12 @@
 <ui:component>
 	<div class="row p-0">
 		<div class="col-12">
-			<p:staticMessage styleClass="col-12" severity="warn" summary="WARN"
+			<p:staticMessage styleClass="col-12" severity="warn" summary="#{bundle.refused_because}"
 				rendered="#{userPostCardController.item.postStatus == 'REFFUSED'}"
 				detail="#{userPostCardController.item.reffuseCause}"
 				style="overflow: overlay;" />
 
-			<p:staticMessage styleClass="col-12" severity="warn" summary="WARN"
+			<p:staticMessage styleClass="col-12" severity="warn" summary="#{bundle.reviews_because}"
 				rendered="#{userPostCardController.item.postStatus == 'TO_REVIEUX_BY_USER'}"
 				detail="#{userPostCardController.item.reffuseCause}"
 				style="overflow: overlay;" />
@@ -42,7 +42,7 @@
 				circular="true" fullScreen="true" showItemNavigators="true"
 				showThumbnails="false">
 				<div class="d-flex flex-column align-items-center">
-					<p:graphicImage width="350" height="350" id="photoId"
+					<p:graphicImage width="350" height="450" id="photoId"
 						url="#{userPostCardController.fullUrl}#{photo}" alt="the photos"
 						style="display: block; object-fit: contain;">
 					</p:graphicImage>
@@ -73,7 +73,7 @@
 						<p:outputLabel class="control-label" for="exchangeId"
 							value="#{bundle.property_exchange_type}">
 						</p:outputLabel>
-						<h:selectOneMenu id="exchangeId" styleClass="white form-control"
+						<p:selectOneMenu id="exchangeId" styleClass="white form-control"
 							disabled="#{userPostCardController.propertyTypeEnum eq 'LAND'}"
 							converter="omnifaces.SelectItemsConverter"
 							value="#{userPostCardController.exchangeRealEstateType}">
@@ -82,7 +82,7 @@
 							<f:ajax
 								listener="#{userPostCardController.listenerSelectProperty()}"
 								execute="@this" render="myForm:inputPanel" />
-						</h:selectOneMenu>
+						</p:selectOneMenu>
 					</div>
 				</div>
 				<div class="col-md-3 col-xs-12 col-12">
@@ -90,7 +90,7 @@
 						<p:outputLabel class="control-label"
 							value="#{bundle.property_type}">
 						</p:outputLabel>
-						<h:selectOneMenu styleClass="white form-control"
+						<p:selectOneMenu styleClass="white form-control"
 							converter="omnifaces.SelectItemsConverter"
 							value="#{userPostCardController.propertyTypeEnum}">
 							<f:selectItems value="#{PropertyTypeEnum.values()}" var="option"
@@ -98,7 +98,7 @@
 							<f:ajax
 								listener="#{userPostCardController.listenerSelectProperty()}"
 								execute="@this" render="myForm:inputPanel myForm:exchangeId" />
-						</h:selectOneMenu>
+						</p:selectOneMenu>
 					</div>
 				</div>
 			</h:panelGroup>
@@ -215,14 +215,14 @@
 							<p:outputLabel class="control-label" for="floorId"
 								value="#{bundle.real_estate_floor}">
 							</p:outputLabel>
-							<h:selectOneMenu id="floorId"
+							<p:selectOneMenu id="floorId"
 								converter="omnifaces.SelectItemsConverter"
 								styleClass="form-select"
 								value="#{userPostCardController.item.floor}">
 								<f:selectItems value="#{FloorEnum.values()}" var="floor"
 									itemValue="#{floor.floor}" itemLabel="#{bundle[floor]}" />
 								<f:ajax execute="@this" />
-							</h:selectOneMenu>
+							</p:selectOneMenu>
 						</div>
 					</div>
 					<div class="col-md-3 col-6">
@@ -402,6 +402,13 @@
 							value="#{userPostCardController.item.subTittle}">
 						</h:inputTextarea>
 					</div>
+				</div>
+
+				<div class="col-12">
+					<p style="color: #00a780; background-color: #e6f8f4;"
+						class="bi-info-circle-fill   accordion-item p-0 mt-2 px-2 mb-0">
+						<span class="mx-2">#{bundle.you_can_choose_3_to_5_photos}</span>
+					</p>
 				</div>
 				<h:panelGroup id="uploadPanelId">
 					<div class="col-md-12 mt-3">

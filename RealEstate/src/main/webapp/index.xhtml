@@ -31,7 +31,7 @@
 	</ui:define>
 
 	<ui:define name="adspanel">
-		<p:galleria value="#{makanTemplateController.adsList}" var="photo"
+		<p:galleria value="#{makanTemplateController.adsList}" var="photo" rendered="false"
 			circular="true" autoPlay="true" numVisible="5"
 			styleClass="galleria-arabic-fix mt-2 mb-2" transitionInterval="5000"
 			style="height:275px;width: 100%;">
@@ -39,6 +39,7 @@
 				url="#{makanTemplateController.fullUrlAdsImage}#{photo.url}"
 				style="height:275px ;width: 70%; display: block;object-fit:contain;" />
 		</p:galleria>
+		<span  style="display: block;padding: 10px"/>
 	</ui:define>
 
 	<ui:define name="searchBar">

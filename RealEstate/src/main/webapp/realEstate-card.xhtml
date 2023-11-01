@@ -41,15 +41,19 @@
 											responsiveOptions="#{realEstateCardController.responsiveOptions1}"
 											circular="true" fullScreen="true" showItemNavigators="true"
 											showThumbnails="false" style="max-width: 40%">
-											<p:graphicImage
-												url="#{realEstateCardController.fullUrl}#{photo}"
-												alt="the photos" style="width: 100%; display: block" />
+											<div class="d-flex   align-items-center">
+												<p:graphicImage
+													url="#{realEstateCardController.fullUrl}#{photo}"
+													alt="the photos"
+													style="width: 100%;  display: block; height: 450px;  object-fit: contain;" />
+											</div>
 										</p:galleria>
 										<p:commandButton value="#{bundle.show_photos}"
 											styleClass="col-12" icon="pi pi-external-link"
 											onclick="PF('galleria1').show()" process="@this">
 										</p:commandButton>
-										<div class="d-flex justify-content-between px-2" style="position: absolute; top:0">
+										<div class="d-flex justify-content-between px-2"
+											style="position: absolute; top: 0">
 											<h:panelGroup layout="block"
 												rendered="#{realEstateCardController.item.boosted}"
 												styleClass="tag-new tag-new--verified px-2">

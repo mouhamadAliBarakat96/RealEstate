@@ -84,7 +84,7 @@ public class IndexController implements Serializable {
 	private User user;
 	private String postType;
 	private int minPrice;
-	private int maxPrice;
+	private int maxPrice=100000000;
 	private AtomicLong totalCount = new AtomicLong();
 	private List<Integer> bedRooms;
 	private List<Integer> bathRooms;

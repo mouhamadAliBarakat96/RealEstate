@@ -50,6 +50,8 @@ public class UserPostListController implements Serializable {
 	private RealEstateFacade estateFacade;
 	@Inject
 	private ChaletFacade chaletFacade;
+	@Inject
+	private LanguageController languageController;
 
 	@Inject
 	private AppSinglton appSinglton ;
@@ -182,6 +184,17 @@ public class UserPostListController implements Serializable {
 			return fullUrl.concat(item.getImages().get(0));
 		} else {
 			return Utility.NO_PHOTO;
+		}
+	}
+	
+	
+	public void deleteRealEstate(RealEstate estate) {
+		try {
+			estateFacade.remove(estate);
+			realEstates.remove(estate);
+			Utility.addSuccessMessage("post_deleted", languageController.getLocale());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
