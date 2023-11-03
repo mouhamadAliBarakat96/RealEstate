@@ -1,9 +1,9 @@
 /********** Template CSS **********/
-:root { -
-	-primary: #00B98E; -
-	-secondary: #FF6922; -
-	-light: #EFFDF5; -
-	-dark: #0E2E50;
+:root { 
+	--primary: #00B98E; 
+	--secondary: #FF6922; 
+	--light: #EFFDF5; 
+	--dark: #0E2E50;
 }
 
 .back-to-top {
@@ -52,11 +52,11 @@
 	height: 48px;
 }
 
-.btn.btn-search, .btn.btn-search:hover{
+.btn.btn-search, .btn.btn-search:hover {
 	background-color: #00d996;
 	color: white;
 	border: 2px solid;
-	padding:0px;
+	padding: 0px;
 }
 
 .btn-square, .btn-sm-square, .btn-lg-square {
@@ -634,18 +634,19 @@ a.nav-item.nav-link:hover {
 }
 
 .tag-new--verified {
-    background-color: var(--bs-primary);
-    color: white;
-    border-radius: 0.4rem;
-    width:fit-content;
-    margin: 0.2rem;
+	background-color: var(- -bs-primary);
+	color: white;
+	border-radius: 0.4rem;
+	width: fit-content;
+	margin: 0.2rem;
 }
 
 .tag-new {
-    height: 1.5rem;
-    font-weight: 500;
-    align-items: center
+	height: 1.5rem;
+	font-weight: 500;
+	align-items: center
 }
+
 .tag-new__icon {
 	margin-right: .4rem;
 }
@@ -655,38 +656,31 @@ a.nav-item.nav-link:hover {
 	width: 1.6rem;
 }
 
-
-
-
-
 /*******try images views********/
+#fullscreen-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.9);
+	z-index: 9999;
+	text-align: center;
+}
 
-  #fullscreen-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    z-index: 9999;
-    text-align: center;
-  }
-  
-  #fullscreen-image {
-    max-width: 90%;
-    max-height: 90%;
-    margin-top: 5%;
-  }
-  
-  .close-button {
-    color: #fff;
-    font-size: 30px;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    cursor: pointer;
-  }
+#fullscreen-image {
+	max-width: 90%;
+	max-height: 90%;
+	margin-top: 5%;
+}
+
+.close-button {
+	color: #fff;
+	font-size: 30px;
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	cursor: pointer;
+}
 /*************END******************/
-
- 
