@@ -41,10 +41,11 @@
 			</ui:remove>
 			<div class="col-md-3 col-sm-12 mt-1 ">
 				<h:outputLabel value="#{bundle.village}" style="color:white" />
-				
-				<p:selectOneMenu converter="omnifaces.SelectItemsConverter" style="min-width:25px"
-					id="chaletVillage" filter="true" filterMatchMode="contains"
-					filterNormalize="true" styleClass="form-select border-0  "
+
+				<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
+					style="min-width:25px" id="chaletVillage" filter="true"
+					filterMatchMode="contains" filterNormalize="true"
+					styleClass="form-select border-0  "
 					value="#{actionBean.selecteVillage}">
 					<f:selectItem itemLabel="#{bundle.any}" itemValue="" />
 					<f:selectItems value="#{actionBean.villages}" var="option"
@@ -102,8 +103,8 @@
 			<div
 				class="col-md-3 col-sm-12 d-flex flex-column-reverse flex-wrap  mt-2 align-content-start">
 				<p:commandButton action="#{actionBean.chaletSearch()}"
-					oncomplete="addScroll();" value="#{bundle.search}"
-					styleClass="btn btn-search" process="myForm:searchBarPanel"
+					value="#{bundle.search}" styleClass="btn btn-search"
+					process="myForm:searchBarPanel"
 					update="myForm:ChaletPanelId :messageScript">
 				</p:commandButton>
 			</div>

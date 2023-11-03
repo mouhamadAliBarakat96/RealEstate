@@ -13,6 +13,9 @@
 			paginatorPosition="bottom" widgetVar="realEstatesDataView"  id="realestateDataView"
 			paginatorTemplate="  {PreviousPageLink} {PageLinks} {NextPageLink}" 
 			gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+			
+			<p:ajax event="page" oncomplete="scrollViewTo();" />
+			
 			<p:dataViewGridItem>
 				<div class="card flex justify-content-center">
 					<div class="col-md-12">

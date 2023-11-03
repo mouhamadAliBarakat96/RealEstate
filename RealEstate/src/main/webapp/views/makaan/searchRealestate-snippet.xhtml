@@ -101,19 +101,21 @@
 				</h:panelGroup>
 
 				<div class="col-md-3 mt-4 col-sm-12 d-flex flex-column-reverse">
-					<p:commandButton id="showButton" style="background:white;color:black" value="#{bundle.real_estate_price}" type="button"
+					<p:commandButton id="showButton"
+						style="background:white;color:black"
+						value="#{bundle.real_estate_price}" type="button"
 						onclick="overlayPanel.show();" />
 				</div>
 				<div class="col-12 d-flex flex-row-reverse flex-wrap  mt-2  ">
 					<p:commandButton action="#{actionBean.search()}"
-						oncomplete="addScroll();" value="#{bundle.search}"
-						styleClass="btn btn-search" process="myForm:searchBarPanel"
+						value="#{bundle.search}" styleClass="btn btn-search"
+						process="myForm:searchBarPanel"
 						update="myForm:RealEstatePanelId :messageScript">
 					</p:commandButton>
 				</div>
 			</div>
-			<p:overlayPanel id="overlayPanel" for="myForm:showButton" dynamic="true"
-				dismissable="true" >
+			<p:overlayPanel id="overlayPanel" for="myForm:showButton"
+				dynamic="true" dismissable="true">
 				<div class="d-flex">
 					<div class="col-6">
 						<h:outputLabel value="#{bundle.min_price}" />

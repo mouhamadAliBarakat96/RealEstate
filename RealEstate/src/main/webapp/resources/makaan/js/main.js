@@ -154,9 +154,6 @@ $(document).ready(function() {
 			navLinks[i].classList.add('active');
 		}
 	}
-	
-	//scroll dataview in top
-	 addScroll();
 });
 
 
@@ -173,21 +170,17 @@ function copyCurrentURL() {
 
 //dataView component
 
-function addScroll() {
-     $('.ui-paginator .ui-paginator-prev,.ui-paginator .ui-paginator-next,.ui-paginator .ui-paginator-pages').click(function() {
-		var element = document.getElementById('myForm:tabView');
-				if (element) {
-					scrollTo(top);
-				} else {
-					var firstItem = $('.ui-dataview-row:first');
-					// Scroll to the first item
-					if (firstItem) {
-						scrollTo(firstItem.offset().top -200, firstItem .offset().top -200);
-					}
-				}
-			});
-}
+ function scrollViewTo() {
 
+	var dataHeader = document.querySelector('.ui-dataview .ui-dataview-header');
+	if (dataHeader) {
+		var firstItemPosition = dataHeader.offsetTop - dataHeader.offsetHeight;
+		window.scrollTo(0, firstItemPosition);
+	}
+	console.log('scrollViewTo')
+} 
+ 
+ 
 function restrictToNumbers(inputField) {
     var input = inputField.value;
     var numericInput = input.replace(/[^0-9]/g, "");
