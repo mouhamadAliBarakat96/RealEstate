@@ -6,6 +6,7 @@
 	--dark: #0E2E50;
 }
 
+
 .back-to-top {
 	position: fixed;
 	display: none;
@@ -184,7 +185,7 @@
 	align-items: center;
 	justify-content: center;
 	color: #FFFFFF;
-	background: var(- -primary);
+	background: var(--primary);
 	border-radius: 40px;
 	font-size: 20px;
 	transition: .5s;
@@ -192,7 +193,7 @@
 
 .header-carousel .owl-nav .owl-prev:hover, .header-carousel .owl-nav .owl-next:hover
 	{
-	background: var(- -dark);
+	background: var(--dark);
 }
 
 @media ( max-width : 768px) {
@@ -213,7 +214,7 @@
 	justify-content: center;
 	background: #FFFFFF !important;
 	border-radius: 50px;
-	border: 1px dashed var(- -primary) !important;
+	border: 1px dashed var(--primary) !important;
 }
 
 /*** About ***/
@@ -229,7 +230,7 @@
 	left: -50%;
 	width: 100%;
 	height: 100%;
-	background: var(- -primary);
+	background: var(--primary);
 	transform: skew(20deg);
 	z-index: 1;
 }
@@ -242,7 +243,7 @@
 }
 
 .cat-item:hover div {
-	background: var(- -primary);
+	background: var(--primary);
 	border-color: transparent;
 }
 
@@ -256,7 +257,7 @@
 
 /*** Property List ***/
 .nav-pills .nav-item .btn {
-	color: var(- -dark);
+	color: var(--dark);
 }
 
 .nav-pills .nav-item .btn:hover, .nav-pills .nav-item .btn.active {
@@ -290,26 +291,26 @@
 }
 
 .team-item .btn {
-	color: var(- -primary);
+	color: var(--primary);
 	background: #FFFFFF;
 	box-shadow: 0 0 30px rgba(0, 0, 0, .15);
 }
 
 .team-item .btn:hover {
 	color: #FFFFFF;
-	background: var(- -primary);
+	background: var(--primary);
 }
 
 .team-item:hover {
-	border-color: var(- -secondary) !important;
+	border-color: var(--secondary) !important;
 }
 
 .team-item:hover .bg-primary {
-	background: var(- -secondary) !important;
+	background: var(--secondary) !important;
 }
 
 .team-item:hover .bg-primary i {
-	color: var(- -secondary) !important;
+	color: var(--secondary) !important;
 }
 
 /*** Testimonial ***/
@@ -349,7 +350,7 @@
 	align-items: center;
 	justify-content: center;
 	color: #FFFFFF;
-	background: var(- -primary);
+	background: var(--primary);
 	border-radius: 40px;
 	font-size: 20px;
 	transition: .5s;
@@ -357,7 +358,7 @@
 
 .testimonial-carousel .owl-nav .owl-prev:hover, .testimonial-carousel .owl-nav .owl-next:hover
 	{
-	background: var(- -dark);
+	background: var(--dark);
 }
 
 /*** Footer ***/
@@ -368,15 +369,15 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: var(- -light);
+	color: var(--light);
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	border-radius: 35px;
 	transition: .3s;
 }
 
 .footer .btn.btn-social:hover {
-	color: var(- -primary);
-	border-color: var(- -light);
+	color: var(--primary);
+	border-color: var(--light);
 }
 
 .footer .btn.btn-link {
@@ -414,7 +415,7 @@
 }
 
 .footer .copyright a {
-	color: var(- -light);
+	color: var(--light);
 }
 
 .footer .footer-menu a {
@@ -634,7 +635,7 @@ a.nav-item.nav-link:hover {
 }
 
 .tag-new--verified {
-	background-color: var(- -bs-primary);
+	background-color: var(--bs-primary);
 	color: white;
 	border-radius: 0.4rem;
 	width: fit-content;
@@ -683,4 +684,25 @@ a.nav-item.nav-link:hover {
 	right: 20px;
 	cursor: pointer;
 }
+
+[dir="ltr"] .icon-eye {
+	position: absolute;
+	right: 10px;
+	z-index: 1;
+}
+
+[dir="rtl"] .icon-eye {
+	position: absolute;
+	left: 10px;
+	z-index: 1;
+}
+
+.top-35 {
+	top: 35px;
+}
+
+.top-10 {
+	top: 10px;
+}
+
 /*************END******************/

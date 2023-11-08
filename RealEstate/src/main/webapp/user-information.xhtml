@@ -172,8 +172,7 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 				<div class="row">
 					<div class="col-md-12 form-group position-relative">
 						<h:outputLabel class="control-label" for="oldPassword"
-							style="padding-left:1.5%" value="#{bundle.current_password} ">
-							<span class="required">*</span>
+							style="padding-left:1.5%" value="#{bundle.current_password} *">
 						</h:outputLabel>
 						<h:inputSecret id="oldPassword"
 							f5:placeholder="#{bundle.current_password} "
@@ -181,33 +180,31 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 							title="#{bundle.current_password}"
 							value="#{updateUserInformationController.currentPassword}"
 							styleClass="form-control position-relative">
-							<i id="oldIconId" class="fa fa-eye"
+							<i id="oldIconId" class="fa fa-eye icon-eye top-35 px-3"
 								onclick="togglePasswordVisibility('myForm:oldPassword', 'oldIconId')"
-								style="position: absolute; top: 35px; right: 20px; z-index: 1;" />
+								 />
 						</h:inputSecret>
 					</div>
 
 					<div class="col-md-12 form-group position-relative">
 						<h:outputLabel class="control-label" for="newPassword"
-							style="padding-left:1.5%" value="#{bundle.new_password} ">
-							<span class="required">*</span>
+							style="padding-left:1.5%" value="#{bundle.new_password} *">
 						</h:outputLabel>
 						<h:inputSecret id="newPassword"
 							f5:placeholder="#{bundle.new_password} "
 							label="#{bundle.new_password} " title="#{bundle.new_password}"
 							value="#{updateUserInformationController.newPassword}"
 							styleClass="form-control position-relative">
-							<i id="newIconId" class="fa fa-eye"
+							<i id="newIconId" class="fa fa-eye icon-eye top-35 px-3"
 								onclick="togglePasswordVisibility('myForm:newPassword', 'newIconId')"
-								style="position: absolute; top: 35px; right: 20px; z-index: 1;" />
+								 />
 						</h:inputSecret>
 					</div>
 
 					<div class=" col-md-12 form-group position-relative">
 						<h:outputLabel class="control-label" for="verfiedNewPassword"
 							style="padding-left:1.5%"
-							value="#{bundle.verfied_current_password} ">
-							<span class="required">*</span>
+							value="#{bundle.verfied_current_password} *">
 						</h:outputLabel>
 						<h:inputSecret id="verfiedNewPassword"
 							f5:placeholder="#{bundle.verfied_current_password} "
@@ -215,9 +212,9 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 							title="#{bundle.verfied_current_password}"
 							value="#{updateUserInformationController.verNewPassword}"
 							styleClass="form-control position-relative">
-							<i id="verfiedIconId" class="fa fa-eye"
+							<i id="verfiedIconId" class="fa fa-eye icon-eye top-35 px-3"
 								onclick="togglePasswordVisibility('myForm:verfiedNewPassword', 'verfiedIconId')"
-								style="position: absolute; top: 35px; right: 20px; z-index: 1;" />
+								 />
 						</h:inputSecret>
 					</div>
 				</div>
