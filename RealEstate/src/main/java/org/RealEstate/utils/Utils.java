@@ -344,7 +344,7 @@ public class Utils {
 
 	public static boolean validatePhoneNumber(String input) {
 		String result = input.replaceAll("\\s+", "");
-		String regex = "^(\\+?961)?(0)?[1-9]\\d{6}$";
+		String regex = "^(\\+?961|0)?(3[0-9]{7}|7[0-9]{7}|81[0-9]{6}|71[0-9]{6}|76[0-9]{6}|78[0-9]{6}|79[0-9]{6})$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(result);
 

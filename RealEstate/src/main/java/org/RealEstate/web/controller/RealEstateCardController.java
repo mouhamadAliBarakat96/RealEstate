@@ -16,6 +16,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
+import org.RealEstate.enumerator.Country;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.model.RealEstate;
@@ -115,7 +116,7 @@ public class RealEstateCardController implements Serializable {
 		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
-			String phoneNumber = item.getUser().getPhoneNumber();
+			String phoneNumber = Utility.checkPhoneNumber(item.getUser().getPhoneNumber(), Country.LEBANON);
 			String message = getIpAddressWithPort() + "/realEstate-card.xhtml?id=" + item.getId();
 			// Construct the WhatsApp URL
 			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "")+ "&text=" + message;

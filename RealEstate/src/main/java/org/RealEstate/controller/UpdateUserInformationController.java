@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.dto.ImageDto;
+import org.RealEstate.enumerator.Country;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
@@ -68,6 +69,7 @@ public class UpdateUserInformationController implements Serializable {
 	private String verNewPassword;
 
 	private String currentPassword;
+	private String lastPhoneNumber;
 
 	@PostConstruct
 	public void init() {
@@ -85,6 +87,7 @@ public class UpdateUserInformationController implements Serializable {
 				e.printStackTrace();
 			}
 		} else {
+			lastPhoneNumber=user.getPhoneNumber();
 			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
 					.concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
 		}
@@ -145,12 +148,13 @@ public class UpdateUserInformationController implements Serializable {
 			if (!validate()) {
 				return;
 			}
-
+			
 			Response r = userService.updateUserInforamtion(user);
 			if (r.getStatus() == Status.ACCEPTED.getStatusCode()) {
 				Utility.addSuccessMessage("update_sucess", sessionLanguage.getLocale());
 				changeUrl();
 			} else {
+				user.setPhoneNumber(lastPhoneNumber.replaceAll("\\s+", ""));
 				Utility.addErrorMessage(r.getEntity().toString(), sessionLanguage.getLocale());
 			}
 		} catch (Exception e) {
