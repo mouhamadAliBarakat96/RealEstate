@@ -20,6 +20,7 @@ import org.RealEstate.service.UploadImagesMultiPart;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
@@ -66,13 +67,13 @@ public class AdsController implements Serializable {
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
-		
+
 		String ipAddress = request.getRemoteAddr();
 
 		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
-			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+			ipAddressWithPort = "http://" + ipAddress + ":" + request.getLocalPort();
 		} else {
-			ipAddressWithPort = "https://" + appSinglton.getRealDns() ;
+			ipAddressWithPort = "https://" + appSinglton.getRealDns();
 		}
 
 		return ipAddressWithPort;
@@ -90,14 +91,20 @@ public class AdsController implements Serializable {
 	public void save() {
 		try {
 
+			if (StringUtils.isBlank(adsToSave.getUrlToOpen())) {
+				CommonUtility.addMessageToFacesContext("Dont miss To Add Url To Open  ", "error");
+return ;
+			}
+
 			if (imageDto == null) {
 				CommonUtility.addMessageToFacesContext("upload the image", "error");
-
+				return ;
 			}
 
 			String url = uploadImagesMultiPart.uploadImageAdsFrontEnd(imageDto);
 
 			adsToSave.setUrl(url);
+
 			adsFacade.save(adsToSave);
 			adsFacade.getEm().detach(adsToSave);
 			adsToSave = new Ads();

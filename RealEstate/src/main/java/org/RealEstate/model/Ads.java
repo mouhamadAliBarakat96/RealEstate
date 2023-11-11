@@ -37,6 +37,11 @@ public class Ads extends MainEntity implements Serializable {
 	@Expose
 	private String url;
 
+	@NotEmpty
+	@Expose
+	@Size(min = 1)
+	private String urlToOpen;
+
 	public long getId() {
 		return id;
 	}
@@ -59,6 +64,14 @@ public class Ads extends MainEntity implements Serializable {
 
 	public void setInformation(String information) {
 		this.information = information;
+	}
+
+	public String getUrlToOpen() {
+		return urlToOpen;
+	}
+
+	public void setUrlToOpen(String urlToOpen) {
+		this.urlToOpen = urlToOpen;
 	}
 
 }

@@ -73,13 +73,33 @@
 						</div>
 					</div>
 
+					<div class="row" style="margin-top:2%">
+						<div class="col-md-5">
+							<div class="form-group">
+								<h:outputLabel class="control-label" for="urlTopOpen"
+									style="padding-left:1.5%" value="url To Open">
+									<span class="required">*</span>
+								</h:outputLabel>
+								<h:inputText id="urlTopOpen" required="true"
+									f5:placeholder="url To Open Information " label="url To Open  "
+									title="ads Information   "
+									
+									value="#{adsController.adsToSave.urlToOpen}"
+									styleClass="form-control">
+									<f:ajax render=":messageScript"></f:ajax>
+								</h:inputText>
+								<h:message for="urlTopOpen" styleClass="error-message" />
+							</div>
+						</div>
+					</div>
+
 					<div class="row">
 						<div class="col-md-12">
 							<h:commandLink id="saveId"
 								style=" float:right ; margin-left:10px;"
 								action='#{adsController.save()}'
 								styleClass="btn btn-primary btn-save">
-								<f:ajax render=":messageScript  adsInformation  "
+								<f:ajax render=":messageScript  adsInformation  urlTopOpen "
 									execute="  adsInformation  " />
 								<i class="fa fa-save" />
 								<span>Save</span>
@@ -164,6 +184,18 @@
 								headerText="information" filterMatchMode="contains">
 								<h:outputText value="#{entity.information}" />
 							</p:column>
+
+
+
+<p:column filterBy="#{entity.urlToOpen}"
+								sortBy="#{entity.urlToOpen}"
+								style="vertical-align: middle; margin-left: .5rem"
+								headerText="url to open" filterMatchMode="contains">
+								<h:outputText value="#{entity.urlToOpen}" />
+							</p:column>
+
+
+
 							<p:column headerText="Creation Date"
 								sortBy="#{entity.creationDate}" style="padding-bottom: 45px;">
 								<h:outputText id="creationDate" styleClass="text-ellipsis"
