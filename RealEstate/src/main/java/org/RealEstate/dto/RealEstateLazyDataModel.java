@@ -58,7 +58,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 	public int count(Map<String, FilterMeta> arg0) {
 
 		try {
-			return Math.toIntExact(facade.countRealSatateWithFilter(user, postType, minPrice, maxPrice, village,
+			return Math.toIntExact(facade.countRealSatateWithFilter(user,false, postType, minPrice, maxPrice, village,
 					totalCount, bedRooms, bathRooms, district, governorate, exchangeRealEstateType));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,7 +70,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 	public List<RealEstate> load(int first, int pageSize, Map<String, SortMeta> sortMap,
 			Map<String, FilterMeta> filterMap) {
 		try {
-			pageItems = facade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice, village,
+			pageItems = facade.findAllRealSatateWithFilter(user, false ,postType, minPrice, maxPrice, village,
 					(first / pageSize) + 1, pageSize, totalCount, bedRooms, bathRooms, district, governorate,
 					exchangeRealEstateType);
 			setRowCount(Math.toIntExact(totalCount.get()));

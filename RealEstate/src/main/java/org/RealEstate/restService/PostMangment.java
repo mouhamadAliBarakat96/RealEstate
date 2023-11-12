@@ -126,7 +126,7 @@ public class PostMangment {
 	 * 
 	 * bathRoom 1,2,3
 	 */
-	public Response findAllPostByUser(@QueryParam("userId") Long userId, @QueryParam("postType") String postType,
+	public Response findAllPostByUser(@QueryParam("userId") Long userId, @QueryParam("allPost") boolean isAllPost , @QueryParam("postType") String postType,
 			@QueryParam("minPrice") int minPrice, @QueryParam("maxPrice") int maxPrice,
 			@QueryParam("villageId") Long villageId, @QueryParam("page") int page, @QueryParam("size") int size,
 			@QueryParam("bedRoom") String bedRoom,
@@ -135,7 +135,7 @@ public class PostMangment {
 
 	) {
 		
-		return postService.findPosts(userId, postType, minPrice, maxPrice, villageId, page, size, bedRoom, 
+		return postService.findPosts(userId, isAllPost , postType, minPrice, maxPrice, villageId, page, size, bedRoom, 
 				bathRoom, districtId, governorateId , exchangeRealEstateType);
 
 	}

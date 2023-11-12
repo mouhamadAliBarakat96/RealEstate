@@ -87,7 +87,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 	}
 
-	public List<RealEstate> findAllRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice,
+	public List<RealEstate> findAllRealSatateWithFilter(User user, boolean isAllPost ,String postType, int minPrice, int maxPrice,
 			Village village, int page, int size, AtomicLong totalCount, List<Integer> bedRoom, List<Integer> bathRoom,
 			District district, Governorate governorate, ExchangeRealEstateType exchangeRealEstateType)
 			throws Exception {
@@ -124,8 +124,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		root = countQuery.from(classType);
 
 		// Create a list of predicates based on your runtime conditions
-
-		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, postType, minPrice, maxPrice,
+		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user,isAllPost, postType, minPrice, maxPrice,
 				village, totalCount, bedRoom, bathRoom, district, governorate, exchangeRealEstateType);
 
 		Predicate predicateBoostFalse = criteriaBuilder.equal(root.get("isBoosted"), false);
@@ -199,7 +198,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	}
 
 	private Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<? extends RealEstate> root, Class classType,
-			User user, String postType, int minPrice, int maxPrice, Village village, AtomicLong totalCount,
+			User user,boolean isAllPost , String postType, int minPrice, int maxPrice, Village village, AtomicLong totalCount,
 			List<Integer> bedRoomList, List<Integer> bathRoomList, District district, Governorate governorate,
 			ExchangeRealEstateType exchangeRealEstateType) throws Exception {
 
@@ -291,8 +290,12 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 		}
 
-		Predicate postActive = criteriaBuilder.equal(root.get("postStatus"), PostStatus.ACCEPTED);
-		predicates.add(postActive);
+		if(!isAllPost) {
+			Predicate postActive = criteriaBuilder.equal(root.get("postStatus"), PostStatus.ACCEPTED);
+			predicates.add(postActive) ; 
+			
+		}
+		
 
 		// Combine the predicates using conjunction (AND) or disjunction (OR)
 		Predicate finalPredicateAnd = criteriaBuilder.and(predicates.toArray(new Predicate[0]))  ;
@@ -304,7 +307,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 	// start here create predict
 	// to use by kasssem
-	public Long countRealSatateWithFilter(User user, String postType, int minPrice, int maxPrice, Village village,
+	public Long countRealSatateWithFilter(User user,boolean isAllPost , String postType, int minPrice, int maxPrice, Village village,
 			AtomicLong totalCount, List<Integer> bedRoom, List<Integer> bathRoom, District district,
 			Governorate governorate, ExchangeRealEstateType exchangeRealEstateType) throws Exception {
 
@@ -329,7 +332,7 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		criteriaQuery = criteriaBuilder.createQuery(classType);
 		root = countQuery.from(classType);
 
-		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, postType, minPrice, maxPrice,
+		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user,isAllPost , postType, minPrice, maxPrice,
 				village, totalCount, bedRoom, bathRoom, district, governorate, exchangeRealEstateType);
 
 		criteriaQuery.where(finalPredicate);

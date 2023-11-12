@@ -1240,7 +1240,7 @@ public class PostService implements Serializable {
 
 	}
 
-	public Response findPosts(Long userId, String postType, int minPrice, int maxPrice, Long villageId, int page,
+	public Response findPosts(Long userId, boolean isAllPost , String postType, int minPrice, int maxPrice, Long villageId, int page,
 			int size, String bedRoom, String bathRoom, Long districtId, Long governorateId,
 			String exchangeRealEstateTypeString) {
 
@@ -1290,7 +1290,7 @@ public class PostService implements Serializable {
 			}
 
 			AtomicLong totalResults = new AtomicLong();
-			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user, postType, minPrice, maxPrice,
+			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user,isAllPost ,postType, minPrice, maxPrice,
 					village, page, size, totalResults, bedRoomList, bathRoomList, district, governorate,
 					exchangeRealEstateType);
 
