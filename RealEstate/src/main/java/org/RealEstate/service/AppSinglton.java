@@ -19,6 +19,7 @@ import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 
 import org.RealEstate.enumerator.Configuration;
+import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.ConfigurationFacade;
 import org.RealEstate.facade.RealEstateFacade;
@@ -321,6 +322,19 @@ public class AppSinglton implements Serializable {
 
 	public void setMode(String mode) {
 		this.mode = mode;
+	}
+	
+	public int NbOfPostByAccountType(UserCategory category) {
+		switch (category) {
+		case REGULAR:
+			return freeNbOfPost;
+		case MEDUIM:
+			return meduimAccountNbOfPost;
+		case PREMIUM:
+			return premuimAccountNbOfPost;
+		default:
+			return freeNbOfPost;
+		}
 	}
 
 }

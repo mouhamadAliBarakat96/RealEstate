@@ -56,6 +56,8 @@ public class UserPostListController implements Serializable {
 	@Inject
 	private AppSinglton appSinglton ;
 	
+	private User user;
+	
 	@PostConstruct
 	public void init() {
 		try {
@@ -68,7 +70,7 @@ public class UserPostListController implements Serializable {
 	public void checkAuthentication() throws IOException {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		HttpSession session = request.getSession(true);
-		User user = (User) session.getAttribute(Constants.USER_SESSION);
+		  user = (User) session.getAttribute(Constants.USER_SESSION);
 
 		if (user == null) {
 			String currentUrl = externalContext.getRequestServletPath();
@@ -197,4 +199,14 @@ public class UserPostListController implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public String accountType() {
+		return user != null ? user.getUserCategory().toString() : "";
+	}
+
+	public int nbOfTotalPermitPost() {
+		return appSinglton.NbOfPostByAccountType(user.getUserCategory());
+	}
+	
 }

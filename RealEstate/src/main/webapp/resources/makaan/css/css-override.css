@@ -353,8 +353,24 @@ body .ui-galleria .ui-galleria-item-nav {
 
 .ui-dialog .ui-dialog-titlebar {
     background: #00b98e !important;
-    color: white !important;;
+    color: white !important;
 }
 span.ui-icon.ui-icon-closethick {
     color: white;
+}
+
+.btn-delete {
+    padding: 2px !important;
+    background: red !important;
+    border: 0px !important;
+}
+
+.confirm-yes.ui-confirm-popup-yes{
+	 background: #00b98e !important;
+	  color: white !important;
+	  border: 0px;
+}
+.confirm-no.ui-confirm-popup-no{
+	 color: #00b98e !important;
+	 border: 1px solid #00b98e;
 }

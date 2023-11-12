@@ -276,5 +276,9 @@ public class UpdateUserInformationController implements Serializable {
 	public void setCurrentPassword(String currentPassword) {
 		this.currentPassword = currentPassword;
 	}
+	
+	public int nbOfTotalPermitPost() {
+		return appSinglton.NbOfPostByAccountType(user.getUserCategory());
+	}
 
 }

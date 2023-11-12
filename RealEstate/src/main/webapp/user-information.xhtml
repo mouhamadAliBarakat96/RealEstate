@@ -42,12 +42,18 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 						</div>
 						<div class="row mt-2 text-center mb-1"
 							style="display: flex; justify-content: center;">
-							<p:fileUpload multiple="false" id="uploadId" auto="true"
+							<p:fileUpload multiple="false" id="uploadId" auto="true" label="#{bundle.choose_photos}" 
 								listener="#{updateUserInformationController.importFile}"
 								process="@this"
 								update=" :messageScript myForm:profilePicturePanel">
 							</p:fileUpload>
 						</div>
+						
+						<div class="d-flex justify-content-between">
+							<h5>#{bundle.account_is} <span style="color: var(--bs-primary);"> #{bundle[updateUserInformationController.user.userCategory]}</span> </h5>
+							<h5>#{bundle.total_post_added} :<span style="color: var(--bs-primary);">  #{updateUserInformationController.nbOfTotalPermitPost()}</span></h5>
+						</div>
+						
 						<h:panelGroup id="profileInfoPanel" styleClass="row"
 							style="margin-top: 2%" layout="block">
 							<div style="display: inline-block" class="col-md-4">
