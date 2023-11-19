@@ -80,6 +80,14 @@ public class Test {
 	
 	public static void main(String[] args) throws IOException {
 		
+	String  x2 = "x";
+		
+		if("X".equalsIgnoreCase(x2)) {
+			System.out.println("123");
+		}
+		
+		
+		
 		try {
 		String x = 	replaceHost("https://ekarplus.com:8080/iews/governorate/governorate.xhtml?id=34102" , "localhosost");
 System.out.println(x);

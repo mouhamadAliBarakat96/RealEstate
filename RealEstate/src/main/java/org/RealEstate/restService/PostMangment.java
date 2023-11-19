@@ -132,11 +132,15 @@ public class PostMangment {
 			@QueryParam("bedRoom") String bedRoom,
 			@QueryParam("bathRoom") String bathRoom,
 			@QueryParam("districtId") Long districtId, @QueryParam("governorateId") Long governorateId , @QueryParam("exchangeRealEstateType")  String exchangeRealEstateType
+			, @QueryParam("sort")  List<String> sort
+			
 
 	) {
 		
+		
+		
 		return postService.findPosts(userId, isAllPost , postType, minPrice, maxPrice, villageId, page, size, bedRoom, 
-				bathRoom, districtId, governorateId , exchangeRealEstateType);
+				bathRoom, districtId, governorateId , exchangeRealEstateType , sort);
 
 	}
 

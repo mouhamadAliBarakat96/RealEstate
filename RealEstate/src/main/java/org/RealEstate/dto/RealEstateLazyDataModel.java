@@ -1,6 +1,7 @@
 package org.RealEstate.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -59,7 +60,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 
 		try {
 			return Math.toIntExact(facade.countRealSatateWithFilter(user,false, postType, minPrice, maxPrice, village,
-					totalCount, bedRooms, bathRooms, district, governorate, exchangeRealEstateType));
+					totalCount, bedRooms, bathRooms, district, governorate, exchangeRealEstateType , new ArrayList<String>()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -72,7 +73,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 		try {
 			pageItems = facade.findAllRealSatateWithFilter(user, false ,postType, minPrice, maxPrice, village,
 					(first / pageSize) + 1, pageSize, totalCount, bedRooms, bathRooms, district, governorate,
-					exchangeRealEstateType);
+					exchangeRealEstateType , new ArrayList<String>());
 			setRowCount(Math.toIntExact(totalCount.get()));
 		} catch (Exception e) {
 			e.printStackTrace();
