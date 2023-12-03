@@ -35,9 +35,11 @@
 			circular="true" autoPlay="true" numVisible="5"
 			styleClass="galleria-arabic-fix mt-2 mb-2" transitionInterval="5000"
 			style="height:275px;width: 100%;">
-			<p:graphicImage
-				url="#{makanTemplateController.fullUrlAdsImage}#{photo.url}"
-				style="height:275px ;width: 70%; display: block;object-fit:contain;" />
+			<a href="#{photo.urlToOpen}">
+			       <p:graphicImage onclick="location.href=this.getAttribute('href');"
+					url="#{makanTemplateController.fullUrlAdsImage}#{photo.url}"
+					style="height:275px ;width: 70%; display: block;object-fit:contain;" />
+			</a>
 		</p:galleria>
 		<span  style="display: block;padding: 10px"/>
 	</ui:define>

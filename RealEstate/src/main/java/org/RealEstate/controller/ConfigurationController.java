@@ -218,7 +218,7 @@ public class ConfigurationController implements Serializable {
 				generalConfigurationPremuimAccountNbOfPost.setKey(Configuration.PREMIUM_ACCOUNT_NB_OF_POST.toString());
 				generalConfigurationPremuimAccountNbOfPost.setValue(String.valueOf(premuimAccountNbOfPost));
 			} else {
-				generalConfigurationPremuimAccountPay.setValue(String.valueOf(premuimAccountNbOfPost));
+				generalConfigurationPremuimAccountNbOfPost.setValue(String.valueOf(premuimAccountNbOfPost));
 
 			}
 			appSinglton.setPremuimAccountNbOfPost(premuimAccountNbOfPost);
