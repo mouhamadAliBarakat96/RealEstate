@@ -51,6 +51,14 @@ public class PostMangment {
 
 	}
 
+	@DELETE
+	@Path("/v1")
+
+	public Response deletePost(@QueryParam("id") Long id) {
+
+		return postService.deletePost(id);
+	}
+
 	@PUT
 	@Path("/v1/remove-picture-post")
 
@@ -116,31 +124,26 @@ public class PostMangment {
 	@Produces(MediaType.APPLICATION_JSON)
 
 	/*
-	 * remove
-	 * bedRoomEq 
+	 * remove bedRoomEq
 	 * 
-	 * remove
-	 * bathRoomEq
+	 * remove bathRoomEq
 	 * 
 	 * bedRoom String as 1,2,3
 	 * 
 	 * bathRoom 1,2,3
 	 */
-	public Response findAllPostByUser(@QueryParam("userId") Long userId, @QueryParam("allPost") boolean isAllPost , @QueryParam("postType") String postType,
-			@QueryParam("minPrice") int minPrice, @QueryParam("maxPrice") int maxPrice,
-			@QueryParam("villageId") Long villageId, @QueryParam("page") int page, @QueryParam("size") int size,
-			@QueryParam("bedRoom") String bedRoom,
-			@QueryParam("bathRoom") String bathRoom,
-			@QueryParam("districtId") Long districtId, @QueryParam("governorateId") Long governorateId , @QueryParam("exchangeRealEstateType")  String exchangeRealEstateType
-			, @QueryParam("sort")  List<String> sort
-			
+	public Response findAllPostByUser(@QueryParam("userId") Long userId, @QueryParam("allPost") boolean isAllPost,
+			@QueryParam("postType") String postType, @QueryParam("minPrice") int minPrice,
+			@QueryParam("maxPrice") int maxPrice, @QueryParam("villageId") Long villageId, @QueryParam("page") int page,
+			@QueryParam("size") int size, @QueryParam("bedRoom") String bedRoom,
+			@QueryParam("bathRoom") String bathRoom, @QueryParam("districtId") Long districtId,
+			@QueryParam("governorateId") Long governorateId,
+			@QueryParam("exchangeRealEstateType") String exchangeRealEstateType, @QueryParam("sort") List<String> sort
 
 	) {
-		
-		
-		
-		return postService.findPosts(userId, isAllPost , postType, minPrice, maxPrice, villageId, page, size, bedRoom, 
-				bathRoom, districtId, governorateId , exchangeRealEstateType , sort);
+
+		return postService.findPosts(userId, isAllPost, postType, minPrice, maxPrice, villageId, page, size, bedRoom,
+				bathRoom, districtId, governorateId, exchangeRealEstateType, sort);
 
 	}
 

@@ -244,6 +244,30 @@ public class PostService implements Serializable {
 
 	}
 
+	public Response deletePost(Long id) {
+		try {
+
+			RealEstate realEstate = restateFacade.find(id);
+
+			if (realEstate == null) {
+
+				throw new Exception("REALESTATE_DONT_EXISTS");
+			}
+
+			restateFacade.remove(realEstate);
+
+			return Response.status(Status.OK).entity("OK").build();
+
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+
+	}
+
 	public Response removePostImage(Long id, List<String> imagesToDelete) {
 
 		try {
@@ -1240,9 +1264,9 @@ public class PostService implements Serializable {
 
 	}
 
-	public Response findPosts(Long userId, boolean isAllPost , String postType, int minPrice, int maxPrice, Long villageId, int page,
-			int size, String bedRoom, String bathRoom, Long districtId, Long governorateId,
-			String exchangeRealEstateTypeString , List<String> sort) {
+	public Response findPosts(Long userId, boolean isAllPost, String postType, int minPrice, int maxPrice,
+			Long villageId, int page, int size, String bedRoom, String bathRoom, Long districtId, Long governorateId,
+			String exchangeRealEstateTypeString, List<String> sort) {
 
 		try {
 			Village village = null;
@@ -1290,9 +1314,9 @@ public class PostService implements Serializable {
 			}
 
 			AtomicLong totalResults = new AtomicLong();
-			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user,isAllPost ,postType, minPrice, maxPrice,
-					village, page, size, totalResults, bedRoomList, bathRoomList, district, governorate,
-					exchangeRealEstateType , sort);
+			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user, isAllPost, postType, minPrice,
+					maxPrice, village, page, size, totalResults, bedRoomList, bathRoomList, district, governorate,
+					exchangeRealEstateType, sort);
 
 			PaginationResponse<RealEstate> response = new PaginationResponse<>();
 			response.setPage(page);
