@@ -518,7 +518,7 @@ public class PostService implements Serializable {
 			fielddDontChangeOnUpdate(officeRent);
 			addCommonsFieldWithoutPostDate(officeRent);
 			checkPostConstraintFields(officeRent);
-
+		
 			return officeRentFacade.save(officeRent);
 		case "OFFICE_SELL":
 			OfficeSell officeSell = Utils.getObjectFromString(jsonString, OfficeSell.class);
@@ -549,6 +549,7 @@ public class PostService implements Serializable {
 		r.setLiked(oldRealEstate.getLiked());
 		r.setNumberOfCall(oldRealEstate.getNumberOfCall());
 		r.setImages(oldRealEstate.getImages());
+		r.setUser(oldRealEstate.getUser());
 
 	}
 

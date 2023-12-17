@@ -42,6 +42,43 @@ public class UserService implements Serializable {
 	@EJB
 	private AppSinglton appSinglton;
 
+	public Response removeProfilePicture(Long userId) {
+		try {
+			User user = userFacade.findWithExcption(userId);
+			user.setProfileImageUrl(null);
+			user = userFacade.save(user);
+
+			return Response.status(Status.ACCEPTED).entity(Utils.objectToString(user)).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+	}
+
+	public Response changePassword(Long userId, String oldPassword, String newPassword) {
+
+		try {
+
+			User user = userFacade.findWithExcption(userId);
+
+			if (!user.getPassowrd().equals(oldPassword)) {
+				throw new Exception("OLD_PASSWORD_NOT_MATCH_CURRENT_PASSWORD");
+
+			}
+			user.setPassowrd(newPassword);
+			userFacade.save(user);
+			return Response.status(Status.ACCEPTED).entity("OK").build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+
+	}
+
 	public Response updateUserInforamtion(User user) {
 
 		try {
@@ -59,7 +96,7 @@ public class UserService implements Serializable {
 			}
 
 			if (StringUtils.isBlank(user.getLastName()) || StringUtils.isBlank(user.getFirstName())
-					  || StringUtils.isBlank(user.getUserName())) {
+					|| StringUtils.isBlank(user.getUserName())) {
 
 				return Response.status(Status.BAD_REQUEST)
 						.entity(Constants.USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_SHOULD_NOT_BE_EMPTY).build();
@@ -72,6 +109,7 @@ public class UserService implements Serializable {
 			user.setFbId(orginUser.getFbId());
 			user.setBroker(orginUser.isBroker());
 			user.setUserCategory(orginUser.getUserCategory());
+			user.setProfileImageUrl(orginUser.getProfileImageUrl());
 			if (!orginUser.getUserName().equals(user.getUserName())) {
 
 				User userFinded = userFacade.findUserByUserName(user.getUserName());

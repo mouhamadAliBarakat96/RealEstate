@@ -58,10 +58,29 @@ public class UserMangment implements Serializable {
 
 	}
 
+	@PUT
+	@Path("/v1/change-password")
+
+	public Response changeProfilePicture(@QueryParam("id") Long id, @QueryParam("old-password") String oldPassword,
+			@QueryParam("new-password") String newPassword) {
+
+		return userService.changePassword(id, oldPassword, newPassword);
+
+	}
+
+	@PUT
+	@Path("/v1/remove-profile-picture")
+
+	public Response changeProfilePicture(@QueryParam("id") Long id) {
+
+		return userService.removeProfilePicture(id);
+
+	}
+
 	@GET
 	@Path("/v1/nb-post-alllowed/{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response findNumberOfPostForUser( @PathParam("id") Long id) {
+	public Response findNumberOfPostForUser(@PathParam("id") Long id) {
 
 		return userService.findNumberOfPostForUserApi(id);
 
