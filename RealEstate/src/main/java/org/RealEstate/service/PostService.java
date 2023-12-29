@@ -49,6 +49,7 @@ import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.NumberPatternDetector;
+import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
@@ -258,8 +259,6 @@ public class PostService implements Serializable {
 
 			return Response.status(Status.OK).entity("OK").build();
 
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
@@ -400,8 +399,8 @@ public class PostService implements Serializable {
 
 			}
 
-			if (appratmentRent.getPrice() < 60) {
-				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			if (  appratmentRent.getSpace() * 0.5 > appratmentRent.getPrice() ) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_05_DOLLARS");
 			}
 
 			checkPostConstraintFields(appratmentRent);
@@ -417,8 +416,8 @@ public class PostService implements Serializable {
 
 			}
 
-			if (appratmentSell.getSpace() * 100 < appratmentSell.getPrice()) {
-				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			if (appratmentSell.getSpace() * 50 < appratmentSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS");
 			}
 
 			checkPostConstraintFields(appratmentSell);
@@ -471,6 +470,11 @@ public class PostService implements Serializable {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
 
 			}
+			if (shopSell.getSpace() * 50 > shopSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS");
+			}
+			
+			
 		case "STORE_HOUSE_RENT":
 
 			StoreHouseRent storeHouseRent = Utils.getObjectFromString(jsonString, StoreHouseRent.class);
@@ -478,8 +482,8 @@ public class PostService implements Serializable {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
 
 			}
-			if (storeHouseRent.getPrice() < 60) {
-				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			if ( storeHouseRent.getSpace() * 0.5 > storeHouseRent.getPrice() ) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_5_DOLLARS");
 			}
 			fielddDontChangeOnUpdate(storeHouseRent);
 			addCommonsFieldWithoutPostDate(storeHouseRent);
@@ -495,8 +499,8 @@ public class PostService implements Serializable {
 
 			}
 
-			if (storeHouseSell.getSpace() * 100 < storeHouseSell.getPrice()) {
-				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			if (storeHouseSell.getSpace() * 50 < storeHouseSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS");
 			}
 			fielddDontChangeOnUpdate(storeHouseSell);
 			addCommonsFieldWithoutPostDate(storeHouseSell);
@@ -512,13 +516,13 @@ public class PostService implements Serializable {
 
 			}
 
-			if (officeRent.getPrice() < 60) {
-				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			if ( officeRent.getSpace() * 1 > officeRent.getPrice() ) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_1_DOLLARS");
 			}
 			fielddDontChangeOnUpdate(officeRent);
 			addCommonsFieldWithoutPostDate(officeRent);
 			checkPostConstraintFields(officeRent);
-		
+
 			return officeRentFacade.save(officeRent);
 		case "OFFICE_SELL":
 			OfficeSell officeSell = Utils.getObjectFromString(jsonString, OfficeSell.class);
@@ -581,8 +585,8 @@ public class PostService implements Serializable {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
 
 			}
-			if (appratmentRent.getPrice() < 60) {
-				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
+			if (  appratmentRent.getSpace() * 0.5 > appratmentRent.getPrice()   ) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_5_DOLLARS");
 			}
 
 			addCommonsField(appratmentRent);
@@ -598,8 +602,8 @@ public class PostService implements Serializable {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_50");
 
 			}
-			if (appratmentSell.getSpace() * 100 < appratmentSell.getPrice()) {
-				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			if (appratmentSell.getSpace() * 50 < appratmentSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS");
 			}
 
 			checkPostConstraintFields(appratmentSell);
@@ -649,8 +653,8 @@ public class PostService implements Serializable {
 		case "SHOP_SELL":
 
 			ShopSell shopSell = Utils.getObjectFromString(jsonString, ShopSell.class);
-			if (shopSell.getSpace() * 100 < shopSell.getPrice()) {
-				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
+			if (shopSell.getSpace() * 50 < shopSell.getPrice()) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS");
 			}
 			if (shopSell.getSpace() < 40) {
 				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
@@ -680,7 +684,7 @@ public class PostService implements Serializable {
 		case "STORE_HOUSE_SELL":
 
 			StoreHouseSell storeHouseSell = Utils.getObjectFromString(jsonString, StoreHouseSell.class);
-			if (storeHouseSell.getSpace() * 100 > storeHouseSell.getPrice()) {
+			if (storeHouseSell.getSpace() * 100 < storeHouseSell.getPrice()) {
 				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_100_DOLLARS");
 			}
 			if (storeHouseSell.getSpace() < 40) {
@@ -699,8 +703,8 @@ public class PostService implements Serializable {
 			if (officeRent.getPrice() < 60) {
 				throw new Exception("PRICE_OF_RENT_SHOULD_BE_GREATER_60");
 			}
-			if (officeRent.getSpace() < 40) {
-				throw new Exception("SPACE_SHOULD_BE_GREATER_40");
+			if (  officeRent.getSpace() * 1 > officeRent.getPrice() ) {
+				throw new Exception("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_1_DOLLARS");
 
 			}
 			addCommonsField(officeRent);
@@ -825,8 +829,8 @@ public class PostService implements Serializable {
 	private void checkPostConstraintFields(RealEstate realEstate) throws Exception {
 
 		// check tittle and sub tittle not null and empty
-		if (StringUtils.isBlank(realEstate.getTittle()) || StringUtils.isBlank(realEstate.getSubTittle())) {
-			throw new Exception("TITTLE_OR_SUBTTITLE_SHOULD_NOT_BE_EMPTY");
+		if (StringUtils.isBlank(realEstate.getTittle())) {
+			throw new Exception("TITTLE_SHOULD_NOT_BE_EMPTY");
 
 		}
 		// check tittle sub tittle dont have numbet
