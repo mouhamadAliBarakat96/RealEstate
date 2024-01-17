@@ -16,8 +16,8 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "tbl_shop_rent")
-public class ShopRent extends RealEstate implements Serializable {
 
+public class ShopRent extends RealEstate implements Serializable {
 	/**
 	 * 
 	 */

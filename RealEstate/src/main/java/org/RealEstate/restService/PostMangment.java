@@ -139,11 +139,13 @@ public class PostMangment {
 			@QueryParam("bathRoom") String bathRoom, @QueryParam("districtId") Long districtId,
 			@QueryParam("governorateId") Long governorateId,
 			@QueryParam("exchangeRealEstateType") String exchangeRealEstateType, @QueryParam("sort") List<String> sort
+			,@QueryParam("road") Boolean road ,@QueryParam("water") Boolean water, @QueryParam("electricity") Boolean electricity,
+			@QueryParam("garden") Boolean  garden  ,  @QueryParam("electricElevator") Boolean  electricElevator ,@QueryParam("greenbound") Boolean  greenbound 
 
 	) {
 
 		return postService.findPosts(userId, isAllPost, postType, minPrice, maxPrice, villageId, page, size, bedRoom,
-				bathRoom, districtId, governorateId, exchangeRealEstateType, sort);
+				bathRoom, districtId, governorateId, exchangeRealEstateType, sort  , road , water , electricity  ,  garden,  electricElevator , greenbound);
 
 	}
 

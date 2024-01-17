@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -135,13 +136,15 @@ public class PostService implements Serializable {
 
 				return Response.status(Status.BAD_REQUEST).entity(Constants.EMPTY_REQUEST_DONT_CONTAIN_DATA).build();
 			}
-
-			User user = checkUserConstraint(data.get(0).getBodyAsString());
+		    InputPart dataPart = data.get(0);
+		    dataPart.setMediaType(javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE);
+		    String dataPartJson = dataPart.getBody(String.class, null);
+			User user = checkUserConstraint( dataPartJson);
 
 			// check village Exist
-			checkVillageExist(data.get(0).getBodyAsString());
-			String jsonDataFromRequest = data.get(0).getBodyAsString();
-			Object obj = savePost(jsonDataFromRequest, inputParts, user);
+			checkVillageExist(dataPartJson);
+			
+			Object obj = savePost(dataPartJson, inputParts, user);
 
 			if (obj == null) {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.POST_TYPE_NOT_SUPPORTED).build();
@@ -356,10 +359,14 @@ public class PostService implements Serializable {
 
 			User user = findUser(data.get(0).getBodyAsString());
 
+			   InputPart dataPart = data.get(0);
+			    dataPart.setMediaType(javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE);
+			    String dataPartJson = dataPart.getBody(String.class, null);
+			    
 			// check village Exist
-			checkVillageExist(data.get(0).getBodyAsString());
-			String jsonDataFromRequest = data.get(0).getBodyAsString();
-			Object obj = updatePost(jsonDataFromRequest, user);
+			checkVillageExist(dataPartJson);
+			
+			Object obj = updatePost(dataPartJson, user);
 
 			if (obj == null) {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.POST_TYPE_NOT_SUPPORTED).build();
@@ -1271,7 +1278,7 @@ public class PostService implements Serializable {
 
 	public Response findPosts(Long userId, boolean isAllPost, String postType, int minPrice, int maxPrice,
 			Long villageId, int page, int size, String bedRoom, String bathRoom, Long districtId, Long governorateId,
-			String exchangeRealEstateTypeString, List<String> sort) {
+			String exchangeRealEstateTypeString, List<String> sort , Boolean road , Boolean water , Boolean electricity  , Boolean  garden, Boolean electricElevator ,Boolean greenbound) {
 
 		try {
 			Village village = null;
@@ -1321,7 +1328,7 @@ public class PostService implements Serializable {
 			AtomicLong totalResults = new AtomicLong();
 			List<RealEstate> realEstate = restateFacade.findAllRealSatateWithFilter(user, isAllPost, postType, minPrice,
 					maxPrice, village, page, size, totalResults, bedRoomList, bathRoomList, district, governorate,
-					exchangeRealEstateType, sort);
+					exchangeRealEstateType, sort ,  road , water , electricity  ,  garden,  electricElevator , greenbound);
 
 			PaginationResponse<RealEstate> response = new PaginationResponse<>();
 			response.setPage(page);

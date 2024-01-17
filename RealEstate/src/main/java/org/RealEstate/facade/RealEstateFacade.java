@@ -21,12 +21,18 @@ import javax.persistence.criteria.Root;
 import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostStatus;
 import org.RealEstate.enumerator.PostType;
+import org.RealEstate.model.AppratmentRent;
+import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
 import org.RealEstate.model.Land;
+import org.RealEstate.model.OfficeRent;
+import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.ShopRent;
 import org.RealEstate.model.ShopSell;
+import org.RealEstate.model.StoreHouseRent;
+import org.RealEstate.model.StoreHouseSell;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.service.AppSinglton;
@@ -91,7 +97,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	public List<RealEstate> findAllRealSatateWithFilter(User user, boolean isAllPost, String postType, int minPrice,
 			int maxPrice, Village village, int page, int size, AtomicLong totalCount, List<Integer> bedRoom,
 			List<Integer> bathRoom, District district, Governorate governorate,
-			ExchangeRealEstateType exchangeRealEstateType, List<String> sort) throws Exception {
+			ExchangeRealEstateType exchangeRealEstateType, List<String> sort, Boolean road, Boolean water,
+			Boolean electricity, Boolean garden, Boolean electricElevator, Boolean greenbound) throws Exception {
 
 		List<? extends RealEstate> realEstatesWithoutAddvertise;
 		List<? extends RealEstate> realEstatesWithAddvertise;
@@ -149,7 +156,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 		// Create a list of predicates based on your runtime conditions
 		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, isAllPost, postType, minPrice,
-				maxPrice, village, totalCount, bedRoom, bathRoom, district, governorate, exchangeRealEstateType, sort);
+				maxPrice, village, totalCount, bedRoom, bathRoom, district, governorate, exchangeRealEstateType, sort,
+				road, water, electricity, garden, electricElevator, greenbound);
 
 		Predicate predicateBoostFalse = criteriaBuilder.equal(root.get("isBoosted"), false);
 		Predicate finalPredicateWithoutAdd = criteriaBuilderWithAdd.and(finalPredicate, predicateBoostFalse);
@@ -224,7 +232,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 	private Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<? extends RealEstate> root, Class classType,
 			User user, boolean isAllPost, String postType, int minPrice, int maxPrice, Village village,
 			AtomicLong totalCount, List<Integer> bedRoomList, List<Integer> bathRoomList, District district,
-			Governorate governorate, ExchangeRealEstateType exchangeRealEstateType, List<String> sort)
+			Governorate governorate, ExchangeRealEstateType exchangeRealEstateType, List<String> sort, Boolean road,
+			Boolean water, Boolean electricity, Boolean garden, Boolean electricElevator, Boolean greenbound)
 			throws Exception {
 
 		List<Predicate> predicates = new ArrayList<>();
@@ -315,6 +324,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 		}
 
+		manageAmenities(classType, road, water, electricity, garden, electricElevator, greenbound, predicates,
+				criteriaBuilder, root);
 		if (!isAllPost) {
 			Predicate postActive = criteriaBuilder.equal(root.get("postStatus"), PostStatus.ACCEPTED);
 			predicates.add(postActive);
@@ -329,11 +340,99 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 	}
 
+	private void manageAmenities(Class classType, Boolean road, Boolean water, Boolean electricity, Boolean garden,
+			Boolean electricElevator, Boolean greenbound, List<Predicate> predicates, CriteriaBuilder criteriaBuilder,
+			Root<? extends RealEstate> root) {
+		if (classType.equals(Land.class)) {
+
+			if (road != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("road"), road);
+				predicates.add(postActive);
+
+			}
+			if (water != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("water"), water);
+				predicates.add(postActive);
+			}
+			if (electricity != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("electricity"), electricity);
+				predicates.add(postActive);
+			}
+			if (greenbound != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("greenbound"), greenbound);
+				predicates.add(postActive);
+			}
+
+		} else if (classType.equals(AppratmentSell.class)) {
+			if (greenbound != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("greenbound"), greenbound);
+				predicates.add(postActive);
+			}
+			if (electricElevator != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("electricElevator"), electricElevator);
+				predicates.add(postActive);
+			}
+			if (garden != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("garden"), garden);
+				predicates.add(postActive);
+			}
+
+		} else if (classType.equals(AppratmentRent.class)) {
+			if (electricElevator != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("electricElevator"), electricElevator);
+				predicates.add(postActive);
+			}
+			if (garden != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("garden"), garden);
+				predicates.add(postActive);
+			}
+
+		} else if (classType.equals(StoreHouseSell.class)) {
+			if (greenbound != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("greenbound"), greenbound);
+				predicates.add(postActive);
+			}
+
+		} else if (classType.equals(StoreHouseRent.class)) {
+			if (electricElevator != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("electricElevator"), electricElevator);
+				predicates.add(postActive);
+			}
+
+		} else if (classType.equals(OfficeSell.class)) {
+			if (greenbound != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("greenbound"), greenbound);
+				predicates.add(postActive);
+			}
+
+			if (electricElevator != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("electricElevator"), electricElevator);
+				predicates.add(postActive);
+			}
+
+		} else if (classType.equals(OfficeRent.class)) {
+			if (electricElevator != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("electricElevator"), electricElevator);
+				predicates.add(postActive);
+			}
+		} else if (classType.equals(ShopRent.class)) {
+
+		} else if (classType.equals(ShopSell.class)) {
+			if (greenbound != null) {
+				Predicate postActive = criteriaBuilder.equal(root.get("greenbound"), greenbound);
+				predicates.add(postActive);
+			}
+
+		}
+
+	}
+
 	// start here create predict
 	// to use by kasssem
 	public Long countRealSatateWithFilter(User user, boolean isAllPost, String postType, int minPrice, int maxPrice,
 			Village village, AtomicLong totalCount, List<Integer> bedRoom, List<Integer> bathRoom, District district,
-			Governorate governorate, ExchangeRealEstateType exchangeRealEstateType, List<String> sort)
+			Governorate governorate, ExchangeRealEstateType exchangeRealEstateType, List<String> sort, Boolean road,
+			Boolean water, Boolean electricity, Boolean garden, Boolean electricElevator, Boolean greenbound)
 			throws Exception {
 
 		CriteriaQuery<? extends RealEstate> criteriaQuery;
@@ -358,7 +457,8 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 		root = countQuery.from(classType);
 
 		Predicate finalPredicate = buildPredicate(criteriaBuilder, root, classType, user, isAllPost, postType, minPrice,
-				maxPrice, village, totalCount, bedRoom, bathRoom, district, governorate, exchangeRealEstateType, sort);
+				maxPrice, village, totalCount, bedRoom, bathRoom, district, governorate, exchangeRealEstateType, sort,
+				road, water, electricity, garden, electricElevator, greenbound);
 
 		criteriaQuery.where(finalPredicate);
 

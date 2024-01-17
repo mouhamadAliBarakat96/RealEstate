@@ -60,7 +60,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 
 		try {
 			return Math.toIntExact(facade.countRealSatateWithFilter(user,false, postType, minPrice, maxPrice, village,
-					totalCount, bedRooms, bathRooms, district, governorate, exchangeRealEstateType , new ArrayList<String>()));
+					totalCount, bedRooms, bathRooms, district, governorate, exchangeRealEstateType , new ArrayList<String>() , null , null , null , null , null , null   ));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -73,7 +73,7 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 		try {
 			pageItems = facade.findAllRealSatateWithFilter(user, false ,postType, minPrice, maxPrice, village,
 					(first / pageSize) + 1, pageSize, totalCount, bedRooms, bathRooms, district, governorate,
-					exchangeRealEstateType , new ArrayList<String>());
+					exchangeRealEstateType , new ArrayList<String>() ,  null , null , null , null , null , null );
 			setRowCount(Math.toIntExact(totalCount.get()));
 		} catch (Exception e) {
 			e.printStackTrace();
