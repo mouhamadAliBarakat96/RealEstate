@@ -13,12 +13,14 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.RealEstate.enumerator.Country;
 import org.RealEstate.facade.ContactUsFacade;
 import org.RealEstate.model.ContactUs;
 import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.CommonUtility;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utility;
 import org.RealEstate.utils.Utils;
 import org.omnifaces.util.Faces;
 
@@ -79,14 +81,14 @@ public class ContactUsController implements Serializable {
 
 			if (userSignIn) {
 				contactUs.setUser(user);
-				contactUsFacade.save(contactUs);
-				Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-				flash.put("message-success", "true");
-
-				changeUrl();
 			} else {
-				showErrorMessage = true;
+				contactUs.setUser(null);
 			}
+			contactUsFacade.save(contactUs);
+			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+			flash.put("message-success", "true");
+			changeUrl();
+
 		}
 
 		catch (Exception e) {
@@ -135,6 +137,10 @@ public class ContactUsController implements Serializable {
 
 	public void setShowMessageSuccess(boolean showMessageSuccess) {
 		this.showMessageSuccess = showMessageSuccess;
+	}
+
+	public String getAsWhatsappNumber() {
+		return Utility.checkPhoneNumber(phoneNumber, Country.LEBANON);
 	}
 
 }

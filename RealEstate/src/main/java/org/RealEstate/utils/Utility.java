@@ -253,7 +253,11 @@ public class Utility {
 			number = number.substring(1);
 		}
 		
-		if (number.startsWith(country.getCode()) || number.startsWith("+" + country.getCode())) {
+		if (number.startsWith("+")) {
+			number = number.substring(1);
+		}
+		
+		if (number.startsWith(country.getCode())) {
 			return number;
 		} else {
 			return country.getCode().concat(number);

@@ -19,7 +19,8 @@
 
 				<div class="row">
 					<div class="form-group col-md-12">
-						<p:inputTextarea id="msg" style="border: 1px solid #ddd;" styleClass="form-control"
+						<p:inputTextarea id="msg" style="border: 1px solid #ddd;"
+							styleClass="form-control"
 							placeholder="#{bundle.print_ur_message_here} " required="true"
 							value="#{contactUsController.contactUs.message}">
 						</p:inputTextarea>
@@ -104,7 +105,10 @@
 									<div class="d-flex align-items-center bg-white rounded p-3"
 										style="border: 1px dashed rgba(0, 185, 142, .3)">
 										<div class="icon mx-1" style="width: 45px; height: 45px;">
-											<i class="fa fa-phone text-primary"></i>
+											<h:outputLink
+												value="https://api.whatsapp.com/send?phone=#{contactUsController.getAsWhatsappNumber()}">
+												<i class="fab fa-whatsapp"></i>
+											</h:outputLink>
 										</div>
 										<span>#{contactUsController.phoneNumber}</span>
 									</div>
