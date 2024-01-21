@@ -109,7 +109,7 @@ public class UserService implements Serializable {
 			user.setFbId(orginUser.getFbId());
 			user.setBroker(orginUser.isBroker());
 			user.setUserCategory(orginUser.getUserCategory());
-//			user.setProfileImageUrl(orginUser.getProfileImageUrl());
+ 			user.setProfileImageUrl(orginUser.getProfileImageUrl());
 			if (!orginUser.getUserName().equals(user.getUserName())) {
 
 				User userFinded = userFacade.findUserByUserName(user.getUserName());

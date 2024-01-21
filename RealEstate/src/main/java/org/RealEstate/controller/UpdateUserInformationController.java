@@ -70,6 +70,7 @@ public class UpdateUserInformationController implements Serializable {
 
 	private String currentPassword;
 	private String lastPhoneNumber;
+	private String imageUrl = "";
 
 	@PostConstruct
 	public void init() {
@@ -87,9 +88,10 @@ public class UpdateUserInformationController implements Serializable {
 				e.printStackTrace();
 			}
 		} else {
-			lastPhoneNumber=user.getPhoneNumber();
+			lastPhoneNumber = user.getPhoneNumber();
 			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
 					.concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
+			imageUrl = user.getProfileImageUrl();
 		}
 
 	}
@@ -145,18 +147,26 @@ public class UpdateUserInformationController implements Serializable {
 
 	public void updateUserInformation() {
 		try {
+
+			Response r = null;
+
 			if (!validate()) {
 				return;
 			}
-			
-			Response r = userService.updateUserInforamtion(user);
-			if (r.getStatus() == Status.ACCEPTED.getStatusCode()) {
-				Utility.addSuccessMessage("update_sucess", sessionLanguage.getLocale());
-				changeUrl();
-			} else {
+
+			if (!user.getProfileImageUrl().equals(imageUrl)) {
+				user.setShowProfilePicture(false);
+			}
+
+			if (!Utils.validatePhoneNumber(user.getPhoneNumber())) {
+				r = Response.status(Status.BAD_REQUEST).entity(Constants.PHONE_NUMBER_NOT_CORRECT).build();
 				user.setPhoneNumber(lastPhoneNumber.replaceAll("\\s+", ""));
 				Utility.addErrorMessage(r.getEntity().toString(), sessionLanguage.getLocale());
+				return;
 			}
+
+			user = userFacade.save(user);
+			Utility.addSuccessMessage("update_sucess", sessionLanguage.getLocale());
 		} catch (Exception e) {
 			CommonUtility.addMessageToFacesContext(e.getMessage(), "error");
 			e.printStackTrace();
@@ -194,7 +204,7 @@ public class UpdateUserInformationController implements Serializable {
 			user = userFacade.save(user);
 			Ajax.oncomplete("PF('dlgChangePassword').hide();");
 			Utility.addSuccessMessage("change_success", sessionLanguage.getLocale());
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Utility.addErrorMessage("user_name_required", sessionLanguage.getLocale());
@@ -276,7 +286,7 @@ public class UpdateUserInformationController implements Serializable {
 	public void setCurrentPassword(String currentPassword) {
 		this.currentPassword = currentPassword;
 	}
-	
+
 	public int nbOfTotalPermitPost() {
 		return appSinglton.NbOfPostByAccountType(user.getUserCategory());
 	}
