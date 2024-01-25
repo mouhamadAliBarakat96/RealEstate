@@ -52,9 +52,13 @@ public class ContactUsMangment implements Serializable {
 
 	private Response saveContactUsMangment(ContactUs contactUs) throws Exception {
 
-		User user = userFacade.find(contactUs.getUser().getId());
+		if(contactUs.getUser() !=null) {
+			User user = userFacade.findWithExcption(contactUs.getUser().getId());
+			contactUs.setUser(user);
+			
+		}
 
-		contactUs.setUser(user);
+		
 		contactUs = contactUsFacade.save(contactUs);
 
 		return Response.status(Status.CREATED).entity(Utils.objectToString(contactUs)).build();
