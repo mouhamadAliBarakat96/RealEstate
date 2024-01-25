@@ -90,7 +90,7 @@ public class UserService implements Serializable {
 
 			}
 
-			if (StringUtils.isBlank(user.getPhoneNumber()) || !Utils.validatePhoneNumber(user.getPhoneNumber())) {
+			if (StringUtils.isBlank(user.getPhoneNumber()) ) {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.PHONE_NUMBER_NOT_CORRECT).build();
 
 			}

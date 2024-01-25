@@ -52,7 +52,7 @@ public class ContactUsMangment implements Serializable {
 
 	private Response saveContactUsMangment(ContactUs contactUs) throws Exception {
 
-		User user = userFacade.findWithExcption(contactUs.getUser().getId());
+		User user = userFacade.find(contactUs.getUser().getId());
 
 		contactUs.setUser(user);
 		contactUs = contactUsFacade.save(contactUs);
