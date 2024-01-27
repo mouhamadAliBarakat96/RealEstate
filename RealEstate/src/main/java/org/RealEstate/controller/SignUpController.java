@@ -121,6 +121,10 @@ public class SignUpController implements Serializable {
 		if (StringUtils.isBlank(user.getPhoneNumber())) {
 			Utility.addErrorMessage("phone_no_required", sessionLanguage.getLocale());
 			isValid = false;
+
+		} else if (!Utils.validatePhoneNumber(user.getPhoneNumber())) {
+			Utility.addErrorMessage(Constants.PHONE_NUMBER_NOT_CORRECT, sessionLanguage.getLocale());
+			isValid = false;
 		}
 
 		if (StringUtils.isBlank(user.getUserName())) {
@@ -132,6 +136,8 @@ public class SignUpController implements Serializable {
 			Utility.addErrorMessage("INVALID_PASSWORD", sessionLanguage.getLocale());
 			isValid = false;
 		}
+		
+		
 		return isValid;
 	}
 	
@@ -162,7 +168,7 @@ public class SignUpController implements Serializable {
 			}
  
 			user.setPassowrd(Utils.sha256(user.getPassowrd()));
-
+			user.getPhoneNumber().replaceAll("\\s+", "");
 			Response r = userService.createUser(user);
 
 			if (r.getStatus() == Status.CREATED.getStatusCode()) {

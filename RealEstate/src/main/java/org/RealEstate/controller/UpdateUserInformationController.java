@@ -91,7 +91,7 @@ public class UpdateUserInformationController implements Serializable {
 			lastPhoneNumber = user.getPhoneNumber();
 			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
 					.concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
-			imageUrl = user.getProfileImageUrl();
+			imageUrl = user.getProfileImageUrl() == null ? "" : user.getProfileImageUrl();
 		}
 
 	}
@@ -135,6 +135,10 @@ public class UpdateUserInformationController implements Serializable {
 		if (StringUtils.isBlank(user.getPhoneNumber())) {
 			Utility.addErrorMessage("phone_no_required", sessionLanguage.getLocale());
 			isValid = false;
+
+		} else if (!Utils.validatePhoneNumber(user.getPhoneNumber())) {
+			Utility.addErrorMessage(Constants.PHONE_NUMBER_NOT_CORRECT, sessionLanguage.getLocale());
+			isValid = false;
 		}
 
 		if (StringUtils.isBlank(user.getUserName())) {
@@ -148,23 +152,14 @@ public class UpdateUserInformationController implements Serializable {
 	public void updateUserInformation() {
 		try {
 
-			Response r = null;
-
 			if (!validate()) {
 				return;
 			}
 
-			if (!user.getProfileImageUrl().equals(imageUrl)) {
+			if (user.getProfileImageUrl() != null && !user.getProfileImageUrl().equals(imageUrl)) {
 				user.setShowProfilePicture(false);
 			}
-
-			if (!Utils.validatePhoneNumber(user.getPhoneNumber())) {
-				r = Response.status(Status.BAD_REQUEST).entity(Constants.PHONE_NUMBER_NOT_CORRECT).build();
-				user.setPhoneNumber(lastPhoneNumber.replaceAll("\\s+", ""));
-				Utility.addErrorMessage(r.getEntity().toString(), sessionLanguage.getLocale());
-				return;
-			}
-
+			user.getPhoneNumber().replaceAll("\\s+", "");
 			user = userFacade.save(user);
 			Utility.addSuccessMessage("update_sucess", sessionLanguage.getLocale());
 		} catch (Exception e) {
