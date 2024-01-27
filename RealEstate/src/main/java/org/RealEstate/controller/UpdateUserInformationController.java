@@ -159,7 +159,7 @@ public class UpdateUserInformationController implements Serializable {
 			if (user.getProfileImageUrl() != null && !user.getProfileImageUrl().equals(imageUrl)) {
 				user.setShowProfilePicture(false);
 			}
-			user.getPhoneNumber().replaceAll("\\s+", "");
+			user.setPhoneNumber(Utility.checkPhoneNumber(user.getPhoneNumber().replaceAll("\\s+", ""), Country.LEBANON));
 			user = userFacade.save(user);
 			Utility.addSuccessMessage("update_sucess", sessionLanguage.getLocale());
 		} catch (Exception e) {

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.RealEstate.enumerator.Country;
 import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.service.UserService;
@@ -168,9 +169,9 @@ public class SignUpController implements Serializable {
 			}
  
 			user.setPassowrd(Utils.sha256(user.getPassowrd()));
-			user.getPhoneNumber().replaceAll("\\s+", "");
+			user.setPhoneNumber(Utility.checkPhoneNumber(user.getPhoneNumber().replaceAll("\\s+", ""), Country.LEBANON));
+			
 			Response r = userService.createUser(user);
-
 			if (r.getStatus() == Status.CREATED.getStatusCode()) {
 
 				User user = Utils.getObjectFromString(r.getEntity().toString(), User.class);
