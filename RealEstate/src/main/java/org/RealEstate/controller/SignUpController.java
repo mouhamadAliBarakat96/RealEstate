@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.enumerator.Country;
+import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.service.UserService;
@@ -39,8 +40,13 @@ public class SignUpController implements Serializable {
 	private final String RQUEST_FROM = "from";
 	
 	private User user = new User();
+	
 	@EJB
 	private UserService userService;
+	
+	@EJB
+	private UserFacade userFacade;
+	
 
 	@Inject
 	private HttpServletRequest request;
@@ -50,6 +56,8 @@ public class SignUpController implements Serializable {
 	
 	@Inject
 	private LanguageController sessionLanguage;
+	
+	
 	
 	private String from_url = "";
 	
@@ -138,6 +146,16 @@ public class SignUpController implements Serializable {
 			isValid = false;
 		}
 		
+		if (StringUtils.isBlank(user.getEmail())) {
+			Utility.addErrorMessage("email_required", sessionLanguage.getLocale());
+			isValid = false;
+		}
+		
+		
+		if (!Utility.isValidEmail(user.getEmail())) {
+			Utility.addErrorMessage("invalid_email", sessionLanguage.getLocale());
+			isValid = false;
+		}
 		
 		return isValid;
 	}
@@ -167,9 +185,14 @@ public class SignUpController implements Serializable {
 			if (!validate()) {
 				return;
 			}
- 
+			
 			user.setPassowrd(Utils.sha256(user.getPassowrd()));
 			user.setPhoneNumber(Utility.checkPhoneNumber(user.getPhoneNumber().replaceAll("\\s+", ""), Country.LEBANON));
+			
+			if (userFacade.findUserByPhoneNumber(user.getPhoneNumber()) != null) {
+				Utility.addErrorMessage("PHONE_NUMBER_IS_USED", sessionLanguage.getLocale());
+				return;
+			}
 			
 			Response r = userService.createUser(user);
 			if (r.getStatus() == Status.CREATED.getStatusCode()) {

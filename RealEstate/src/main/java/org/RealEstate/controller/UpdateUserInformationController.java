@@ -12,8 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.dto.ImageDto;
 import org.RealEstate.enumerator.Country;
@@ -143,6 +141,18 @@ public class UpdateUserInformationController implements Serializable {
 
 		if (StringUtils.isBlank(user.getUserName())) {
 			Utility.addErrorMessage("user_name_required", sessionLanguage.getLocale());
+			isValid = false;
+		}
+		
+
+		if (StringUtils.isBlank(user.getEmail())) {
+			Utility.addErrorMessage("email_required", sessionLanguage.getLocale());
+			isValid = false;
+		}
+		
+		
+		if (!Utility.isValidEmail(user.getEmail())) {
+			Utility.addErrorMessage("invalid_email", sessionLanguage.getLocale());
 			isValid = false;
 		}
 

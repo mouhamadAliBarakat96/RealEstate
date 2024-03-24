@@ -150,8 +150,16 @@
 
 	<navigation-rule>
 		<navigation-case>
-			<from-outcome>index-page</from-outcome>
+			<from-outcome>index-realestate</from-outcome>
 			<to-view-id>/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>index-chalet</from-outcome>
+			<to-view-id>/indexChalet.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

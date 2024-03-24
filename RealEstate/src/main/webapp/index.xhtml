@@ -31,102 +31,65 @@
 	</ui:define>
 
 	<ui:define name="adspanel">
-		<p:galleria value="#{makanTemplateController.adsList}" var="photo" rendered="false"
-			circular="true" autoPlay="true" numVisible="5"
+		<p:galleria value="#{makanTemplateController.adsList}" var="photo"
+			rendered="false" circular="true" autoPlay="true" numVisible="5"
 			styleClass="galleria-arabic-fix mt-2 mb-2" transitionInterval="5000"
 			style="height:275px;width: 100%;">
-			<a href="#{photo.urlToOpen}">
-			       <p:graphicImage onclick="location.href=this.getAttribute('href');"
+			<a href="#{photo.urlToOpen}"> <p:graphicImage
+					onclick="location.href=this.getAttribute('href');"
 					url="#{makanTemplateController.fullUrlAdsImage}#{photo.url}"
 					style="height:275px ;width: 70%; display: block;object-fit:contain;" />
 			</a>
 		</p:galleria>
-		<span  style="display: block;padding: 10px"/>
+		<span style="display: block; padding: 10px" />
 	</ui:define>
 
 	<ui:define name="searchBar">
 		<h:panelGroup id="searchBarPanel">
-			<h:panelGroup
-				rendered="#{indexController.propertyKind == 'REALESTATE'}">
-				<div class="container-xxl">
-					<div class="container">
-						<div class="tab-content">
-							<div id="tab-1" class="tab-pane fade show p-0 active">
-								<div class="row g-0 gx-5 align-items-end">
-									<div class="col-lg-6">
-										<div class="  mx-auto mb-5 wow " data-wow-delay="0.1s">
-											<h2 class="mb-3">#{bundle.properties_title}</h2>
-											<p>#{bundle.properties_description}</p>
-										</div>
+			<div class="container-xxl">
+				<div class="container">
+					<div class="tab-content">
+						<div id="tab-1" class="tab-pane fade show p-0 active">
+							<div class="row g-0 gx-5 align-items-end">
+								<div class="col-lg-6">
+									<div class="  mx-auto mb-5 wow " data-wow-delay="0.1s">
+										<h2 class="mb-3">#{bundle.properties_title}</h2>
+										<p>#{bundle.properties_description}</p>
 									</div>
-									<div class="col-lg-6 d-flex flex-row-reverse "
-										style="visibility: visible;">
-										<ul
-											class="nav nav-pills d-inline-flex justify-content-end mb-5">
-											<li class="nav-item me-2">
-											      <h:commandLink id="buyBtn"
-													action="#{indexController.changeValue('BUY')}"
-													styleClass="btn btn-outline-primary #{indexController.estateTypeEnum eq 'BUY'? 'active' : ''}" data-bs-toggle="pill"
-													value="#{bundle.for_sale}">
-													<f:ajax execute="@this" render="@this myForm:rentBtn"/>
-												</h:commandLink></li>
-											<li class="nav-item me-2">
-											      <h:commandLink id="rentBtn"
-													action="#{indexController.changeValue('RENT')}"
-													styleClass="btn btn-outline-primary #{indexController.estateTypeEnum eq 'RENT'? 'active' : ''}" data-bs-toggle="pill"
-													value="#{bundle.for_rent}">
-													<f:ajax execute="@this" render="@this myForm:buyBtn"/>
-												</h:commandLink>
-											</li>
-										</ul>
-									</div>
+								</div>
+								<div class="col-lg-6 d-flex flex-row-reverse "
+									style="visibility: visible;">
+									<ul
+										class="nav nav-pills d-inline-flex justify-content-end mb-5">
+										<li class="nav-item me-2"><h:commandLink id="buyBtn"
+												action="#{indexController.changeValue('BUY')}"
+												styleClass="btn btn-outline-primary #{indexController.estateTypeEnum eq 'BUY'? 'active' : ''}"
+												data-bs-toggle="pill" value="#{bundle.for_sale}">
+												<f:ajax execute="@this" render="@this myForm:rentBtn" />
+											</h:commandLink></li>
+										<li class="nav-item me-2"><h:commandLink id="rentBtn"
+												action="#{indexController.changeValue('RENT')}"
+												styleClass="btn btn-outline-primary #{indexController.estateTypeEnum eq 'RENT'? 'active' : ''}"
+												data-bs-toggle="pill" value="#{bundle.for_rent}">
+												<f:ajax execute="@this" render="@this myForm:buyBtn" />
+											</h:commandLink></li>
+									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<ui:include src="/views/makaan/searchRealestate-snippet.xhtml">
-					<ui:param name="actionBean" value="#{indexController}" />
-				</ui:include>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{indexController.propertyKind == 'CHALET'}">
-				<div class="container-xxl ">
-					<div class="container">
-						<div class="tab-content">
-							<div id="tab-1" class="tab-pane fade show p-0 active">
-								<div class="row g-4">
-									<div class="row g-0 gx-5 align-items-end">
-										<div class="col-lg-6">
-											<div class="  mx-auto mb-5 wow " data-wow-delay="0.1s">
-												<h1 class="mb-3">#{bundle.chalets}</h1>
-												<p>#{bundle.properties_description}</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<ui:include src="/views/makaan/searchChalet-snippet.xhtml">
-					<ui:param name="actionBean" value="#{indexController}" />
-				</ui:include>
-			</h:panelGroup>
+			</div>
+			<ui:include src="/views/makaan/searchRealestate-snippet.xhtml">
+				<ui:param name="actionBean" value="#{indexController}" />
+			</ui:include>
 		</h:panelGroup>
 	</ui:define>
 
 	<ui:define name="property-content">
 		<div style="margin-top: 3%"></div>
-		<h:panelGroup id="RealEstatePanelId"
-			rendered="#{indexController.propertyKind == 'REALESTATE'}">
+		<h:panelGroup id="RealEstatePanelId">
 			<ui:include src="/views/makaan/realestate-snippet.xhtml">
-				<ui:param name="actionBean" value="#{indexController}" />
-			</ui:include>
-		</h:panelGroup>
-
-		<h:panelGroup id="ChaletPanelId"
-			rendered="#{indexController.propertyKind == 'CHALET'}">
-			<ui:include src="/views/makaan/chalet-snippet.xhtml">
 				<ui:param name="actionBean" value="#{indexController}" />
 			</ui:include>
 		</h:panelGroup>
@@ -221,28 +184,9 @@
 									<h:outputText value="#{indexController.numberOfRentOffices()}">
 										<f:convertNumber pattern="#,###.##" />
 									</h:outputText>
-
 								</div>
 							</span>
 						</div>
-
-						<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-							<span class="cat-item d-block bg-light text-center rounded p-3">
-								<div class="rounded p-4">
-									<div class="icon mb-3">
-										<img class="img-fluid"
-											src="/resources/makaan/img/icon-apartment.png" alt="Icon" />
-									</div>
-									<h6>#{bundle.chalet}</h6>
-
-									<h:outputText value="#{indexController.numberOfChalet()}">
-										<f:convertNumber pattern="#,###.##" />
-									</h:outputText>
-
-								</div>
-							</span>
-						</div>
-
 					</div>
 				</div>
 			</div>

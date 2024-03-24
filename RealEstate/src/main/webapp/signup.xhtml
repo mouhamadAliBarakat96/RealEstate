@@ -86,7 +86,7 @@
 									<div class="form-group">
 										<h:outputLabel class="control-label" for="firstName"
 											style="padding-left:1.5%" value="#{bundle.firstName} ">
-											
+
 										</h:outputLabel>
 										<h:inputText id="firstName"
 											f5:placeholder="#{bundle.firstName}  "
@@ -101,7 +101,7 @@
 									<div class="form-group">
 										<h:outputLabel class="control-label" style="padding-left:1.5%"
 											value="#{bundle.lastName} ">
-											
+
 										</h:outputLabel>
 										<h:inputText id="lastName"
 											f5:placeholder="#{bundle.lastName} "
@@ -116,7 +116,7 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label"
 												style="padding-left:1.5%" value="#{bundle.middleName} ">
-												
+
 											</h:outputLabel>
 											<h:inputText id="middleName"
 												f5:placeholder="#{bundle.middleName} "
@@ -131,7 +131,7 @@
 									<div class="form-group">
 										<h:outputLabel class="control-label" style="padding-left:1.5%"
 											value="#{bundle.userName} ">
-											
+
 										</h:outputLabel>
 										<h:inputText id="userName"
 											f5:placeholder="#{bundle.userName} "
@@ -145,20 +145,21 @@
 									<div class="form-group">
 										<h:outputLabel class="control-label" style="padding-left:1.5%"
 											value="#{bundle.phoneNumber} ">
-											
+
 										</h:outputLabel>
-										<pe:inputPhone allowDropdown="false" id="phoneNumber"  onkeyup="restrictToNumbers(this);"
-											initialCountry="lb" lang="#{languageController.locale}"
+										<pe:inputPhone allowDropdown="false" id="phoneNumber"
+											onkeyup="restrictToNumbers(this);" initialCountry="lb"
+											lang="#{languageController.locale}"
 											value="#{signUpController.user.phoneNumber}"
 											label="#{bundle.phoneNumber}" formatOnDisplay="true">
 										</pe:inputPhone>
 									</div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-group" style="position:relative;">
+									<div class="form-group" style="position: relative;">
 										<h:outputLabel class="control-label" for="password"
 											style="padding-left:1.5%" value="#{bundle.password} ">
-											
+
 										</h:outputLabel>
 										<h:inputText id="password" style="position:relative;"
 											f5:placeholder="#{bundle.password} "
@@ -170,8 +171,22 @@
 											onclick="togglePasswordVisibility('myForm:password', 'iconId')" />
 									</div>
 								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="control-label" for="emailId"
+											style="padding-left:1.5%" value="#{bundle.email} ">
+										</h:outputLabel>
+										<h:inputText id="emailId" f5:placeholder="example@gmail.com"
+											label="#{bundle.email} " title="#{bundle.email} "
+											value="#{signUpController.user.email}"
+											styleClass="form-control">
+										</h:inputText>
+									</div>
+								</div>
+
 							</div>
-							<div class="row" >
+							<div class="row">
 								<!--  TODO ACTIVE THIS CODE LATER
 								<div class="fb-login-button" data-width="" data-size=""
 									style="width: 25%" data-button-type="" data-layout=""

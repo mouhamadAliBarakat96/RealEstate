@@ -21,9 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Pattern;
 
-import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.UserCategory;
 
 import com.google.gson.annotations.Expose;
@@ -35,28 +33,23 @@ import com.google.gson.annotations.Expose;
 		@NamedQuery(name = User.LOGIN_USER, query = "SELECT user FROM User user WHERE  user.userName= :userName and user.passowrd = :password "),
 		@NamedQuery(name = User.FIND_USER_BY_USER_NAME, query = "SELECT user FROM User user WHERE  user.userName= :userName  "),
 		@NamedQuery(name = User.FIND_USER_BY_FB_ID, query = "SELECT user FROM User user WHERE  user.fbId= :fbId "),
-		
-		
 		@NamedQuery(name = User.USER_PROFILE_PICTURE_FALSE, query = "SELECT user FROM User user WHERE  user.showProfilePicture =  :param"),
+		@NamedQuery(name = User.FIND_USER_BY_PHONE_NUMBER, query = "SELECT user FROM User user WHERE  user.phoneNumber= :phoneNumber  ")
 
 })
 public class User extends MainEntity implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public static final String LOGIN_USER = "USER.LOGIN";
 
-	
 	public static final String FIND_USER_BY_USER_NAME = "USER.FIND_USER_BY_USER_NAME";
 
-	
 	public static final String FIND_USER_BY_FB_ID = "USER.FIND_USER_BY_FB_ID";
 
-	
 	public static final String USER_PROFILE_PICTURE_FALSE = "USER.USER_PROFILE_PICTURE_FALSE";
+
+	public static final String FIND_USER_BY_PHONE_NUMBER = "USER.FIND_USER_BY_PHONE_NUMBER";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -88,24 +81,20 @@ public class User extends MainEntity implements Serializable {
 	private boolean freezed;
 
 	@Expose
-	//@Pattern(regexp = "^(03|71|76|81)\\d{6}$", message = "Invalid format Phone Number")
 	private String phoneNumber;
 
 	// el post li howe mnzlon
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
-///	@Expose
+	/// @Expose
 	private List<RealEstate> readStateList = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
-//	@Expose
+	// @Expose
 	private List<Chalet> chales = new ArrayList<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "realestate_fav_user", joinColumns = { @JoinColumn(name = "user_id") },
-
-			inverseJoinColumns = { @JoinColumn(name = "state_id") }
-
-	)
+	@JoinTable(name = "realestate_fav_user", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "state_id") })
 	@Expose
 	private List<RealEstate> readStateFavoriteList = new ArrayList<>();
 
@@ -114,6 +103,13 @@ public class User extends MainEntity implements Serializable {
 	private UserCategory userCategory;
 	@Expose
 	private boolean isBroker;
+
+	// new column
+	private String email;
+
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public long getId() {
 		return id;
@@ -241,6 +237,14 @@ public class User extends MainEntity implements Serializable {
 
 	public void setFbId(String fbId) {
 		this.fbId = fbId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

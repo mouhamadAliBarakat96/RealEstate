@@ -94,21 +94,6 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 									</h:inputText>
 								</div>
 							</div>
-							<!-- <div style="display: inline-block" class="col-md-4">
-								<div class="form-group">
-									<h:outputLabel class="control-label" for="middleName"
-										style="padding-left:1.5%" value="#{bundle.middleName} ">
-									</h:outputLabel>
-									<h:inputText id="middleName" required="true"
-										f5:placeholder="#{bundle.middleName} "
-										label="#{bundle.middleName} " title="#{bundle.middleName} "
-										value="#{updateUserInformationController.user.middleName}"
-										styleClass="form-control">
-										<f:ajax render=":messageScript"></f:ajax>
-									</h:inputText>
-									<h:message for="middleName" styleClass="error-message" />
-								</div>
-							</div> -->
 							<div style="display: inline-block" class="col-md-4">
 								<div class="form-group">
 									<h:outputLabel class="control-label" for="userName"
@@ -136,6 +121,19 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 										value="#{updateUserInformationController.user.phoneNumber}"
 										label="#{bundle.phoneNumber}" formatOnDisplay="true">
 									</pe:inputPhone>
+								</div>
+							</div>
+							<div style="display: inline-block" class="col-md-4">
+								<div class="form-group">
+									<h:outputLabel class="control-label" for="email"
+										style="padding-left:1.5%" value="#{bundle.email} ">
+										<span class="required">*</span>
+									</h:outputLabel>
+									<h:inputText id="email" f5:placeholder="example@gmail.com "
+										label="#{bundle.email} " title="#{bundle.email}"
+										value="#{updateUserInformationController.user.email}"
+										styleClass="form-control">
+									</h:inputText>
 								</div>
 							</div>
 							<div style="display: inline-block" class="col-md-4">

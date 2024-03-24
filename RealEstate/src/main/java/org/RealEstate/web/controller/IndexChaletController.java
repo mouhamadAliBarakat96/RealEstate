@@ -17,21 +17,17 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
-import org.RealEstate.dto.RealEstateLazyDataModel;
+import org.RealEstate.dto.ChaletLazyDataModel;
 import org.RealEstate.enumerator.Country;
-import org.RealEstate.enumerator.ExchangeRealEstateType;
-import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.PropertyKindEnum;
-import org.RealEstate.enumerator.PropertyTypeEnum;
-import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.enumerator.YesNoEnum;
+import org.RealEstate.facade.ChaletFacade;
 import org.RealEstate.facade.DistrictFacade;
 import org.RealEstate.facade.GovernorateFacade;
-import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.VillageFacade;
+import org.RealEstate.model.Chalet;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
-import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.service.AppSinglton;
@@ -41,12 +37,10 @@ import org.RealEstate.utils.Utility;
 
 @Named
 @ViewScoped
-public class IndexController implements Serializable {
+public class IndexChaletController implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
 	@Inject
 	private LanguageController sessionLanguage;
 	@Inject
@@ -56,13 +50,11 @@ public class IndexController implements Serializable {
 	@Inject
 	private VillageFacade villageFacade;
 	@Inject
-	private RealEstateFacade realEstateFacade;
-	@Inject
 	private PostService postService;
+	@Inject
+	private ChaletFacade chaletFacade;
 
-	private PostType selectPostType;
-
-	private PropertyKindEnum propertyKind;
+	private PropertyKindEnum propertyKind = PropertyKindEnum.CHALET;
 
 	private List<Governorate> governorates = new ArrayList<>();
 
@@ -72,25 +64,21 @@ public class IndexController implements Serializable {
 
 	private List<Village> allVillages = new ArrayList<>();
 
-	// lazy model
-	private RealEstateLazyDataModel realLazyModel;
 	// Search Bar Filters
 	private User user;
 	private String postType;
-	private int minPrice;
-	private int maxPrice = 100000000;
 	private AtomicLong totalCount = new AtomicLong();
-	private List<Integer> bedRooms;
-	private List<Integer> bathRooms;
-	private boolean bathRoomEq;
-	private boolean bedRoomEq;
+
 	private Governorate selecteGovernorate = new Governorate();
 	private District selecteDistrict = new District();
-	private Village selecteVillage = new Village();
 
+	private ChaletLazyDataModel chaletLazyModel;
 	// Search Bar Filters
-	private YesNoEnum bathsEqualsEnum = null;
-	private YesNoEnum roomsEqualsEnum = null;
+	private Village selecteVillage = new Village();
+	private YesNoEnum poolYesNoEnum = null;
+	private YesNoEnum chimneyYesNoEnum = null;
+	private int minPrice;
+	private int maxPrice = 100000000;
 
 	private String fullUrl = "";
 	private String ipAddressWithPort;
@@ -98,24 +86,18 @@ public class IndexController implements Serializable {
 	@Inject
 	private AppSinglton appSinglton;
 
-	private RealEstateTypeEnum realEstateTypeEnum = RealEstateTypeEnum.ALL;
-
-	/* use these two filter to get info about real estate type rent or sale */
-	private PropertyTypeEnum propertyTypeEnum = null;
-	private ExchangeRealEstateType estateTypeEnum = ExchangeRealEstateType.BUY;
-
 	@PostConstruct
 	public void init() {
 		governorates = governorateFacade.findAll();
 		allVillages = villageFacade.findAll();
 		villages = allVillages;
 
-		realLazyModel = new RealEstateLazyDataModel(realEstateFacade);
+		chaletLazyModel = new ChaletLazyDataModel(chaletFacade);
 
 		fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
 				.concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
-		propertyKind = PropertyKindEnum.REALESTATE;
+		propertyKind = PropertyKindEnum.CHALET;
 	}
 
 	public String getIpAddressWithPort() {
@@ -133,31 +115,31 @@ public class IndexController implements Serializable {
 		return ipAddressWithPort;
 	}
 
-	public void addViewsAfterClick(RealEstate item) {
+	public void addViewsAfterClick_chalet(Chalet item) {
 		try {
-			Response response = postService.updatePostVieux(item.getId(), item.getPostType().toString());
+			Response response = postService.updateChaletViews(item.getId());
 			System.out.println(response.getStatus());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void addCallNumber(RealEstate item) {
+	public void addCallNumber_chalet(Chalet item) {
 		try {
-			Response response = postService.updateCallPost(item.getId(), item.getPostType().toString());
+			Response response = postService.updateChaletCall(item.getId());
 			System.out.println(response.getStatus());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void navigateToWhatsApp(RealEstate item) throws IOException {
+	public void navigateToWhatsApp_chalet(Chalet chalet) throws IOException {
 		// Get the phone number parameter from the request
-		if (item.getUser() != null && item.getUser().getPhoneNumber() != null) {
+		if (chalet.getUser() != null && chalet.getUser().getPhoneNumber() != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
-			String phoneNumber = Utility.checkPhoneNumber(item.getUser().getPhoneNumber(), Country.LEBANON);
-			String message = getIpAddressWithPort() + "/realEstate-card.xhtml?id=" + item.getId();
+			String phoneNumber = Utility.checkPhoneNumber(chalet.getUser().getPhoneNumber(), Country.LEBANON);
+			String message = getIpAddressWithPort() + "/chalet-card.xhtml?id=" + chalet.getId();
 			// Construct the WhatsApp URL
 			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "") + "&text="
 					+ message;
@@ -166,10 +148,9 @@ public class IndexController implements Serializable {
 		}
 	}
 
-	// navigate to real estate Card
-	public void navigate(RealEstate item) {
+	public void navigate_chalet(Chalet item) {
 		// Build the URL with the parameter values
-		String url = "realEstate-card.xhtml?id=" + item.getId();
+		String url = "chalet-card.xhtml?id=" + item.getId();
 		// Use the ExternalContext object to redirect to the new page
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
@@ -210,70 +191,38 @@ public class IndexController implements Serializable {
 		}
 	}
 
-	public void search() {
-
-		// boolean searchFeildsError=false;
-
+	public void chaletSearch() {
 		if (maxPrice != 0 && minPrice > maxPrice) {
 			Utility.addErrorMessage("min_price_mut_be _less_than_max", sessionLanguage.getLocale());
 			return;
 		}
-
-		if (!contaisRoomsFilter()) {
-			bathRooms = new ArrayList<>();
-			bedRooms = new ArrayList<>();
-		}
-
-		realLazyModel.setBathRooms(bathRooms);
-		realLazyModel.setUser(user != null ? user : null);
-		realLazyModel.setBathRoomEq(exactValueBaths());
-		realLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
-		realLazyModel.setGovernorate(
+		chaletLazyModel.setUser(user != null ? user : null);
+		chaletLazyModel.setChimney(chimneyValue());
+		chaletLazyModel.setPool(poolValue());
+		chaletLazyModel.setMaxPrice(maxPrice);
+		chaletLazyModel.setMinPrice(minPrice);
+		chaletLazyModel.setDistrict(selecteDistrict != null && selecteDistrict.getId() > 0 ? selecteDistrict : null);
+		chaletLazyModel.setGovernorate(
 				selecteGovernorate != null && selecteGovernorate.getId() > 0 ? selecteGovernorate : null);
-		realLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
-		realLazyModel.setBedRooms(bedRooms);
-		realLazyModel.setBedRoomEq(exactValueRooms());
-		realLazyModel.setMaxPrice(maxPrice);
-		realLazyModel.setMinPrice(minPrice);
-		realLazyModel.setPostType(Utility.findRealEstateClassType(estateTypeEnum, propertyTypeEnum));
-		realLazyModel.setExchangeRealEstateType(estateTypeEnum);
-		// RealLazyModel.setTotalCount(totalCount);
+		chaletLazyModel.setVillage(selecteVillage != null && selecteVillage.getId() > 0 ? selecteVillage : null);
 
 		Utility.addSuccessMessage("search_complete", sessionLanguage.getLocale());
+
 	}
 
-	public void changeValue(ExchangeRealEstateType value) {
-		this.estateTypeEnum = value;
-	}
-
-	public boolean apperBathsAndRoomsInSearch(PropertyTypeEnum type) {
-		if (type == null) {
-			return true;
-		} else
-			return (type == PropertyTypeEnum.APPRATMENT || type == PropertyTypeEnum.OFFICE);
-	}
-
-	public boolean hasRoomsAndBathRooms(PostType type) {
-		if (type == null) {
-			return true;
-		} else
-			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
-					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
-	}
-
-	public boolean aLand(PostType type) {
-		return (type.equals(PostType.LAND));
-	}
-
-	private boolean exactValueBaths() {
-		if (bathsEqualsEnum == YesNoEnum.YES)
+	private Boolean poolValue() {
+		if (poolYesNoEnum == null)
+			return null;
+		else if (poolYesNoEnum == YesNoEnum.YES)
 			return true;
 		else
 			return false;
 	}
 
-	private boolean exactValueRooms() {
-		if (roomsEqualsEnum == YesNoEnum.YES)
+	private Boolean chimneyValue() {
+		if (chimneyYesNoEnum == null)
+			return null;
+		else if (chimneyYesNoEnum == YesNoEnum.YES)
 			return true;
 		else
 			return false;
@@ -283,14 +232,6 @@ public class IndexController implements Serializable {
 		Random random = new Random();
 		int randomValue = random.nextInt(3) + 1;
 		return randomValue;
-	}
-
-	public PostType getSelectPostType() {
-		return selectPostType;
-	}
-
-	public void setSelectPostType(PostType selectPostType) {
-		this.selectPostType = selectPostType;
 	}
 
 	public List<Village> getVillages() {
@@ -341,12 +282,12 @@ public class IndexController implements Serializable {
 		this.selecteDistrict = selecteDistrict;
 	}
 
-	public RealEstateLazyDataModel getRealLazyModel() {
-		return realLazyModel;
+	public ChaletLazyDataModel getChaletLazyModel() {
+		return chaletLazyModel;
 	}
 
-	public void setRealLazyModel(RealEstateLazyDataModel realLazyModel) {
-		this.realLazyModel = realLazyModel;
+	public void setChaletLazyModel(ChaletLazyDataModel chaletLazyModel) {
+		this.chaletLazyModel = chaletLazyModel;
 	}
 
 	public GovernorateFacade getGovernorateFacade() {
@@ -371,14 +312,6 @@ public class IndexController implements Serializable {
 
 	public void setVillageFacade(VillageFacade villageFacade) {
 		this.villageFacade = villageFacade;
-	}
-
-	public RealEstateFacade getRealEstateFacade() {
-		return realEstateFacade;
-	}
-
-	public void setRealEstateFacade(RealEstateFacade realEstateFacade) {
-		this.realEstateFacade = realEstateFacade;
 	}
 
 	public User getUser() {
@@ -421,22 +354,6 @@ public class IndexController implements Serializable {
 		this.totalCount = totalCount;
 	}
 
-	public boolean isBedRoomEq() {
-		return bedRoomEq;
-	}
-
-	public void setBedRoomEq(boolean bedRoomEq) {
-		this.bedRoomEq = bedRoomEq;
-	}
-
-	public boolean isBathRoomEq() {
-		return bathRoomEq;
-	}
-
-	public void setBathRoomEq(boolean bathRoomEq) {
-		this.bathRoomEq = bathRoomEq;
-	}
-
 	public String getFullUrl() {
 		return fullUrl;
 	}
@@ -453,55 +370,27 @@ public class IndexController implements Serializable {
 		this.propertyKind = propertyKind;
 	}
 
-	public long numberOfSellAppartments() {
-		return realEstateFacade.findCountWithType(PostType.APPRATMENT_SELL);
+	public YesNoEnum getPoolYesNoEnum() {
+		return poolYesNoEnum;
 	}
 
-	public long numberOfRentAppartments() {
-		return realEstateFacade.findCountWithType(PostType.APPRATMENT_SELL);
+	public void setPoolYesNoEnum(YesNoEnum poolYesNoEnum) {
+		this.poolYesNoEnum = poolYesNoEnum;
 	}
 
-	public long numberOfLands() {
-		return realEstateFacade.findCountWithType(PostType.LAND);
+	public YesNoEnum getChimneyYesNoEnum() {
+		return chimneyYesNoEnum;
 	}
 
-	public long numberOfSellOffices() {
-		return realEstateFacade.findCountWithType(PostType.OFFICE_SELL);
+	public void setChimneyYesNoEnum(YesNoEnum chimneyYesNoEnum) {
+		this.chimneyYesNoEnum = chimneyYesNoEnum;
 	}
 
-	public long numberOfRentOffices() {
-		return realEstateFacade.findCountWithType(PostType.OFFICE_RENT);
+	public int numberOfChalet() {
+		return chaletFacade.count();
 	}
 
-	public YesNoEnum getBathsEqualsEnum() {
-		return bathsEqualsEnum;
-	}
-
-	public void setBathsEqualsEnum(YesNoEnum bedsEqualsEnum) {
-		this.bathsEqualsEnum = bedsEqualsEnum;
-	}
-
-	public YesNoEnum getRoomsEqualsEnum() {
-		return roomsEqualsEnum;
-	}
-
-	public void setRoomsEqualsEnum(YesNoEnum roomsEqualsEnum) {
-		this.roomsEqualsEnum = roomsEqualsEnum;
-	}
-
-	public ExchangeRealEstateType getEstateTypeEnum() {
-		return estateTypeEnum;
-	}
-
-	public void setEstateTypeEnum(ExchangeRealEstateType estateTypeEnum) {
-		this.estateTypeEnum = estateTypeEnum;
-	}
-
-	public void changeTypeRealEstateSearch(ExchangeRealEstateType type) {
-		this.estateTypeEnum = type;
-	}
-
-	public String displayFirstImageReal(RealEstate item) {
+	public String displayFirstImageChalet(Chalet item) {
 		if (item != null && !item.getImages().isEmpty()) {
 			return fullUrl.concat(item.getImages().get(0));
 		} else {
@@ -509,43 +398,4 @@ public class IndexController implements Serializable {
 		}
 	}
 
-	public RealEstateTypeEnum getRealEstateTypeEnum() {
-		return realEstateTypeEnum;
-	}
-
-	public void setRealEstateTypeEnum(RealEstateTypeEnum realEstateTypeEnum) {
-		this.realEstateTypeEnum = realEstateTypeEnum;
-	}
-
-	public List<Integer> getBedRooms() {
-		return bedRooms;
-	}
-
-	public void setBedRooms(List<Integer> bedRooms) {
-		this.bedRooms = bedRooms;
-	}
-
-	public List<Integer> getBathRooms() {
-		return bathRooms;
-	}
-
-	public void setBathRooms(List<Integer> bathRooms) {
-		this.bathRooms = bathRooms;
-	}
-
-	public PropertyTypeEnum getPropertyTypeEnum() {
-		return propertyTypeEnum;
-	}
-
-	public void setPropertyTypeEnum(PropertyTypeEnum propertyTypeEnum) {
-		this.propertyTypeEnum = propertyTypeEnum;
-	}
-
-	public String currentUrl(ExternalContext externalContext) {
-		return externalContext.getRequestContextPath() + externalContext.getRequestServletPath();
-	}
-
-	public boolean contaisRoomsFilter() {
-		return propertyTypeEnum == PropertyTypeEnum.APPRATMENT || propertyTypeEnum == PropertyTypeEnum.OFFICE;
-	}
 }

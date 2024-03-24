@@ -159,9 +159,12 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 
 									<h:outputText value="Sub Tittle:" />
-									<h:outputText value="#{postController.realEstate.subTittle}" />
-
-
+									<h:inputTextarea id="subTitleId" rows="10"
+										label="#{bundle.real_estate_subtitle}"
+										styleClass="form-control"
+										value="#{postController.realEstate.subTittle}">
+										<f:ajax execute="@this" render="@this"></f:ajax>
+									</h:inputTextarea>
 
 
 									<h:outputText value=" Space : " />

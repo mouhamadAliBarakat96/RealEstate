@@ -9,6 +9,8 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -33,7 +35,9 @@ public class Utility {
 	public final static String BUNDLE_FILE_NAME = "resources.bundle";
 	public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	public static final String NO_PHOTO = "/resources/images/ekar_plus.jpg";
-
+	
+	private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+	private static final Pattern pattern = Pattern.compile(EMAIL_REGEX);
 
 	public static String getMessage(String key, String bundle) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(bundle);
@@ -201,11 +205,8 @@ public class Utility {
 			return "unknown";
 		}
 	}
-	
-	
-	public static PostType findRealEstateType(ExchangeRealEstateType exchangeType,
-			PropertyTypeEnum realTypeEnum) {
 
+	public static PostType findRealEstateType(ExchangeRealEstateType exchangeType, PropertyTypeEnum realTypeEnum) {
 
 		if (realTypeEnum == PropertyTypeEnum.LAND) {
 			return PostType.LAND;
@@ -243,29 +244,26 @@ public class Utility {
 			}
 		}
 		return null;
-	
-	 
+
 	}
-	
+
 	public static String checkPhoneNumber(String number, Country country) {
 
 		if (number.startsWith("0")) {
 			number = number.substring(1);
 		}
-		
+
 		if (number.startsWith("+")) {
 			number = number.substring(1);
 		}
-		
+
 		if (number.startsWith(country.getCode())) {
 			return number;
 		} else {
 			return country.getCode().concat(number);
 		}
 	}
-	
-	 
-	
+
 	public static String urlEncode(String value) {
 		try {
 			return URLEncoder.encode(value, "UTF-8");
@@ -284,6 +282,11 @@ public class Utility {
 		} else {
 			return null;
 		}
+	}
+
+	public static boolean isValidEmail(String email) {
+		Matcher matcher = pattern.matcher(email);
+		return matcher.matches();
 	}
 
 }

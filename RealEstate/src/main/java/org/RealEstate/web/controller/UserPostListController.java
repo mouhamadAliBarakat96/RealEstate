@@ -54,10 +54,10 @@ public class UserPostListController implements Serializable {
 	private LanguageController languageController;
 
 	@Inject
-	private AppSinglton appSinglton ;
-	
+	private AppSinglton appSinglton;
+
 	private User user;
-	
+
 	@PostConstruct
 	public void init() {
 		try {
@@ -70,14 +70,14 @@ public class UserPostListController implements Serializable {
 	public void checkAuthentication() throws IOException {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		HttpSession session = request.getSession(true);
-		  user = (User) session.getAttribute(Constants.USER_SESSION);
+		user = (User) session.getAttribute(Constants.USER_SESSION);
 
 		if (user == null) {
 			String currentUrl = externalContext.getRequestServletPath();
-			externalContext.redirect("/user-login.xhtml?"+RQUEST_FROM+"="+currentUrl);
+			externalContext.redirect("/user-login.xhtml?" + RQUEST_FROM + "=" + currentUrl);
 		} else {
-			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
-					.concat("/").concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
+			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
+					.concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 			realEstates = findUserRealEstates(user);
 			chalets = findUserChalets(user);
 		}
@@ -97,22 +97,21 @@ public class UserPostListController implements Serializable {
 		return user;
 	}
 
-
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
-		
+
 		String ipAddress = request.getRemoteAddr();
 
 		if (appSinglton.getMode().equals(Constants.DEVELOPMENT)) {
-			ipAddressWithPort = "http://" + ipAddress +  ":" + request.getLocalPort() ;
+			ipAddressWithPort = "http://" + ipAddress + ":" + request.getLocalPort();
 		} else {
-			ipAddressWithPort = "https://" +  appSinglton.getRealDns() ;
+			ipAddressWithPort = "https://" + appSinglton.getRealDns();
 		}
 
 		return ipAddressWithPort;
 	}
-	
+
 	public boolean hasRoomsAndBathRooms(PostType type) {
 		if (type == null) {
 			return true;
@@ -178,8 +177,8 @@ public class UserPostListController implements Serializable {
 			return Utility.NO_PHOTO;
 		}
 	}
-	
-	//todo hrer
+
+	// todo hrer
 
 	public String displayFirstImageChalet(Chalet item) {
 		if (item != null && !item.getImages().isEmpty()) {
@@ -188,8 +187,7 @@ public class UserPostListController implements Serializable {
 			return Utility.NO_PHOTO;
 		}
 	}
-	
-	
+
 	public void deleteRealEstate(RealEstate estate) {
 		try {
 			estateFacade.remove(estate);
@@ -199,14 +197,14 @@ public class UserPostListController implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public String accountType() {
 		return user != null ? user.getUserCategory().toString() : "";
 	}
 
 	public int nbOfTotalPermitPost() {
-		return appSinglton.NbOfPostByAccountType(user.getUserCategory());
+		return user != null ? appSinglton.NbOfPostByAccountType(user.getUserCategory()) : 0;
+
 	}
-	
+
 }
