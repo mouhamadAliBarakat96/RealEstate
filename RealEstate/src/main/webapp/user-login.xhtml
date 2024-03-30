@@ -164,7 +164,8 @@
 															<span class="auth-form-icon"> <em
 																class="dripicons-user"></em>
 															</span>
-															<p:inputText type="text" style="border-radius: 10px;"  autocomplete="username"
+															<p:inputText type="text" style="border-radius: 10px;"
+																autocomplete="username"
 																styleClass=" form-control #{component.valid ? '' :'error' } "
 																id="username" value="#{loginController.userName}"></p:inputText>
 														</div>
@@ -177,12 +178,13 @@
 															<span class="auth-form-icon"> <i
 																class="dripicons-lock"></i>
 															</span>
-															<p:inputText h5:type="password"  autocomplete="current-password"
+															<p:inputText h5:type="password"
+																autocomplete="current-password"
 																style="border-radius: 10px;position:relative"
 																styleClass=" form-control #{component.valid ? '' :'error' } "
 																value="#{loginController.passowrd}" id="userpassword">
-																<i id="iconId" class="fa fa-eye icon-eye top-10" onclick="togglePasswordVisibility('myForm:userpassword', 'iconId')"
-																	 />
+																<i id="iconId" class="fa fa-eye icon-eye top-10"
+																	onclick="togglePasswordVisibility('myForm:userpassword', 'iconId')" />
 															</p:inputText>
 														</div>
 
@@ -231,6 +233,21 @@
 															style=" text-decoration:underline !important;font-size:14px;color:rgb(0, 126, 168)">
 															<f:ajax />
 														</h:commandLink>
+													</div>
+													<div
+														style="margin-top: 3%; display: flex; justify-content: center; align-items: center">
+														<span
+															style="font-size: 14px; font-weight: 400; margin-right: 10px;">#{bundle.forget_password}
+														</span>
+														<div
+															class="d-flex align-items-center bg-white rounded p-0">
+															<div class="icon mx-1" style="width: 25px; height: 25px;">
+																<h:outputLink
+																	value="https://api.whatsapp.com/send?phone=#{loginController.asWhatsappNumber}&amp;text=#{bundle.i_forget_my_password}">
+																	<i class="fab fa-whatsapp"></i>
+																</h:outputLink>
+															</div>
+														</div>
 													</div>
 												</div>
 												<!--end col-->
