@@ -45,7 +45,7 @@ public class Governorate extends MainEntity implements Serializable {
 	private String nameAr;
 
 	public Governorate() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Governorate(@Size(min = 1) @NotEmpty String name) {

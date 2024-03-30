@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.RealEstate.enumerator.Country;
+import org.RealEstate.enumerator.YesNoEnum;
+import org.RealEstate.facade.TokenService;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
@@ -42,6 +44,9 @@ public class LoginController implements Serializable {
 
 	@EJB
 	private UserFacade userFacade;
+	@EJB
+	private TokenService tokenService;
+
 	@Inject
 	private HttpServletRequest request;
 	@Inject
@@ -57,23 +62,33 @@ public class LoginController implements Serializable {
 
 	String phoneNumber = "";
 
+	private String authToken;
+
 	@PostConstruct
 	public void init() {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = facesContext.getExternalContext();
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
 
-		phoneNumber = appSinglton.getPhoneNumber();
+			phoneNumber = appSinglton.getPhoneNumber();
 
-		if (!facesContext.isPostback()) {
-			from_url = externalContext.getRequestParameterMap().get(RQUEST_FROM);
+			if (!facesContext.isPostback()) {
+				from_url = externalContext.getRequestParameterMap().get(RQUEST_FROM);
+			}
+
+			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+			if (flash.containsKey("message")) {
+				showErrorMessage = true;
+				errorMessage = (String) flash.get("message");
+			}
+
+			if (checkLoggedIn() == true) {
+				requestFromUrl();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-		if (flash.containsKey("message")) {
-			showErrorMessage = true;
-			errorMessage = (String) flash.get("message");
-		}
-
 	}
 
 	public void loginFb() {
@@ -171,18 +186,35 @@ public class LoginController implements Serializable {
 				flash.put("message", Utility.getMessage("wrong_user_name_or_password"));
 				changeUrl();
 			} else {
-
 				HttpSession session = request.getSession(true);
+				session.setAttribute(Constants.NEED_REMOVE_SESSION, YesNoEnum.NO);
 				session.setAttribute(Constants.USER_SESSION, user);
-
+				authToken = tokenService.generateToken(user);
 				// Redirect to default page after successful login
 				requestFromUrl();
-
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean checkLoggedIn() throws IOException {
+
+		if (StringUtils.isBlank(authToken)) {
+			return false;
+		} else {
+			User loggedInUser = tokenService.validateToken(authToken);
+
+			if (loggedInUser == null) {
+				return false;
+			} else {
+				HttpSession session = request.getSession(true);
+				session.setAttribute(Constants.USER_SESSION, loggedInUser);
+				return true;
+			}
+
+		}
+
 	}
 
 	public void createAccount() {
@@ -237,9 +269,17 @@ public class LoginController implements Serializable {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 	public String getAsWhatsappNumber() {
 		return Utility.checkPhoneNumber(phoneNumber, Country.LEBANON);
+	}
+
+	public String getAuthToken() {
+		return authToken;
+	}
+
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
 	}
 
 }

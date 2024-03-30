@@ -30,9 +30,8 @@ public interface Constants {
 	final String POST_IMAGE_DIR_NAME = "POST";
 	final String PROFILE_IMAGE_DIR_NAME = "PROFILE";
 	final String ADS_IMAGE_DIR_NAME = "ADS";
+	public final String NEED_REMOVE_SESSION = "NEED_REMOVE_SESSION";
 
-	
-	
 	public static final String EMPTY_REQUEST_DONT_CONTAIN_DATA = "EMPTY_REQUEST_DONT_CONTAIN_DATA";
 	public static final String POST_TYPE_NOT_SUPPORTED = "POST_TYPE_NOT_SUPPORTED";
 
@@ -44,14 +43,11 @@ public interface Constants {
 	public static final String USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_SHOULD_NOT_BE_EMPTY = "USER_NAME_FIRST_NAME_MIDDLE_NAME_LAST_NAME_PASSWORD_SHOULD_NOT_BE_EMPTY";
 	public static final String USER_ID_SHOULD_BE_GREATER_THAN_ZERO = "USER_ID_SHOULD_BE_GREATER_THAN_ZERO";
 
-	
 	public static final String FACEBOOK_ID_SHOUD_NOT_BE_NULL = "FACEBOOK_ID_SHOUD_NOT_BE_NULL";
 
-	
 	public static final String USER_NAME_SHOULD_BE_UNIQUE = "USER_NAME_SHOULD_BE_UNIQUE";
 	public static final String FACEBOOK_USER_HAVE_ACCOUNT = "FACEBOOK_USER_HAVE_ALREADY_ACCOUNT";
 
-	
 	public static final int NB_IMAGE_IN_POST_ALLOWED = 5;
 
 	public static final String USER_NOT_EXISTS = "USER_NOT_EXISTS";
@@ -59,15 +55,12 @@ public interface Constants {
 	public static final String DISTRICT_NOT_EXISTS = "DISTRICT_NOT_EXISTS";
 	public static final String GOVERNORTE_NOT_EXISTS = "GOVERNORTE_NOT_EXISTS";
 	public static final String USER_NAME_OR_PASSWORD_INVALID = "USER_NAME_OR_PASSWORD_INVALID";
-	public static final String EXCEEDED_POST_LIMIT_FOR_THIS_USER = "EXCEEDED_POST_LIMIT_for_this_user" ;
+	public static final String EXCEEDED_POST_LIMIT_FOR_THIS_USER = "EXCEEDED_POST_LIMIT_for_this_user";
 
 	public static final String FACEBOOK_ID_INVALID = "FACEBOOK_ID_INVALID";
 
-	
-	//FOR MODE
-	public static final String  DEVELOPMENT = "development" ;
-	public static final String  PRODUCATION = "production" ;
-	
+	// FOR MODE
+	public static final String DEVELOPMENT = "development";
+	public static final String PRODUCATION = "production";
 
-	
 }

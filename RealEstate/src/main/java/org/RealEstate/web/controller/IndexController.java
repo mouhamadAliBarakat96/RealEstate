@@ -9,12 +9,14 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Response;
 
 import org.RealEstate.dto.RealEstateLazyDataModel;
@@ -28,6 +30,7 @@ import org.RealEstate.enumerator.YesNoEnum;
 import org.RealEstate.facade.DistrictFacade;
 import org.RealEstate.facade.GovernorateFacade;
 import org.RealEstate.facade.RealEstateFacade;
+import org.RealEstate.facade.TokenService;
 import org.RealEstate.facade.VillageFacade;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
@@ -103,7 +106,7 @@ public class IndexController implements Serializable {
 	/* use these two filter to get info about real estate type rent or sale */
 	private PropertyTypeEnum propertyTypeEnum = null;
 	private ExchangeRealEstateType estateTypeEnum = ExchangeRealEstateType.BUY;
-
+	
 	@PostConstruct
 	public void init() {
 		governorates = governorateFacade.findAll();

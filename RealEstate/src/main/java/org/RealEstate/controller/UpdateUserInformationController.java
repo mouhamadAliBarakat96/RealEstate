@@ -82,7 +82,7 @@ public class UpdateUserInformationController implements Serializable {
 				ExternalContext externalContext = facesContext.getExternalContext();
 				externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		} else {

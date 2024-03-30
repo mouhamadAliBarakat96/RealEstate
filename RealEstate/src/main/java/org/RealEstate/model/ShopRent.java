@@ -44,7 +44,7 @@ public class ShopRent extends RealEstate implements Serializable {
 	}
 
 	public ShopRent() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 

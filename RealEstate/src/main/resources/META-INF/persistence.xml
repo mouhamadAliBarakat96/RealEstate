@@ -26,6 +26,7 @@
 		<class>org.RealEstate.model.StoreHouseSell</class>
 		<class>org.RealEstate.model.StoreHouseRent</class>
 		<class>org.RealEstate.model.ContactUs</class>
+		<class>org.RealEstate.model.TokenEntity</class>
 
   
 		<properties>

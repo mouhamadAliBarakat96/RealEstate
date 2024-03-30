@@ -14,7 +14,7 @@ public enum PostStatus {
 	private String status_ar;
 
 	private PostStatus(String status,String status_ar) {
-		// TODO Auto-generated constructor stub
+		
 		this.status = status;
 		this.status_ar = status_ar;
 	}

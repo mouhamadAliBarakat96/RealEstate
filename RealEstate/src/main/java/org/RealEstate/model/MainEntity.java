@@ -31,13 +31,13 @@ public class MainEntity extends ApplicationEntity implements Serializable {
 
 	@Override
 	public long getId() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public void setId(long id) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -91,7 +91,7 @@ public class MainEntity extends ApplicationEntity implements Serializable {
 
 	// @Override
 	// public int compareTo(MainEntity mainEntity) {
-	// // TODO Auto-generated method stub
+	// 
 	//
 	// return mainEntity.getLastUpdate().compareTo(this.getLastUpdate());
 	// }

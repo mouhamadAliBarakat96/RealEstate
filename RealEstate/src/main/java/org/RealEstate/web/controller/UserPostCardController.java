@@ -539,7 +539,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 
 	private boolean chaletValidationFields() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
@@ -638,25 +638,25 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	@Override
 	public RealEstate getItem() {
-		// TODO Auto-generated method stub
+		
 		return item;
 	}
 
 	@Override
 	public void setItem(RealEstate item) {
-		// TODO Auto-generated method stub
+		
 		this.item = item;
 	}
 
 	@Override
 	public long getId() {
-		// TODO Auto-generated method stub
+		
 		return item != null ? item.getId() : -1;
 	}
 
 	@Override
 	public ICRUDOperations<RealEstate> getAbstractFacade() {
-		// TODO Auto-generated method stub
+		
 		return estateFacade;
 	}
 

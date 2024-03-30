@@ -55,7 +55,7 @@ public class Village extends MainEntity implements Serializable {
 	private District district;
 
 	public Village() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Village(@Size(min = 1) @NotEmpty String name) {

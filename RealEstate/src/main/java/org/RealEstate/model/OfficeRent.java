@@ -46,7 +46,7 @@ public class OfficeRent extends RealEstate implements Serializable {
 	private int nbBathRoom;
 
 	public OfficeRent() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public OfficeRent(int nbRoom, boolean electricElevator, int floor, int nbBathRoom, Village vill,

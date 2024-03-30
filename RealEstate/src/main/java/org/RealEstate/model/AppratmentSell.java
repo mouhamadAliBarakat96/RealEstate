@@ -51,7 +51,7 @@ public class AppratmentSell extends RealEstate implements Serializable {
 	private int blockNb;
 
 	public AppratmentSell() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public AppratmentSell(int nbRoom, int floor, boolean garden, int nbBathRoom, Village village,List<String> images) {

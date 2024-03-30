@@ -77,7 +77,7 @@ public class UserProfilePicture implements Serializable {
 		} catch (Exception e) {
 			CommonUtility.addMessageToFacesContext(" error_on_save ", "error");
 
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 

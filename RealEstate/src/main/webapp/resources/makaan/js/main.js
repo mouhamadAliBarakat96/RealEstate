@@ -136,7 +136,6 @@ function changeLang(lang) {
 
 }
 
-
 $(document).ready(function() {
 	// Get the current URL
 	var currentURL = window.location.href;
@@ -156,21 +155,20 @@ $(document).ready(function() {
 	}
 });
 
-
 function copyCurrentURL() {
 	event.preventDefault();
-    var tempInput = document.createElement("input");
-    tempInput.value = document.location.href;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
-    alert("URL: " + document.location.href);
+	var tempInput = document.createElement("input");
+	tempInput.value = document.location.href;
+	document.body.appendChild(tempInput);
+	tempInput.select();
+	document.execCommand("copy");
+	document.body.removeChild(tempInput);
+	alert("URL: " + document.location.href);
 }
 
-//dataView component
+// dataView component
 
- function scrollViewTo() {
+function scrollViewTo() {
 
 	var dataHeader = document.querySelector('.ui-dataview .ui-dataview-header');
 	if (dataHeader) {
@@ -178,22 +176,20 @@ function copyCurrentURL() {
 		window.scrollTo(0, firstItemPosition);
 	}
 	console.log('scrollViewTo')
-} 
- 
- 
+}
+
 function restrictToNumbers(inputField) {
-    var input = inputField.value;
-    var numericInput = input.replace(/[^0-9]/g, "");
-    inputField.value = numericInput;
+	var input = inputField.value;
+	var numericInput = input.replace(/[^0-9]/g, "");
+	inputField.value = numericInput;
 }
 
 function selectAllContent(input) {
-    input.select();
-  }
+	input.select();
+}
 
-  
-function togglePasswordVisibility(inputId,iconId) {
-	
+function togglePasswordVisibility(inputId, iconId) {
+
 	var passwordInput = document.getElementById(inputId);
 	var icon = document.getElementById(iconId);
 
@@ -207,7 +203,27 @@ function togglePasswordVisibility(inputId,iconId) {
 		icon.classList.add("fa-eye");
 	}
 }
- 
 
 // Use noConflict to release control of the $ variable
 jQuery.noConflict();
+
+// token auth set to browser
+//$(document).ready(function() {
+//					document.getElementById("hiddenForm:myHiddenField").value = retrieveAuthToken();
+//});
+
+function setAuthToken(authToken) {
+	localStorage.setItem('authToken', authToken);
+	console.log('token is set');
+}
+
+function removeAuthToken() {
+	localStorage.removeItem('authToken');
+	console.log('token is removed');
+}
+
+function retrieveAuthToken() {
+	var authToken = localStorage.getItem('authToken');
+	document.getElementById("hiddenForm:myHiddenField").value=authToken;
+	return authToken;
+}

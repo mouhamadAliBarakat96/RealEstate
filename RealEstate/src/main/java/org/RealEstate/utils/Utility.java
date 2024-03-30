@@ -78,7 +78,7 @@ public class Utility {
 			else if (local.getLanguage().equals("ar"))
 				key = getMessage(key, BUNDLE_FILE_NAME_AR);
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		} finally {
 			FacesMessage msg = new FacesMessage(key, "error");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -92,7 +92,7 @@ public class Utility {
 			else if (local.getLanguage().equals("ar"))
 				key = getMessage(key, BUNDLE_FILE_NAME_AR);
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		} finally {
 			FacesMessage msg = new FacesMessage(key, "warn");
 			FacesContext.getCurrentInstance().addMessage(null, msg);

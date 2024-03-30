@@ -158,7 +158,7 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	private boolean needVerfied;
 
 	public RealEstate() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public RealEstate(String tittle, String subTittle, int space, Village village, double price) {

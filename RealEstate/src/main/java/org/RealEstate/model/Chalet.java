@@ -139,7 +139,7 @@ public class Chalet extends MainEntity implements Serializable {
 	private boolean needVerified;
 
 	public Chalet() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Chalet(@Size(min = 1) String name, boolean pool, boolean chimney, String descrption, Village village,

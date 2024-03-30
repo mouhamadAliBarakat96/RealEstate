@@ -9,7 +9,7 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-	<title>Ekar+</title>
+	<title>#{bundle.house_and_land}</title>
 	<link rel="shortcut icon"
 		href=" #{resource['images/logoIkarPlus:25.png'] }" />
 
@@ -39,106 +39,21 @@
 
 </h:head>
 <h:body>
-
-
 	<o:onloadScript>
 ($('.toogle')).bootstrapToggle();
 </o:onloadScript>
+
 	<ui:composition template="/views/template/makaan-template.xhtml">
 
 		<ui:define name="customStylesheet">
 			<link href="/resources/makaan/css/index.css" rel="stylesheet" />
-			<style>
-.login-custom {
-	max-width: 550px;
-	position: relative;
-	margin: 0 auto;
-}
-
-.vh-100 {
-	height: 85vh !important;
-}
-
-.card {
-	border-radius: 50px;
-}
-</style>
-
-
+			<link href="/resources/makaan/css/login-user.css" rel="stylesheet" />
 		</ui:define>
 
 		<ui:define name="customOutputScript">
-
-			<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1504756280267313',
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
-      xfbml      : true  // parse XFBML
-    });
-
-    // Additional initialization code here
-
-    
-    
-    showMe = function(response) {
-      if (response.status !== 'connected') {
-        div.innerHTML = '<em>Not Connected</em>';
-      } else {
-        FB.api('/me', function(response) {
-          var i=0;
-          var id =  '' ;
-          for (var key in response) {
-
-        	  
-            i++;
-     ///console.log(key);
-     if(key === 'id'){
-    	 id =response[key] ; 
-    	 console.log(response[key]);
-         }
-
-    //console.log(response[key]);
-
-
-          }
-     
-          remoteCommandAction([{name:'fbId',value:id}]);
-        });
-      }
-    };
-
-
-
-    
-    FB.getLoginStatus(function(response) {
-    
-    FB.Event.subscribe('auth.authResponseChange', showMe);
-    FB.Event.subscribe('auth.authResponseChange', console.log('change'));
-    
-  });
-
-
-    
-  };
-
- 
- 
-  
-  // Load the SDK Asynchronously
-  (function(d){
-     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement('script'); js.id = id; js.async = true;
-     js.src = "//connect.facebook.net/en_US/all.js";
-     ref.parentNode.insertBefore(js, ref);
-
-
-     
-   }(document));
-</script>
+			<script src="resources/makaan/js/login-user.js" />
 		</ui:define>
+
 		<ui:define name="property-content">
 			<div class="login-custom">
 				<div class="row vh-100 " style="margin-top: 0%">

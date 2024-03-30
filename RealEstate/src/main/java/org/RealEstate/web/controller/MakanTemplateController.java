@@ -16,15 +16,17 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.RealEstate.dto.MenuItem;
-import org.RealEstate.enumerator.PropertyKindEnum;
+import org.RealEstate.enumerator.YesNoEnum;
 import org.RealEstate.facade.AdsFacade;
+import org.RealEstate.facade.TokenService;
 import org.RealEstate.model.Ads;
+import org.RealEstate.model.TokenEntity;
 import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
-import org.RealEstate.utils.Utility;
+import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
+import org.primefaces.PrimeFaces;
 
 @Named
 @ViewScoped
@@ -58,6 +60,12 @@ public class MakanTemplateController implements Serializable {
 	private String phoneNumber;
 	private String address;
 	private Locale locale;
+	private String ipAddressWithPort;
+
+	// TODO check if token exists in local storage
+	@EJB
+	private TokenService tokenService;
+	private String tokenValue;// read value from input hidden that retrive value from java script
 
 	@PostConstruct
 	public void init() {
@@ -68,11 +76,30 @@ public class MakanTemplateController implements Serializable {
 		adsList = adsFacade.findAll();
 		fullUrlAdsImage = fullUrlAdsImage.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 				.concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/");
-		phoneNumber=appSinglton.getPhoneNumber();
+		phoneNumber = appSinglton.getPhoneNumber();
 
+		settingAutToken();
+
+ 		PrimeFaces.current().executeScript("refreshAgrid();");
 	}
 
-	private String ipAddressWithPort;
+	public void test() {
+		PrimeFaces.current().executeScript("retrieveAuthToken();");
+		Ajax.oncomplete("console.log('token is: '+ '" + tokenValue + "');");
+	}
+
+	public void settingAutToken() {
+		HttpSession session = request.getSession(true);
+		if (user != null) {
+			TokenEntity token = tokenService.findTokenByUser(user);
+			PrimeFaces.current().executeScript("setAuthToken('" + token.getTokenValue() + "')");
+		} else if (session.getAttribute(Constants.NEED_REMOVE_SESSION) != null
+				&& session.getAttribute(Constants.NEED_REMOVE_SESSION) == YesNoEnum.YES) {
+			PrimeFaces.current().executeScript("removeAuthToken();");
+			// session.setAttribute(Constants.NEED_REMOVE_SESSION, YesNoEnum.NO);
+		}
+
+	}
 
 	public String getIpAddressWithPort() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
@@ -89,48 +116,56 @@ public class MakanTemplateController implements Serializable {
 		return ipAddressWithPort;
 	}
 
-//	public List<MenuItem> fillMenuItems() {
-//		List<MenuItem> menu = new ArrayList<>();
-//		MenuItem m1 = null;
-//
-//		m1 = new MenuItem(languageController.getMessage("real_estates"), "", "index-page", true,
-//				"nav-item nav-link active", PropertyKindEnum.REALESTATE.toString());
-//		menu.add(m1);
-//
-//		m1 = new MenuItem(languageController.getMessage("chalets"), "", "index-page", true, "nav-item nav-link",
-//				PropertyKindEnum.CHALET.toString());
-//		menu.add(m1);
-//
-//		m1 = new MenuItem(languageController.getMessage("add_new"), "", "userpost-card", true, "nav-item nav-link",
-//				"post-card");
-//		menu.add(m1);
-//
-//		m1 = new MenuItem(languageController.getMessage("my_posts"), "", "userpost-list", true, "nav-item nav-link",
-//				"post-list");
-//		menu.add(m1);
-//
-//		m1 = new MenuItem(languageController.getMessage("contact_us"), "", "contact-us", true, "nav-item nav-link",
-//				"contact-us");
-//		menu.add(m1);
-//
-//		if (user == null) {
-//			/*m1 = new MenuItem(languageController.getMessage("login"), "", "login-user", true, "nav-item nav-link",
-//					"login");
-//			menu.add(m1);*/
-//
-//			/*m1 = new MenuItem(languageController.getMessage("register"), "", "signup", true, "nav-item nav-link",
-//					"register");
-//			menu.add(m1);*/
-//
-//		} else {
-//			m1 = new MenuItem(languageController.getMessage("user-information"), "", "user-information-front-end", true,
-//					"nav-item nav-link", "user-information-front-end");
-//			menu.add(m1);
-//
-//		}
-//
-//		return menu;
-//	}
+	// public List<MenuItem> fillMenuItems() {
+	// List<MenuItem> menu = new ArrayList<>();
+	// MenuItem m1 = null;
+	//
+	// m1 = new MenuItem(languageController.getMessage("real_estates"), "",
+	// "index-page", true,
+	// "nav-item nav-link active", PropertyKindEnum.REALESTATE.toString());
+	// menu.add(m1);
+	//
+	// m1 = new MenuItem(languageController.getMessage("chalets"), "", "index-page",
+	// true, "nav-item nav-link",
+	// PropertyKindEnum.CHALET.toString());
+	// menu.add(m1);
+	//
+	// m1 = new MenuItem(languageController.getMessage("add_new"), "",
+	// "userpost-card", true, "nav-item nav-link",
+	// "post-card");
+	// menu.add(m1);
+	//
+	// m1 = new MenuItem(languageController.getMessage("my_posts"), "",
+	// "userpost-list", true, "nav-item nav-link",
+	// "post-list");
+	// menu.add(m1);
+	//
+	// m1 = new MenuItem(languageController.getMessage("contact_us"), "",
+	// "contact-us", true, "nav-item nav-link",
+	// "contact-us");
+	// menu.add(m1);
+	//
+	// if (user == null) {
+	// /*m1 = new MenuItem(languageController.getMessage("login"), "", "login-user",
+	// true, "nav-item nav-link",
+	// "login");
+	// menu.add(m1);*/
+	//
+	// /*m1 = new MenuItem(languageController.getMessage("register"), "", "signup",
+	// true, "nav-item nav-link",
+	// "register");
+	// menu.add(m1);*/
+	//
+	// } else {
+	// m1 = new MenuItem(languageController.getMessage("user-information"), "",
+	// "user-information-front-end", true,
+	// "nav-item nav-link", "user-information-front-end");
+	// menu.add(m1);
+	//
+	// }
+	//
+	// return menu;
+	// }
 
 	public List<FacesMessage> getMessages() {
 
@@ -174,6 +209,7 @@ public class MakanTemplateController implements Serializable {
 		try {
 			HttpSession session = request.getSession(true);
 			session.removeAttribute(Constants.USER_SESSION);
+			session.setAttribute(Constants.NEED_REMOVE_SESSION, YesNoEnum.YES);
 			Faces.redirect("index.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -218,6 +254,14 @@ public class MakanTemplateController implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getTokenValue() {
+		return tokenValue;
+	}
+
+	public void setTokenValue(String tokenValue) {
+		this.tokenValue = tokenValue;
 	}
 
 }

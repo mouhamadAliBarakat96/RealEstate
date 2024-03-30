@@ -54,7 +54,7 @@ public class TestController implements Serializable {
 
 			System.out.println(url);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -78,7 +78,7 @@ public class TestController implements Serializable {
 
 			System.out.println(url);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

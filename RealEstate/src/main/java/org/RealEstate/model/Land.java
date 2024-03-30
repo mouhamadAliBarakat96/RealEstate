@@ -31,7 +31,7 @@ public class Land extends RealEstate implements Serializable {
 	private boolean electricity;
 
 	public Land() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Land(int nbOfShares, boolean road, boolean water,Village village,List<String> images) {

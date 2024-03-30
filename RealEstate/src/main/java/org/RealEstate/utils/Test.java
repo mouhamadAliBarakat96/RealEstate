@@ -177,7 +177,7 @@ System.out.println(x);
 			System.out.println(Utils.objectToString(storeHouseRent));
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

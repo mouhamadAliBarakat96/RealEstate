@@ -57,7 +57,7 @@ public class District extends MainEntity implements Serializable {
 	private Governorate governorate;
 
 	public District() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public District(@Size(min = 1) @NotEmpty String name) {

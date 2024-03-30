@@ -10,7 +10,7 @@ public enum YesNoEnum {
 	private String answer;
 	private String answer_ar;
 	private YesNoEnum(String answer,String answer_ar) {
-		// TODO Auto-generated constructor stub
+		
 		this.answer = answer;
 		this.answer_ar=answer_ar;
 	}
