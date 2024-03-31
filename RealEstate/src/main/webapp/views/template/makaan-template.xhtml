@@ -66,8 +66,11 @@
 	</f:facet>
 
 	<h:form id="hiddenForm" style="display:none;">
-		<h:inputHidden id="myHiddenField" value="#{makanTemplateController.tokenValue}" />
-		<p:remoteCommand name="refreshAgrid" actionListener="#{makanTemplateController.test()}"/>
+		<h:inputHidden id="myHiddenField"
+			value="#{makanTemplateController.tokenValue}" />
+		
+		<p:remoteCommand name="refreshToken"
+			actionListener="#{makanTemplateController.test()}" />
 	</h:form>
 
 	<h:form id="myForm">
@@ -290,7 +293,7 @@
 	<script src="/resources/makaan/lib/owlcarousel/owl.carousel.min.js"></script>
 	<!-- Template Javascript -->
 	<script type="text/javascript" src="/resources/makaan/js/main.js" />
-	<!-- 	<h:outputScript>sendAuthToBean();</h:outputScript> -->
+	<h:outputScript>retrieveAuthToken();</h:outputScript>
 	<!-- BEGIN TOASTR -->
 	<h:outputScript name="toastr.min.js" library="js" />
 

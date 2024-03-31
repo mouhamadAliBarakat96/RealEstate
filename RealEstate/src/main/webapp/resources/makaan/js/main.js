@@ -207,23 +207,19 @@ function togglePasswordVisibility(inputId, iconId) {
 // Use noConflict to release control of the $ variable
 jQuery.noConflict();
 
-// token auth set to browser
-//$(document).ready(function() {
-//					document.getElementById("hiddenForm:myHiddenField").value = retrieveAuthToken();
-//});
-
 function setAuthToken(authToken) {
 	localStorage.setItem('authToken', authToken);
-	console.log('token is set');
+//	console.log('token is set');
 }
 
 function removeAuthToken() {
 	localStorage.removeItem('authToken');
-	console.log('token is removed');
+//	console.log('token is removed');
 }
 
 function retrieveAuthToken() {
 	var authToken = localStorage.getItem('authToken');
 	document.getElementById("hiddenForm:myHiddenField").value=authToken;
+//	console.log('retrieveAuthToken called');
 	return authToken;
 }

@@ -24,6 +24,7 @@ import org.RealEstate.model.TokenEntity;
 import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.PrimeFaces;
@@ -78,25 +79,28 @@ public class MakanTemplateController implements Serializable {
 				.concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/");
 		phoneNumber = appSinglton.getPhoneNumber();
 
-		settingAutToken();
+		settingAutToken(session);
 
- 		PrimeFaces.current().executeScript("refreshAgrid();");
+		PrimeFaces.current().executeScript("refreshToken();");
 	}
 
-	public void test() {
+	public void test() throws IOException {
 		PrimeFaces.current().executeScript("retrieveAuthToken();");
-		Ajax.oncomplete("console.log('token is: '+ '" + tokenValue + "');");
+		if (!StringUtils.isBlank(tokenValue) && user == null) {
+			user = tokenService.validateToken(tokenValue);
+			HttpSession session = request.getSession(true);
+			session.setAttribute(Constants.USER_SESSION, user);
+			Faces.redirect("index.xhtml");
+		}
 	}
 
-	public void settingAutToken() {
-		HttpSession session = request.getSession(true);
+	public void settingAutToken(HttpSession session) {
 		if (user != null) {
 			TokenEntity token = tokenService.findTokenByUser(user);
 			PrimeFaces.current().executeScript("setAuthToken('" + token.getTokenValue() + "')");
 		} else if (session.getAttribute(Constants.NEED_REMOVE_SESSION) != null
 				&& session.getAttribute(Constants.NEED_REMOVE_SESSION) == YesNoEnum.YES) {
-			PrimeFaces.current().executeScript("removeAuthToken();");
-			// session.setAttribute(Constants.NEED_REMOVE_SESSION, YesNoEnum.NO);
+			PrimeFaces.current().executeScript("removeAuthToken();retrieveAuthToken();");
 		}
 
 	}
@@ -205,13 +209,12 @@ public class MakanTemplateController implements Serializable {
 	}
 
 	public void logout() {
-
 		try {
 			HttpSession session = request.getSession(true);
 			session.removeAttribute(Constants.USER_SESSION);
 			session.setAttribute(Constants.NEED_REMOVE_SESSION, YesNoEnum.YES);
 			Faces.redirect("index.xhtml");
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
