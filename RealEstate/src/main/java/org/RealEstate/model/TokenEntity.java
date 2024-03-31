@@ -31,10 +31,10 @@ public class TokenEntity {
 	@Expose
 	private long id;
 
-	@Column(name = "token_value ")
+	@Column(name = "token_value")
 	private String tokenValue;
 
-	@Column(name = "expiration_date  ")
+	@Column(name = "expiration_date")
 	private Date expirationDate;
 
 	@OneToOne
