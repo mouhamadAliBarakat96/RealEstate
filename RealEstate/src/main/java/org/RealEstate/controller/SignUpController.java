@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.RealEstate.enumerator.Country;
+import org.RealEstate.facade.TokenService;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
@@ -38,39 +39,40 @@ public class SignUpController implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final String RQUEST_FROM = "from";
-	
+
 	private User user = new User();
-	
+
 	@EJB
 	private UserService userService;
-	
+
 	@EJB
 	private UserFacade userFacade;
-	
 
 	@Inject
 	private HttpServletRequest request;
 
 	@Inject
-	private  AppSinglton appSinglton ;
-	
+	private AppSinglton appSinglton;
+
 	@Inject
 	private LanguageController sessionLanguage;
-	
-	
-	
+
 	private String from_url = "";
-	
+
+	@EJB
+	private TokenService tokenService;
+
+	private String authToken;
+
 	@PostConstruct
 	public void init() {
-		
+
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		if (!facesContext.isPostback()) {
 			from_url = externalContext.getRequestParameterMap().get(RQUEST_FROM);
 		}
-		
-		
+
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		if (flash.containsKey("type")) {
 			String type = (String) flash.get("type");
@@ -89,31 +91,26 @@ public class SignUpController implements Serializable {
 			CommonUtility.addMessageToFacesContext(message, type);
 		}
 	}
-	
-	
-	
+
 	private void requestFromUrl() {
 		try {
 			FacesContext context = FacesContext.getCurrentInstance();
 			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 			String url = request.getRequestURL().toString();
 			String requestUri = request.getRequestURI();
-			
+
 			if (!StringUtils.isEmpty(from_url)) {
 				url = url.replace(requestUri, from_url);
 			} else {
 				url = url.replace(requestUri, "/index.xhtml");
 			}
-			url = Utils.replaceHost(url, appSinglton.getRealDns()   , appSinglton.getMode());
+			url = Utils.replaceHost(url, appSinglton.getRealDns(), appSinglton.getMode());
 			Faces.redirect(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	
-	
-	
 	public boolean validate() {
 		boolean isValid = true;
 
@@ -142,24 +139,23 @@ public class SignUpController implements Serializable {
 		}
 
 		if (!Utils.validatePassword(user.getPassowrd())) {
-			Utility.addErrorMessage("INVALID_PASSWORD", sessionLanguage.getLocale());
+			// Utility.addErrorMessage("INVALID_PASSWORD", sessionLanguage.getLocale());
+			Utility.addErrorMessage("INVALID_PASSWORD_TEMP", sessionLanguage.getLocale());
 			isValid = false;
 		}
-		
-		if (StringUtils.isBlank(user.getEmail())) {
-			Utility.addErrorMessage("email_required", sessionLanguage.getLocale());
-			isValid = false;
-		}
-		
-		
-		if (!Utility.isValidEmail(user.getEmail())) {
-			Utility.addErrorMessage("invalid_email", sessionLanguage.getLocale());
-			isValid = false;
-		}
-		
+
+		// if (StringUtils.isBlank(user.getEmail())) {
+		// Utility.addErrorMessage("email_required", sessionLanguage.getLocale());
+		// isValid = false;
+		// }
+
+		// if (!Utility.isValidEmail(user.getEmail())) {
+		// Utility.addErrorMessage("invalid_email", sessionLanguage.getLocale());
+		// isValid = false;
+		// }
+
 		return isValid;
 	}
-	
 
 	public void save() {
 		try {
@@ -167,7 +163,7 @@ public class SignUpController implements Serializable {
 			/**
 			 * TODO ACTIVE THIS CODE LATER
 			 */
-			
+
 			/*
 			 * String fbId = null; Map<String, String> requestParamMap =
 			 * FacesContext.getCurrentInstance().getExternalContext()
@@ -181,19 +177,20 @@ public class SignUpController implements Serializable {
 			 * 
 			 * changeUrl(); return; }
 			 */
-			
+
 			if (!validate()) {
 				return;
 			}
-			
+
 			user.setPassowrd(Utils.sha256(user.getPassowrd()));
-			user.setPhoneNumber(Utility.checkPhoneNumber(user.getPhoneNumber().replaceAll("\\s+", ""), Country.LEBANON));
-			
+			user.setPhoneNumber(
+					Utility.checkPhoneNumber(user.getPhoneNumber().replaceAll("\\s+", ""), Country.LEBANON));
+
 			if (userFacade.findUserByPhoneNumber(user.getPhoneNumber()) != null) {
 				Utility.addErrorMessage("PHONE_NUMBER_IS_USED", sessionLanguage.getLocale());
 				return;
 			}
-			
+
 			Response r = userService.createUser(user);
 			if (r.getStatus() == Status.CREATED.getStatusCode()) {
 
@@ -201,11 +198,14 @@ public class SignUpController implements Serializable {
 
 				HttpSession session = request.getSession(true);
 				session.setAttribute(Constants.USER_SESSION, user);
-			
-				/*FacesContext facesContext = FacesContext.getCurrentInstance();
-				ExternalContext externalContext = facesContext.getExternalContext();
-				externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");*/
-				
+				authToken = tokenService.generateToken(user);
+				/*
+				 * FacesContext facesContext = FacesContext.getCurrentInstance();
+				 * ExternalContext externalContext = facesContext.getExternalContext();
+				 * externalContext.redirect(externalContext.getRequestContextPath() +
+				 * "/index.xhtml");
+				 */
+
 				requestFromUrl();
 			} else {
 				Utility.addErrorMessage(r.getEntity().toString(), sessionLanguage.getLocale());
@@ -225,7 +225,7 @@ public class SignUpController implements Serializable {
 		if (StringUtils.isBlank(user.getFirstName()) || StringUtils.isBlank(user.getLastName())
 				|| StringUtils.isBlank(user.getUserName()) || StringUtils.isBlank(user.getPassowrd())
 				|| StringUtils.isBlank(user.getPhoneNumber())) {
-			
+
 			Utility.addWarningMessage("user_info_requried", sessionLanguage.getLocale());
 		}
 
@@ -236,7 +236,7 @@ public class SignUpController implements Serializable {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		String url = request.getRequestURL().toString();
 		try {
-			url = Utils.replaceHost(url, appSinglton.getRealDns() ,   appSinglton.getMode());
+			url = Utils.replaceHost(url, appSinglton.getRealDns(), appSinglton.getMode());
 
 			Faces.redirect(url);
 
@@ -251,6 +251,14 @@ public class SignUpController implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getAuthToken() {
+		return authToken;
+	}
+
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
 	}
 
 }

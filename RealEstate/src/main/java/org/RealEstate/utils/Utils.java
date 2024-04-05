@@ -333,7 +333,8 @@ public class Utils {
 		String pattern = "^(?=.*[A-Z]).{8,}$";
 
 		// Create a Pattern object
-		Pattern regex = Pattern.compile(pattern);
+//		Pattern regex = Pattern.compile(pattern);
+		Pattern regex =  Pattern.compile(".{5,}");
 
 		// Create a Matcher object
 		Matcher matcher = regex.matcher(result);

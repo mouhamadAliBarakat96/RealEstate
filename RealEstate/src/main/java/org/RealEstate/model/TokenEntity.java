@@ -12,6 +12,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.google.gson.annotations.Expose;
 
@@ -34,6 +36,7 @@ public class TokenEntity {
 	@Column(name = "token_value")
 	private String tokenValue;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "expiration_date")
 	private Date expirationDate;
 
