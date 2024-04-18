@@ -1,6 +1,5 @@
 package org.RealEstate.web.controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,21 +12,18 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.RealEstate.enumerator.YesNoEnum;
 import org.RealEstate.facade.AdsFacade;
 import org.RealEstate.facade.TokenService;
 import org.RealEstate.model.Ads;
-import org.RealEstate.model.TokenEntity;
 import org.RealEstate.model.User;
 import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
-import org.apache.commons.lang3.StringUtils;
-import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
-import org.primefaces.PrimeFaces;
 
 @Named
 @ViewScoped
@@ -70,39 +66,64 @@ public class MakanTemplateController implements Serializable {
 
 	@PostConstruct
 	public void init() {
+
+		FacesContext fc = FacesContext.getCurrentInstance();
 		HttpSession session = request.getSession(true);
 		user = (User) session.getAttribute(Constants.USER_SESSION);
+		if (user == null) {
+			checkLoginToken(fc, session);
+		}
 		locale = languageController.getLocale();
-		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+		fc.getViewRoot().setLocale(locale);
 		adsList = adsFacade.findAll();
 		fullUrlAdsImage = fullUrlAdsImage.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES)
 				.concat("/").concat(Constants.ADS_IMAGE_DIR_NAME).concat("/");
 		phoneNumber = appSinglton.getPhoneNumber();
-
-		settingAutToken(session);
-
-		PrimeFaces.current().executeScript("refreshToken();");
 	}
 
-	public void test() throws IOException {
-		PrimeFaces.current().executeScript("retrieveAuthToken();");
-		if (!StringUtils.isBlank(tokenValue) && user == null) {
-			user = tokenService.validateToken(tokenValue);
+	public void checkLoginToken(FacesContext facesContext, HttpSession session) {
+		HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("loginToken")) {
+					// If login token is found, perform automatic login
+					String token = cookie.getValue().trim();
+					user = tokenService.validateToken(token);
+					session.setAttribute(Constants.USER_SESSION, user);
+				}
+			}
+		}
+	}
+
+	public void logout() {
+		try {
 			HttpSession session = request.getSession(true);
-			session.setAttribute(Constants.USER_SESSION, user);
+			session.removeAttribute(Constants.USER_SESSION);
+			removeCookie();
 			Faces.redirect("index.xhtml");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
-	public void settingAutToken(HttpSession session) {
-		if (user != null) {
-			TokenEntity token = tokenService.findTokenByUser(user);
-			PrimeFaces.current().executeScript("setAuthToken('" + token.getTokenValue() + "')");
-		} else if (session.getAttribute(Constants.NEED_REMOVE_SESSION) != null
-				&& session.getAttribute(Constants.NEED_REMOVE_SESSION) == YesNoEnum.YES) {
-			PrimeFaces.current().executeScript("removeAuthToken();retrieveAuthToken();");
-		}
+	public void removeCookie() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
 
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("loginToken")) {
+					// Expire the cookie by setting its expiry time to a past date
+					cookie.setMaxAge(0);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+					return; // Exit the method after removing the cookie
+				}
+			}
+		}
 	}
 
 	public String getIpAddressWithPort() {
@@ -206,17 +227,6 @@ public class MakanTemplateController implements Serializable {
 
 	public String showRealEstateTitle() {
 		return languageController.getMessage("house_and_land");
-	}
-
-	public void logout() {
-		try {
-			HttpSession session = request.getSession(true);
-			session.removeAttribute(Constants.USER_SESSION);
-			session.setAttribute(Constants.NEED_REMOVE_SESSION, YesNoEnum.YES);
-			Faces.redirect("index.xhtml");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public User getUser() {

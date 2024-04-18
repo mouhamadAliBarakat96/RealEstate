@@ -1,10 +1,9 @@
 package org.RealEstate.facade;
 
 import java.io.Serializable;
-import java.security.SecureRandom;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
@@ -17,7 +16,7 @@ public class TokenService extends AbstractFacade<TokenEntity> implements Seriali
 
 	private static final long serialVersionUID = 1L;
 
-	private static final int TOKEN_LENGTH = 32;
+//	private static final int TOKEN_LENGTH = 32;
 	private static final int EXPIRATION_TIME_MINUTES = 1000;
 
 	public TokenService() {
@@ -25,9 +24,10 @@ public class TokenService extends AbstractFacade<TokenEntity> implements Seriali
 	}
 
 	public String generateToken(User user) throws Exception {
-		byte[] randomBytes = new byte[TOKEN_LENGTH];
-		new SecureRandom().nextBytes(randomBytes);
-		String tokenValue = Base64.getEncoder().encodeToString(randomBytes);
+//		byte[] randomBytes = new byte[TOKEN_LENGTH];
+//		new SecureRandom().nextBytes(randomBytes);
+//		 Base64.getEncoder().encodeToString(randomBytes);
+		String tokenValue = user.getUserName().concat(UUID.randomUUID().toString());
 
 		TokenEntity userToken = findTokenByUser(user);
 
@@ -62,7 +62,7 @@ public class TokenService extends AbstractFacade<TokenEntity> implements Seriali
 
 	public User validateToken(String tokenValue) {
 		TokenEntity token = findByToken(tokenValue);
-		if (token != null && token.getExpirationDate().after(new Date())) {
+		if (token != null) {//&& token.getExpirationDate().after(new Date())
 			return token.getUser();
 		}
 		return null;

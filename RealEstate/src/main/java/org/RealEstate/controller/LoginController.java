@@ -12,11 +12,12 @@ import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.RealEstate.enumerator.Country;
-import org.RealEstate.enumerator.YesNoEnum;
 import org.RealEstate.facade.TokenService;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
@@ -187,15 +188,29 @@ public class LoginController implements Serializable {
 				changeUrl();
 			} else {
 				HttpSession session = request.getSession(true);
-				session.setAttribute(Constants.NEED_REMOVE_SESSION, YesNoEnum.NO);
 				session.setAttribute(Constants.USER_SESSION, user);
 				authToken = tokenService.generateToken(user);
+
+				setCookie("loginToken", authToken);
 				// Redirect to default page after successful login
 				requestFromUrl();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void setCookie(String name, String value) {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+		Cookie cookie = new Cookie(name, value);
+		cookie.setMaxAge(30 * 24 * 60 * 60);
+       
+		cookie.setSecure(true); // Set the Secure attribute to ensure transmission over HTTPS
+        cookie.setHttpOnly(true); // Optional: Set the HttpOnly attribute for added security
+
+		cookie.setPath("/");
+		response.addCookie(cookie);
 	}
 
 	public boolean checkLoggedIn() throws IOException {
