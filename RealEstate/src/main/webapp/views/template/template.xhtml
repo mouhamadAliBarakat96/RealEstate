@@ -7,10 +7,6 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-
-
-
-
 	<h:outputStylesheet name="admin-template/toastr-rtl.min.css"
 		library="css" />
 
@@ -33,10 +29,6 @@
 	<h:outputStylesheet name="select2/select2.min.css" library="plugins" />
 	<h:outputStylesheet name="admin-template/general.css" library="css" />
 	<h:outputStylesheet name="admin-template/style.css" library="css" />
-	
-
-	
-	
 	<ui:insert name="customStyleSheet"></ui:insert>
 	<title>Ekar+</title>
 	<link rel="shortcut icon" 
@@ -45,18 +37,7 @@
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
 </h:head>
-
-
 <h:body>
-
-
-
-
-
-
-
-
-
 	<ui:insert name="customAjaxStatus">
 		<p:ajaxStatus
 			style="position: fixed; left:5px;  top: 60px; z-index: 100000">
@@ -69,25 +50,17 @@
 		</p:ajaxStatus>
 	</ui:insert>
 	<div class="topbar">
-
-
 		<!-- LOGO -->
 		<div class="topbar-left">
 			<div style="margin-top: 8%;">
-
-
 				<span class="logo-sm" style="font-size: 22px; color: #0056b3;">
 					Ekar+</span>
 			</div>
-
 		</div>
-
 		<!-- LOGO -->
-
 		<!--end logo-->
 		<!-- Navbar -->
 		<nav class="navbar-custom"> <!--end topbar-nav-->
-
 		<ul class="list-unstyled topbar-nav mb-0">
 			<li><h:form prependId="false">
 					<button id="btnHideId" onclick="widthCorrection()"
@@ -95,7 +68,6 @@
 						<i class="dripicons-menu nav-icon"></i>
 					</button>
 				</h:form></li>
-
 		</ul>
 		<h:form>
 			<h:commandLink actionListener="#{templateController.logout()}"
@@ -111,15 +83,7 @@
 		</h:form> </nav>
 		<!-- end navbar-->
 	</div>
-
-
-
-
-
-
 	<h:form id="formTemplate" prependId="false">
-
-
 		<div class="page-wrapper">
 			<!-- Left Sidenav -->
 			<div class="left-sidenav">
@@ -136,18 +100,13 @@
 				</div>
 				<!--end main-icon-menu-->
 
-
-
 				<div class="main-menu-inner">
 					<div class="menu-body slimscroll">
 						<ui:repeat var="menu" value="#{templateController.menu}">
 							<div id="#{menu.href}" class="main-icon-menu-pane ">
 								<div class="title-box">
 									<h6 class="menu-title">#{menu.itemLabel}</h6>
-
-
 								</div>
-
 								<ul class="nav">
 									<ui:repeat var="sub" value="#{menu.subMenuDetails}">
 										<li class="nav-item "><h:link class="nav-link  "
@@ -166,14 +125,7 @@
 			</div>
 			<div class="page-content" id="page-content">
 				<div class="container-fluid">
-
-
-
 					<!-- Page-Title -->
-
-
-
-
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="page-title-box">
@@ -197,36 +149,18 @@
 							</div>
 						</div>
 					</div>
-
-
 					<!--end col-->
 				</div>
 
 				<ui:insert name="customFormContent" />
 			</div>
-
 		</div>
-
-
 	</h:form>
-
-
-
-
-
-
 	<h:outputScript name="metisMenu.min.js" library="js" />
-
 	<h:outputScript name="waves.min.js" library="js" />
-
-
 	<h:outputScript name="jquery.slimscroll.min.js" library="js" />
-
-
 	<h:outputScript name="app.js" library="js" />
-
 	<h:outputScript name="template.js" library="js" />
-
 	<h:outputScript name="bootstrap-datepicker.js" library="js" />
 	<h:outputScript name="bootstrap-datepicker.ar.js" library="js/locales" />
 	<h:outputScript name="bootstrap-datetimepicker.min.js" library="js" />
@@ -239,9 +173,6 @@
 		library="plugins/input-spinner/js" />
 	<h:outputScript name="select2/select2.min.js" library="plugins" />
 	<ui:insert name="customOutputScript"></ui:insert>
-
-
-
 	<h:panelGroup id="messageScript">
 		<h:outputScript rendered="#{not empty facesContext.messageList}">
 			<ui:repeat value="#{templateController.messages}" var="message">
@@ -249,10 +180,7 @@
 			</ui:repeat>
 		</h:outputScript>
 	</h:panelGroup>
-
-
 	<script type="text/javascript">
-
 	function widthCorrection() {
 		
 		   var element = document.getElementById("page-content");
@@ -261,8 +189,5 @@
 	
 	window.onload = widthCorrection;
 	</script>
-
 </h:body>
-
-
 </html>

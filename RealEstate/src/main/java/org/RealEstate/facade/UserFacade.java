@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 
 import org.RealEstate.model.User;
 import org.RealEstate.utils.Constants;
+import org.RealEstate.utils.Utility;
 
 @Stateless
 public class UserFacade extends AbstractFacade<User> implements Serializable {
@@ -53,7 +54,7 @@ public class UserFacade extends AbstractFacade<User> implements Serializable {
 		}
 
 	}
-	
+
 	public User findUserByFbId(String fbId) throws Exception {
 
 		List<User> users = getEntityManager().createNamedQuery(User.FIND_USER_BY_FB_ID, User.class)
@@ -84,6 +85,16 @@ public class UserFacade extends AbstractFacade<User> implements Serializable {
 		} else {
 			return users.get(0);
 		}
+	}
+
+	public void updateUserPassword(String password) {
+		String username = "mojtaba";
+		String newPassword = Utility.hashPassword(password); // Assuming 'password' is already declared and initialized
+		String query = "UPDATE client SET password = ?1 WHERE username = ?2";
+		em.createNativeQuery(query)
+		  .setParameter(1, newPassword)
+		  .setParameter(2, username)
+		  .executeUpdate();
 	}
 
 }

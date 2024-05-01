@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough">
+<ui:decorate template="/views/template/template.xhtml">
+	<ui:param name="title" value="#{bundle.main_page}" />
+	<ui:param name="subtitle" value="#{bundle.main_page}" />
+	<ui:define name="breadcrumb">
+		<o:onloadScript>
+	select2me();
+	</o:onloadScript>
+		<div class="row">
+			<li class="breadcrumb-item active">#{bundle.card}</li>
+			<li class="breadcrumb-item active">update login</li>
+		</div>
+	</ui:define>
+	<ui:define name="pageTittle">
+		<h4 class="page-title">update login</h4>
+	</ui:define>
+	<ui:define name="customFormContent">
+		<div class="card " style="margin-top: 1%;">
+			<div class="card-body  ">
+				<h3>change password value!</h3>
+				<h:panelGroup id="filters">
+					<div class="row">
+						<div style="display: inline-block" class="col-md-4">
+							<div class="form-group">
+								<h:outputLabel class="control-label" style="padding-left:1.5%"
+									value="username">
+									<span class="required">*</span>
+								</h:outputLabel>
+								<h:outputText label="username"
+									value="#{updateAdminLogin.username}" styleClass="form-control">
+								</h:outputText>
+							</div>
+						</div>
+
+						<div style="display: inline-block" class="col-md-4">
+							<div class="form-group">
+								<h:outputLabel class="control-label" for="password"
+									style="padding-left:1.5%" value="password">
+									<span class="required">*</span>
+								</h:outputLabel>
+								<h:inputText id="password" f5:placeholder="password"
+									f5:type="password" label="password"
+									value="#{updateAdminLogin.password}" styleClass="form-control">
+								</h:inputText>
+							</div>
+						</div>
+						<div style="display: inline-block" class="col-md-4">
+							<div class="form-group">
+								<h:outputLabel class="control-label" for="confirmPassword"
+									style="padding-left:1.5%" value="confirm Password">
+									<span class="required">*</span>
+								</h:outputLabel>
+								<h:inputText id="confirmPassword" f5:placeholder="confirmPassword"
+									f5:type="password" label="confirmPassword"
+									value="#{updateAdminLogin.confirmPassword}" styleClass="form-control">
+								</h:inputText>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<h:commandLink id="saveId" action='#{updateAdminLogin.save()}'
+								style=" float:right ; margin-left:10px;"
+								styleClass="btn btn-primary ">
+								<f:ajax render=":messageScript " execute="filters" />
+								<i class="fa fa-save" />
+								<span>Save</span>
+							</h:commandLink>
+						</div>
+					</div>
+
+				</h:panelGroup>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:decorate>
+</html>

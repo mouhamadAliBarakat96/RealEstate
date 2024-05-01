@@ -4,38 +4,23 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html">
-
-
 <ui:decorate template="/views/template/template.xhtml">
-
-
-
-
 	<ui:param name="title" value="#{bundle.main_page}" />
 	<ui:param name="subtitle" value="#{bundle.main_page}" />
-
 	<ui:define name="breadcrumb">
-
 		<o:onloadScript>
 	select2me();
 	</o:onloadScript>
-
 		<div class="row">
-
-
 			<li class="breadcrumb-item active">#{bundle.card}</li>
 			<li class="breadcrumb-item active">User List Pending Profile
 				Picture</li>
-
-
 		</div>
 	</ui:define>
 	<ui:define name="pageTittle">
-
 		<h4 class="page-title">User List Pending Profile Picture</h4>
 	</ui:define>
 	<ui:define name="customFormContent">
-
 		<h:panelGroup>
 
 			<div class="card">
@@ -63,7 +48,7 @@
 								converter="omnifaces.SelectItemsConverter" id="imageParam"
 								label="disctrict" value="#{userProfilePictureList.param}"
 								placeHolder="#set">
-								
+
 								<f:selectItem itemLabel="false" itemValue="false" />
 								<f:selectItem itemLabel="true" itemValue="true" />
 
@@ -74,10 +59,10 @@
 
 
 							<p:commandLink id="saveId"
-								oncomplete="PF('tableWidget').filter()"
-								update="header-panel"
+								oncomplete="PF('tableWidget').filter()" update="header-panel"
 								styleClass="btn btn-primary waves-effect waves-light btn-xs "
-								style="margin-top:15% ;color:white; float:right ; margin-left:10px" value="search"
+								style="margin-top:15% ;color:white; float:right ; margin-left:10px"
+								value="search"
 								actionListener="#{userProfilePictureList.search()}">
 
 

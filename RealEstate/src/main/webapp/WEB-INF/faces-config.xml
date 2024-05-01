@@ -273,6 +273,14 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>update-login</from-outcome>
+			<to-view-id>/views/user/updatelogin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 	<application>
 		<locale-config>
