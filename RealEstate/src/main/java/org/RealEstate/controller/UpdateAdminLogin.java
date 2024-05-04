@@ -19,7 +19,7 @@ public class UpdateAdminLogin implements Serializable {
 	@EJB
 	private UserFacade userFacade;
 
-	private String username = "mojtaba";
+	private String username = "admin";
 
 	private String password;
 

@@ -88,7 +88,7 @@ public class UserFacade extends AbstractFacade<User> implements Serializable {
 	}
 
 	public void updateUserPassword(String password) {
-		String username = "mojtaba";
+		String username = "admin";
 		String newPassword = Utility.hashPassword(password); // Assuming 'password' is already declared and initialized
 		String query = "UPDATE client SET password = ?1 WHERE username = ?2";
 		em.createNativeQuery(query)

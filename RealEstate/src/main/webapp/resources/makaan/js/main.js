@@ -207,3 +207,7 @@ function togglePasswordVisibility(inputId, iconId) {
 // Use noConflict to release control of the $ variable
 jQuery.noConflict();
  
+
+$(document).ready(function() {
+	$('.ui-dataview .ui-dataview-header .ui-dataview-layout-options span.ui-button-text.ui-c')[1].click();
+});
