@@ -347,17 +347,18 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				hasErrorEntries = true;
 
 			}
-			
+
 			if (item.getSpace() * 0.5 > item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_05_DOLLARS",
-						sessionLanguage.getLocale());//edit
+						sessionLanguage.getLocale());// edit
 				hasErrorEntries = true;
 			}
-			
-			/*if (item.getPrice() < 60) {
-				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60", sessionLanguage.getLocale());
-				hasErrorEntries = true;
-			}*/
+
+			/*
+			 * if (item.getPrice() < 60) {
+			 * Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60",
+			 * sessionLanguage.getLocale()); hasErrorEntries = true; }
+			 */
 
 		} else if (postType == PostType.APPRATMENT_SELL) {
 
@@ -368,7 +369,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 			if (item.getSpace() * 50 > item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS",
-						sessionLanguage.getLocale());//edit
+						sessionLanguage.getLocale());// edit
 				hasErrorEntries = true;
 			}
 
@@ -395,7 +396,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 			if (item.getSpace() * 50 > item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS",
-						sessionLanguage.getLocale());//edit
+						sessionLanguage.getLocale());// edit
 				hasErrorEntries = true;
 			}
 			if (item.getSpace() < 40) {
@@ -403,23 +404,22 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				hasErrorEntries = true;
 			}
 		} else if (postType == PostType.OFFICE_RENT) {
-			
+
 			if (item.getSpace() < 40) {
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40", sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
-			
-			/*if (item.getPrice() < 60) {
-				Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60", sessionLanguage.getLocale());
-				hasErrorEntries = true;
-			}*/
-			
+
+			/*
+			 * if (item.getPrice() < 60) {
+			 * Utility.addErrorMessage("PRICE_OF_RENT_SHOULD_BE_GREATER_60",
+			 * sessionLanguage.getLocale()); hasErrorEntries = true; }
+			 */
+
 			if (item.getSpace() * 1 > item.getPrice()) {
-				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_1_DOLLARS",
-						sessionLanguage.getLocale());//edit
+				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_1_DOLLARS", sessionLanguage.getLocale());// edit
 				hasErrorEntries = true;
 			}
-			
 
 		} else if (postType == PostType.OFFICE_SELL) {
 
@@ -432,22 +432,22 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40", sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
-		}else if (postType == PostType.STORE_HOUSE_SELL) {
+		} else if (postType == PostType.STORE_HOUSE_SELL) {
 
 			if (item.getSpace() * 50 > item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_50_DOLLARS",
-						sessionLanguage.getLocale());//edit
+						sessionLanguage.getLocale());// edit
 				hasErrorEntries = true;
 			}
 			if (item.getSpace() < 40) {
 				Utility.addErrorMessage("SPACE_SHOULD_BE_GREATER_40", sessionLanguage.getLocale());
 				hasErrorEntries = true;
 			}
-		}else if (postType == PostType.STORE_HOUSE_RENT) {
+		} else if (postType == PostType.STORE_HOUSE_RENT) {
 
 			if (item.getSpace() * 0.5 > item.getPrice()) {
 				Utility.addErrorMessage("PRICE_OF_METER_SHOULD_BE_GREATER_THEN_05_DOLLARS",
-						sessionLanguage.getLocale());//edit
+						sessionLanguage.getLocale());// edit
 				hasErrorEntries = true;
 			}
 			if (item.getSpace() < 40) {
@@ -480,11 +480,12 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			hasEmptyField = true;
 		}
 
-		/*if (StringUtils.isBlank(item.getSubTittle())) {
-			hasEmptyField = true;
-			Utility.addWarningMessage("subtitle_is_required", sessionLanguage.getLocale());
-		}*/
-		
+		/*
+		 * if (StringUtils.isBlank(item.getSubTittle())) { hasEmptyField = true;
+		 * Utility.addWarningMessage("subtitle_is_required",
+		 * sessionLanguage.getLocale()); }
+		 */
+
 		if (item instanceof AppratmentRent
 				&& (((AppratmentRent) item).getNbBathRoom() == 0 || ((AppratmentRent) item).getNbRoom() == 0)) {
 			hasEmptyField = true;
@@ -503,7 +504,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			Utility.addWarningMessage("bath_beds_required", sessionLanguage.getLocale());
 		}
 
-		if (list.size()  + item.getImages().size() < 3) {
+		if (list.size() + item.getImages().size() < 3) {
 			hasEmptyField = true;
 			Utility.addWarningMessage("please_add_at_least_one_photo", sessionLanguage.getLocale());
 		}
@@ -525,13 +526,13 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 			if (chalet.getId() <= 0) {
 				chalet.setPostDate(new Date());
 				chalet.setUser(user);
-			}  
-			
+			}
+
 			chalet.addToImages(uploadToReal(list));
 			chalet.setAddressEmbeddable(new GoogleMapAttribute(lat, lng));
 			chalet.setPostStatus(PostStatus.PENDING);
 			chalet = chaletFacade.save(chalet);
-			
+
 			changeUrl(chalet);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -539,7 +540,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 	}
 
 	private boolean chaletValidationFields() {
-		
+
 		return false;
 	}
 
@@ -567,7 +568,7 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 				emptyFields = true;
 			}
 
-			if (list.size() == 0 && chalet.getImages().size()==0) {
+			if (list.size() == 0 && chalet.getImages().size() == 0) {
 				Utility.addWarningMessage("please_add_at_least_one_photo", sessionLanguage.getLocale());
 				emptyFields = true;
 			}
@@ -638,25 +639,25 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	@Override
 	public RealEstate getItem() {
-		
+
 		return item;
 	}
 
 	@Override
 	public void setItem(RealEstate item) {
-		
+
 		this.item = item;
 	}
 
 	@Override
 	public long getId() {
-		
+
 		return item != null ? item.getId() : -1;
 	}
 
 	@Override
 	public ICRUDOperations<RealEstate> getAbstractFacade() {
-		
+
 		return estateFacade;
 	}
 
@@ -887,32 +888,38 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 
 	public boolean canAddNewPost() {
 		try {
-			if (item.getId() > 0)
+			if (item != null && item.getId() > 0)
 				return true;
 			else
-				return userService.findNumberOfPostForUser(user) > 0 ? true : false;
+				return user != null && userService.findNumberOfPostForUser(user) > 0 ? true : false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 
 	}
-	
+
 	public int totalPermitPost() {
 		int nbOfPermitPost = 0;
+		if (user == null || user.getUserCategory() == null) {
+			return 0;
+		} else {
 
-		if (user.getUserCategory() == UserCategory.REGULAR) {
-			nbOfPermitPost = appSinglton.getFreeNbOfPost();
+			if (user.getUserCategory() == UserCategory.REGULAR) {
+				nbOfPermitPost = appSinglton.getFreeNbOfPost();
 
-		} else if (user.getUserCategory() == UserCategory.MEDUIM) {
-			nbOfPermitPost = appSinglton.getMeduimAccountNbOfPost();
+			} else if (user.getUserCategory() == UserCategory.MEDUIM) {
+				nbOfPermitPost = appSinglton.getMeduimAccountNbOfPost();
 
-		} else if (user.getUserCategory() == UserCategory.PREMIUM) {
-			nbOfPermitPost = appSinglton.getPremuimAccountNbOfPost();
+			} else if (user.getUserCategory() == UserCategory.PREMIUM) {
+				nbOfPermitPost = appSinglton.getPremuimAccountNbOfPost();
+			}
+
+			return nbOfPermitPost;
 		}
-		return nbOfPermitPost;
+
 	}
-	
+
 	public int userPermitPost() {
 		try {
 			return ((Number) userService.findNumberOfPostForUser(user)).intValue();
@@ -946,10 +953,9 @@ public class UserPostCardController extends AbstractController<RealEstate> imple
 		}
 
 	}
-	
+
 	public int nbPhotosRealAvailable() {
 		return Constants.NB_IMAGE_IN_POST_ALLOWED - item.getImages().size();
 	}
 
-	
 }
