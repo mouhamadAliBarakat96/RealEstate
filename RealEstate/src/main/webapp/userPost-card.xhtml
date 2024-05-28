@@ -7,6 +7,12 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <ui:composition template="/views/template/makaan-template.xhtml">
+	
+	<ui:define name="ui-title">
+		<title>Ekar Plus - Add New</title>
+	</ui:define>
+
+
 	<ui:define name="customStylesheet">
 		<link href="/resources/makaan/css/user-post.css" rel="stylesheet"
 			type="text/css" />
@@ -28,13 +34,14 @@
 		<div class="container-xxl py-4 card mt-4 p-0">
 			<div class="container">
 				<div class="tab-content">
-					
+
 					<h:panelGroup rendered="#{userPostCardController.canAddNewPost()}">
 						<!-- there is the place of chalet snippet included in p:tabView and every thing in backend ready with some changes in page -->
 
 						<!-- this is snippet of real estate  -->
-						<ui:include src="/views/makaan/userpost-snippet/post-realestate-snippet.xhtml" />
-						
+						<ui:include
+							src="/views/makaan/userpost-snippet/post-realestate-snippet.xhtml" />
+
 						<div class="row">
 							<div class="col-md-12">
 								<div class="alert alert-info mt-2" role="alert">#{bundle.click_on_map}</div>
@@ -44,12 +51,12 @@
 							</div>
 						</div>
 					</h:panelGroup>
-					
-					<h:panelGroup
-						rendered="#{!userPostCardController.canAddNewPost()}">
-						<ui:include src="/views/makaan/userpost-snippet/prevent-add-new.xhtml" />
+
+					<h:panelGroup rendered="#{!userPostCardController.canAddNewPost()}">
+						<ui:include
+							src="/views/makaan/userpost-snippet/prevent-add-new.xhtml" />
 					</h:panelGroup>
-				
+
 				</div>
 			</div>
 			<div id="marker" style="display: none;">

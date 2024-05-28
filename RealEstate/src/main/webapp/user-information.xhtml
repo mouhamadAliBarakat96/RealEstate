@@ -10,6 +10,11 @@
 
 
 <ui:composition template="/views/template/makaan-template.xhtml">
+
+	<ui:define name="ui-title">
+		<title>Ekar Plus - User Information</title>
+	</ui:define>
+
 	<ui:define name="customStylesheet">
 		<h:outputStylesheet name="admin-template/color.css" library="css" />
 
@@ -42,18 +47,26 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 						</div>
 						<div class="row mt-2 text-center mb-1"
 							style="display: flex; justify-content: center;">
-							<p:fileUpload multiple="false" id="uploadId" auto="true" label="#{bundle.choose_photos}" 
+							<p:fileUpload multiple="false" id="uploadId" auto="true"
+								label="#{bundle.choose_photos}"
 								listener="#{updateUserInformationController.importFile}"
 								process="@this"
 								update=" :messageScript myForm:profilePicturePanel">
 							</p:fileUpload>
 						</div>
-						
+
 						<div class="d-flex justify-content-between">
-							<h5>#{bundle.account_is} <span style="color: var(--bs-primary);"> #{bundle[updateUserInformationController.user.userCategory]}</span> </h5>
-							<h5>#{bundle.total_post_added} :<span style="color: var(--bs-primary);">  #{updateUserInformationController.nbOfTotalPermitPost()}</span></h5>
+							<h5>
+								#{bundle.account_is} <span style="color: var(- -bs-primary);">
+									#{bundle[updateUserInformationController.user.userCategory]}</span>
+							</h5>
+							<h5>
+								#{bundle.total_post_added} :<span
+									style="color: var(- -bs-primary);">
+									#{updateUserInformationController.nbOfTotalPermitPost()}</span>
+							</h5>
 						</div>
-						
+
 						<h:panelGroup id="profileInfoPanel" styleClass="row"
 							style="margin-top: 2%" layout="block">
 							<div style="display: inline-block" class="col-md-4">
@@ -185,8 +198,7 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 							value="#{updateUserInformationController.currentPassword}"
 							styleClass="form-control position-relative">
 							<i id="oldIconId" class="fa fa-eye icon-eye top-35 px-3"
-								onclick="togglePasswordVisibility('myForm:oldPassword', 'oldIconId')"
-								 />
+								onclick="togglePasswordVisibility('myForm:oldPassword', 'oldIconId')" />
 						</h:inputSecret>
 					</div>
 
@@ -200,8 +212,7 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 							value="#{updateUserInformationController.newPassword}"
 							styleClass="form-control position-relative">
 							<i id="newIconId" class="fa fa-eye icon-eye top-35 px-3"
-								onclick="togglePasswordVisibility('myForm:newPassword', 'newIconId')"
-								 />
+								onclick="togglePasswordVisibility('myForm:newPassword', 'newIconId')" />
 						</h:inputSecret>
 					</div>
 
@@ -217,14 +228,13 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 							value="#{updateUserInformationController.verNewPassword}"
 							styleClass="form-control position-relative">
 							<i id="verfiedIconId" class="fa fa-eye icon-eye top-35 px-3"
-								onclick="togglePasswordVisibility('myForm:verfiedNewPassword', 'verfiedIconId')"
-								 />
+								onclick="togglePasswordVisibility('myForm:verfiedNewPassword', 'verfiedIconId')" />
 						</h:inputSecret>
 					</div>
 				</div>
 			</h:panelGroup>
 			<div class="d-flex justify-content-center pt-2">
-				<h:commandLink styleClass="btn btn-success" 
+				<h:commandLink styleClass="btn btn-success"
 					action="#{updateUserInformationController.changePassowrd()}"
 					value="#{bundle.change_password}">
 					<f:ajax execute="myForm:pannel-group" render=":messageScript" />

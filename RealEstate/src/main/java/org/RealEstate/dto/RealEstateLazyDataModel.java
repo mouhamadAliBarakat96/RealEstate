@@ -54,6 +54,11 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 		// this.pageItems = pageItems;
 		this.facade = facade;
 	}
+	
+	public RealEstateLazyDataModel(RealEstateFacade facade,User user) {
+		this.user=user;
+		this.facade = facade;
+	}
 
 	@Override
 	public int count(Map<String, FilterMeta> arg0) {

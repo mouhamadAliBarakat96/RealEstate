@@ -7,6 +7,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough">
 <ui:composition template="/views/template/makaan-template.xhtml">
+
+	<ui:define name="ui-title">
+		<title>Ekar Plus - User Posts</title>
+	</ui:define>
+
 	<ui:define name="customStylesheet">
 		<link href="/resources/makaan/css/index.css" rel="stylesheet" />
 	</ui:define>
@@ -59,8 +64,7 @@
 						style=" color:#666565 ; font-size: 15px; font-weight: 600">
 						<f:param name="id" value="#{userPostVieuxController.user.id}" />
 					</h:link>
-					<small class="flex-fill">
-					 <h:commandLink
+					<small class="flex-fill"> <h:commandLink
 							style=" display:block ; font-weight: bold;"
 							action="#{userPostVieuxController.navigateToUser()}"
 							target="_blank"
@@ -93,22 +97,20 @@
 									style="visibility: visible;">
 									<ul
 										class="nav nav-pills d-inline-flex justify-content-end mb-5">
-										<li class="nav-item me-2">
-											<h:commandLink id="buyBtn"
+										<li class="nav-item me-2"><h:commandLink id="buyBtn"
 												action="#{userPostVieuxController.changeValue('BUY')}"
 												styleClass="btn btn-outline-primary #{userPostVieuxController.estateTypeEnum eq 'BUY'? 'active' : ''}"
 												data-bs-toggle="pill" value="#{bundle.for_sale}">
-												<f:ajax execute="@this" render="@this myForm:rentBtn myForm:RealEstatePanelId :messageScript" />
-											</h:commandLink>
-										</li>
-										<li class="nav-item me-2">
-											<h:commandLink id="rentBtn"
+												<f:ajax execute="@this"
+													render="@this myForm:rentBtn myForm:RealEstatePanelId :messageScript" />
+											</h:commandLink></li>
+										<li class="nav-item me-2"><h:commandLink id="rentBtn"
 												action="#{userPostVieuxController.changeValue('RENT')}"
 												styleClass="btn btn-outline-primary #{userPostVieuxController.estateTypeEnum eq 'RENT'? 'active' : ''}"
 												data-bs-toggle="pill" value="#{bundle.for_rent}">
-												<f:ajax execute="@this" render="@this myForm:buyBtn myForm:RealEstatePanelId :messageScript" />
-											</h:commandLink>
-										</li>
+												<f:ajax execute="@this"
+													render="@this myForm:buyBtn myForm:RealEstatePanelId :messageScript" />
+											</h:commandLink></li>
 									</ul>
 								</div>
 							</div>

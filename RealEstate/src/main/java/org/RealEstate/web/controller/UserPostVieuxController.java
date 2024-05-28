@@ -40,6 +40,7 @@ import org.RealEstate.service.PostService;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utility;
 import org.omnifaces.cdi.Param;
+import org.omnifaces.util.Faces;
 
 @Named
 @ViewScoped
@@ -107,33 +108,39 @@ public class UserPostVieuxController implements Serializable {
 	private User user;
 
 	private RealEstateTypeEnum realEstateTypeEnum = RealEstateTypeEnum.ALL;
-	/*use these two filter to get info about real estate type rent or sale*/
-	private PropertyTypeEnum propertyTypeEnum=null;
+	/* use these two filter to get info about real estate type rent or sale */
+	private PropertyTypeEnum propertyTypeEnum = null;
 	private ExchangeRealEstateType estateTypeEnum = ExchangeRealEstateType.BUY;
-	
+
 	@PostConstruct
 	public void init() {
-		governorates = governorateFacade.findAll();
+		try {
 
-		// realEstates = realEstateFacade.findAll();// GET RECOMMEND PROPERTIES LATER
-		// totalCount.set(realEstates.size());
+			if (id > 0) {
+				user = userFacade.find(id);
+			} else {
+				Faces.redirect("/index.xhtml");
+				return;
+			}
 
-		realLazyModel = new RealEstateLazyDataModel(realEstateFacade);
+			governorates = governorateFacade.findAll();
 
-		fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
-				.concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
+			realLazyModel = new RealEstateLazyDataModel(realEstateFacade, user);
 
-		fullUrlProfilePicture = fullUrlProfilePicture.concat("http://").concat(getIpAddressWithPort()).concat("/")
-				.concat(Constants.IMAGES).concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
-		if (id > 0) {
-			user = userFacade.find(id);
+			fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
+					.concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
 
+			fullUrlProfilePicture = fullUrlProfilePicture.concat("http://").concat(getIpAddressWithPort()).concat("/")
+					.concat(Constants.IMAGES).concat("/").concat(Constants.PROFILE_IMAGE_DIR_NAME).concat("/");
+
+			if (user != null && user.getProfileImageUrl() != null) {
+				fullUrlProfilePicture = fullUrlProfilePicture.concat(user.getProfileImageUrl());
+			}
+
+			propertyKind = parameterPropertyKind();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		if (user.getProfileImageUrl() != null) {
-			fullUrlProfilePicture = fullUrlProfilePicture.concat(user.getProfileImageUrl());
-		}
-
-		propertyKind = parameterPropertyKind();
 	}
 
 	private PropertyKindEnum parameterPropertyKind() {
@@ -173,14 +180,13 @@ public class UserPostVieuxController implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public void navigateToUser() throws IOException {
 		// Get the phone number parameter from the request
 		if (user != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
-			String phoneNumber =Utility.checkPhoneNumber(user.getPhoneNumber(), Country.LEBANON);
+			String phoneNumber = Utility.checkPhoneNumber(user.getPhoneNumber(), Country.LEBANON);
 			// Construct the WhatsApp URL
 			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "");
 			// Navigate to the URL
@@ -196,7 +202,8 @@ public class UserPostVieuxController implements Serializable {
 			String phoneNumber = Utility.checkPhoneNumber(item.getUser().getPhoneNumber(), Country.LEBANON);
 			String message = getIpAddressWithPort() + "/realEstate-card.xhtml?id=" + item.getId();
 			// Construct the WhatsApp URL
-			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "")+"&text=" + message;
+			String url = "https://api.whatsapp.com/send?phone=" + phoneNumber.replaceAll("\\D+", "") + "&text="
+					+ message;
 			// Navigate to the URL
 			externalContext.redirect(url);
 		}
@@ -213,8 +220,6 @@ public class UserPostVieuxController implements Serializable {
 			// Handle the exception appropriately
 		}
 	}
-
-	 
 
 	public String displayFirstImageReal(RealEstate item) {
 		if (item != null && !item.getImages().isEmpty()) {
@@ -248,7 +253,7 @@ public class UserPostVieuxController implements Serializable {
 			Utility.addErrorMessage("min_price_mut_be _less_than_max", sessionLanguage.getLocale());
 			return;
 		}
-		
+
 		if (!contaisRoomsFilter()) {
 			bathRooms = new ArrayList<>();
 			bedRooms = new ArrayList<>();
@@ -279,7 +284,7 @@ public class UserPostVieuxController implements Serializable {
 			return (type.equals(PostType.APPRATMENT_RENT) || type.equals(PostType.APPRATMENT_SELL)
 					|| type.equals(PostType.OFFICE_RENT) || type.equals(PostType.OFFICE_SELL));
 	}
-	
+
 	public boolean apperBathsAndRoomsInSearch(PropertyTypeEnum type) {
 		if (type == null) {
 			return true;
@@ -566,12 +571,12 @@ public class UserPostVieuxController implements Serializable {
 	public void setPropertyTypeEnum(PropertyTypeEnum propertyTypeEnum) {
 		this.propertyTypeEnum = propertyTypeEnum;
 	}
-	
+
 	public void changeValue(ExchangeRealEstateType value) {
 		this.estateTypeEnum = value;
 		search();
 	}
-	
+
 	public boolean contaisRoomsFilter() {
 		return propertyTypeEnum == PropertyTypeEnum.APPRATMENT || propertyTypeEnum == PropertyTypeEnum.OFFICE;
 	}
