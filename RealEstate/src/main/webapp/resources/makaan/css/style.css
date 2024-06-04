@@ -614,6 +614,12 @@ a.nav-item.nav-link:hover {
 	width: fit-content;
 }
 
+.add-new.nav-link.dropdown-toggle {
+	background-color: #00b98e;
+	color: white !important;
+	width: fit-content;
+}
+
 .img-data-list {
 	position: relative;
 	z-index: 0;

@@ -34,6 +34,10 @@ public class MakanTemplateController implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private final String facebookUrl = "https://www.facebook.com/profile.php?id=61559013603770&mibextid=ZbWKwL";
+
+	private final String instaUrl = "https://www.instagram.com/ekarplus?igsh=MWc1ajVzMzM1ZmJtcA==";
+
 	@Inject
 	private LanguageController languageController;
 	@Inject
@@ -275,6 +279,14 @@ public class MakanTemplateController implements Serializable {
 
 	public void setTokenValue(String tokenValue) {
 		this.tokenValue = tokenValue;
+	}
+
+	public String getFacebookUrl() {
+		return facebookUrl;
+	}
+
+	public String getInstaUrl() {
+		return instaUrl;
 	}
 
 }

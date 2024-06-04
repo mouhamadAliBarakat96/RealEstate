@@ -213,4 +213,11 @@ $(document).ready(function() {
 	    // Click the element
 	    $('.ui-dataview .ui-dataview-header .ui-dataview-layout-options span.ui-button-text.ui-c').eq(1).click();
 	}
+	
+	if ($('.ui-dataview .ui-dataview-header .ui-dataview-layout-options span.ui-button-text.ui-c').eq(3).length > 0) {
+	    // Click the element
+		$('.ui-dataview .ui-dataview-header .ui-dataview-layout-options span.ui-button-text.ui-c').eq(3).click();
+	}
+	
+	
 });

@@ -155,7 +155,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>index-chalet</from-outcome>
@@ -273,7 +273,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>update-login</from-outcome>
@@ -281,6 +281,26 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>userChalet-card</from-outcome>
+			<to-view-id>/userChalet-card.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>userRealestate-card</from-outcome>
+			<to-view-id>/userRealestate-card.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+
 
 	<application>
 		<locale-config>

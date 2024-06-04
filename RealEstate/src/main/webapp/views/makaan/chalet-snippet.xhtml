@@ -17,7 +17,7 @@
 					widgetVar="chaletDataView"
 					paginatorTemplate="    {PreviousPageLink} {PageLinks} {NextPageLink}  "
 					gridIcon="pi pi-th-large" listIcon="pi pi-bars">
-					
+
 					<p:ajax event="page" oncomplete="scrollViewTo();" />
 					<p:dataViewGridItem>
 						<div class="card flex justify-content-center">
@@ -51,24 +51,25 @@
 												</h:panelGroup>
 											</div>
 										</div>
-									</div>
-									<div class="p-3 pb-0">
-
 										<h:commandLink action="#{actionBean.navigate_chalet(chalet)}"
-											target="_blank" value="#{chalet.name}"
-											styleClass="text-primary d-block h5 mb-2">
+											target="_blank">
+											<div
+												class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{chalet.name}</div>
 											<f:actionListener
 												binding="#{actionBean.addViewsAfterClick_chalet(chalet)}" />
 										</h:commandLink>
-
-										<h6 class="mb-3">
-											<span class=" ">#{bundle.chalet_weekdays}:</span> <span
-												class="text-primary">#{chalet.weekdays} $</span>
-										</h6>
-										<h6 class="mb-3">
-											<span class=" ">#{bundle.chalet_weekenddays}:</span> <span
-												class="text-primary">#{chalet.weekenddays} $</span>
-										</h6>
+									</div>
+									<div class="pt-2 px-1 pb-0">
+										<div class="d-flex justify-content-between ">
+											<h6 class="mb-3">
+												<span class=" ">#{bundle.chalet_weekdays}:</span> <span
+													class="text-primary">#{chalet.weekdays} $</span>
+											</h6>
+											<h6 class="mb-3">
+												<span class=" ">#{bundle.chalet_weekenddays}:</span> <span
+													class="text-primary">#{chalet.weekenddays} $</span>
+											</h6>
+										</div>
 										<p>
 											<i class="fa fa-map-marker-alt text-primary me-2"></i>
 											<c:choose>

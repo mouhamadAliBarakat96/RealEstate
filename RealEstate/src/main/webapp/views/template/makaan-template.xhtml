@@ -163,10 +163,22 @@
 						</h:link>
 
 
-						<h:link outcome="userpost-card" value="#{bundle.add_new}"
-							styleClass="add-new nav-item nav-link ps-2 pe-2">
-							<i class="fa fa-plus ps-1 pe-1" />
-						</h:link>
+						<div class="nav-item dropdown">
+							<a href="#" class="add-new nav-link dropdown-toggle ps-2 pe-2"
+								data-bs-toggle="dropdown">#{bundle.add_new}</a>
+							<div class="dropdown-menu rounded-0 m-0">
+								<h:link outcome="userChalet-card"
+									value="#{bundle.add_new_chalet}"
+									styleClass="nav-item nav-link ps-2 pe-2">
+									<i class="fa fa-plus ps-1 pe-1" />
+								</h:link>
+								<h:link outcome="userRealestate-card"
+									value="#{bundle.add_new_realestate}"
+									styleClass="nav-item nav-link ps-2 pe-2">
+									<i class="fa fa-plus ps-1 pe-1" />
+								</h:link>
+							</div>
+						</div>
 
 						<h:link outcome="userpost-list" value="#{bundle.my_posts}"
 							styleClass="nav-item nav-link">
@@ -256,13 +268,15 @@
 								</p>
 								<div class="d-flex pt-2">
 									<a class="btn btn-outline-light btn-social" href=""> <i
-										class="fab fa-twitter" />
+										class="fab fa-twitter"></i>
+									</a> <a class="btn btn-outline-light btn-social" target="_blank"
+										href="#{makanTemplateController.facebookUrl}"> <i
+										class="fab fa-facebook-f"></i>
+									</a> <a class="btn btn-outline-light btn-social" target="_blank"
+										href="#{makanTemplateController.instaUrl}"> <i
+										class="fab fa-instagram"></i>
 									</a> <a class="btn btn-outline-light btn-social" href=""> <i
-										class="fab fa-facebook-f" />
-									</a> <a class="btn btn-outline-light btn-social" href=""> <i
-										class="fab fa-youtube" />
-									</a> <a class="btn btn-outline-light btn-social" href=""> <i
-										class="fab fa-linkedin-in" />
+										class="fab fa-youtube"></i>
 									</a>
 								</div>
 							</div>

@@ -26,7 +26,7 @@
 						<div class="card">
 							<div class="row">
 								<div class="col-md-4">
-									<div class="col-md-12">
+									<div class="col-md-12" style="position: relative;">
 										<p:remoteCommand name="rc"
 											actionListener="#{chaletCardController.changeActiveIndex}"
 											oncomplete="PF('chaletGallerie').show()" />
@@ -43,17 +43,14 @@
 											style="max-width: 40%"
 											responsiveOptions="#{chaletCardController.responsiveOptions1}">
 											<p:graphicImage url="#{chaletCardController.fullUrl}#{photo}"
-												alt="the photos" style="width: 100%; display: block" />
+												alt="the photos" style="width: 100%;  display: block; height: 450px;  object-fit: contain;" />
 										</p:galleria>
 										<p:commandButton value="#{bundle.show_photos}"
 											icon="pi pi-external-link" styleClass="col-12"
 											onclick="PF('chaletGallerie').show();" process="@this">
 										</p:commandButton>
-									</div>
-								</div>
-								<div class="col-md-8 ">
-									<div class="pt-2 px-3 pb-0">
-										<div class="d-flex justify-content-between">
+										<div class="d-flex justify-content-between px-2"
+											style="position: absolute; top: 0">
 											<h:panelGroup layout="block"
 												rendered="#{chaletCardController.item.boosted}"
 												styleClass="tag-new tag-new--verified px-2">
@@ -62,24 +59,28 @@
 												</p:graphicImage>
 												<label class="mx-2"> #{bundle.post_boosted}</label>
 											</h:panelGroup>
-											<h:panelGroup rendered="#{chaletCardController.item.verfied}"
+											<h:panelGroup
+												rendered="#{chaletCardController.item.verfied}"
 												layout="block" styleClass="tag-new tag-new--verified px-2">
 												<p:graphicImage alt="verified" width="15" height="15"
-													url="/resources/images/icon-checked.png">
-												</p:graphicImage>
+													url="/resources/images/icon-checked.png" />
 												<label class="mx-2"> #{bundle.post_verified}</label>
 											</h:panelGroup>
 										</div>
-										<div class="d-flex justify-content-between mt-2">
-											<span
-												style="color: #00B98E; font-size: 22px; font-weight: 700">
-												#{chaletCardController.item.name}</span>
-
-											<button class="btn btn-outline-primary"
-												style="display: contents;" onclick="copyCurrentURL()">#{bundle.copy}</button>
+									</div>
+								</div>
+								<div class="col-md-8 ">
+									<div class="pt-2 px-3 pb-0">
+										<div class="d-flex justify-content-between px-2">
+											<strong>#{bundle.real_estate_subtitle}</strong>
+											<div class="tag-new tag-new--verified px-2">
+												<button class="btn btn-outline-primary white"
+													style="display: contents; color: white;"
+													onclick="copyCurrentURL()">#{bundle.copy}</button>
+											</div>
 										</div>
 
-										<span class="border-bottom row mt-2"
+										<span class="mt-2 form-control  card"
 											style="margin-top: 0.5%; display: block; color: #2d383f;">
 											#{chaletCardController.item.descrption}</span>
 

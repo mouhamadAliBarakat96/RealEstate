@@ -11,13 +11,8 @@ import org.RealEstate.enumerator.ExchangeRealEstateType;
 import org.RealEstate.enumerator.PostType;
 import org.RealEstate.enumerator.RealEstateTypeEnum;
 import org.RealEstate.facade.RealEstateFacade;
-import org.RealEstate.model.AppratmentRent;
-import org.RealEstate.model.AppratmentSell;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
-import org.RealEstate.model.Land;
-import org.RealEstate.model.OfficeRent;
-import org.RealEstate.model.OfficeSell;
 import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
@@ -55,6 +50,11 @@ public class RealEstateLazyDataModel extends LazyDataModel<RealEstate> implement
 		this.facade = facade;
 	}
 	
+	public RealEstateLazyDataModel(RealEstateFacade facade, ExchangeRealEstateType exchangeRealEstateType) {
+		this.facade = facade;
+		this.exchangeRealEstateType = exchangeRealEstateType;
+	}
+
 	public RealEstateLazyDataModel(RealEstateFacade facade,User user) {
 		this.user=user;
 		this.facade = facade;

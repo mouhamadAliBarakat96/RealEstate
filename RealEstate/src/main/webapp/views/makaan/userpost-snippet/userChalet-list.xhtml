@@ -8,17 +8,18 @@
 
 <ui:component>
 	<div class="row">
-		<p:dataView var="chalet" value="#{userPostListController.chalets}" emptyMessage="#{bundle.no_records}"
-			rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"
+		<p:dataView var="chalet" value="#{userPostListController.chalets}"
+			emptyMessage="#{bundle.no_records}" rows="6" lazy="true"
+			paginator="true" rowsPerPageTemplate="6,12,16"
 			paginatorPosition="bottom" widgetVar="chaletDataView"
 			paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 			gridIcon="pi pi-th-large" listIcon="pi pi-bars">
-			
-			 <p:ajax event="page" oncomplete="scrollViewTo();" />
-			
+
+			<p:ajax event="page" oncomplete="scrollViewTo();" />
+
 			<p:dataViewGridItem>
 				<div class="card flex justify-content-center">
-					<div class="col-md-12 wow  "  >
+					<div class="col-md-12 wow  ">
 						<div class="property-item rounded overflow-hidden">
 							<div class="position-relative overflow-hidden">
 								<h:commandLink
@@ -31,33 +32,35 @@
 								<h:outputLabel
 									styleClass="rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3 #{chalet.postStatus == 'ACCEPTED'? 'bg-primary' :'bg-danger'}"
 									value="#{languageController.locale eq 'en'?chalet.postStatus.status:chalet.postStatus.status_ar}" />
-							</div>
-							<div class="p-3 pb-0">
 
 								<h:commandLink
 									action="#{userPostListController.navigateToUserChalet(chalet)}"
-									target="_blank" value="#{chalet.name}"
-									styleClass="text-primary d-block h5 mb-2">
+									target="_blank">
+									<div
+										class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">#{chalet.name}</div>
 								</h:commandLink>
-
-								<h6 class="mb-3">
-									<span class=" ">#{bundle.chalet_weekdays}:</span> <span
-										class="text-primary">#{chalet.weekdays} $</span>
-								</h6>
-								<h6 class="mb-3">
-									<span class=" ">#{bundle.chalet_weekenddays}:</span> <span
-										class="text-primary">#{chalet.weekenddays} $</span>
-								</h6>
+							</div>
+							<div class="p-3 pb-0">
+								<div class="d-flex justify-content-between ">
+									<h6 class="mb-3">
+										<span class=" ">#{bundle.chalet_weekdays}:</span> <span
+											class="text-primary">#{chalet.weekdays} $</span>
+									</h6>
+									<h6 class="mb-3">
+										<span class=" ">#{bundle.chalet_weekenddays}:</span> <span
+											class="text-primary">#{chalet.weekenddays} $</span>
+									</h6>
+								</div>
 								<p>
 									<i class="fa fa-map-marker-alt text-primary me-2"></i>
-								     <c:choose>
-											<c:when test="#{languageController.locale eq 'en'}">
+									<c:choose>
+										<c:when test="#{languageController.locale eq 'en'}">
 												#{chalet.village.fullAddress()}
 											</c:when>
-											<c:otherwise>
+										<c:otherwise>
 												 #{chalet.village.fullAddress_ar()}
 											</c:otherwise>
-									 </c:choose>
+									</c:choose>
 								</p>
 							</div>
 							<div class="d-flex border-top">
@@ -84,7 +87,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								<div class="position-relative overflow-hidden">
-									<h:commandLink  
+									<h:commandLink
 										action="#{userPostListController.navigateToUserChalet(chalet)}"
 										styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 										<p:graphicImage alt="no photos" styleClass="img-fluid"
@@ -92,8 +95,8 @@
 										</p:graphicImage>
 									</h:commandLink>
 									<h:outputLabel
-									styleClass="rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3 #{chalet.postStatus == 'ACCEPTED'? 'bg-primary' :'bg-danger'}"
-									value="#{languageController.locale eq 'en'?chalet.postStatus.status:chalet.postStatus.status_ar}" />
+										styleClass="rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3 #{chalet.postStatus == 'ACCEPTED'? 'bg-primary' :'bg-danger'}"
+										value="#{languageController.locale eq 'en'?chalet.postStatus.status:chalet.postStatus.status_ar}" />
 								</div>
 							</div>
 							<div class="col-md-8 border-bottom border-left">
@@ -114,14 +117,14 @@
 									</h6>
 									<p>
 										<i class="fa fa-map-marker-alt text-primary me-2"></i>
- 										<c:choose>
-												<c:when test="#{languageController.locale eq 'en'}">
+										<c:choose>
+											<c:when test="#{languageController.locale eq 'en'}">
 													#{chalet.village.fullAddress()}
 												</c:when>
-												<c:otherwise>
+											<c:otherwise>
 													 #{chalet.village.fullAddress_ar()}
 												</c:otherwise>
-										 </c:choose>
+										</c:choose>
 									</p>
 								</div>
 

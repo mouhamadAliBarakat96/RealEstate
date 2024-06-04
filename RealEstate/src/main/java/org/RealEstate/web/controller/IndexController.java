@@ -106,14 +106,14 @@ public class IndexController implements Serializable {
 	/* use these two filter to get info about real estate type rent or sale */
 	private PropertyTypeEnum propertyTypeEnum = null;
 	private ExchangeRealEstateType estateTypeEnum = ExchangeRealEstateType.BUY;
-	
+
 	@PostConstruct
 	public void init() {
 		governorates = governorateFacade.findAll();
 		allVillages = villageFacade.findAll();
 		villages = allVillages;
 
-		realLazyModel = new RealEstateLazyDataModel(realEstateFacade);
+		realLazyModel = new RealEstateLazyDataModel(realEstateFacade, estateTypeEnum);
 
 		fullUrl = fullUrl.concat(getIpAddressWithPort()).concat("/").concat(Constants.IMAGES).concat("/")
 				.concat(Constants.POST_IMAGE_DIR_NAME).concat("/");
