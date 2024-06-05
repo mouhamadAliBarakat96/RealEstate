@@ -128,7 +128,7 @@ public class UserPostListController implements Serializable {
 		try {
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			flash.put("edit-realestate", "true");
-			String url = "userRealestate-card.xhtml?id=" + item.getId() + "&kind=" + PropertyKindEnum.REALESTATE;
+			String url = "userRealestate-card.xhtml?id=" + item.getId() ;//+ "&kind=" + PropertyKindEnum.REALESTATE;
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -139,7 +139,7 @@ public class UserPostListController implements Serializable {
 		try {
 			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 			flash.put("edit-chalet", "true");
-			String url = "userChalet-card.xhtml?id=" + item.getId() + "&kind=" + PropertyKindEnum.CHALET;
+			String url = "userChalet-card.xhtml?id=" + item.getId() ;//+ "&kind=" + PropertyKindEnum.CHALET;
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -192,6 +192,16 @@ public class UserPostListController implements Serializable {
 		try {
 			estateFacade.remove(estate);
 			realEstates.remove(estate);
+			Utility.addSuccessMessage("post_deleted", languageController.getLocale());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteChalet(Chalet chalet) {
+		try {
+			chaletFacade.remove(chalet);
+			chalets.remove(chalet);
 			Utility.addSuccessMessage("post_deleted", languageController.getLocale());
 		} catch (Exception e) {
 			e.printStackTrace();

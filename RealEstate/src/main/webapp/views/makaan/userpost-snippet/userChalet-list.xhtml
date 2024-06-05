@@ -10,7 +10,7 @@
 	<div class="row">
 		<p:dataView var="chalet" value="#{userPostListController.chalets}"
 			emptyMessage="#{bundle.no_records}" rows="6" lazy="true"
-			paginator="true" rowsPerPageTemplate="6,12,16"
+			paginator="true" rowsPerPageTemplate="6,12,16" id="chaletDataViewId"
 			paginatorPosition="bottom" widgetVar="chaletDataView"
 			paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 			gridIcon="pi pi-th-large" listIcon="pi pi-bars">
@@ -51,17 +51,37 @@
 											class="text-primary">#{chalet.weekenddays} $</span>
 									</h6>
 								</div>
-								<p>
-									<i class="fa fa-map-marker-alt text-primary me-2"></i>
-									<c:choose>
-										<c:when test="#{languageController.locale eq 'en'}">
+								<div class="d-flex   justify-content-between">
+
+									<p>
+										<i class="fa fa-map-marker-alt text-primary me-2"></i>
+										<c:choose>
+											<c:when test="#{languageController.locale eq 'en'}">
 												#{chalet.village.fullAddress()}
 											</c:when>
-										<c:otherwise>
+											<c:otherwise>
 												 #{chalet.village.fullAddress_ar()}
 											</c:otherwise>
-									</c:choose>
-								</p>
+										</c:choose>
+									</p>
+									<div>
+										<p:commandButton styleClass="btn btn-delete"
+											action="#{userPostListController.deleteChalet(chalet)}"
+											update="myForm:tabView:chaletDataViewId :messageScript"
+											icon="pi pi-trash" aria-label="Delete">
+											<p:confirm type="popup" header="Confirmation"
+												message="#{bundle.ar_you_sure}" icon="pi pi-info-circle" />
+										</p:commandButton>
+
+										<p:confirmPopup global="true">
+											<p:commandButton value="#{bundle.no}" type="button"
+												styleClass="confirm-no ui-confirm-popup-no ui-button-flat" />
+											<p:commandButton value="#{bundle.yes}" type="button"
+												styleClass="confirm-yes ui-confirm-popup-yes" />
+										</p:confirmPopup>
+									</div>
+
+								</div>
 							</div>
 							<div class="d-flex border-top">
 								<small class="flex-fill text-center border-end py-2"> <h:outputLabel
@@ -100,6 +120,23 @@
 								</div>
 							</div>
 							<div class="col-md-8 border-bottom border-left">
+								<div
+									class="d-flex flex-row-reverse justify-content-between align-center">
+									<p:commandButton value="#{bundle.delete_post}"
+										styleClass="btn btn-delete"
+										action="#{userPostListController.deleteChalet(chalet)}"
+										update="myForm:tabView:chaletDataViewId :messageScript">
+										<p:confirm type="popup" header="Confirmation"
+											message="#{bundle.ar_you_sure}" icon="pi pi-info-circle" />
+									</p:commandButton>
+									<p:confirmPopup global="true">
+										<p:commandButton value="#{bundle.no}" type="button"
+											styleClass="confirm-no ui-confirm-popup-no ui-button-flat" />
+										<p:commandButton value="#{bundle.yes}" type="button"
+											styleClass="confirm-yes ui-confirm-popup-yes" />
+									</p:confirmPopup>
+								</div>
+
 								<div class="p-4 pb-0">
 									<h:commandLink
 										action="#{userPostListController.navigateToUserChalet(chalet)}"

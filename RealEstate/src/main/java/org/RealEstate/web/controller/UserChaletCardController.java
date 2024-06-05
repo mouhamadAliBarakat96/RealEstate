@@ -296,7 +296,7 @@ public class UserChaletCardController implements Serializable {
 		String url = request.getRequestURL().toString();
 		url = Utils.replaceHost(url, appSinglton.getRealDns(), appSinglton.getMode());
 		try {
-			Faces.redirect(url + "?id=" + chalet.getId() + "&kind=" + PropertyKindEnum.CHALET);
+			Faces.redirect(url + "?id=" + chalet.getId());// + "&kind=" + PropertyKindEnum.CHALET);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

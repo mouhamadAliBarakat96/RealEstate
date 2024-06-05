@@ -505,7 +505,7 @@ public class UserRealestateCardController extends AbstractController<RealEstate>
 		String url = request.getRequestURL().toString();
 		url = Utils.replaceHost(url, appSinglton.getRealDns(), appSinglton.getMode());
 		try {
-			Faces.redirect(url + "?id=" + estate.getId() + "&kind=" + PropertyKindEnum.REALESTATE);
+			Faces.redirect(url + "?id=" + estate.getId());// + "&kind=" + PropertyKindEnum.REALESTATE);
 
 		} catch (IOException e) {
 			e.printStackTrace();

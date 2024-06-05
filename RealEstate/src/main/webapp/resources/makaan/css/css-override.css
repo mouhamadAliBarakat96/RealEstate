@@ -360,7 +360,7 @@ span.ui-icon.ui-icon-closethick {
 }
 
 .btn-delete {
-    padding: 2px !important;
+    padding: 0px !important;
     background: red !important;
     border: 0px !important;
 }

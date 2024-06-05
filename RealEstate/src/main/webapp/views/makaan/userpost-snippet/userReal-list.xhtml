@@ -9,18 +9,24 @@
 <ui:component>
 
 	<div class="row col-md-12">
-		<h5>#{bundle.account_is} <span style="color: var(--bs-primary);"> #{bundle[userPostListController.user.userCategory]}</span> </h5>
-		<h6>#{bundle.total_post_added} : #{userPostListController.nbOfTotalPermitPost()}</h6>
+		<h5>
+			#{bundle.account_is} <span style="color: var(- -bs-primary);">
+				#{bundle[userPostListController.user.userCategory]}</span>
+		</h5>
+		<h6>#{bundle.total_post_added} :
+			#{userPostListController.nbOfTotalPermitPost()}</h6>
 	</div>
 	<div class="row">
-		<p:dataView var="real" value="#{userPostListController.realEstates}" emptyMessage="#{bundle.no_records}"
-			rows="6" lazy="true" paginator="true" rowsPerPageTemplate="6,12,16"  
-			paginatorPosition="bottom" widgetVar="realEstatesDataView"  id="realestateDataView"
-			paginatorTemplate="  {PreviousPageLink} {PageLinks} {NextPageLink}" 
+		<p:dataView var="real" value="#{userPostListController.realEstates}"
+			emptyMessage="#{bundle.no_records}" rows="6" lazy="true"
+			paginator="true" rowsPerPageTemplate="6,12,16"
+			paginatorPosition="bottom" widgetVar="realEstatesDataView"
+			id="realestateDataView"
+			paginatorTemplate="  {PreviousPageLink} {PageLinks} {NextPageLink}"
 			gridIcon="pi pi-th-large" listIcon="pi pi-bars">
-			
+
 			<p:ajax event="page" oncomplete="scrollViewTo();" />
-			
+
 			<p:dataViewGridItem>
 				<div class="card flex justify-content-center">
 					<div class="col-md-12">
@@ -53,19 +59,35 @@
 									</h:outputLabel>
 								</h5>
 
-								<p>
-									<i class="fa fa-map-marker-alt text-primary me-2"></i>
-									<c:choose>
-										<c:when test="#{languageController.locale eq 'en'}">
+								<div class="d-flex   justify-content-between">
+									<p class="mt-1">
+										<i class="fa fa-map-marker-alt text-primary me-2"></i>
+										<c:choose>
+											<c:when test="#{languageController.locale eq 'en'}">
 											#{real.village.fullAddress()}
 										</c:when>
-										<c:otherwise>
+											<c:otherwise>
 											 #{real.village.fullAddress_ar()}
 										</c:otherwise>
-									 </c:choose>
-									
-									 
-								</p>
+										</c:choose>
+									</p>
+									<div>
+										<p:commandButton styleClass="btn btn-delete"
+											action="#{userPostListController.deleteRealEstate(real)}"
+											update="myForm:tabView:realestateDataView :messageScript"
+											icon="pi pi-trash" aria-label="Delete">
+											<p:confirm type="popup" header="Confirmation"
+												message="#{bundle.ar_you_sure}" icon="pi pi-info-circle" />
+										</p:commandButton>
+
+										<p:confirmPopup global="true">
+											<p:commandButton value="#{bundle.no}" type="button"
+												styleClass="confirm-no ui-confirm-popup-no ui-button-flat" />
+											<p:commandButton value="#{bundle.yes}" type="button"
+												styleClass="confirm-yes ui-confirm-popup-yes" />
+										</p:confirmPopup>
+									</div>
+								</div>
 							</div>
 							<div class="d-flex border-top">
 								<small class="flex-fill text-center  py-2"> <h:outputLabel
@@ -98,7 +120,7 @@
 						<div class="row">
 							<div class="col-md-4 ">
 								<div class="position-relative overflow-hidden">
-									<h:commandLink  
+									<h:commandLink
 										action="#{userPostListController.navigateToUserReal(real)}"
 										styleClass="d-block h5 mb-2 img-fluid" target="_blank">
 										<p:graphicImage alt="no photos" styleClass="img-fluid"
@@ -117,22 +139,28 @@
 
 									<div
 										class="d-flex flex-row-reverse justify-content-between align-center">
-										<p:commandButton value="#{bundle.delete_post}" styleClass="btn btn-delete"
-											action="#{userPostListController.deleteRealEstate(real)}"  update="myForm:tabView:realestateDataView :messageScript">
-											 <p:confirm type="popup" header="Confirmation" message="#{bundle.ar_you_sure}" icon="pi pi-info-circle" />
+										<p:commandButton value="#{bundle.delete_post}"
+											styleClass="btn btn-delete"
+											action="#{userPostListController.deleteRealEstate(real)}"
+											update="myForm:tabView:realestateDataView :messageScript">
+											<p:confirm type="popup" header="Confirmation"
+												message="#{bundle.ar_you_sure}" icon="pi pi-info-circle" />
 										</p:commandButton>
-										 <p:confirmPopup global="true">
-								            <p:commandButton value="#{bundle.no}" type="button" styleClass="confirm-no ui-confirm-popup-no ui-button-flat"/>
-								            <p:commandButton value="#{bundle.yes}" type="button" styleClass="confirm-yes ui-confirm-popup-yes" />
-								        </p:confirmPopup>
+										<p:confirmPopup global="true">
+											<p:commandButton value="#{bundle.no}" type="button"
+												styleClass="confirm-no ui-confirm-popup-no ui-button-flat" />
+											<p:commandButton value="#{bundle.yes}" type="button"
+												styleClass="confirm-yes ui-confirm-popup-yes" />
+										</p:confirmPopup>
 									</div>
 
 									<h5 class="text-primary mb-3">
-									
-									<h:outputLabel value="#{real.price}">
-										<f:convertNumber pattern="#,###,###" />
-										<i class="fas fa-solid fa-dollar-sign "></i>
-									</h:outputLabel></h5>
+
+										<h:outputLabel value="#{real.price}">
+											<f:convertNumber pattern="#,###,###" />
+											<i class="fas fa-solid fa-dollar-sign "></i>
+										</h:outputLabel>
+									</h5>
 
 									<h:commandLink
 										action="#{userPostListController.navigateToUserReal(real)}"
@@ -142,14 +170,14 @@
 
 									<p>
 										<i class="fa fa-map-marker-alt text-primary me-2"></i>
-										 <c:choose>
-												<c:when test="#{languageController.locale eq 'en'}">
+										<c:choose>
+											<c:when test="#{languageController.locale eq 'en'}">
 													#{real.village.fullAddress()}
 												</c:when>
-												<c:otherwise>
+											<c:otherwise>
 													 #{real.village.fullAddress_ar()}
 												</c:otherwise>
-										 </c:choose>
+										</c:choose>
 									</p>
 								</div>
 
@@ -160,35 +188,34 @@
 											<f:convertNumber pattern="#,###" />
 											<i class=" fa fa-regular fa-eye text-primary" />
 										</h:outputLabel>
-									</small> <small class="flex-fill text-center  py-2">
-										<i class="fa fa-ruler-combined text-primary me-2" />
+									</small> <small class="flex-fill text-center  py-2"> <i
+										class="fa fa-ruler-combined text-primary me-2" />
 										#{real.space} #{bundle.real_state_distance}
 									</small>
 
 									<h:panelGroup
 										rendered="#{userPostListController.hasRoomsAndBathRooms(real.postType)}">
-										<small class="flex-fill text-center  py-2">
-											<i class="fa fa-bed text-primary me-2" />
-											#{real.nbRoom ==0? bundle.no_value: real.nbRoom} 
-											#{bundle.real_estate_rooms}
+										<small class="flex-fill text-center  py-2"> <i
+											class="fa fa-bed text-primary me-2" /> #{real.nbRoom ==0?
+											bundle.no_value: real.nbRoom} #{bundle.real_estate_rooms}
 										</small>
 
 										<small class="flex-fill text-center py-2"> <i
-											class="fa fa-bath text-primary me-2" />
-											#{real.nbBathRoom ==0? bundle.no_value: real.nbBathRoom} 
+											class="fa fa-bath text-primary me-2" /> #{real.nbBathRoom
+											==0? bundle.no_value: real.nbBathRoom}
 											#{bundle.real_estate_bathrooms}
 										</small>
 									</h:panelGroup>
 									<h:panelGroup
 										rendered="#{userPostListController.aLand(real.postType)}}">
-										<small class="flex-fill text-center  py-2">
-											<i class="fa fa-solid fa-road text-primary me-2" />#{bundle.real_estate_road}:
+										<small class="flex-fill text-center  py-2"> <i
+											class="fa fa-solid fa-road text-primary me-2" />#{bundle.real_estate_road}:
 											<i
 											class="text-primary #{real.road ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
 										</small>
 
-										<small class="flex-fill text-center py-2 ">
-											<i class="fa fa-solid fa-water text-primary me-2" />#{bundle.real_estate_water}:
+										<small class="flex-fill text-center py-2 "> <i
+											class="fa fa-solid fa-water text-primary me-2" />#{bundle.real_estate_water}:
 											<i
 											class="text-primary #{real.water ? 'fas fa-check-circle' : 'fas fa-times-circle'}" />
 										</small>
