@@ -46,14 +46,16 @@
 				numVisible="4" id="chaletGalleria"
 				responsiveOptions="#{userChaletCardController.responsiveOptions1}"
 				circular="true" fullScreen="true" showItemNavigators="true"
-				showThumbnails="false" style="max-width: 40%">
-				<p:graphicImage styleClass="gallery-item mt-2"
-					url="#{userChaletCardController.fullUrl}#{photo}" alt="the photos"
-					style="width: 100%; display: block" />
-				<p:commandButton process="@this" value="#{bundle.delete}"
-					onclick="closeGalleria();"
-					action="#{userChaletCardController.deleteChaletPhoto(photo)}"
-					update="myForm:chaletphotos" />
+				showThumbnails="false" >
+				<div class="d-flex flex-column align-items-center">
+					<p:graphicImage styleClass="gallery-item mt-2" width="350"
+						height="450" url="#{userChaletCardController.fullUrl}#{photo}"
+						alt="the photos" style="display: block; object-fit: contain;" />
+					<p:commandButton process="@this" value="#{bundle.delete}"
+						onclick="closeGalleria();"
+						action="#{userChaletCardController.deleteChaletPhoto(photo)}"
+						update="myForm:chaletphotos" />
+				</div>
 			</p:galleria>
 
 			<p:commandButton value="#{bundle.show_photos}" partialSubmit="true"
@@ -77,9 +79,10 @@
 			</div>
 			<div class="col-md-3 ">
 				<h:outputLabel value="#{bundle.village}" styleClass="control-label" />
-				<p:selectOneMenu id="villagechaletId" filter="true" style="min-width: 101px;"
-					filterMatchMode="contains" filterNormalize="true"
-					converter="omnifaces.SelectItemsConverter" styleClass="form-select"
+				<p:selectOneMenu id="villagechaletId" filter="true"
+					style="min-width: 101px;" filterMatchMode="contains"
+					filterNormalize="true" converter="omnifaces.SelectItemsConverter"
+					styleClass="form-select"
 					value="#{userChaletCardController.chalet.village}">
 					<f:selectItem itemLabel="#{bundle.village}" itemValue="" />
 					<f:selectItems value="#{userChaletCardController.villages}"
@@ -210,8 +213,7 @@
 					<h:commandLink value='#{bundle.save}' id="save_btn"
 						action='#{userChaletCardController.save()}'
 						styleClass="btn btn-primary btn-save">
-						<f:ajax render=":messageScript"
-							execute="myForm:chaletInputPanel" />
+						<f:ajax render=":messageScript" execute="myForm:chaletInputPanel" />
 						<i class="fa fa-save" />
 					</h:commandLink>
 				</div>
