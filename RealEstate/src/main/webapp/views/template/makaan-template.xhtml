@@ -110,6 +110,24 @@
 
 	<ui:insert name="customStylesheet" />
 
+
+	<!-- Google tag (gtag.js) -->
+   <script type="text/javascript">
+      (function() {
+        var gaScript = document.createElement('script');
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-ECXXB0F6QG';
+        gaScript.async = true;
+        document.head.appendChild(gaScript);
+
+        gaScript.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-ECXXB0F6QG');
+        };
+      })();
+    </script>
+
 </h:head>
 <h:body class="bg-white">
 
