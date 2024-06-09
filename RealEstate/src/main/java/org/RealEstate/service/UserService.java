@@ -335,6 +335,22 @@ public class UserService implements Serializable {
 
 	}
 
+	public Response deleteUser(Long id) {
+		
+		try {
+		User user = userFacade.findWithExcption(id) ;
+			
+			userFacade.remove(user);
+			
+			return Response.status(Status.OK).entity("OK").build();
+
+		}
+		catch(Exception e ) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+		
+	}
 	public Long findNumberOfPostForUser(User user) throws Exception {
 
 		if (user == null) {

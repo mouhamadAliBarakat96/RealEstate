@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -152,6 +153,19 @@ public class UserMangment implements Serializable {
 
 	}
 
+	@DELETE
+	@Path("/v1")
+
+	public Response deleteUser(@QueryParam("id") Long fbId) {
+		try {
+			return userService.deleteUser(fbId);
+		} catch (Exception e) {
+			return analyzeException(e);
+
+		}
+
+	}
+	
 	private Response analyzeException(Exception e) {
 		e.printStackTrace();
 		if (e instanceof EJBException)
@@ -173,5 +187,7 @@ public class UserMangment implements Serializable {
 		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 
 	}
+	
+	
 
 }
