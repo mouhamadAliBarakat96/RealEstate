@@ -141,5 +141,11 @@ public abstract class AbstractFacade<T> implements Serializable, ICRUDOperations
 
 		return list;
 	}
+	
+	public void remove(List<T> entityArray) throws Exception {
+		for (T entity : entityArray) {
+			getEntityManager().remove(getEntityManager().merge(entity));
+		}
+	}
 
 }

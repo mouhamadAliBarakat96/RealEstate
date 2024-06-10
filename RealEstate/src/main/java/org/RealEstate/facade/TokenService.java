@@ -16,7 +16,7 @@ public class TokenService extends AbstractFacade<TokenEntity> implements Seriali
 
 	private static final long serialVersionUID = 1L;
 
-//	private static final int TOKEN_LENGTH = 32;
+	// private static final int TOKEN_LENGTH = 32;
 	private static final int EXPIRATION_TIME_MINUTES = 1000;
 
 	public TokenService() {
@@ -24,9 +24,9 @@ public class TokenService extends AbstractFacade<TokenEntity> implements Seriali
 	}
 
 	public String generateToken(User user) throws Exception {
-//		byte[] randomBytes = new byte[TOKEN_LENGTH];
-//		new SecureRandom().nextBytes(randomBytes);
-//		 Base64.getEncoder().encodeToString(randomBytes);
+		// byte[] randomBytes = new byte[TOKEN_LENGTH];
+		// new SecureRandom().nextBytes(randomBytes);
+		// Base64.getEncoder().encodeToString(randomBytes);
 		String tokenValue = user.getUserName().concat(UUID.randomUUID().toString());
 
 		TokenEntity userToken = findTokenByUser(user);
@@ -62,7 +62,7 @@ public class TokenService extends AbstractFacade<TokenEntity> implements Seriali
 
 	public User validateToken(String tokenValue) {
 		TokenEntity token = findByToken(tokenValue);
-		if (token != null) {//&& token.getExpirationDate().after(new Date())
+		if (token != null) {// && token.getExpirationDate().after(new Date())
 			return token.getUser();
 		}
 		return null;
@@ -89,6 +89,29 @@ public class TokenService extends AbstractFacade<TokenEntity> implements Seriali
 		TokenEntity token = findByToken(tokenValue);
 		if (token != null) {
 			remove(token);
+		}
+	}
+
+	public List<TokenEntity> findAllTokenByUser(User user) {
+		try {
+			TypedQuery<TokenEntity> query = em.createNamedQuery(TokenEntity.FIND_BY_USER, TokenEntity.class);
+			query.setParameter("pUser", user);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public void deleteByUserId(User user) {
+		try {
+			List<TokenEntity> tokens = findAllTokenByUser(user);
+			if (tokens != null && tokens.size() > 0) {
+				remove(tokens);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

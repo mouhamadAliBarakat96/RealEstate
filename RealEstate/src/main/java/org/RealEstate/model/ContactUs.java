@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.eclipse.persistence.annotations.BatchFetch;
@@ -19,12 +20,15 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "tbl_contact_us")
+@NamedQuery(name = ContactUs.FIND_BY_USER, query = "select t from ContactUs t where t.user = :pUser")
 public class ContactUs extends MainEntity implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_BY_USER = "ContactUs.FIND_BY_USER";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

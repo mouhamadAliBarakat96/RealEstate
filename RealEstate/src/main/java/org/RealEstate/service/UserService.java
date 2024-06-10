@@ -12,7 +12,9 @@ import javax.ws.rs.core.Response.Status;
 import org.RealEstate.dto.PaginationResponse;
 import org.RealEstate.enumerator.UserCategory;
 import org.RealEstate.facade.ChaletFacade;
+import org.RealEstate.facade.ContactUsFacade;
 import org.RealEstate.facade.RealEstateFacade;
+import org.RealEstate.facade.TokenService;
 import org.RealEstate.facade.UserFacade;
 import org.RealEstate.model.User;
 import org.RealEstate.utils.Constants;
@@ -41,6 +43,12 @@ public class UserService implements Serializable {
 
 	@EJB
 	private AppSinglton appSinglton;
+	
+	@EJB
+	private ContactUsFacade contactUsFacade;
+	
+	@EJB
+	private TokenService tokenFacade;
 
 	public Response removeProfilePicture(Long userId) {
 		try {
@@ -336,20 +344,16 @@ public class UserService implements Serializable {
 	}
 
 	public Response deleteUser(Long id) {
-		
 		try {
-		User user = userFacade.findWithExcption(id) ;
-			
+			User user = userFacade.findWithExcption(id);
+			contactUsFacade.deleteByUserId(user);
+			tokenFacade.deleteByUserId(user);
 			userFacade.remove(user);
-			
 			return Response.status(Status.OK).entity("OK").build();
 
-		}
-		catch(Exception e ) {
+		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-
 		}
-		
 	}
 	public Long findNumberOfPostForUser(User user) throws Exception {
 
