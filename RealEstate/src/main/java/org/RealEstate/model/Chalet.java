@@ -63,8 +63,10 @@ public class Chalet extends MainEntity implements Serializable {
 
 	@Expose
 	private boolean pool;
+	
 	@Expose
 	private boolean chimney;
+	
 	@Expose
 	@Column(length = 3000)
 	private String descrption;
@@ -73,18 +75,23 @@ public class Chalet extends MainEntity implements Serializable {
 	@JoinColumn(name = "village_id")
 	@Expose
 	private Village village;
+	
 	@Expose
 	private double weekdays;
+	
 	@Expose
 	private double weekenddays;
 
 	@Embedded
 	@Expose
 	private GoogleMapAttribute addressEmbeddable = new GoogleMapAttribute();
+	
 	@Expose
 	private int views;
+	
 	@Expose
 	private int liked;
+	
 	@Expose
 	private int space;
 
@@ -94,16 +101,13 @@ public class Chalet extends MainEntity implements Serializable {
 
 	@Column(length = 1000)
 	@Expose
-
 	private String reffuseCause;
 
 	@Column(length = 1000)
 	@Expose
-
 	private String reviuexCause;
 
 	@Enumerated(EnumType.STRING)
-
 	@Expose
 	private PostStatus postStatus;
 

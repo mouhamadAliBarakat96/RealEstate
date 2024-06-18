@@ -70,9 +70,6 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Expose
 	protected long id;
-	/**
-	 * 
-	 */
 
 	@Column(length = 1000)
 	@Expose
@@ -89,6 +86,7 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 
 	@Expose
 	private boolean negotiable;
+	
 	@Expose
 	private int space;
 
@@ -101,14 +99,17 @@ public abstract class RealEstate extends MainEntity implements Serializable {
 	@JoinColumn(name = "user_id")
 	@Expose
 	private User user;
+	
 	@Expose
 	private double price;
+
 	@Embedded
 	@Expose
 	private GoogleMapAttribute addressEmbeddable = new GoogleMapAttribute();
 
 	@Expose
 	private int views;
+
 	@Expose
 	private int liked;
 

@@ -18,15 +18,12 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.RealEstate.enumerator.PostStatus;
-import org.RealEstate.enumerator.PostType;
 import org.RealEstate.model.Chalet;
 import org.RealEstate.model.District;
 import org.RealEstate.model.Governorate;
-import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
 import org.RealEstate.service.UploadImagesMultiPart;
-import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 
@@ -261,6 +258,17 @@ public class ChaletFacade extends AbstractFacade<Chalet> implements Serializable
 
 		updateQuery.executeUpdate();
 
+	}
+
+	public void deleteByUser(User user) {
+		try {
+			List<Chalet> chalets = findUserChalets(user);
+			if (chalets != null && chalets.size() > 0) {
+				remove(chalets);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

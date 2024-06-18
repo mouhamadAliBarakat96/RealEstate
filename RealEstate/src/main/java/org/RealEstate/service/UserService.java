@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -16,6 +17,8 @@ import org.RealEstate.facade.ContactUsFacade;
 import org.RealEstate.facade.RealEstateFacade;
 import org.RealEstate.facade.TokenService;
 import org.RealEstate.facade.UserFacade;
+import org.RealEstate.model.Chalet;
+import org.RealEstate.model.RealEstate;
 import org.RealEstate.model.User;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
@@ -43,10 +46,10 @@ public class UserService implements Serializable {
 
 	@EJB
 	private AppSinglton appSinglton;
-	
+
 	@EJB
 	private ContactUsFacade contactUsFacade;
-	
+
 	@EJB
 	private TokenService tokenFacade;
 
@@ -98,7 +101,7 @@ public class UserService implements Serializable {
 
 			}
 
-			if (StringUtils.isBlank(user.getPhoneNumber()) ) {
+			if (StringUtils.isBlank(user.getPhoneNumber())) {
 				return Response.status(Status.BAD_REQUEST).entity(Constants.PHONE_NUMBER_NOT_CORRECT).build();
 
 			}
@@ -117,7 +120,7 @@ public class UserService implements Serializable {
 			user.setFbId(orginUser.getFbId());
 			user.setBroker(orginUser.isBroker());
 			user.setUserCategory(orginUser.getUserCategory());
- 			user.setProfileImageUrl(orginUser.getProfileImageUrl());
+			user.setProfileImageUrl(orginUser.getProfileImageUrl());
 			if (!orginUser.getUserName().equals(user.getUserName())) {
 
 				User userFinded = userFacade.findUserByUserName(user.getUserName());
@@ -284,7 +287,7 @@ public class UserService implements Serializable {
 
 		// find user
 		User user = userFacade.findWithExcption(userId);
-// yaane hayde mana awal mara  w 3am yaaml update
+		// yaane hayde mana awal mara w 3am yaaml update
 
 		if (user.getProfileImageUrl() != null) {
 			user.setShowProfilePicture(false);
@@ -346,15 +349,29 @@ public class UserService implements Serializable {
 	public Response deleteUser(Long id) {
 		try {
 			User user = userFacade.findWithExcption(id);
+			
+			//delete contacts
 			contactUsFacade.deleteByUserId(user);
+			
+			//delete tokens
 			tokenFacade.deleteByUserId(user);
+
+			//delete realestates
+			restateFacade.deleteByUser(user);
+
+			//delete chalets
+			chaletFacade.deleteByUser(user);
+
+			//delete user
 			userFacade.remove(user);
+
 			return Response.status(Status.OK).entity("OK").build();
 
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
+
 	public Long findNumberOfPostForUser(User user) throws Exception {
 
 		if (user == null) {

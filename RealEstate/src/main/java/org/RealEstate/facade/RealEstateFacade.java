@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -35,12 +35,8 @@ import org.RealEstate.model.StoreHouseRent;
 import org.RealEstate.model.StoreHouseSell;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
-import org.RealEstate.service.AppSinglton;
 import org.RealEstate.utils.Constants;
 import org.RealEstate.utils.Utils;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.persistence.criteria.Expression;
 
 @Stateless
 public class RealEstateFacade extends AbstractFacade<RealEstate> implements Serializable {
@@ -503,6 +499,17 @@ public class RealEstateFacade extends AbstractFacade<RealEstate> implements Seri
 
 		updateQuery.executeUpdate();
 
+	}
+	
+	public void deleteByUser(User user) {
+		try {
+			List<RealEstate> realestates = findUserRealEstates(user);
+			if (realestates != null && realestates.size() > 0) {
+				remove(realestates);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

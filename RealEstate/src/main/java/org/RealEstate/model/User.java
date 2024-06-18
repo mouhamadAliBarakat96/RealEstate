@@ -84,23 +84,23 @@ public class User extends MainEntity implements Serializable {
 	private String phoneNumber;
 
 	// el post li howe mnzlon
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
 	/// @Expose
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<RealEstate> readStateList = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
 	// @Expose
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<Chalet> chales = new ArrayList<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "realestate_fav_user", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "state_id") })
+	@JoinTable(name = "realestate_fav_user", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {@JoinColumn(name = "state_id") })
 	@Expose
 	private List<RealEstate> readStateFavoriteList = new ArrayList<>();
 
 	@Enumerated(EnumType.STRING)
 	@Expose
 	private UserCategory userCategory;
+	
 	@Expose
 	private boolean isBroker;
 
@@ -108,7 +108,7 @@ public class User extends MainEntity implements Serializable {
 	private String email;
 
 	public User() {
-		
+
 	}
 
 	public long getId() {
