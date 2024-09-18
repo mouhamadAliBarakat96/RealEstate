@@ -30,7 +30,9 @@ import com.google.gson.annotations.Expose;
 @Table(name = "tbl_user")
 @NamedQueries({
 		// change to enum accepted
-		@NamedQuery(name = User.LOGIN_USER, query = "SELECT user FROM User user WHERE  user.userName= :userName and user.passowrd = :password "),
+		@NamedQuery(name = User.LOGIN_USER, query = "SELECT user FROM User user WHERE  user.userName= :userName and user.passowrd = :password  "),
+		@NamedQuery(name = User.LOGIN_USER_PHONE_NUMBER, query = "SELECT user FROM User user WHERE  user.phoneNumber= :phoneNumber and user.passowrd = :password and  user.deleted != true   "),
+
 		@NamedQuery(name = User.FIND_USER_BY_USER_NAME, query = "SELECT user FROM User user WHERE  user.userName= :userName  "),
 		@NamedQuery(name = User.FIND_USER_BY_FB_ID, query = "SELECT user FROM User user WHERE  user.fbId= :fbId "),
 		@NamedQuery(name = User.USER_PROFILE_PICTURE_FALSE, query = "SELECT user FROM User user WHERE  user.showProfilePicture =  :param"),
@@ -42,6 +44,7 @@ public class User extends MainEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String LOGIN_USER = "USER.LOGIN";
+	public static final String LOGIN_USER_PHONE_NUMBER = "USER.LOGIN_PHONE_NUMBER";
 
 	public static final String FIND_USER_BY_USER_NAME = "USER.FIND_USER_BY_USER_NAME";
 
@@ -93,19 +96,26 @@ public class User extends MainEntity implements Serializable {
 	private List<Chalet> chales = new ArrayList<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "realestate_fav_user", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {@JoinColumn(name = "state_id") })
+	@JoinTable(name = "realestate_fav_user", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "state_id") })
 	@Expose
 	private List<RealEstate> readStateFavoriteList = new ArrayList<>();
 
 	@Enumerated(EnumType.STRING)
 	@Expose
 	private UserCategory userCategory;
-	
+
 	@Expose
 	private boolean isBroker;
 
 	// new column
 	private String email;
+
+	private String fireBaseToken;
+
+	private boolean deleted;
+
+	private String otp;
 
 	public User() {
 
@@ -245,6 +255,30 @@ public class User extends MainEntity implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getFireBaseToken() {
+		return fireBaseToken;
+	}
+
+	public void setFireBaseToken(String fireBaseToken) {
+		this.fireBaseToken = fireBaseToken;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
 	}
 
 }

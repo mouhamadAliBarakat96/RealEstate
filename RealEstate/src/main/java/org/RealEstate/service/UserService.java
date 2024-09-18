@@ -53,6 +53,9 @@ public class UserService implements Serializable {
 	@EJB
 	private TokenService tokenFacade;
 
+	@EJB
+	private OtpService otpService;
+
 	public Response removeProfilePicture(Long userId) {
 		try {
 			User user = userFacade.findWithExcption(userId);
@@ -217,6 +220,24 @@ public class UserService implements Serializable {
 		}
 	}
 
+	public Response loginV2(String phoneNumber, String password, String fireBaseToken) {
+
+		try {
+			User user = userFacade.findUserByPhoneNumberAndPassword(phoneNumber, password);
+			if (user == null) {
+				return Response.status(Status.BAD_REQUEST).entity(Constants.USER_NAME_OR_PASSWORD_INVALID).build();
+
+			}
+			user.setFireBaseToken(fireBaseToken);
+			user = userFacade.save(user);
+			return Response.status(Status.OK).entity(Utils.objectToString(user)).build();
+
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+		}
+	}
+
 	public Response loginFb(String fbId) {
 
 		try {
@@ -349,23 +370,56 @@ public class UserService implements Serializable {
 	public Response deleteUser(Long id) {
 		try {
 			User user = userFacade.findWithExcption(id);
-			
-			//delete contacts
-			contactUsFacade.deleteByUserId(user);
-			
-			//delete tokens
-			tokenFacade.deleteByUserId(user);
 
-			//delete realestates
-			restateFacade.deleteByUser(user);
+			// delete contacts
+			// contactUsFacade.deleteByUserId(user);
 
-			//delete chalets
-			chaletFacade.deleteByUser(user);
+			// delete tokens
+			// tokenFacade.deleteByUserId(user);
 
-			//delete user
-			userFacade.remove(user);
+			// delete realestates
+			// restateFacade.deleteByUser(user);
+
+			// delete chalets
+			// chaletFacade.deleteByUser(user);
+
+			// delete user
+			// userFacade.remove(user);
+
+			user.setDeleted(true);
 
 			return Response.status(Status.OK).entity("OK").build();
+
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+	}
+
+	public Response sendOtp(Long id) {
+		try {
+			User user = userFacade.findWithExcption(id);
+			otpService.sendOtp(user.getPhoneNumber());
+
+			return Response.status(Status.OK).entity("OK").build();
+
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+	}
+
+	public Response verfyOtp(Long id, String otp) {
+		try {
+			User user = userFacade.findWithExcption(id);
+			boolean valide = otpService.validOtp(user.getPhoneNumber(), otp);
+			if (valide) {
+				user.setOtp(otp);
+				userFacade.save(user);
+				return Response.status(Status.OK).entity("OK").build();
+
+			} else {
+				return Response.status(Status.OK).entity("OTP_NOT_VALIDE").build();
+
+			}
 
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();

@@ -141,6 +141,20 @@ public class UserMangment implements Serializable {
 	}
 
 	@GET
+	@Path("/login/v2")
+
+	public Response loginV2(@QueryParam("phoneNumber") String phoneNumber, @QueryParam("password") String password,
+			@QueryParam("fireBaseToken") String fireBaseToken) {
+		try {
+			return userService.loginV2(phoneNumber, password, fireBaseToken);
+		} catch (Exception e) {
+			return analyzeException(e);
+
+		}
+
+	}
+
+	@GET
 	@Path("/login-fb/v1")
 
 	public Response loginFb(@QueryParam("fbId") String fbId) {
@@ -165,7 +179,33 @@ public class UserMangment implements Serializable {
 		}
 
 	}
-	
+
+	@GET
+	@Path("/send-otp/v1")
+
+	public Response sendOtp(@QueryParam("id") Long fbId) {
+		try {
+			return userService.sendOtp(fbId);
+		} catch (Exception e) {
+			return analyzeException(e);
+
+		}
+
+	}
+
+	@POST
+	@Path("/verfy-otp/v1")
+
+	public Response verfyOtp(@QueryParam("id") Long fbId, @QueryParam("otp") String otp) {
+		try {
+			return userService.verfyOtp(fbId, otp);
+		} catch (Exception e) {
+			return analyzeException(e);
+
+		}
+
+	}
+
 	private Response analyzeException(Exception e) {
 		e.printStackTrace();
 		if (e instanceof EJBException)
@@ -187,7 +227,5 @@ public class UserMangment implements Serializable {
 		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 
 	}
-	
-	
 
 }

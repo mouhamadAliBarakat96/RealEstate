@@ -50,6 +50,7 @@ import org.RealEstate.model.StoreHouseRent;
 import org.RealEstate.model.StoreHouseSell;
 import org.RealEstate.model.User;
 import org.RealEstate.model.Village;
+import org.RealEstate.service.OtpService;
 
 public class Test {
 	
@@ -80,17 +81,19 @@ public class Test {
 	
 	public static void main(String[] args) throws IOException {
 		
-	String  x2 = "x";
-		
-		if("X".equalsIgnoreCase(x2)) {
-			System.out.println("123");
-		}
+	OtpService x  = new OtpService();
+	try {
+		x.sendSms("+96171006196");
+	//	x.sendOtp("+96171006196");
+	//System.out.println("" + x.validOtp("+96171006196", "861703")  );	
+	} catch (Exception e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 		
 		
 		
 		try {
-		String x = 	replaceHost("https://ekarplus.com:8080/iews/governorate/governorate.xhtml?id=34102" , "localhosost");
-System.out.println(x);
 		
 		System.out.println(Utils.addDaysToCurrentDate(7));	
 		

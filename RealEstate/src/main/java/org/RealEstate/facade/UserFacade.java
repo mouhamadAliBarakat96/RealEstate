@@ -41,6 +41,20 @@ public class UserFacade extends AbstractFacade<User> implements Serializable {
 		}
 
 	}
+	
+
+	public User findUserByPhoneNumberAndPassword(String phoneNumber, String password  ) throws Exception {
+
+		List<User> users = getEntityManager().createNamedQuery(User.LOGIN_USER_PHONE_NUMBER, User.class)
+				.setParameter("phoneNumber", phoneNumber).setParameter("password", password).getResultList();
+
+		if (users.isEmpty()) {
+			return null;
+		} else {
+			return users.get(0);
+		}
+
+	}
 
 	public User findUserByUserName(String userName) throws Exception {
 

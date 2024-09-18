@@ -161,13 +161,29 @@
 										<f:ajax></f:ajax>
 									</p:selectOneMenu>
 								</f:facet>
-
-
 								<em
 									class="   #{entity.freezed  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
-
-
 							</p:column>
+
+
+			<p:column filterBy="#{entity.deleted}" filterMatchMode="exact"
+								headerText="deleted " sortBy="#{entity.deleted}" width="180">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tableWidget').filter()"
+										converter="javax.faces.Boolean" style="width:100% ;   "
+										styleClass="inputtext-filter">
+										<f:selectItem itemLabel="All" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItem itemLabel="No" itemValue="false" />
+										<f:selectItem itemLabel="Yes" itemValue="true" />
+										<f:ajax></f:ajax>
+									</p:selectOneMenu>
+								</f:facet>
+								<em
+									class="   #{entity.deleted  ? 'fa fa-check our-green '  : 'fa fa-times our-red'}  "></em>
+							</p:column>
+
+
 
 
 						</p:dataTable>
